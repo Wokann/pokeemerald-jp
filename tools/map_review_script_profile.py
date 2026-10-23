@@ -65,7 +65,8 @@ FIXED_V4 = FIXED | {'setobjectmovementtype': (4, 2), 'getplayerxy': (5, 2),
                    'buffertrainerclassname': (4, 2), 'buffertrainername': (4, 2),
                    'buffernumberstring': (4, 2), 'checkpartymove': (3, 1),
                    'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2),
-                   'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2), 'dowildbattle': (1, 0)}
+                   'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2), 'dowildbattle': (1, 0),
+                   'nop1': (1, 0)}
 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
@@ -83,14 +84,23 @@ FALLTHROUGHS = {
     'CableClub_EventScript_CheckTurnAttendant': 'CableClub_EventScript_DontTurnAttendant',
     'CableClub_EventScript_PlayerExitRecordCorner': 'CableClub_EventScript_ExitRecordCornerRet',
     'CableClub_EventScript_TryWonderCardScript': 'CableClub_EventScript_MysteryGiftThankYou',
+    'DewfordTown_Gym_EventScript_BrightenRoom': 'DewfordTown_Gym_EventScript_NoLightChange',
+    'DewfordTown_Gym_EventScript_CountTrainersDefeated': 'DewfordTown_Gym_EventScript_CheckJocelyn',
+    'DewfordTown_Gym_EventScript_CheckJocelyn': 'DewfordTown_Gym_EventScript_CheckLaura',
+    'DewfordTown_Gym_EventScript_CheckLaura': 'DewfordTown_Gym_EventScript_CheckBrenden',
+    'DewfordTown_Gym_EventScript_CheckBrenden': 'DewfordTown_Gym_EventScript_CheckCristian',
+    'DewfordTown_Gym_EventScript_CheckCristian': 'DewfordTown_Gym_EventScript_CheckLilith',
+    'DewfordTown_Gym_EventScript_CheckLilith': 'DewfordTown_Gym_EventScript_StopCountingTrainers',
 }
 
-# Only the explicitly measured forms are supported. Optional no-music forms
-# are intentionally absent until independently reviewed.
+# Only explicitly measured forms are supported. A five-argument single is
+# accepted only with NO_MUSIC; its flag is not a pointer or an emitted field.
 TRAINER_FORMS = {
     ('trainerbattle_single', 3): ('TRAINER_BATTLE_SINGLE', 'EventScript_TryDoNormalTrainerBattle',
                                 'sOrdinaryBattleParams'),
     ('trainerbattle_single', 4): ('TRAINER_BATTLE_CONTINUE_SCRIPT', 'EventScript_TryDoNormalTrainerBattle',
+                                'sContinueScriptBattleParams'),
+    ('trainerbattle_single', 5): ('TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC', 'EventScript_TryDoNormalTrainerBattle',
                                 'sContinueScriptBattleParams'),
     ('trainerbattle_double', 4): ('TRAINER_BATTLE_DOUBLE', 'EventScript_TryDoDoubleTrainerBattle',
                                 'sDoubleBattleParams'),
@@ -230,9 +240,9 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_trainer_flag_branch')
             target(args[1], 'script')
             size = 9
-        elif version == 4 and op == 'cleartrainerflag':
+        elif version == 4 and op in ('cleartrainerflag', 'settrainerflag'):
             if len(args) != 1 or not re.fullmatch(r'TRAINER_\w+', args[0]):
-                raise ValueError('unsupported_profile_cleartrainerflag')
+                raise ValueError('unsupported_profile_' + op)
             size = 3
         elif version == 4 and op == 'setwildbattle':
             if (len(args) not in (2, 3) or not re.fullmatch(r'SPECIES_\w+', args[0])
@@ -263,6 +273,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if len(args) != 1 or not re.fullmatch(r'HEAL_LOCATION_\w+', args[0]):
                 raise ValueError('unsupported_profile_setrespawn')
             size = 3
+        elif version == 4 and op in ('setflashlevel', 'animateflash'):
+            if (len(args) != 1 or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[0])
+                    or not 0 <= int(args[0], 16 if args[0].lower().startswith('0x') else 10) <= 8):
+                raise ValueError('unsupported_profile_flash_level')
+            size = 3 if op == 'setflashlevel' else 2
         elif version == 4 and op == 'givemon':
             if (len(args) not in (2, 3) or not re.fullmatch(r'SPECIES_\w+', args[0])
                     or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])
@@ -313,6 +328,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             size = 10
         elif version == 4 and op.startswith('trainerbattle_'):
             form = TRAINER_FORMS.get((op, len(args)))
+            if op == 'trainerbattle_single' and len(args) == 5:
+                if args[-1] != 'NO_MUSIC':
+                    raise ValueError('unsupported_trainer_battle_music_flag')
+                args = args[:-1]
             if (form is None or not re.fullmatch(r'TRAINER_\w+', args[0])
                     or any(not NAME.fullmatch(arg) or arg == 'NULL' for arg in args[1:])):
                 raise ValueError('unsupported_trainer_battle_form')
