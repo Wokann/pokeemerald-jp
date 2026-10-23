@@ -334,7 +334,8 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_flag_branch')
             target(args[-1], 'script')
             size = 9
-        elif version == 4 and op in ('goto_if_defeated', 'goto_if_not_defeated'):
+        elif version == 4 and op in ('goto_if_defeated', 'goto_if_not_defeated',
+                                    'call_if_defeated', 'call_if_not_defeated'):
             if len(args) != 2 or not re.fullmatch(r'TRAINER_\w+', args[0]):
                 raise ValueError('unsupported_profile_trainer_flag_branch')
             target(args[1], 'script')
@@ -517,17 +518,23 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_pokenav_call')
             result.texts[args[0]] = 'string'
             size = 5
-        elif version == 4 and op == 'checkitem':
+        elif version == 4 and op in ('checkitem', 'checkpcitem'):
             if len(args) not in (1, 2) or not re.fullmatch(r'(?:ITEM|VAR)_\w+', args[0]):
-                raise ValueError('unsupported_profile_checkitem')
+                raise ValueError('unsupported_profile_' + op)
+            if (op == 'checkpcitem' and len(args) == 2
+                    and not re.fullmatch(r'(?:VAR_\w+|0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])):
+                raise ValueError('unsupported_profile_checkpcitem_quantity')
             size = 5
         elif version == 4 and op == 'setstepcallback':
             if len(args) != 1 or not re.fullmatch(r'STEP_CB_\w+', args[0]):
                 raise ValueError('unsupported_profile_step_callback')
             size = 2
-        elif version == 4 and op in ('setdivewarp', 'setescapewarp', 'warpsilent', 'warpwhitefade'):
+        elif version == 4 and op in ('setdivewarp', 'setescapewarp', 'warpsilent', 'warpwhitefade', 'warpdoor'):
             if len(args) != 3 or not re.fullmatch(r'MAP_\w+', args[0]):
                 raise ValueError('unsupported_profile_coordinate_warp')
+            if (op == 'warpdoor' and any(not re.fullmatch(r'(?:VAR_\w+|0[xX][0-9A-Fa-f]+|[0-9]+)', a)
+                                         for a in args[1:])):
+                raise ValueError('unsupported_profile_warpdoor_coordinates')
             size = 8
         elif version == 4 and op == 'setmaplayoutindex':
             if len(args) != 1 or not re.fullmatch(r'LAYOUT_\w+', args[0]):
