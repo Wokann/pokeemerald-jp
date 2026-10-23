@@ -206,13 +206,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_warp')
         elif (op in ('call', 'goto', 'call_if_eq', 'goto_if_eq', 'case')
               or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne', 'goto_if_lt',
-                                         'goto_if_gt', 'call_if_ne', 'call_if_ge')):
+                                         'goto_if_gt', 'call_if_ne', 'call_if_ge', 'call_if_lt')):
             count = 2 if op == 'case' else 3 if '_if_' in op else 1
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
             if count == 3 and not re.fullmatch(r'VAR_\w+', args[0]):
                 raise ValueError('unsupported_profile_compare')
-            if op == 'call_if_ge' and args[-1] == 'NULL':
+            if op in ('call_if_ge', 'call_if_lt') and args[-1] == 'NULL':
                 raise ValueError('unsupported_profile_null_call')
             size = 11 if count in (2, 3) else 5
             target(args[-1], 'script')
@@ -237,6 +237,40 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                     or len(args) == 3 and not re.fullmatch(r'ITEM_\w+', args[2])):
                 raise ValueError('unsupported_profile_setwildbattle')
             size = 6
+        elif version == 4 and op == 'givemon':
+            if (len(args) not in (2, 3) or not re.fullmatch(r'SPECIES_\w+', args[0])
+                    or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])
+                    or not 0 <= int(args[1], 16 if args[1].lower().startswith('0x') else 10) <= 255
+                    or len(args) == 3 and not re.fullmatch(r'ITEM_\w+', args[2])):
+                raise ValueError('unsupported_profile_givemon')
+            size = 15
+        elif version == 4 and op == 'subvar':
+            if (len(args) != 2 or not re.fullmatch(r'VAR_\w+', args[0])
+                    or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])
+                    or not 0 <= int(args[1], 16 if args[1].lower().startswith('0x') else 10) <= 65535):
+                raise ValueError('unsupported_profile_subvar')
+            size = 5
+        elif version == 4 and op == 'showmonpic':
+            if (len(args) != 3 or not re.fullmatch(r'SPECIES_\w+', args[0])
+                    or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
+                           or not 0 <= int(value, 16 if value.lower().startswith('0x') else 10) <= 255
+                           for value in args[1:])):
+                raise ValueError('unsupported_profile_showmonpic')
+            size = 5
+        elif version == 4 and op == 'hidemonpic':
+            if args:
+                raise ValueError('unsupported_profile_arguments:hidemonpic')
+            size = 1
+        elif version == 4 and op == 'bufferspeciesname':
+            if (len(args) != 2 or not re.fullmatch(r'STR_VAR_[123]', args[0])
+                    or not re.fullmatch(r'(?:SPECIES|VAR)_\w+', args[1])):
+                raise ValueError('unsupported_profile_bufferspeciesname')
+            size = 4
+        elif version == 4 and op == 'bufferboxname':
+            if (len(args) != 2 or not re.fullmatch(r'STR_VAR_[123]', args[0])
+                    or not re.fullmatch(r'VAR_\w+', args[1])):
+                raise ValueError('unsupported_profile_bufferboxname')
+            size = 4
         elif version == 4 and op == 'trainerbattle_no_intro':
             if (len(args) != 2 or not re.fullmatch(r'TRAINER_\w+', args[0])
                     or not NAME.fullmatch(args[1]) or args[1] == 'NULL'):

@@ -320,6 +320,16 @@ def extended_analysis(root: Path, text: str) -> tuple[int, set[str], dict[str, s
     return size, scripts, texts
 
 
+def _dynamic_blockdata_size(root: Path, row: dict) -> int:
+    """Keep an asset's optional zero-filled word-alignment tail in its extent."""
+    data = local_path(root, row['blockdata_filepath']).read_bytes()
+    logical_size = row['width'] * row['height'] * 2
+    if len(data) != logical_size:
+        if len(data) != (logical_size + 3) & ~3 or any(data[logical_size:]):
+            raise ValueError('missing_or_wrong_dynamic_layout_asset')
+    return len(data)
+
+
 def dynamic_layout_contracts(root: Path, batch: dict) -> tuple[dict, dict, list]:
     """Resolve only explicitly used layout IDs to their real generated owners."""
     ids = batch.get('dynamic_layouts', [])
@@ -369,7 +379,11 @@ def dynamic_layout_contracts(root: Path, batch: dict) -> tuple[dict, dict, list]
         for key, symbol, size, role in (('border_filepath', labels[0], 8, 'dynamic_border'),
                                        ('blockdata_filepath', labels[1], width * height * 2, 'dynamic_blockdata')):
             path = row.get(key)
-            if not isinstance(path, str) or path not in files or local_path(root, path).stat().st_size != size:
+            if not isinstance(path, str) or path not in files:
+                raise ValueError('missing_or_wrong_dynamic_layout_asset')
+            if role == 'dynamic_blockdata':
+                _dynamic_blockdata_size(root, row)
+            elif local_path(root, path).stat().st_size != size:
                 raise ValueError('missing_or_wrong_dynamic_layout_asset')
             owned = statements(blocks[symbol]) if symbol in blocks else []
             if not owned or owned[0] != '.incbin "' + path + '"':
@@ -430,6 +444,7 @@ def story_event_target(event: dict, field: str, *, version=3):
 def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict, dict]:
     """Derive component identity/extent and actual shared-call closure from source."""
     contracts, external, external_text = {}, set(), {}
+    local_labels = set()
     addressed = batch.get('review_type') == 'direct_map_v4'
     story = batch.get('review_type') in ('direct_map_v3', 'direct_map_v4')
     extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4')
@@ -501,6 +516,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         blocks = label_blocks(script)
         if not blocks or next(iter(blocks)) != name + '_MapScripts':
             raise ValueError('noncanonical_map_script_owner')
+        local_labels.update(blocks)
         length, targets, texts = analyze(script, source_address(name, name + '_MapScripts') if addressed else None)
         if story:
             expect(name + '_MapScripts', 'map_table')
@@ -560,6 +576,11 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
     pending, visited, shared = list(external), set(), {}
     while pending:
         entry = pending.pop()
+        if story and entry in local_labels and entry not in entries:
+            # A shared helper may call back into the explicitly profiled map
+            # owner. Its source/native extent is already bound there; the
+            # final expected/actual kind check must still validate this edge.
+            continue
         if entry in visited:
             continue
         visited.add(entry)
@@ -619,7 +640,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         for row in layouts.values():
             name = row['name']
             for symbol, size in ((name, 24), (name + '_Border', 8),
-                                 (name + '_Blockdata', row['width'] * row['height'] * 2)):
+                                 (name + '_Blockdata', _dynamic_blockdata_size(root, row))):
                 if (None, symbol) in contracts:
                     raise ValueError('conflicting_dynamic_layout_contract')
                 contracts[(None, symbol)] = (symbol, size)

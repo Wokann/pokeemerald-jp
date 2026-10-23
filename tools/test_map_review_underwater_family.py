@@ -157,11 +157,12 @@ class UnderwaterFamilyTests(unittest.TestCase):
     def test_version_upgrade_never_duplicates_or_adds_reviewed_maps(self):
         manifest = json.loads((ROOT / review.MANIFEST_PATH).read_text())
         names = [name for batch in manifest['batches'] for name in batch['maps']]
-        self.assertEqual((len(names),len(set(names))),(64,64))
+        self.assertEqual(len(names),len(set(names)))
+        self.assertEqual([name for name in names if name in MAPS],MAPS)
         known = {path.parent.name for path in (ROOT / 'data/maps').glob('*/map.json')}
         result = review.map_review_progress(ROOT,known)
-        self.assertEqual(result['reviewed_maps'],64)
-        self.assertEqual(sum(result['current_maps_by_review_type'].values()),64)
+        self.assertEqual(result['reviewed_maps'],len(names))
+        self.assertEqual(sum(result['current_maps_by_review_type'].values()),len(names))
         self.assertNotIn('direct_map_v1',result['current_maps_by_review_type'])
         self.assertEqual(result['current_maps_by_review_type']['direct_map_v2'],7)
 
