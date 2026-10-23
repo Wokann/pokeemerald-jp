@@ -82,6 +82,7 @@ FALLTHROUGHS = {
     'Route111_EventScript_SetSandstorm': 'Route111_EventScript_EndCheckSetSandstorm',
     'ProfBirch_EventScript_RatePokedexOrRegister': 'ProfBirch_EventScript_AskRatePokedex',
     'MauvilleCity_PokemonCenter_1F_EventScript_KnowNoTales': 'MauvilleCity_PokemonCenter_1F_EventScript_DoYouHaveAnyTales',
+    'RustboroCity_Flat1_2F_EventScript_WaldasDad': 'RustboroCity_Flat1_2F_EventScript_GivePhrase',
     'EventScript_StartTrainerApproach': 'EventScript_TrainerApproach',
     'EventScript_DoTrainerBattle': 'EventScript_EndTrainerBattle',
     'BerryTree_EventScript_ChooseBerryToPlant': 'BerryTree_EventScript_CancelPlanting',
@@ -439,6 +440,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                                      for value in args)):
                 raise ValueError('unsupported_profile_erasebox')
             size = 5
+        elif version == 4 and op == 'multichoicegrid':
+            if (len(args) != 5 or any(not a.isdecimal() or int(a) > 255 for a in args[:2])
+                    or not re.fullmatch(r'MULTI_\w+', args[2])
+                    or not args[3].isdecimal() or not 1 <= int(args[3]) <= 255
+                    or args[4] not in ('FALSE', 'TRUE', '0', '1')):
+                raise ValueError('unsupported_profile_multichoice_grid')
+            size = 6
         elif version == 4 and op == 'setrespawn':
             if len(args) != 1 or not re.fullmatch(r'HEAL_LOCATION_\w+', args[0]):
                 raise ValueError('unsupported_profile_setrespawn')
