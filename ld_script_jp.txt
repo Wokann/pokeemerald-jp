@@ -520,7 +520,6 @@ dive_warp = TryDoDiveWarp;
 GetNumFloorsInTrainerHillChallenge = sub_081D5E30;
 SetWarpDestinationTrainerHill4F = sub_081D5ABC;
 SetWarpDestinationTrainerHillFinalFloor = sub_081D5AD0;
-MossdeepCity_SpaceCenter_2F_EventScript_RivalRayquazaCall = gStdScripts_End + 0x322B7;
 SSTidalCorridor_EventScript_ReachedStepCount = gStdScripts_End + 0x426DF;
 ShouldDoScottFortreeCall = ShouldDoWinonaCall;
 ShouldDoScottBattleFrontierCall = ShouldDoScottCall;

@@ -67,12 +67,15 @@ class DewfordProfileTests(unittest.TestCase):
         prefix = 'trainerbattle_single TRAINER_BRAWLY_1, Intro, Defeat, After, '
         cases = [prefix + flag + '\nend' for flag in ('TRUE', 'FALSE', '0', '1', 'Music')]
         cases += [prefix + 'NO_MUSIC', prefix + 'NO_MUSIC, EXTRA\nend',
-                  'trainerbattle_double TRAINER_BRAWLY_1, Intro, Defeat, TooFew, After, NO_MUSIC\nend']
+                  'trainerbattle_double TRAINER_BRAWLY_1, Intro, Defeat, TooFew, After, NO_MUSIC, EXTRA\nend']
         for source in cases:
             with self.subTest(source=source), self.assertRaises(ValueError):
                 self.parse(source)
         with self.assertRaises(ValueError):
             self.parse(prefix + 'NO_MUSIC\nend', version=3)
+        # Mossdeep measures double NO_MUSIC in v4; legacy profiles still reject it.
+        with self.assertRaises(ValueError):
+            self.parse('trainerbattle_double TRAINER_BRAWLY_1, Intro, Defeat, TooFew, After, NO_MUSIC\nend', version=3)
 
     def test_the_seven_light_count_fallthroughs_are_explicit(self):
         selected = {name: target for name, target in profile.FALLTHROUGHS.items() if name.startswith(MAPS[0])}

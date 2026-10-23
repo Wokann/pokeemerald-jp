@@ -53,6 +53,11 @@ TRAINER_ENGINE_CONTEXT = {'src/scrcmd.c', 'src/battle_setup.c', 'src/overworld.c
 WARP_CONTEXT_SYMBOLS = {'ScrCmd_warp': 'src/scrcmd.c', 'DoWarp': 'src/field_screen_effect.c',
     'Task_WarpAndLoadMap': 'src/field_screen_effect.c', 'CB2_LoadMap': 'src/overworld.c',
     'ScriptContext_Init': 'src/script.c', 'InitScriptContext': 'src/script.c'}
+CALLBACK_CONTEXT_SYMBOLS = {
+    'SetCB2WhiteOut': 'src/post_battle_event_funcs.c', 'SetMainCallback2': 'src/main.c',
+    'CB2_WhiteOut': 'src/overworld.c', 'ScriptContext_Init': 'src/script.c',
+    'InitScriptContext': 'src/script.c',
+}
 TRAINER_ENGINE_SYMBOLS = {
     'ScrCmd_trainerbattle': 'src/scrcmd.c', 'ScrCmd_dotrainerbattle': 'src/scrcmd.c',
     'ScrCmd_gotopostbattlescript': 'src/scrcmd.c',
@@ -491,6 +496,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
     used_layouts = set()
     trainer_battles, trainer_run, trainer_post, trainer_beaten = {}, False, False, False
     context_exits = {}
+    callback_exits = {}
     if story:
         # Lazy import: the typed profiler reuses this module's text encoder.
         try:
@@ -508,6 +514,8 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         for label, profile in profiles.items():
             if profile.context_warp:
                 context_exits[label] = profile.context_warp
+            if profile.context_callback:
+                callback_exits[label] = profile.context_callback
             if profile.runtime_scripts:
                 bound = {c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}
                 if (profile.runtime_scripts != {'saved_wonder_card'}
@@ -775,6 +783,13 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         if (expected_exits and not (set(WARP_CONTEXT_SYMBOLS.values()) | {'ld_script_jp.txt'}) <= {
                 c['path'] for c in batch['sources'] if c.get('selector') == 'file'}):
             raise ValueError('missing_context_warp_source')
+        expected_callbacks = [dict(entry=entry, special=special)
+                              for entry, special in sorted(callback_exits.items())]
+        if batch.get('callback_exits', []) != expected_callbacks:
+            raise ValueError('missing_or_changed_context_callback_contract')
+        if (expected_callbacks and not (set(CALLBACK_CONTEXT_SYMBOLS.values()) | {'ld_script_jp.txt'}) <= {
+                c['path'] for c in batch['sources'] if c.get('selector') == 'file'}):
+            raise ValueError('missing_context_callback_source')
         expected_battles = [trainer_battles[key] for key in sorted(trainer_battles)]
         if batch.get('trainer_battles', []) != expected_battles:
             raise ValueError('missing_or_changed_trainer_battle_contract')
@@ -1091,6 +1106,50 @@ def _context_warp_native(batch: dict, native: dict, errors: list[str]) -> None:
             calls.add(start + offset + 4 + delta)
     if addresses['ScriptContext_Init'] not in calls:
         errors.append('native_context_warp_missing_init_call')
+
+
+def _context_callback_native(batch: dict, native: dict, errors: list[str]) -> None:
+    """Verify the measured JP callback setter and its script-context reset."""
+    if not batch.get('callback_exits'):
+        return
+    addresses = {}
+    for symbol, path in CALLBACK_CONTEXT_SYMBOLS.items():
+        values = {value & ~1 for value in native['symbols'].get(symbol, set())}
+        if len(values) != 1:
+            errors.append('native_context_callback_symbol_mismatch:' + symbol)
+            continue
+        address = addresses[symbol] = next(iter(values))
+        owner = path[:-2] + '.o'
+        if not any(start <= address < start + size and (actual == owner or actual.endswith('/' + owner))
+                   for start, size, actual in native['owners']):
+            errors.append('native_context_callback_owner_mismatch:' + symbol)
+    if len(addresses) != len(CALLBACK_CONTEXT_SYMBOLS):
+        return
+    aliases = {value & ~1 for value in native['symbols'].get('ScriptContext1_Init', set())}
+    if aliases and aliases != {addresses['ScriptContext_Init']}:
+        errors.append('native_context_callback_init_alias_mismatch')
+    def code(symbol, size):
+        start = addresses[symbol]
+        at = start - 0x08000000
+        return start, native['rom'][at:at + size]
+    def calls(start, data):
+        targets = set()
+        for offset in range(0, len(data) - 3, 2):
+            high, low = struct.unpack_from('<HH', data, offset)
+            if high & 0xF800 == 0xF000 and low & 0xF800 == 0xF800:
+                delta = ((high & 0x7FF) << 12) | ((low & 0x7FF) << 1)
+                if delta & 0x400000:
+                    delta -= 0x800000
+                targets.add(start + offset + 4 + delta)
+        return targets
+    # Measured function extents, not a search through arbitrary later code.
+    start, setter = code('SetCB2WhiteOut', 0x14)
+    if (len(setter) != 0x14 or addresses['SetMainCallback2'] not in calls(start, setter)
+            or struct.pack('<I', addresses['CB2_WhiteOut'] | 1) not in setter):
+        errors.append('native_context_callback_setter_mismatch')
+    start, callback = code('CB2_WhiteOut', 0x74)
+    if len(callback) != 0x74 or addresses['ScriptContext_Init'] not in calls(start, callback):
+        errors.append('native_context_callback_missing_init_call')
 
 
 def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], parsed: list) -> None:
@@ -1514,6 +1573,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                     address += profile.size
             _trainer_native(root, batch, native, errors, parsed)
             _context_warp_native(batch, native, errors)
+            _context_callback_native(batch, native, errors)
             _dynamic_layout_native(root, batch, native, errors)
         for entry, pieces in shared.items():
             address = next(a for n, role, symbol, a, size, digest in parsed if n is None and symbol == entry)

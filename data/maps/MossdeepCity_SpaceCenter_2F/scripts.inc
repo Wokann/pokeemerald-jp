@@ -6,28 +6,28 @@ MossdeepCity_SpaceCenter_2F_MapScripts::
 	.byte 0
 
 MossdeepCity_SpaceCenter_2F_OnTransition:: @ 0x0820D68D
-	call_if_eq VAR_MOSSDEEP_CITY_STATE, 0x2, MossdeepCity_SpaceCenter_2F_EventScript_MoveCivilians
-	call_if_eq VAR_MOSSDEEP_SPACE_CENTER_STATE, 0x2, MossdeepCity_SpaceCenter_2F_EventScript_MoveDefeatedGrunts
+	call_if_eq VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_MoveCivilians
+	call_if_eq VAR_MOSSDEEP_SPACE_CENTER_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_MoveDefeatedGrunts
 	end
 
 MossdeepCity_SpaceCenter_2F_EventScript_MoveCivilians:: @ 0x0820D6A4
 	clearflag FLAG_INTERACTED_WITH_STEVEN_SPACE_CENTER
-	setobjectxyperm LOCALID_SPACE_CENTER_2F_SCIENTIST, 0x5, 0x3
+	setobjectxyperm LOCALID_SPACE_CENTER_2F_SCIENTIST, 5, 3
 	setobjectmovementtype LOCALID_SPACE_CENTER_2F_SCIENTIST, MOVEMENT_TYPE_FACE_RIGHT
-	setobjectxyperm LOCALID_SPACE_CENTER_2F_RICH_BOY, 0x3, 0x2
+	setobjectxyperm LOCALID_SPACE_CENTER_2F_RICH_BOY, 3, 2
 	setobjectmovementtype LOCALID_SPACE_CENTER_2F_RICH_BOY, MOVEMENT_TYPE_FACE_RIGHT
-	setobjectxyperm LOCALID_SPACE_CENTER_2F_GENTLEMAN, 0x1, 0x3
+	setobjectxyperm LOCALID_SPACE_CENTER_2F_GENTLEMAN, 1, 3
 	setobjectmovementtype LOCALID_SPACE_CENTER_2F_GENTLEMAN, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 MossdeepCity_SpaceCenter_2F_EventScript_MoveDefeatedGrunts:: @ 0x0820D6C9
-	setobjectxyperm LOCALID_SPACE_CENTER_GRUNT_6, 0xB, 0x2
-	setobjectxyperm LOCALID_SPACE_CENTER_GRUNT_7, 0xF, 0x2
-	setobjectxyperm LOCALID_SPACE_CENTER_GRUNT_5, 0xD, 0x4
+	setobjectxyperm LOCALID_SPACE_CENTER_GRUNT_6, 11, 2
+	setobjectxyperm LOCALID_SPACE_CENTER_GRUNT_7, 15, 2
+	setobjectxyperm LOCALID_SPACE_CENTER_GRUNT_5, 13, 4
 	return
 
 MossdeepCity_SpaceCenter_2F_OnFrame:: @ 0x0820D6DF
-	map_script_2 VAR_MOSSDEEP_SPACE_CENTER_STATE, 0x1, MossdeepCity_SpaceCenter_2F_EventScript_ThreeMagmaGrunts
+	map_script_2 VAR_MOSSDEEP_SPACE_CENTER_STATE, 1, MossdeepCity_SpaceCenter_2F_EventScript_ThreeMagmaGrunts
 	.2byte 0
 
 MossdeepCity_SpaceCenter_2F_EventScript_ThreeMagmaGrunts:: @ 0x0820D6E9
@@ -39,7 +39,7 @@ MossdeepCity_SpaceCenter_2F_EventScript_ThreeMagmaGrunts:: @ 0x0820D6E9
 	msgbox MossdeepCity_SpaceCenter_2F_Text_GoodAnswer, MSGBOX_DEFAULT
 	closemessage
 	applywaitmovement LOCALID_PLAYER, MossdeepCity_SpaceCenter_2F_Movement_PlayerExit
-	warp MAP_MOSSDEEP_CITY_SPACE_CENTER_1F, 0xD, 0x1
+	warp MAP_MOSSDEEP_CITY_SPACE_CENTER_1F, 13, 1
 	waitstate
 	releaseall
 	end
@@ -60,7 +60,7 @@ MossdeepCity_SpaceCenter_2F_EventScript_BattleThreeMagmaGrunts:: @ 0x0820D733
 	msgbox MossdeepCity_SpaceCenter_2F_Text_Grunt7Intro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_GRUNT_SPACE_CENTER_7, MossdeepCity_SpaceCenter_2F_Text_Grunt7Defeat
 	applywaitmovement LOCALID_SPACE_CENTER_GRUNT_7, MossdeepCity_SpaceCenter_2F_Movement_Grunt7Defeated
-	setvar VAR_MOSSDEEP_SPACE_CENTER_STATE, 0x2
+	setvar VAR_MOSSDEEP_SPACE_CENTER_STATE, 2
 	copyobjectxytoperm LOCALID_SPACE_CENTER_GRUNT_6
 	copyobjectxytoperm LOCALID_SPACE_CENTER_GRUNT_7
 	copyobjectxytoperm LOCALID_SPACE_CENTER_GRUNT_5
@@ -89,8 +89,8 @@ MossdeepCity_SpaceCenter_2F_EventScript_Scientist:: @ 0x0820D7B7
 	lock
 	faceplayer
 	goto_if_set FLAG_SYS_GAME_CLEAR, MossdeepCity_SpaceCenter_2F_EventScript_ScientistNormal
-	goto_if_eq VAR_MOSSDEEP_CITY_STATE, 0x2, MossdeepCity_SpaceCenter_2F_EventScript_ScientistMagma
-	goto_if_lt VAR_MOSSDEEP_CITY_STATE, 0x2, MossdeepCity_SpaceCenter_2F_EventScript_ScientistNormal
+	goto_if_eq VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_ScientistMagma
+	goto_if_lt VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_ScientistNormal
 	goto MossdeepCity_SpaceCenter_2F_EventScript_ScientistMagma
 	end
 
@@ -108,8 +108,8 @@ MossdeepCity_SpaceCenter_2F_EventScript_Gentleman:: @ 0x0820D7F2
 	lock
 	faceplayer
 	goto_if_set FLAG_SYS_GAME_CLEAR, MossdeepCity_SpaceCenter_2F_EventScript_GentlemanNormal
-	goto_if_eq VAR_MOSSDEEP_CITY_STATE, 0x2, MossdeepCity_SpaceCenter_2F_EventScript_GentlemanMagma
-	goto_if_lt VAR_MOSSDEEP_CITY_STATE, 0x2, MossdeepCity_SpaceCenter_2F_EventScript_GentlemanNormal
+	goto_if_eq VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_GentlemanMagma
+	goto_if_lt VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_GentlemanNormal
 	goto MossdeepCity_SpaceCenter_2F_EventScript_GentlemanMagma
 	end
 
@@ -127,8 +127,8 @@ MossdeepCity_SpaceCenter_2F_EventScript_RichBoy:: @ 0x0820D82D
 	lock
 	faceplayer
 	goto_if_set FLAG_SYS_GAME_CLEAR, MossdeepCity_SpaceCenter_2F_EventScript_RichBoyNormal
-	goto_if_eq VAR_MOSSDEEP_CITY_STATE, 0x2, MossdeepCity_SpaceCenter_2F_EventScript_RichBoyMagma
-	goto_if_lt VAR_MOSSDEEP_CITY_STATE, 0x2, MossdeepCity_SpaceCenter_2F_EventScript_RichBoyNormal
+	goto_if_eq VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_RichBoyMagma
+	goto_if_lt VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_RichBoyNormal
 	goto MossdeepCity_SpaceCenter_2F_EventScript_RichBoyMagma
 	end
 
@@ -175,7 +175,7 @@ MossdeepCity_SpaceCenter_2F_EventScript_Steven:: @ 0x0820D8A4
 	msgbox MossdeepCity_SpaceCenter_2F_Text_StevenWhyStealRocketFuel, MSGBOX_DEFAULT
 	msgbox MossdeepCity_SpaceCenter_2F_Text_MaxieUseFuelToEruptVolcano, MSGBOX_DEFAULT
 	closemessage
-	delay 0x1E
+	delay 30
 	playse SE_NOT_EFFECTIVE
 	switch VAR_FACING
 	case DIR_SOUTH, MossdeepCity_SpaceCenter_2F_EventScript_StevenFightMovementSouth
@@ -227,7 +227,7 @@ MossdeepCity_SpaceCenter_2F_EventScript_ChoosePartyForMultiBattle:: @ 0x0820D936
 	special SavePlayerParty
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
-	goto_if_ne VAR_RESULT, 0x0, MossdeepCity_SpaceCenter_2F_EventScript_DoStevenMultiBattle
+	goto_if_ne VAR_RESULT, 0, MossdeepCity_SpaceCenter_2F_EventScript_DoStevenMultiBattle
 	special LoadPlayerParty
 	goto MossdeepCity_SpaceCenter_2F_EventScript_ReadyForBattlePrompt
 
@@ -235,7 +235,7 @@ MossdeepCity_SpaceCenter_2F_EventScript_DoStevenMultiBattle:: @ 0x0820D95C
 	special ReducePlayerPartyToSelectedMons
 	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
 	setvar VAR_0x8004, SPECIAL_BATTLE_STEVEN
-	setvar VAR_0x8005, 0x0
+	setvar VAR_0x8005, 0
 	special DoSpecialTrainerBattle
 	frontier_saveparty
 	special LoadPlayerParty
@@ -247,21 +247,21 @@ MossdeepCity_SpaceCenter_2F_EventScript_DoStevenMultiBattle:: @ 0x0820D95C
 MossdeepCity_SpaceCenter_2F_EventScript_DefeatedMaxieTabitha:: @ 0x0820D99B
 	msgbox MossdeepCity_SpaceCenter_2F_Text_MaxieWeFailedIsAquaAlsoMisguided, MSGBOX_DEFAULT
 	closemessage
-	delay 0x14
+	delay 20
 	applymovement LOCALID_SPACE_CENTER_MAXIE, Common_Movement_WalkInPlaceFasterLeft
 	applymovement LOCALID_SPACE_CENTER_TABITHA, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	delay 0x3C
+	delay 60
 	applymovement LOCALID_SPACE_CENTER_MAXIE, Common_Movement_WalkInPlaceFasterUp
 	applymovement LOCALID_SPACE_CENTER_TABITHA, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	delay 0x14
+	delay 20
 	msgbox MossdeepCity_SpaceCenter_2F_Text_MaxieWeWillGiveUp, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_MOSSDEEP_CITY_STATE, 0x3
+	setvar VAR_MOSSDEEP_CITY_STATE, 3
 	fadedefaultbgm
 	fadescreen FADE_TO_BLACK
-	setvar VAR_MOSSDEEP_SPACE_CENTER_STATE, 0x3
+	setvar VAR_MOSSDEEP_SPACE_CENTER_STATE, 3
 	setflag FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_1F_TEAM_MAGMA
 	setflag FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_TEAM_MAGMA
 	setflag FLAG_HIDE_MOSSDEEP_CITY_TEAM_MAGMA
@@ -270,11 +270,11 @@ MossdeepCity_SpaceCenter_2F_EventScript_DefeatedMaxieTabitha:: @ 0x0820D99B
 	removeobject LOCALID_SPACE_CENTER_GRUNT_5
 	removeobject LOCALID_SPACE_CENTER_TABITHA
 	removeobject LOCALID_SPACE_CENTER_MAXIE
-	setobjectxy LOCALID_SPACE_CENTER_2F_SCIENTIST, 0x5, 0x6
+	setobjectxy LOCALID_SPACE_CENTER_2F_SCIENTIST, 5, 6
 	turnobject LOCALID_SPACE_CENTER_2F_SCIENTIST, DIR_SOUTH
-	setobjectxy LOCALID_SPACE_CENTER_2F_GENTLEMAN, 0xB, 0x8
+	setobjectxy LOCALID_SPACE_CENTER_2F_GENTLEMAN, 11, 8
 	turnobject LOCALID_SPACE_CENTER_2F_GENTLEMAN, DIR_NORTH
-	setobjectxy LOCALID_SPACE_CENTER_2F_RICH_BOY, 0x6, 0x2
+	setobjectxy LOCALID_SPACE_CENTER_2F_RICH_BOY, 6, 2
 	turnobject LOCALID_SPACE_CENTER_2F_RICH_BOY, DIR_NORTH
 	call MossdeepCity_SpaceCenter_2F_EventScript_StevenFacePlayer
 	fadescreen FADE_FROM_BLACK
@@ -286,10 +286,10 @@ MossdeepCity_SpaceCenter_2F_EventScript_DefeatedMaxieTabitha:: @ 0x0820D99B
 	removeobject LOCALID_SPACE_CENTER_2F_STEVEN
 	setflag FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_MAGMA_NOTE
 	clearflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN
-	setvar VAR_STEVENS_HOUSE_STATE, 0x1
+	setvar VAR_STEVENS_HOUSE_STATE, 1
 	setflag FLAG_HIDE_MOSSDEEP_CITY_SCOTT
 	removeobject LOCALID_SPACE_CENTER_2F_SCIENTIST
-	setobjectxyperm LOCALID_SPACE_CENTER_2F_SCIENTIST, 0x5, 0x6
+	setobjectxyperm LOCALID_SPACE_CENTER_2F_SCIENTIST, 5, 6
 	setobjectmovementtype LOCALID_SPACE_CENTER_2F_SCIENTIST, MOVEMENT_TYPE_WANDER_AROUND
 	addobject LOCALID_SPACE_CENTER_2F_SCIENTIST
 	fadescreen FADE_FROM_BLACK

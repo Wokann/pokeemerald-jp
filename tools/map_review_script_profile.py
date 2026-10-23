@@ -47,7 +47,8 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
                            'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
-                           'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right'}
+                           'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right',
+                           'walk_slow_down'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -76,7 +77,8 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
                    'buffernumberstring': (4, 2), 'checkpartymove': (3, 1),
                    'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2),
                    'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2), 'dowildbattle': (1, 0),
-                   'choosecontestmon': (1, 0), 'contestlinktransfer': (1, 0), 'nop1': (1, 0)}
+                   'choosecontestmon': (1, 0), 'contestlinktransfer': (1, 0), 'nop1': (1, 0),
+                   'turnrotatingtileobjects': (1, 0), 'freerotatingtilepuzzle': (1, 0)}
 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
@@ -196,9 +198,16 @@ CONTEXT_WARP_EXITS = {
         ('MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR', 2, 3),
 }
 
+# The native white-out callback resets the global script context. The next
+# physical label is not a continuation of the losing battle's old script.
+CONTEXT_CALLBACK_EXITS = {
+    'MossdeepCity_SpaceCenter_2F_EventScript_DoStevenMultiBattle': 'SetCB2WhiteOut',
+}
+
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    'frontier_saveparty': ('CallFrontierUtilFunc', 8, ()),
     'frontier_results': ('CallFrontierUtilFunc', 13, (r'FACILITY_LINK_CONTEST',)),
     'frontier_getstatus': ('CallFrontierUtilFunc', 8, ()),
     'frontier_get': ('CallFrontierUtilFunc', 13, (r'FRONTIER_DATA_\w+',)),
@@ -237,8 +246,8 @@ FACILITY_FORMS = {
     'factory_setopponentgfx': ('CallBattleFactoryFunction', 8, ()),
 }
 
-# Only explicitly measured forms are supported. A five-argument single is
-# accepted only with NO_MUSIC; its flag is not a pointer or an emitted field.
+# Only explicitly measured forms are supported. The final NO_MUSIC argument
+# selects a mode; it is not a pointer or an independently emitted field.
 TRAINER_FORMS = {
     ('trainerbattle_single', 3): ('TRAINER_BATTLE_SINGLE', 'EventScript_TryDoNormalTrainerBattle',
                                 'sOrdinaryBattleParams'),
@@ -251,6 +260,8 @@ TRAINER_FORMS = {
     ('trainerbattle_double', 4): ('TRAINER_BATTLE_DOUBLE', 'EventScript_TryDoDoubleTrainerBattle',
                                 'sDoubleBattleParams'),
     ('trainerbattle_double', 5): ('TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE', 'EventScript_TryDoDoubleTrainerBattle',
+                                'sContinueScriptDoubleBattleParams'),
+    ('trainerbattle_double', 6): ('TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC', 'EventScript_TryDoDoubleTrainerBattle',
                                 'sContinueScriptDoubleBattleParams'),
     ('trainerbattle_rematch', 3): ('TRAINER_BATTLE_REMATCH', 'EventScript_TryDoRematchBattle',
                                  'sOrdinaryBattleParams'),
@@ -277,6 +288,7 @@ class BlockProfile:
     fallthrough: str | None = None
     may_fall_through: bool = False
     context_warp: str | None = None
+    context_callback: str | None = None
 
 
 def special_waits(root: Path) -> dict[str, int]:
@@ -422,13 +434,21 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                     or len(args) == 3 and not re.fullmatch(r'ITEM_\w+', args[2])):
                 raise ValueError('unsupported_profile_setwildbattle')
             size = 6
-        elif version == 4 and op in ('setwarp', 'warpspinenter', 'setdynamicwarp'):
+        elif version == 4 and op in ('setwarp', 'warpspinenter', 'setdynamicwarp', 'warpmossdeepgym'):
             if (len(args) != 3 or not re.fullmatch(r'MAP_\w+', args[0])
                     or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
                            or not 0 <= int(value, 16 if value.lower().startswith('0x') else 10) <= 65535
                            for value in args[1:])):
                 raise ValueError('unsupported_profile_setwarp')
             size = 8
+        elif version == 4 and op == 'initrotatingtilepuzzle':
+            if args != ['FALSE']:
+                raise ValueError('unsupported_profile_rotating_tile_initialization')
+            size = 3
+        elif version == 4 and op == 'moverotatingtileobjects':
+            if len(args) != 1 or not re.fullmatch(r'(?:0x[0-4]|[0-4])', args[0]):
+                raise ValueError('unsupported_profile_rotating_tile_number')
+            size = 3
         elif version == 4 and op == 'trywondercardscript':
             if args:
                 raise ValueError('unsupported_profile_arguments:trywondercardscript')
@@ -524,6 +544,17 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             result.trainer_battles.append(dict(owner=owner[1], trainer=args[0], defeat_text=args[1],
                 address=f'0x{address + result.size:08X}', resume=f'0x{address + result.size + 10:08X}'))
             size = 10
+        elif (version == 4 and op == 'trainerbattle' and args
+              and args[0] in ('TRAINER_BATTLE_SET_TRAINER_A', 'TRAINER_BATTLE_SET_TRAINER_B')):
+            if (len(args) != 5 or not re.fullmatch(r'TRAINER_\w+', args[1])
+                    or args[2] != 'LOCALID_NONE'
+                    or any(not NAME.fullmatch(value) or value == 'NULL' for value in args[3:])
+                    or position != 0 or len(lines) != 2 or lines[-1] != 'end'):
+                raise ValueError('unsupported_explicit_trainer_setup_form')
+            # The real handler loads A/B parameters and returns NULL, not a
+            # battle script or the next byte. Do not invent a battle frame.
+            result.texts.update({value: 'string' for value in args[3:]})
+            size = 14
         elif version == 4 and op == 'trainerbattle':
             if (len(args) != 6 or args[0] != 'TRAINER_BATTLE_CONTINUE_SCRIPT'
                     or not re.fullmatch(r'TRAINER_\w+', args[1])
@@ -546,7 +577,8 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 address=f'0x{address + result.size:08X}', resume=f'0x{address + result.size + size:08X}'))
         elif version == 4 and op.startswith('trainerbattle_'):
             form = TRAINER_FORMS.get((op, len(args)))
-            if op == 'trainerbattle_single' and len(args) == 5:
+            if ((op == 'trainerbattle_single' and len(args) == 5)
+                    or (op == 'trainerbattle_double' and len(args) == 6)):
                 if args[-1] != 'NO_MUSIC':
                     raise ValueError('unsupported_trainer_battle_music_flag')
                 args = args[:-1]
@@ -782,6 +814,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         if lines[-2:] != [f'warp {destination}, {x}, {y}', 'waitstate']:
             raise ValueError('changed_context_replacing_warp')
         result.context_warp = destination
+        result.may_fall_through = False
+    if version == 4 and owner and owner[1] in CONTEXT_CALLBACK_EXITS:
+        special = CONTEXT_CALLBACK_EXITS[owner[1]]
+        if (lines[-2:] != ['fadescreen FADE_TO_BLACK', 'special ' + special]
+                or result.specials.get(special) != 1):
+            raise ValueError('changed_context_replacing_callback')
+        result.context_callback = special
         result.may_fall_through = False
     return result
 
