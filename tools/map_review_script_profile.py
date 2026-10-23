@@ -14,6 +14,10 @@ except ModuleNotFoundError:
 
 NAME = re.compile(r'[A-Za-z_]\w*\Z')
 ATOM = re.compile(r'(?:[A-Za-z_]\w*|0x[0-9A-Fa-f]+|-?\d+)\Z')
+GAME_CORNER_PRICES = {'TM_DOUBLE_TEAM_COINS': 1500, 'TM_PSYCHIC_COINS': 3500,
+    'TM_FLAMETHROWER_COINS': 4000, 'TM_THUNDERBOLT_COINS': 4000, 'TM_ICE_BEAM_COINS': 4000,
+    'DOLL_COINS': 1000, 'COINS_PRICE_50': 1000, 'COINS_PRICE_500': 10000}
+COIN_CAPACITY_EXPRESSIONS = {'(MAX_COINS + 1 - 50)', '(MAX_COINS + 1 - 500)'}
 MAP_TYPES = {name: ('condition_table' if name in ('MAP_SCRIPT_ON_FRAME_TABLE',
     'MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE') else 'script') for name in (
     'MAP_SCRIPT_ON_LOAD', 'MAP_SCRIPT_ON_FRAME_TABLE', 'MAP_SCRIPT_ON_TRANSITION',
@@ -77,6 +81,7 @@ FALLTHROUGHS = {
     'Route111_EventScript_CheckSetSandstorm': 'Route111_EventScript_SetSandstorm',
     'Route111_EventScript_SetSandstorm': 'Route111_EventScript_EndCheckSetSandstorm',
     'ProfBirch_EventScript_RatePokedexOrRegister': 'ProfBirch_EventScript_AskRatePokedex',
+    'MauvilleCity_PokemonCenter_1F_EventScript_KnowNoTales': 'MauvilleCity_PokemonCenter_1F_EventScript_DoYouHaveAnyTales',
     'EventScript_StartTrainerApproach': 'EventScript_TrainerApproach',
     'EventScript_DoTrainerBattle': 'EventScript_EndTrainerBattle',
     'BerryTree_EventScript_ChooseBerryToPlant': 'BerryTree_EventScript_CancelPlanting',
@@ -297,6 +302,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         raise ValueError('empty_profile_block')
     if any(';' in line for line in lines):
         raise ValueError('unmodeled_statement_separator')
+    owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
+    if version == 4 and owner and owner[1] == 'MauvilleCity_GameCorner_MapScripts':
+        expected = ['.byte 0'] + [f'.set {name}, {value}' for name, value in GAME_CORNER_PRICES.items()]
+        if lines != expected:
+            raise ValueError('changed_game_corner_price_definitions')
+        # These US-style local prices emit no bytes, unlike address aliases.
+        return BlockProfile(size=1, kind='map_table')
     operations = [line.split(None, 1)[0] for line in lines]
     movements = MOVEMENTS_V4 if version == 4 else MOVEMENTS
     fixed = FIXED_V4 if version == 4 else FIXED
@@ -350,7 +362,8 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         parts = line.split(None, 1)
         op = parts[0]
         args = [v.strip() for v in parts[1].split(',')] if len(parts) == 2 else []
-        if any(not ATOM.fullmatch(arg) for arg in args):
+        if any(not ATOM.fullmatch(arg) and not (version == 4 and op == 'goto_if_ge'
+               and index == 1 and arg in COIN_CAPACITY_EXPRESSIONS) for index, arg in enumerate(args)):
             raise ValueError('unsupported_profile_argument_expression:' + op)
         if op in fixed:
             size, count = fixed[op]
@@ -573,11 +586,42 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             # Preserve the existing two-operand ITEMID/AMOUNT macro form.
             size = 5
         elif version == 4 and op in ('checkmoney', 'removemoney'):
-            if (len(args) not in (1, 2) or not re.fullmatch(r'(?:0x[0-9A-Fa-f]+|[0-9]+)', args[0])
-                    or int(args[0], 16 if args[0].startswith('0x') else 10) > 0xFFFFFFFF
+            price = (GAME_CORNER_PRICES[args[0]] if args and args[0] in ('COINS_PRICE_50', 'COINS_PRICE_500')
+                     else int(args[0], 16 if args[0].startswith('0x') else 10)
+                     if args and re.fullmatch(r'(?:0x[0-9A-Fa-f]+|[0-9]+)', args[0]) else None)
+            if (len(args) not in (1, 2) or price is None or price > 0xFFFFFFFF
                     or len(args) == 2 and args[1] not in ('0', '1')):
                 raise ValueError('unsupported_profile_money_command')
             size = 6
+        elif version == 4 and op in ('showcoinsbox', 'hidecoinsbox', 'updatecoinsbox'):
+            if len(args) != 2 or any(not a.isdecimal() or int(a) > 255 for a in args):
+                raise ValueError('unsupported_profile_coin_window')
+            size = 3
+        elif version == 4 and op == 'getpokenewsactive':
+            if len(args) != 1 or not re.fullmatch(r'POKENEWS_\w+', args[0]):
+                raise ValueError('unsupported_profile_pokenews_kind')
+            size = 3
+        elif version == 4 and op == 'checkcoins':
+            if len(args) != 1 or not re.fullmatch(r'VAR_\w+', args[0]):
+                raise ValueError('unsupported_profile_coin_output')
+            size = 3
+        elif version == 4 and op in ('addcoins', 'removecoins', 'playslotmachine'):
+            if (len(args) != 1 or not (re.fullmatch(r'VAR_\w+', args[0])
+                    or args[0] in GAME_CORNER_PRICES
+                    or re.fullmatch(r'(?:0x[0-9A-Fa-f]+|[0-9]+)', args[0])
+                    and int(args[0], 16 if args[0].startswith('0x') else 10) <= 65535)):
+                raise ValueError('unsupported_profile_coin_or_slot_operand')
+            size = 3
+        elif version == 4 and op in ('adddecoration', 'checkdecorspace', 'givedecoration', 'bufferdecorationname'):
+            count = 2 if op == 'bufferdecorationname' else 1
+            if (len(args) != count or not re.fullmatch(r'(?:(?:DECOR|VAR)_\w+|ITEMID)', args[-1])
+                    or count == 2 and not re.fullmatch(r'STR_VAR_[123]', args[0])):
+                raise ValueError('unsupported_profile_decoration_operand')
+            size = 4 if count == 2 else 3
+            if op == 'givedecoration':
+                target('Std_ObtainDecoration', 'script')
+                result.standard_scripts[7] = 'Std_ObtainDecoration'
+                size = 7
         elif version == 4 and op == 'showmoneybox':
             if (len(args) not in (2, 3) or any(not a.isdecimal() or int(a) > 255 for a in args[:2])
                     or len(args) == 3 and args[2] not in ('0', '1')):

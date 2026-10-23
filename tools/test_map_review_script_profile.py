@@ -146,11 +146,12 @@ class StoryProfileTests(unittest.TestCase):
         self.assertEqual(len(samples), 144)
         self.check_native_forms(samples)
 
-    def check_native_forms(self, samples, forced_waits=None, *, version=3):
+    def check_native_forms(self, samples, forced_waits=None, *, version=3, source_prefix=''):
         source = (ROOT / 'data/event_scripts.s').read_text()
         prefix = source[:source.index('\t.include "data/maps/PetalburgCity/scripts.inc"')]
         item_owner = (ROOT / 'data/scripts/obtain_item.inc').read_text()
         prefix += item_owner[:item_owner.index('Std_ObtainItem::')]
+        prefix += '\n' + source_prefix
         for name, wait in (forced_waits or {}).items():
             prefix += '\n.set SPECIAL_WAITSTATE_%s, %d\n' % (name, wait)
         parent = ROOT / '.tmp/agent-work/tests'
@@ -173,6 +174,10 @@ class StoryProfileTests(unittest.TestCase):
                 options = dict(version=version, address=address)
                 if op in ('.byte', '.2byte'):
                     predicted = 1 if op == '.byte' else 2
+                elif version == 4 and op == '.set':
+                    self.assertIn(line, {f'.set {name}, {value}'
+                                        for name, value in profile.GAME_CORNER_PRICES.items()})
+                    predicted = 0
                 elif op in ('map_script', 'map_script_2'):
                     tail, size = ('\n.byte 0', 1) if op == 'map_script' else ('\n.2byte 0', 2)
                     predicted = profile.profile_block(ROOT, 'Entry::\n' + line + tail, waits, **options).size - size
