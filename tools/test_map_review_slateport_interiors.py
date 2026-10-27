@@ -185,7 +185,8 @@ class SlateportNativeTests(unittest.TestCase):
                 battles.extend(p.trainer_battles)
                 at += p.size
         self.assertEqual((len(falls), len(exits), len(battles)), (15, 3, 2))
-        self.assertEqual(set(exits), set(profile.CONTEXT_WARP_EXITS))
+        self.assertEqual(set(exits), {label for label in profile.CONTEXT_WARP_EXITS
+                                      if label.startswith('SlateportCity_')})
 
     def test_real_context_exit_chain_and_negative_native_fixtures(self):
         batch = dict(context_exits=[dict(entry=label, destination=target[0])

@@ -51,7 +51,8 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
                            'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right',
                            'walk_slow_down', 'slide_up', 'walk_down_start_affine',
-                           'walk_down_affine', 'emote_heart', 'face_away_player', 'slide_down'}
+                           'walk_down_affine', 'emote_heart', 'face_away_player', 'slide_down',
+                           'jump_2_left', 'enable_jump_landing_ground_effect', 'delay_2', 'jump_in_place_up'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -256,10 +257,49 @@ FALLTHROUGHS |= {'BattleFrontier_BattleTowerMultiBattleRoom_EventScript_' + owne
         ('ReadyForNextOpponentSet', 'ReadyFor2ndOpponentSet'),
         ('ReadyForNextOpponentSetLink', 'ReadyFor2ndOpponentSetLink'),
     )}
+FALLTHROUGHS |= {'BattleFrontier_BattleDome' + room + '_EventScript_' + owner:
+                'BattleFrontier_BattleDome' + room + '_EventScript_' + target
+    for room, owner, target in (
+        ('Lobby', 'DefeatedAce', 'GiveBattlePoints'),
+        ('Lobby', 'LostChallenge', 'AskRecordBattle'),
+        ('Lobby', 'AskRecordBattle', 'RecordBattle'),
+        ('Lobby', 'RecordBattle', 'EndChallenge'),
+        ('Lobby', 'AttendantWelcome', 'AskTakeChallenge'),
+        ('Lobby', 'AskTakeChallenge', 'TryEnterChallenge'),
+        ('Lobby', 'TryEnterChallenge', 'SaveBeforeChallenge'),
+        ('Lobby', 'SaveBeforeChallenge', 'EnterChallenge'),
+        ('Lobby', 'NotEnoughValidMons', 'NotEnoughValidMonsLv50'),
+        ('Lobby', 'LoadPartyCancelChallenge', 'CancelChallenge'),
+        ('Lobby', 'CancelChallenge', 'EndCancelChallenge'),
+        ('Corridor', 'WalkToBattleRoomLvOpen', 'WarpToPreBattleRoom'),
+        ('PreBattleRoom', 'EnterRoom', 'AskReadyForNextRound'),
+        ('PreBattleRoom', 'AskReadyForNextRound', 'AskReadyForNextRoundNoRecord'),
+        ('PreBattleRoom', 'AskReadyForNextRoundNoRecord', 'AskRecordBattle'),
+        ('PreBattleRoom', 'AskRecordBattle', 'RecordBattle'),
+        ('PreBattleRoom', 'AskPauseChallenge', 'AskRetireChallenge'),
+        ('PreBattleRoom', 'AskRetireChallenge', 'RetireChallenge'),
+        ('BattleRoom', 'EnterRoom', 'PlayerEnter'),
+        ('BattleRoom', 'PlayerEnterForTucker', 'AudienceReactToPlayer'),
+        ('BattleRoom', 'AudienceReactToPlayer', 'BattleOpponent'),
+        ('BattleRoom', 'BattleOpponent', 'Draw'),
+        ('BattleRoom', 'Draw', 'LostToOpponent'),
+        ('BattleRoom', 'LostToOpponent', 'LostTourney'),
+        ('BattleRoom', 'LostTourney', 'WarpToLobbyLost'),
+        ('BattleRoom', 'WonLvOpenTourney', 'CelebrateWin'),
+        ('BattleRoom', 'AnnouncePlayerChampion', 'AnnouncePlayerChampionNoTucker'),
+        ('BattleRoom', 'AnnounceTucker', 'AnnounceTuckerSilver'),
+        ('BattleRoom', 'AnnounceTuckerGold', 'TuckerEnter'),
+        ('BattleRoom', 'TuckerEnter', 'BattleTuckerSilver'),
+        ('BattleRoom', 'TuckerGoldIntro', 'BattleTuckerGold'),
+        ('BattleRoom', 'SetUpObjects', 'EndSetUpObjects'),
+    )}
 
 # These exact movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
 MOVEMENT_PREFIXES = {
+    'BattleFrontier_BattleDomeBattleRoom_Movement_PlayerEnter':
+        ('BattleFrontier_BattleDomeBattleRoom_Movement_PlayerStepForward',
+         ('set_visible', 'delay_16', 'walk_up', 'walk_up', 'walk_up', 'walk_right')),
     'FallarborTown_BattleTentCorridor_Movement_PlayerEnterDoor':
         ('FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor', ('walk_up',)),
     'VerdanturfTown_BattleTentCorridor_Movement_PlayerEnterDoor':
@@ -277,6 +317,8 @@ MOVEMENT_PREFIXES = {
 # This audited warp replaces the old script context before the following
 # movement bytes. It is not a bytecode edge into that movement definition.
 CONTEXT_WARP_EXITS = {
+    'BattleFrontier_BattleDomeBattleRoom_EventScript_DefeatedOpponent':
+        ('MAP_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM', 5, 3),
     'SlateportCity_BattleTentBattleRoom_EventScript_WarpToLobbyWon':
         ('MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY', 6, 6),
     'SlateportCity_BattleTent_EventScript_WarpToLobbyLost':
@@ -302,6 +344,7 @@ FACILITY_FORMS = {
     'frontier_saveparty': ('CallFrontierUtilFunc', 8, ()),
     'frontier_results': ('CallFrontierUtilFunc', 13, (r'FACILITY_LINK_CONTEST',)),
     'frontier_getstatus': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_gettrainername': ('CallFrontierUtilFunc', 13, (r'STR_VAR_[12]',)),
     'frontier_get': ('CallFrontierUtilFunc', 13, (r'FRONTIER_DATA_\w+',)),
     'frontier_checkineligible': ('CallFrontierUtilFunc', 8, ()),
     'frontier_setpartyorder': ('CallFrontierUtilFunc', 13, (r'(?:[1-6]|FRONTIER_PARTY_SIZE|FRONTIER_MULTI_PARTY_SIZE)',)),
@@ -321,6 +364,27 @@ FACILITY_FORMS = {
     'tower_save': ('CallBattleTowerFunc', 13, (r'(?:CHALLENGE_STATUS_(?:SAVING|PAUSED)|0)',)),
     'tower_loadlinkopponents': ('CallBattleTowerFunc', 8, ()),
     'tower_closelink': ('CallBattleTowerFunc', 8, ()),
+    'dome_init': ('CallBattleDomeFunction', 8, ()),
+    'dome_get': ('CallBattleDomeFunction', 13, (r'DOME_DATA_(?:PREV_TOURNEY_TYPE|ATTEMPTED_CHALLENGE|HAS_WON_CHALLENGE|WIN_STREAK_ACTIVE)',)),
+    'dome_getroundtext': ('CallBattleDomeFunction', 8, ()),
+    'dome_getopponentname': ('CallBattleDomeFunction', 8, ()),
+    'dome_initopponentparty': ('CallBattleDomeFunction', 8, ()),
+    'dome_showopponentinfo': ('CallBattleDomeFunction', 8, ()),
+    'dome_showtourneytree': ('CallBattleDomeFunction', 8, ()),
+    'dome_showprevtourneytree': ('CallBattleDomeFunction', 8, ()),
+    'dome_setopponent': ('CallBattleDomeFunction', 8, ()),
+    'dome_setopponentgfx': ('CallBattleDomeFunction', 8, ()),
+    'dome_showstatictourneytree': ('CallBattleDomeFunction', 8, ()),
+    'dome_resolvewinners': ('CallBattleDomeFunction', 13, (r'DOME_PLAYER_(?:WON_MATCH|LOST_MATCH|RETIRED)',)),
+    'dome_save': ('CallBattleDomeFunction', 13, (r'(?:CHALLENGE_STATUS_(?:SAVING|PAUSED)|0)',)),
+    'dome_settrainers': ('CallBattleDomeFunction', 8, ()),
+    'dome_resetsketch': ('CallBattleDomeFunction', 8, ()),
+    'dome_restorehelditems': ('CallBattleDomeFunction', 8, ()),
+    'dome_reduceparty': ('CallBattleDomeFunction', 8, ()),
+    'dome_compareseeds': ('CallBattleDomeFunction', 8, ()),
+    'dome_getwinnersname': ('CallBattleDomeFunction', 8, ()),
+    'dome_initresultstree': ('CallBattleDomeFunction', 8, ()),
+    'dome_inittrainers': ('CallBattleDomeFunction', 8, ()),
     'frontier_getsymbols': ('CallFrontierUtilFunc', 8, ()),
     'frontier_givesymbol': ('CallFrontierUtilFunc', 8, ()),
     'frontier_setbrainobj': ('CallFrontierUtilFunc', 8, ()),
@@ -696,19 +760,27 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_arguments:trywondercardscript')
             result.runtime_scripts.add('saved_wonder_card')
             size = 1
-        elif version == 4 and (op in FACILITY_FORMS or op in ('frontier_set', 'tower_set')):
-            if op in ('frontier_set', 'tower_set'):
-                selector = r'FRONTIER_DATA_\w+' if op == 'frontier_set' else r'TOWER_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|LVL_MODE)'
+        elif version == 4 and (op in FACILITY_FORMS or op in ('frontier_set', 'tower_set', 'dome_set')):
+            if op in ('frontier_set', 'tower_set', 'dome_set'):
+                selector = {'frontier_set': r'FRONTIER_DATA_\w+',
+                            'tower_set': r'TOWER_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|LVL_MODE)',
+                            'dome_set': r'DOME_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|ATTEMPTED_CHALLENGE|HAS_WON_CHALLENGE|SELECTED_MONS)'}[op]
                 if (len(args) not in (1, 2) or not re.fullmatch(selector, args[0])
                         or len(args) == 2 and not re.fullmatch(r'(?:[A-Z][A-Z0-9_]*|0x[0-9A-Fa-f]+|\d+)', args[1])):
                     raise ValueError('unsupported_profile_facility_macro:' + op)
+                if op == 'dome_set' and len(args) == 2 and args[1] not in ('0', 'TRUE', 'FALSE', '0xFFFF', '65535'):
+                    raise ValueError('unsupported_profile_facility_macro:' + op)
                 omitted = len(args) == 1 or args[1].lower() in ('0xffff', '65535')
-                function = 'CallFrontierUtilFunc' if op == 'frontier_set' else 'CallBattleTowerFunc'
+                function = {'frontier_set': 'CallFrontierUtilFunc', 'tower_set': 'CallBattleTowerFunc',
+                            'dome_set': 'CallBattleDomeFunction'}[op]
                 size = 13 if omitted else 18
             elif op == 'frontier_results':
-                if (len(args) not in (1, 2) or args[0] not in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER')
-                        or len(args) == 2 and (args[0] != 'FRONTIER_FACILITY_TOWER'
-                            or not re.fullmatch(r'(?:FRONTIER_MODE_(?:SINGLES|DOUBLES|MULTIS|LINK_MULTIS)|0xFF|255)', args[1]))):
+                valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER')
+                         or len(args) == 2 and args[0] == 'FRONTIER_FACILITY_TOWER'
+                         and re.fullmatch(r'(?:FRONTIER_MODE_(?:SINGLES|DOUBLES|MULTIS|LINK_MULTIS)|0xFF|255)', args[1])
+                         or len(args) == 2 and args[0] == 'FRONTIER_FACILITY_DOME'
+                         and args[1] in ('FRONTIER_MODE_SINGLES', 'FRONTIER_MODE_DOUBLES'))
+                if not valid:
                     raise ValueError('unsupported_profile_facility_macro:' + op)
                 function, size = 'CallFrontierUtilFunc', 13 if len(args) == 1 or args[1] in ('0xFF', '255') else 18
             else:
@@ -1117,7 +1189,10 @@ def profile_owner(root: Path, text: str, waits=None, *, version=3, address=None)
     if not blocks:
         raise ValueError('missing_profile_labels')
     first = re.search(r'(?m)^' + re.escape(next(iter(blocks))) + r'::?', text)
-    if statements(text[:first.start()]):
+    prefix = [re.sub(r'\s+', ' ', line) for line in statements(text[:first.start()])]
+    if prefix and not (version == 4
+                       and next(iter(blocks)) == 'BattleFrontier_BattleDomeBattleRoom_MapScripts'
+                       and prefix == ['.set NO_DRAW, 0', '.set DRAW_TRAINER, 1', '.set DRAW_TUCKER, 2']):
         raise ValueError('unmodeled_owner_prefix')
     result = {}
     for name, block in blocks.items():

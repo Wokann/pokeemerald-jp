@@ -90,7 +90,7 @@ class TowerFamilyProfileTests(unittest.TestCase):
                 self.parse(body + '\nreturn')
 
     def test_exact_movement_prefixes_reject_changed_direction_length_and_strangers(self):
-        names = [name for name in profile.MOVEMENT_PREFIXES if name.startswith(('BattleFrontier_', 'Apprentice_'))]
+        names = [name for name in profile.MOVEMENT_PREFIXES if name.startswith(('BattleFrontier_BattleTower', 'Apprentice_'))]
         self.assertEqual(len(names), 4)
         for name in names:
             target, steps = profile.MOVEMENT_PREFIXES[name]
