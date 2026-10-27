@@ -321,6 +321,27 @@ FALLTHROUGHS |= {'BattleFrontier_BattlePalace' + room + '_EventScript_' + owner:
         ('BattleRoom', 'BattleSpenser', 'BattleSpenserSilver'),
         ('BattleRoom', 'IntroSpenserGold', 'BattleSpenserGold'),
     )}
+FALLTHROUGHS |= {'BattleFrontier_BattlePyramid' + room + '_' + owner:
+                'BattleFrontier_BattlePyramid' + room + '_' + target
+    for room, owner, target in (
+        ('Lobby', 'EventScript_DefeatedKing', 'EventScript_GiveBattlePoints'),
+        ('Lobby', 'EventScript_Attendant', 'EventScript_AskTakeChallenge'),
+        ('Lobby', 'EventScript_AskTakeChallenge', 'EventScript_TryEnterChallenge'),
+        ('Lobby', 'EventScript_TryEnterChallenge', 'EventScript_SaveBeforeChallenge'),
+        ('Lobby', 'EventScript_SaveBeforeChallenge', 'EventScript_EnterChallenge'),
+        ('Lobby', 'EventScript_NotEnoughValidMons', 'EventScript_NotEnoughValidMonsLv50'),
+        ('Lobby', 'EventScript_LoadPartyAndCancelChallenge', 'EventScript_CancelChallenge'),
+        ('Lobby', 'EventScript_CancelChallenge', 'EventScript_EndCancelChallenge'),
+        ('Lobby', 'EventScript_ReceiveNewBattleBag', 'EventScript_ReceiveBattleBag'),
+        ('Floor', 'EventScript_UpdateLight', 'EventScript_UpdateLightLoop'),
+        ('Floor', 'OnResume', 'EventScript_ResetParty'),
+        ('', 'EventScript_WarpToLobbyLost', 'EventScript_WarpToLobby'),
+        ('Top', 'EventScript_SetUpObjects', 'EventScript_EndSetUpObjects'),
+        ('Top', 'OnResume', 'EventScript_CheckChallengeStatus'),
+        ('Top', 'EventScript_Attendant', 'EventScript_WarpToLobbyWon'),
+        ('Top', 'EventScript_BrandonHeardSilverSpeech', 'EventScript_BattleBrandonSilver'),
+        ('Top', 'EventScript_BrandonHeardGoldSpeech', 'EventScript_BattleBrandonGold'),
+    )}
 
 # These exact movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
@@ -369,6 +390,16 @@ CONTEXT_CALLBACK_EXITS = {
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    'pyramid_init': ('CallBattlePyramidFunction', 8, ()),
+    'pyramid_get': ('CallBattlePyramidFunction', 13, (r'PYRAMID_DATA_WIN_STREAK(?:_(?:50|OPEN)|_ACTIVE_(?:50|OPEN))?',)),
+    'pyramid_set': ('CallBattlePyramidFunction', 18, (r'PYRAMID_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|TRAINER_FLAGS)', r'(?:0|255|TRUE|FALSE)')),
+    'pyramid_save': ('CallBattlePyramidFunction', 13, (r'(?:0|CHALLENGE_STATUS_SAVING)',)),
+    'pyramid_setprize': ('CallBattlePyramidFunction', 8, ()),
+    'pyramid_seedfloor': ('CallBattlePyramidFunction', 8, ()),
+    'pyramid_settrainers': ('CallBattlePyramidFunction', 8, ()),
+    'pyramid_updatelight': ('CallBattlePyramidFunction', 18, (r'(?:0|32|200)', r'PYRAMID_LIGHT_SET_RADIUS')),
+    'pyramid_clearhelditems': ('CallBattlePyramidFunction', 8, ()),
+    'pyramid_setfloorpal': ('CallBattlePyramidFunction', 8, ()),
     'pyramid_setitem': ('CallBattlePyramidFunction', 8, ()),
     'pyramid_hideitem': ('CallBattlePyramidFunction', 8, ()),
     'pyramid_showhint': ('CallBattlePyramidFunction', 8, ()),
@@ -379,6 +410,7 @@ FACILITY_FORMS = {
     'frontier_getstatus': ('CallFrontierUtilFunc', 8, ()),
     'frontier_settrainers': ('CallFrontierUtilFunc', 8, ()),
     'frontier_gettrainername': ('CallFrontierUtilFunc', 13, (r'STR_VAR_[12]',)),
+    'frontier_isbattletype': ('CallFrontierUtilFunc', 13, (r'BATTLE_TYPE_TRAINER',)),
     'frontier_get': ('CallFrontierUtilFunc', 13, (r'FRONTIER_DATA_\w+',)),
     'frontier_checkineligible': ('CallFrontierUtilFunc', 8, ()),
     'frontier_setpartyorder': ('CallFrontierUtilFunc', 13, (r'(?:[1-6]|FRONTIER_PARTY_SIZE|FRONTIER_MULTI_PARTY_SIZE)',)),
@@ -816,7 +848,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                             'dome_set': 'CallBattleDomeFunction'}[op]
                 size = 13 if omitted else 18
             elif op == 'frontier_results':
-                valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER')
+                valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER', 'FRONTIER_FACILITY_PYRAMID')
                          or len(args) == 2 and args[0] == 'FRONTIER_FACILITY_TOWER'
                          and re.fullmatch(r'(?:FRONTIER_MODE_(?:SINGLES|DOUBLES|MULTIS|LINK_MULTIS)|0xFF|255)', args[1])
                          or len(args) == 2 and args[0] in ('FRONTIER_FACILITY_DOME', 'FRONTIER_FACILITY_PALACE')
