@@ -575,6 +575,16 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if len(args) != 1 or not re.fullmatch(r'TRAINER_\w+', args[0]):
                 raise ValueError('unsupported_profile_' + op)
             size = 3
+        elif version == 4 and op == 'seteventmon':
+            if (len(args) not in (2, 3) or args[0] not in ('SPECIES_LATIAS', 'SPECIES_LATIOS')
+                    or args[1] != '50' or len(args) == 3 and args[2] not in ('ITEM_NONE', 'ITEM_SOUL_DEW')):
+                raise ValueError('unsupported_profile_seteventmon')
+            waits = special_waits(root) if waits is None else waits
+            function = 'CreateEnemyEventMon'
+            if waits.get(function) not in (0, 1):
+                raise ValueError('missing_event_mon_special')
+            result.specials[function] = waits[function]
+            size = 18 + waits[function]
         elif version == 4 and op == 'setwildbattle':
             if (len(args) not in (2, 3) or not re.fullmatch(r'SPECIES_\w+', args[0])
                     or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])

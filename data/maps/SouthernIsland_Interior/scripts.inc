@@ -62,7 +62,6 @@ SouthernIsland_Interior_EventScript_Lati::
 	waitse
 	playmoncry VAR_TEMP_4, CRY_MODE_NORMAL
 	delay 30
-	@ JP encodes this cry wait with SCR_OP_WAITDOORANIM.
 	waitmoncry
 	addobject LOCALID_SOUTHERN_ISLAND_LATI
 	delay 30
