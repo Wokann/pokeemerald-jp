@@ -30,7 +30,7 @@ EverGrandeCity_HallOfFame_EventScript_EnterHallOfFame:: @ 0x082112AB
 	applymovement LOCALID_HALL_OF_FAME_WALLACE, EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame2
 	applymovement LOCALID_PLAYER, EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame2
 	waitmovement 0
-	delay 0x14
+	delay 20
 	applymovement LOCALID_HALL_OF_FAME_WALLACE, Common_Movement_WalkInPlaceFasterRight
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
@@ -39,10 +39,10 @@ EverGrandeCity_HallOfFame_EventScript_EnterHallOfFame:: @ 0x082112AB
 	applymovement LOCALID_HALL_OF_FAME_WALLACE, Common_Movement_WalkInPlaceFasterUp
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
-	delay 0x14
+	delay 20
 	dofieldeffect FLDEFF_HALL_OF_FAME_RECORD
 	waitfieldeffect FLDEFF_HALL_OF_FAME_RECORD
-	delay 0x28
+	delay 40
 	setvar VAR_TEMP_1, 1
 	call EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags
 	checkplayergender
@@ -52,14 +52,14 @@ EverGrandeCity_HallOfFame_EventScript_EnterHallOfFame:: @ 0x082112AB
 
 EverGrandeCity_HallOfFame_EventScript_GameClearMale:: @ 0x08211344
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
-	fadescreenspeed FADE_TO_BLACK, 0x18
+	fadescreenspeed FADE_TO_BLACK, 24
 	special GameClear
 	releaseall
 	end
 
 EverGrandeCity_HallOfFame_EventScript_GameClearFemale:: @ 0x08211350
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F
-	fadescreenspeed FADE_TO_BLACK, 0x18
+	fadescreenspeed FADE_TO_BLACK, 24
 	special GameClear
 	releaseall
 	end

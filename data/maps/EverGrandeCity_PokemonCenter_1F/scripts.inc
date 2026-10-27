@@ -39,7 +39,7 @@ EverGrandeCity_PokemonCenter_1F_EventScript_Scott:: @ 0x08211441
 	call_if_eq VAR_FACING, DIR_NORTH, EverGrandeCity_PokemonCenter_1F_EventScript_ScottExitNorth
 	call_if_eq VAR_FACING, DIR_EAST, EverGrandeCity_PokemonCenter_1F_EventScript_ScottExit
 	call_if_eq VAR_FACING, DIR_WEST, EverGrandeCity_PokemonCenter_1F_EventScript_ScottExit
-	addvar VAR_SCOTT_STATE, 0x1
+	addvar VAR_SCOTT_STATE, 1
 	setflag FLAG_MET_SCOTT_IN_EVERGRANDE
 	playse SE_EXIT
 	waitse

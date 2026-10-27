@@ -406,13 +406,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_warp')
         elif (op in ('call', 'goto', 'call_if_eq', 'goto_if_eq', 'case')
               or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne', 'goto_if_lt',
-                                         'goto_if_gt', 'call_if_ne', 'call_if_ge', 'call_if_lt')):
+                                         'goto_if_gt', 'call_if_ne', 'call_if_ge', 'call_if_lt', 'call_if_le')):
             count = 2 if op == 'case' else 3 if '_if_' in op else 1
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
             if count == 3 and not re.fullmatch(r'VAR_\w+', args[0]):
                 raise ValueError('unsupported_profile_compare')
-            if op in ('call_if_ge', 'call_if_lt') and args[-1] == 'NULL':
+            if op in ('call_if_ge', 'call_if_lt', 'call_if_le') and args[-1] == 'NULL':
                 raise ValueError('unsupported_profile_null_call')
             size = 11 if count in (2, 3) else 5
             target(args[-1], 'script')

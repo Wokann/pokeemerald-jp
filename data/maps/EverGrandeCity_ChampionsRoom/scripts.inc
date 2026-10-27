@@ -25,7 +25,7 @@ EverGrandeCity_ChampionsRoom_OnFrame:: @ 0x082108F5
 EverGrandeCity_ChampionsRoom_EventScript_EnterRoom:: @ 0x082108FF
 	lockall
 	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkUp4
-	delay 0x28
+	delay 40
 	applywaitmovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerApproachWallace
 	setvar VAR_TEMP_1, 1
 	goto EverGrandeCity_ChampionsRoom_EventScript_Wallace
@@ -46,8 +46,8 @@ EverGrandeCity_ChampionsRoom_EventScript_Wallace:: @ 0x08210926
 
 EverGrandeCity_ChampionsRoom_EventScript_Defeated:: @ 0x08210942
 	playse SE_DOOR
-	setmetatile 0x6, 0x1, METATILE_EliteFour_OpenDoorChampion_Frame, FALSE
-	setmetatile 0x6, 0x2, METATILE_EliteFour_OpenDoorChampion_Opening, FALSE
+	setmetatile 6, 1, METATILE_EliteFour_OpenDoorChampion_Frame, FALSE
+	setmetatile 6, 2, METATILE_EliteFour_OpenDoorChampion_Opening, FALSE
 	special DrawWholeMapView
 	msgbox EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 	closemessage
@@ -72,7 +72,7 @@ EverGrandeCity_ChampionsRoom_EventScript_PlayBrendanMusic:: @ 0x082109A2
 
 EverGrandeCity_ChampionsRoom_EventScript_MayAdvice:: @ 0x082109A7
 	msgbox EverGrandeCity_ChampionsRoom_Text_MayAdvice, MSGBOX_DEFAULT
-	delay 0x28
+	delay 40
 	playse SE_PIN
 	applywaitmovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_ExclamationMark
 	applywaitmovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_Delay48
@@ -83,7 +83,7 @@ EverGrandeCity_ChampionsRoom_EventScript_MayAdvice:: @ 0x082109A7
 
 EverGrandeCity_ChampionsRoom_EventScript_BrendanAdvice:: @ 0x082109DC
 	msgbox EverGrandeCity_ChampionsRoom_Text_BrendanAdvice, MSGBOX_DEFAULT
-	delay 0x28
+	delay 40
 	playse SE_PIN
 	applywaitmovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_ExclamationMark
 	applywaitmovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_Delay48
@@ -101,17 +101,17 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF:: @ 0x08210A11
 	call ProfBirch_EventScript_RatePokedex
 	msgbox EverGrandeCity_ChampionsRoom_Text_BirchCongratulations, MSGBOX_DEFAULT
 	applywaitmovement LOCALID_CHAMPIONS_ROOM_WALLACE, Common_Movement_WalkInPlaceFasterUp
-	delay 0x14
+	delay 20
 	applywaitmovement LOCALID_CHAMPIONS_ROOM_WALLACE, Common_Movement_WalkInPlaceFasterDown
 	msgbox EverGrandeCity_ChampionsRoom_Text_WallaceComeWithMe, MSGBOX_DEFAULT
 	closemessage
-	delay 0x1E
+	delay 30
 	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, EverGrandeCity_ChampionsRoom_Movement_WallaceExitStart
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExitStart
 	applymovement LOCALID_CHAMPIONS_ROOM_BIRCH, Common_Movement_WalkInPlaceFasterUp
 	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, EverGrandeCity_ChampionsRoom_Movement_RivalFollows
 	waitmovement 0
-	delay 0x14
+	delay 20
 	applywaitmovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	msgbox EverGrandeCity_ChampionsRoom_Text_WallaceWaitOutside, MSGBOX_DEFAULT
 	checkplayergender
@@ -122,7 +122,7 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF:: @ 0x08210A11
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExit
 	waitmovement 0
 	setflag FLAG_HIDE_PETALBURG_GYM_GREETER
-	warp MAP_EVER_GRANDE_CITY_HALL_OF_FAME, 0x7, 0x10
+	warp MAP_EVER_GRANDE_CITY_HALL_OF_FAME, 7, 16
 	waitstate
 	releaseall
 	end

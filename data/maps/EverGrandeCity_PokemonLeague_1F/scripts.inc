@@ -12,8 +12,8 @@ EverGrandeCity_PokemonLeague_1F_OnTransition:: @ 0x082110DF
 	end
 
 EverGrandeCity_PokemonLeague_1F_EventScript_GuardsBlockDoor:: @ 0x082110EF
-	setobjectxyperm LOCALID_LEAGUE_GUARD_1, 0x9, 0x2
-	setobjectxyperm LOCALID_LEAGUE_GUARD_2, 0xA, 0x2
+	setobjectxyperm LOCALID_LEAGUE_GUARD_1, 9, 2
+	setobjectxyperm LOCALID_LEAGUE_GUARD_2, 10, 2
 	return
 
 EverGrandeCity_PokemonLeague_1F_EventScript_Nurse:: @ 0x082110FE
@@ -49,8 +49,8 @@ EverGrandeCity_PokemonLeague_1F_EventScript_DoorGuard:: @ 0x08211136
 	lockall
 	goto_if_set FLAG_ENTERED_ELITE_FOUR, EverGrandeCity_PokemonLeague_1F_EventScript_GoForth
 	getplayerxy VAR_TEMP_0, VAR_TEMP_1
-	call_if_ge VAR_TEMP_0, 0xB, EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromRight
-	call_if_le VAR_TEMP_0, 0x8, EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromLeft
+	call_if_ge VAR_TEMP_0, 11, EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromRight
+	call_if_le VAR_TEMP_0, 8, EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromLeft
 	message EverGrandeCity_PokemonLeague_1F_Text_MustHaveAllGymBadges
 	waitmessage
 	delay 0x4B
@@ -59,7 +59,7 @@ EverGrandeCity_PokemonLeague_1F_EventScript_DoorGuard:: @ 0x08211136
 	applymovement LOCALID_LEAGUE_GUARD_1, EverGrandeCity_PokemonLeague_1F_Movement_LeftGuardOutOfWay
 	applymovement LOCALID_LEAGUE_GUARD_2, EverGrandeCity_PokemonLeague_1F_Movement_RightGuardOutOfWay
 	waitmovement 0
-	delay 0xA
+	delay 10
 	playfanfare MUS_OBTAIN_BADGE
 	message EverGrandeCity_PokemonLeague_1F_Text_GoForth
 	waitmessage
