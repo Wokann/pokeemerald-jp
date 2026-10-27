@@ -371,6 +371,39 @@ FALLTHROUGHS |= {'BattleFrontier_BattleArena' + room + '_EventScript_' + owner:
         ('BattleRoom', 'IntroGretaGold', 'BattleGretaGold'),
     )}
 
+FALLTHROUGHS |= {'BattleFrontier_BattleFactory' + room + '_EventScript_' + owner:
+                'BattleFrontier_BattleFactory' + room + '_EventScript_' + target
+    for room, owner, target in (
+        ('Lobby', 'DefeatedFactoryHead', 'GiveBattlePoints'),
+        ('Lobby', 'LostChallenge', 'AskRecordBattle'),
+        ('Lobby', 'AskRecordBattle', 'RecordBattle'),
+        ('Lobby', 'RecordBattle', 'EndRecordBattle'),
+        ('Lobby', 'Attendant', 'AskTakeChallenge'),
+        ('Lobby', 'AskTakeChallenge', 'TryEnterChallenge'),
+        ('Lobby', 'TryEnterChallenge', 'SaveBeforeChallenge'),
+        ('Lobby', 'SaveBeforeChallenge', 'EnterChallenge'),
+        ('Lobby', 'LoadPartyAndCancelChallenge', 'CancelChallenge'),
+        ('PreBattleRoom', 'SetUpObjects', 'TurnPlayerNorth'),
+        ('PreBattleRoom', 'EnterRoom', 'EnterBattleRoom'),
+        ('PreBattleRoom', 'AskReadyForOpponent', 'AskReadyForRegularOpponent'),
+        ('PreBattleRoom', 'AskReadyForRegularOpponent', 'AskReadyForOpponentNoRecord'),
+        ('PreBattleRoom', 'AskReadyForOpponentNoRecord', 'AskRecordBattle'),
+        ('PreBattleRoom', 'AskRecordBattle', 'RecordBattle'),
+        ('PreBattleRoom', 'AskPauseChallenge', 'AskRetireChallenge'),
+        ('PreBattleRoom', 'AskRetireChallenge', 'AskSwapMon'),
+        ('PreBattleRoom', 'AskSwapMon', 'SwapMons'),
+        ('PreBattleRoom', 'AskReadyForHead', 'AskReadyForHeadNoRecord'),
+        ('PreBattleRoom', 'AskReadyForHeadNoRecord', 'AskSwapBeforeHead'),
+        ('PreBattleRoom', 'AskSwapBeforeHead', 'WalkToBattleRoomLv50'),
+        ('BattleRoom', 'HideObjects', 'EndHideObjects'),
+        ('BattleRoom', 'EnterRoom', 'BattleOpponent'),
+        ('BattleRoom', 'BattleOpponent', 'WarpToLobbyLost'),
+        ('BattleRoom', 'DefeatedOpponent', 'IncrementWinStreak'),
+        ('BattleRoom', 'IncrementWinStreak', 'IncrementBattleNum'),
+        ('BattleRoom', 'BattleNoland', 'BattleNolandSilver'),
+        ('BattleRoom', 'IntroNolandGold', 'BattleNolandGold'),
+    )}
+
 # These exact movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
 MOVEMENT_PREFIXES = {
@@ -407,6 +440,8 @@ MOVEMENT_PREFIXES = {
 # This audited warp replaces the old script context before the following
 # movement bytes. It is not a bytecode edge into that movement definition.
 CONTEXT_WARP_EXITS = {
+    'BattleFrontier_BattleFactoryBattleRoom_EventScript_IncrementBattleNum':
+        ('MAP_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM', 8, 8),
     'BattleFrontier_BattleArenaBattleRoom_EventScript_WarpToLobbyLost':
         ('MAP_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY', 7, 8),
     'BattleFrontier_BattleArenaBattleRoom_EventScript_ReturnToLobbyWon':
@@ -437,6 +472,16 @@ UNREACHABLE_WAIT_TAILS = {
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    'factory_init': ('CallBattleFactoryFunction', 8, ()),
+    'factory_save': ('CallBattleFactoryFunction', 13, (r'(?:0|CHALLENGE_STATUS_(?:SAVING|PAUSED))',)),
+    'factory_get': ('CallBattleFactoryFunction', 13, (r'FACTORY_DATA_WIN_STREAK(?:_SWAPS)?',)),
+    'factory_rentmons': ('CallBattleFactoryFunction', 8, ()),
+    'factory_swapmons': ('CallBattleFactoryFunction', 8, ()),
+    'factory_setswapped': ('CallBattleFactoryFunction', 8, ()),
+    'factory_generateopponentmons': ('CallBattleFactoryFunction', 8, ()),
+    'factory_generaterentalmons': ('CallBattleFactoryFunction', 8, ()),
+    'factory_getopponentmontype': ('CallBattleFactoryFunction', 8, ()),
+    'factory_getopponentstyle': ('CallBattleFactoryFunction', 8, ()),
     'arena_init': ('CallBattleArenaFunction', 8, ()),
     'arena_gettrainername': ('CallBattleArenaFunction', 8, ()),
     'arena_save': ('CallBattleArenaFunction', 13, (r'(?:0|CHALLENGE_STATUS_(?:SAVING|PAUSED))',)),
@@ -883,25 +928,29 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_arguments:trywondercardscript')
             result.runtime_scripts.add('saved_wonder_card')
             size = 1
-        elif version == 4 and (op in FACILITY_FORMS or op in ('frontier_set', 'tower_set', 'dome_set')):
-            if op in ('frontier_set', 'tower_set', 'dome_set'):
+        elif version == 4 and (op in FACILITY_FORMS or op in ('frontier_set', 'tower_set', 'dome_set', 'factory_set')):
+            if op in ('frontier_set', 'tower_set', 'dome_set', 'factory_set'):
                 selector = {'frontier_set': r'FRONTIER_DATA_\w+',
                             'tower_set': r'TOWER_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|LVL_MODE)',
-                            'dome_set': r'DOME_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|ATTEMPTED_CHALLENGE|HAS_WON_CHALLENGE|SELECTED_MONS)'}[op]
+                            'dome_set': r'DOME_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|ATTEMPTED_CHALLENGE|HAS_WON_CHALLENGE|SELECTED_MONS)',
+                            'factory_set': r'FACTORY_DATA_WIN_STREAK(?:_ACTIVE|_SWAPS)?'}[op]
                 if (len(args) not in (1, 2) or not re.fullmatch(selector, args[0])
                         or len(args) == 2 and not re.fullmatch(r'(?:[A-Z][A-Z0-9_]*|0x[0-9A-Fa-f]+|\d+)', args[1])):
                     raise ValueError('unsupported_profile_facility_macro:' + op)
                 if op == 'dome_set' and len(args) == 2 and args[1] not in ('0', 'TRUE', 'FALSE', '0xFFFF', '65535'):
                     raise ValueError('unsupported_profile_facility_macro:' + op)
+                if (op == 'factory_set' and len(args) == 2
+                        and args[1] not in ('0', 'TRUE', 'FALSE', 'VAR_RESULT', '0xFFFF', '65535')):
+                    raise ValueError('unsupported_profile_facility_macro:' + op)
                 omitted = len(args) == 1 or args[1].lower() in ('0xffff', '65535')
                 function = {'frontier_set': 'CallFrontierUtilFunc', 'tower_set': 'CallBattleTowerFunc',
-                            'dome_set': 'CallBattleDomeFunction'}[op]
+                            'dome_set': 'CallBattleDomeFunction', 'factory_set': 'CallBattleFactoryFunction'}[op]
                 size = 13 if omitted else 18
             elif op == 'frontier_results':
                 valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER', 'FRONTIER_FACILITY_PYRAMID', 'FRONTIER_FACILITY_ARENA')
                          or len(args) == 2 and args[0] == 'FRONTIER_FACILITY_TOWER'
                          and re.fullmatch(r'(?:FRONTIER_MODE_(?:SINGLES|DOUBLES|MULTIS|LINK_MULTIS)|0xFF|255)', args[1])
-                         or len(args) == 2 and args[0] in ('FRONTIER_FACILITY_DOME', 'FRONTIER_FACILITY_PALACE')
+                         or len(args) == 2 and args[0] in ('FRONTIER_FACILITY_DOME', 'FRONTIER_FACILITY_PALACE', 'FRONTIER_FACILITY_FACTORY')
                          and args[1] in ('FRONTIER_MODE_SINGLES', 'FRONTIER_MODE_DOUBLES'))
                 if not valid:
                     raise ValueError('unsupported_profile_facility_macro:' + op)
@@ -1249,6 +1298,9 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                               'BattleFrontier_BattleArenaBattleRoom_EventScript_AnnounceTrainers')
                           and position > 0 and lines[position - 1] == 'palace_getopponentintro'
                           and args[1] == 'MSGBOX_DEFAULT')
+                palace |= (owner is not None and owner[1] == 'BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleOpponent'
+                           and position > 1 and lines[position - 2:position] == ['palace_getopponentintro', 'lockall']
+                           and args[1] == 'MSGBOX_DEFAULT')
                 if version != 4 or not (produced or ereader or tower or palace):
                     raise ValueError('unproven_runtime_message_producer')
                 result.runtime_texts['gStringVar4'] = ('CopyEReaderTrainerGreeting' if ereader
