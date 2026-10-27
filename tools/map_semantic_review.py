@@ -149,7 +149,10 @@ def shared_include_entry(root: Path, dep: dict) -> str | None:
     text_owner = (dep.get('kind') in ('string', 'braille')
                   and isinstance(dep.get('path'), str)
                   and re.fullmatch(r'data/scripts/[A-Za-z0-9_/]+\.inc', dep['path']))
-    if ((dep.get('path') != 'data/event_scripts.s' and not text_owner) or not isinstance(boundaries, list)
+    secret_power_boundary = (dep.get('path') == 'data/scripts/secret_base.inc'
+                             and dep.get('entry') == 'SecretBase_EventScript_LostSecretBaseBattle'
+                             and boundaries == ['data/scripts/secret_power_tm.inc'])
+    if ((dep.get('path') != 'data/event_scripts.s' and not text_owner and not secret_power_boundary) or not isinstance(boundaries, list)
             or not boundaries or any(not isinstance(p, str) or not re.fullmatch(
                 r'data/(?:scripts|text)/[A-Za-z0-9_/]+\.inc', p) for p in boundaries)
             or len(set(boundaries)) != len(boundaries)):
@@ -390,7 +393,7 @@ def dynamic_layout_contracts(root: Path, batch: dict) -> tuple[dict, dict, list]
         raise ValueError('invalid_dynamic_layout_contracts')
     if not ids:
         return {}, {}, []
-    if batch.get('review_type') != 'direct_map_v4':
+    if batch.get('review_type') not in ('direct_map_v4', 'shared_map_v1'):
         raise ValueError('unsupported_dynamic_layout_contracts')
     files = {c['path'] for c in batch['sources'] if c.get('selector') == 'file'}
     if not {'include/constants/layouts.h', 'src/overworld.c', 'src/scrcmd.c',
@@ -514,13 +517,141 @@ def _external_message_dependencies(texts: dict, local_labels: set, actual_kinds:
     return external
 
 
+SHARED_MAP_SCRIPT_OWNERS = {
+    'SecretBase': 'data/scripts/shared_secret_base.inc',
+    'ContestHall': 'data/maps/ContestHall/scripts.inc',
+    'BattlePyramidSquare01': 'data/maps/BattlePyramidSquare01/scripts.inc',
+}
+SHARED_MAP_RUNTIME_CONTEXT = {
+    'SecretBase': {'src/secret_base.c', 'src/decoration.c', 'src/record_mixing.c',
+                   'src/event_object_movement.c', 'src/field_control_avatar.c',
+                   'src/overworld.c', 'include/constants/secret_bases.h'},
+    'ContestHall': {'src/contest.c', 'src/contest_util.c', 'src/field_specials.c',
+                    'src/event_object_movement.c', 'include/constants/contest.h'},
+    'BattlePyramidSquare01': {'src/battle_pyramid.c', 'src/battle_pyramid_bag.c',
+                             'src/battle_setup.c', 'src/fieldmap.c', 'src/trainer_see.c',
+                             'include/constants/battle_pyramid.h'},
+}
+SECRET_BASE_RUNTIME_ROOTS = {
+    'SecretBase_EventScript_Enter': ('src/secret_base.c', 'asm'),
+    'SecretBase_EventScript_SetDecoration': ('src/decoration.c', 'asm'),
+    'SecretBase_EventScript_PutAwayDecoration': ('src/decoration.c', 'asm'),
+    'SecretBase_EventScript_DollInteract': ('src/event_object_movement.c', 'override'),
+    'SecretBase_EventScript_CushionInteract': ('src/event_object_movement.c', 'override'),
+}
+
+
+def shared_map_inputs(root: Path, batch: dict, name: str) -> dict:
+    """Resolve only the three measured sharing families; never fabricate files."""
+    meta = json.loads(local_path(root, f'data/maps/{name}/map.json').read_text())
+    owner = name
+    events_owner = name
+    if batch.get('review_type') != 'shared_map_v1':
+        return dict(metadata=meta, script_owner=name, script_path=f'data/maps/{name}/scripts.inc',
+                    events_owner=name, events_metadata=meta)
+    if re.fullmatch(r'SecretBase_(?:RedCave|BlueCave|BrownCave|YellowCave|Tree|Shrub)[1-4]', name):
+        owner = 'SecretBase'
+    elif re.fullmatch(r'(?:ContestHall(?:Cool|Beauty|Cute|Smart|Tough)|UnusedContestHall[1-6])', name):
+        owner = events_owner = 'ContestHall'
+    elif re.fullmatch(r'BattlePyramidSquare(?:0[2-9]|1[0-6])', name):
+        owner = 'BattlePyramidSquare01'
+    else:
+        raise ValueError('unsupported_shared_map_family')
+    if (meta.get('name') != name or meta.get('shared_scripts_map') != owner
+            or meta.get('connections') is not None
+            or meta.get('shared_events_map') != (events_owner if events_owner != name else None)
+            or ('shared_events_map' in meta and events_owner == name)):
+        raise ValueError('shared_map_declaration_mismatch')
+    path = SHARED_MAP_SCRIPT_OWNERS[owner] if owner != name else f'data/maps/{name}/scripts.inc'
+    blocks = label_blocks(local_path(root, path).read_text())
+    if not blocks or next(iter(blocks)) != owner + '_MapScripts':
+        raise ValueError('noncanonical_shared_script_definition')
+    events_meta = (json.loads(local_path(root, f'data/maps/{events_owner}/map.json').read_text())
+                   if events_owner != name else meta)
+    if events_meta.get('name') != events_owner or 'shared_events_map' in events_meta:
+        raise ValueError('chained_or_mismatched_shared_events')
+    return dict(metadata=meta, script_owner=owner, script_path=path,
+                events_owner=events_owner, events_metadata=events_meta)
+
+
+def review_component_sources(root: Path, batch: dict, maps: list[str]) -> set[str]:
+    """Require each map's own metadata/header and the real shared definitions."""
+    if batch.get('review_type') != 'shared_map_v1':
+        return {f'data/maps/{n}/{part}' for n in maps for part in REQUIRED_COMPONENTS}
+    paths = set()
+    for name in maps:
+        resolved = shared_map_inputs(root, batch, name)
+        paths.update(f'data/maps/{name}/{part}' for part in ('map.json', 'header.inc', 'connections.inc'))
+        paths.add(resolved['script_path'])
+        paths.update(SHARED_MAP_RUNTIME_CONTEXT[resolved['script_owner']])
+        owner = resolved['events_owner']
+        paths.add(f'data/maps/{owner}/events.inc')
+        paths.add(f'data/maps/{owner}/map.json')
+    return paths
+
+
+def shared_map_runtime_roots(root: Path, batch: dict, maps: list[str]) -> dict[str, str]:
+    """Keep C-installed scripts in the closure even when JSON pointers are null."""
+    if batch.get('review_type') != 'shared_map_v1' or not any(
+            shared_map_inputs(root, batch, name)['script_owner'] == 'SecretBase' for name in maps):
+        return {}
+    roots = {}
+    for entry, (path, kind) in SECRET_BASE_RUNTIME_ROOTS.items():
+        source = local_path(root, path).read_text()
+        source = re.sub(r'("(?:\\.|[^"\\])*")|(/\*.*?\*/|//[^\n]*)',
+                        lambda match: match[1] or '', source, flags=re.DOTALL)
+        if kind == 'asm':
+            pattern = r'"[^"\n]*\.4byte\s+' + re.escape(entry) + r'\\n\\t"'
+        else:
+            pattern = (r'OverrideObjectEventTemplateScript\s*\(\s*&gObjectEvents\[objectEventId\],\s*'
+                       + re.escape(entry) + r'\s*\);')
+        if len(re.findall(pattern, source)) != 1:
+            raise ValueError('missing_shared_runtime_script_source:' + entry)
+        roots[entry] = path
+    return roots
+
+
+def _shared_map_runtime_native(root: Path, batch: dict, maps: list[str], native: dict, errors: list[str]) -> None:
+    """Bind each C-installed entry to a literal in its actual compiled owner."""
+    for entry, path in shared_map_runtime_roots(root, batch, maps).items():
+        values = native['symbols'].get(entry, set())
+        owner = path[:-2] + '.o'
+        ranges = [(start, size) for start, size, source in native['owners']
+                  if source == owner or source.endswith('/' + owner)]
+        if len(values) != 1 or not ranges:
+            errors.append('native_shared_runtime_script_owner_mismatch:' + entry)
+            continue
+        pointer = struct.pack('<I', next(iter(values)))
+        if not any(pointer in native['rom'][start - 0x08000000:start - 0x08000000 + size]
+                   for start, size in ranges if 0x08000000 <= start < start + size <= 0x09000000):
+            errors.append('native_shared_runtime_script_pointer_mismatch:' + entry)
+
+
+def _shared_map_header_native(root: Path, batch: dict, maps: list[str], native: dict, errors: list[str]) -> None:
+    """Verify the four actual header pointers, including legal null connections."""
+    for name in maps:
+        resolved = shared_map_inputs(root, batch, name)
+        row = default_layout_owner(root, name, allow_shared=True)
+        wanted = (name, row['name'], resolved['events_owner'] + '_MapEvents',
+                  resolved['script_owner'] + '_MapScripts')
+        values = [native['symbols'].get(symbol, set()) for symbol in wanted]
+        if any(len(v) != 1 for v in values):
+            errors.append('native_shared_map_header_symbol_mismatch:' + name)
+            continue
+        header, layout, events, scripts = [next(iter(v)) for v in values]
+        expected = struct.pack('<4I', layout, events, scripts, 0)
+        at = header - 0x08000000
+        if native['rom'][at:at + 16] != expected:
+            errors.append('native_shared_map_header_pointer_mismatch:' + name)
+
+
 def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict, dict]:
     """Derive component identity/extent and actual shared-call closure from source."""
     contracts, external, external_text = {}, set(), {}
     local_labels = set()
-    addressed = batch.get('review_type') == 'direct_map_v4'
-    story = batch.get('review_type') in ('direct_map_v3', 'direct_map_v4')
-    extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4')
+    addressed = batch.get('review_type') in ('direct_map_v4', 'shared_map_v1')
+    story = batch.get('review_type') in ('direct_map_v3', 'direct_map_v4', 'shared_map_v1')
+    extended = batch.get('review_type') in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4', 'shared_map_v1')
     expected_kinds, actual_kinds, used_standard, used_specials = {}, {}, {}, {}
     used_layouts = set()
     trainer_battles, trainer_run, trainer_post, trainer_beaten = {}, False, False, False
@@ -636,16 +767,20 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                 external_text[target] = kind
     for name in maps:
         metadata = json.loads(local_path(root, f'data/maps/{name}/map.json').read_text())
-        script = local_path(root, f'data/maps/{name}/scripts.inc').read_text()
+        resolved = shared_map_inputs(root, batch, name)
+        script_owner = resolved['script_owner']
+        events_owner = resolved['events_owner']
+        event_metadata = resolved['events_metadata']
+        script = local_path(root, resolved['script_path']).read_text()
         blocks = label_blocks(script)
-        if not blocks or next(iter(blocks)) != name + '_MapScripts':
+        if not blocks or next(iter(blocks)) != script_owner + '_MapScripts':
             raise ValueError('noncanonical_map_script_owner')
         local_labels.update(blocks)
-        length, targets, texts = analyze(script, source_address(name, name + '_MapScripts') if addressed else None)
+        length, targets, texts = analyze(script, source_address(name, script_owner + '_MapScripts') if addressed else None)
         if story:
-            expect(name + '_MapScripts', 'map_table')
+            expect(script_owner + '_MapScripts', 'map_table')
             for field in ('object_events', 'coord_events', 'bg_events'):
-                for event in metadata.get(field, []):
+                for event in event_metadata.get(field, []):
                     target = story_event_target(event, field, version=4 if addressed else 3)
                     event_context = set()
                     if addressed and field == 'bg_events' and event.get('type') == 'secret_base':
@@ -671,11 +806,11 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                     raise ValueError('script_target_is_text:' + target)
         external.update(targets - blocks.keys())
         collect_text(texts, blocks)
-        contracts[(name, 'scripts')] = (name + '_MapScripts', length)
-        counts = [len(metadata.get(key, [])) for key in
+        contracts[(name, 'scripts')] = (script_owner + '_MapScripts', length)
+        counts = [len(event_metadata.get(key, [])) for key in
                   ('object_events', 'warp_events', 'coord_events', 'bg_events')]
         suffixes = ('_ObjectEvents', '_MapWarps', '_MapCoordEvents', '_MapBGEvents')
-        first = next((name + suffix for count, suffix in zip(counts, suffixes) if count), name + '_MapEvents')
+        first = next((events_owner + suffix for count, suffix in zip(counts, suffixes) if count), events_owner + '_MapEvents')
         contracts[(name, 'events')] = (first, 20 + sum(n * stride for n, stride in zip(counts, (24, 8, 16, 12))))
         contracts[(name, 'header')] = (name, 28)
         connections = metadata.get('connections', [])
@@ -717,6 +852,9 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                     or entries[index - 1][1] != layout['name']):
                 raise ValueError('shared_default_layout_table_mismatch')
             contracts[(name, 'default_layout_table')] = ('gMapLayouts', 4 * len(entries))
+    for entry in shared_map_runtime_roots(root, batch, maps):
+        expect(entry, 'script')
+        external.add(entry)
     dependencies = batch.get('shared_dependencies', [])
     if not isinstance(dependencies, list):
         raise ValueError('invalid_shared_dependencies')
@@ -739,7 +877,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         if entry not in entries:
             raise ValueError('missing_shared_call_evidence:' + entry)
         dep = entries[entry]
-        if dep.get('end_before_includes') is not None and batch['review_type'] != 'direct_map_v4':
+        if dep.get('end_before_includes') is not None and batch['review_type'] not in ('direct_map_v4', 'shared_map_v1'):
             raise ValueError('unsupported_shared_include_review_version')
         blocks = shared_script_blocks(root, dep)
         if not set(dep.get('end_before_includes', [])) <= {
@@ -882,7 +1020,7 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                     or not any(c.get('path') == path and c.get('selector') == 'file' for c in batch['sources'])):
                 raise ValueError('missing_special_implementation_source')
             if contract.get('compile_variant') is not None:
-                if batch['review_type'] != 'direct_map_v4' or not {'Makefile', 'tools/audit_structure.py'} <= {
+                if batch['review_type'] not in ('direct_map_v4', 'shared_map_v1') or not {'Makefile', 'tools/audit_structure.py'} <= {
                         c['path'] for c in batch['sources'] if c.get('selector') == 'file'}:
                     raise ValueError('missing_special_compile_variant_source')
                 special_input_object(root, contract)
@@ -1466,7 +1604,7 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
         raise ValueError('invalid_map_list')
     if not set(reviewed) <= maps:
         raise ValueError('unknown_map')
-    if batch.get('review_type') not in ('direct_map_v1', 'direct_map_v2', 'direct_map_v3', 'direct_map_v4') or batch.get('decision') != 'reviewed':
+    if batch.get('review_type') not in ('direct_map_v1', 'direct_map_v2', 'direct_map_v3', 'direct_map_v4', 'shared_map_v1') or batch.get('decision') != 'reviewed':
         raise ValueError('unsupported_or_unapproved_review')
     if not SHA1_RE.fullmatch(str(batch.get('jp_commit', ''))):
         raise ValueError('missing_jp_baseline')
@@ -1503,15 +1641,15 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
             errors.append(str(exc) + ':' + str(claim.get('path')))
         if claim.get('selector') == 'file':
             file_claims.add(claim.get('path'))
-    required = {f'data/maps/{n}/{part}' for n in reviewed for part in REQUIRED_COMPONENTS} | REQUIRED_CONTEXT
-    if batch['review_type'] in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4'):
+    required = review_component_sources(root, batch, reviewed) | REQUIRED_CONTEXT
+    if batch['review_type'] in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4', 'shared_map_v1'):
         required |= TEXT_CONTEXT
-    if batch['review_type'] in ('direct_map_v3', 'direct_map_v4'):
+    if batch['review_type'] in ('direct_map_v3', 'direct_map_v4', 'shared_map_v1'):
         required |= STORY_CONTEXT
     if not required <= file_claims:
         raise ValueError('incomplete_map_or_generator_source_coverage')
     context = compile_context(root, required & (REQUIRED_CONTEXT | STORY_CONTEXT) | {
-        f'data/maps/{n}/scripts.inc' for n in reviewed} | {
+        shared_map_inputs(root, batch, n)['script_path'] for n in reviewed} | {
         c['path'] for c in sources if c.get('selector') == 'asm_labels'} | {
         c['source_path'] for c in batch.get('special_contracts', [])} | (
         TRAINER_ENGINE_CONTEXT if batch.get('trainer_battles') else set()))
@@ -1520,7 +1658,7 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
     if not {f'data/maps/{n}/map.json' for n in reviewed} <= us_files.keys():
         raise ValueError('incomplete_us_map_reference')
     for n in reviewed:
-        layout = default_layout_owner(root, n, allow_shared=batch['review_type'] == 'direct_map_v4')
+        layout = default_layout_owner(root, n, allow_shared=batch['review_type'] in ('direct_map_v4', 'shared_map_v1'))
         layout_sources = {layout['border_filepath'], layout['blockdata_filepath']}
         if not layout_sources <= file_claims:
             raise ValueError('incomplete_layout_resource_coverage')
@@ -1539,7 +1677,9 @@ def _review_batch(root: Path, batch: dict, maps: set[str], native: dict) -> dict
         raise ValueError('incomplete_explicit_semantic_checks')
     for n in reviewed:
         metadata = json.loads(local_path(root, f'data/maps/{n}/map.json').read_text())
-        if metadata.get('name') != n or 'shared_scripts_map' in metadata or 'shared_events_map' in metadata:
+        if batch['review_type'] == 'shared_map_v1':
+            shared_map_inputs(root, batch, n)
+        elif metadata.get('name') != n or 'shared_scripts_map' in metadata or 'shared_events_map' in metadata:
             raise ValueError('unsupported_shared_or_mismatched_map')
         if not any(c.get('path') == 'data/layouts/layouts.json' and c.get('selector') == 'json_layout'
                    and c.get('id') == metadata.get('layout') for c in sources):
@@ -1737,20 +1877,25 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 addresses = native['symbols'].get(last, set())
                 expected = {a + sizes[last] for a in addresses}
                 linker = native['map_symbols'].get(following)
-                linker_mismatch = (linker != expected if dep.get('kind') not in ('string', 'braille')
-                                   else linker is not None and linker != expected)
+                first_owner = label_blocks(local_path(root, dep['end_before_includes'][0]).read_text())
+                following_is_text = text_kind(first_owner[following]) in ('string', 'braille')
+                linker_mismatch = (linker is not None and linker != expected
+                                   if following_is_text else linker != expected)
                 if (len(expected) != 1 or native['symbols'].get(following) != expected
                         or linker_mismatch):
                     errors.append('native_shared_include_boundary_mismatch:' + last)
-        if batch['review_type'] == 'direct_map_v4':
+        if batch['review_type'] in ('direct_map_v4', 'shared_map_v1'):
             _shared_default_layout_native(root, maps, native, errors)
+            if batch['review_type'] == 'shared_map_v1':
+                _shared_map_header_native(root, batch, maps, native, errors)
+                _shared_map_runtime_native(root, batch, maps, native, errors)
             try:
                 from map_review_script_profile import profile_owner
             except ModuleNotFoundError:
                 from tools.map_review_script_profile import profile_owner
             for name in maps:
                 address = next(a for n, role, symbol, a, size, digest in parsed if n == name and role == 'scripts')
-                profiles = profile_owner(root, local_path(root, f'data/maps/{name}/scripts.inc').read_text(),
+                profiles = profile_owner(root, local_path(root, shared_map_inputs(root, batch, name)['script_path']).read_text(),
                                          version=4, address=address)
                 for label, profile in profiles.items():
                     if native['symbols'].get(label) != {address}:
@@ -1779,7 +1924,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 if native['symbols'].get(label) != {address}:
                     errors.append('shared_closure_not_contiguous:' + label)
                 address += size
-        if batch['review_type'] in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4'):
+        if batch['review_type'] in ('direct_map_v2', 'direct_map_v3', 'direct_map_v4', 'shared_map_v1'):
             for contract in batch.get('special_contracts', []):
                 entry, source = contract['entry'], contract['source_symbol']
                 values = {v & ~1 for v in native['symbols'].get(entry, set())}
@@ -1833,7 +1978,8 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                     address = next(a for n, role, symbol, a, size, digest in parsed if n == name and role == 'header') - 0x08000000
                     if native['rom'][address + 12:address + 16] != bytes(4):
                         errors.append('native_null_connection_pointer_mismatch:' + name)
-            text_sources = [(dict(path=f'data/maps/{name}/scripts.inc'), None) for name in maps]
+            text_sources = [(dict(path=path), None) for path in sorted({
+                shared_map_inputs(root, batch, name)['script_path'] for name in maps})]
             text_sources += [(dep, dep['entry']) for dep in batch.get('text_dependencies', [])]
             for dep, selected in text_sources:
                 for label, block in shared_script_blocks(root, dep).items():
@@ -1851,11 +1997,14 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                     if native['rom'][address:address + len(encoded)] != encoded:
                         errors.append('native_text_encoding_mismatch:' + label)
     for name in maps:
-        for start, part in (('data/event_scripts.s', 'scripts.inc'),
-                            ('data/map_events.s', 'events.inc'),
-                            ('data/maps.s', 'header.inc'), ('data/maps.s', 'connections.inc')):
-            if f'data/maps/{name}/{part}' not in _reachable(root, start, native.setdefault('include_graph', {})):
-                errors.append('unreachable_map_component:' + name + '/' + part)
+        resolved = shared_map_inputs(root, batch, name)
+        components = (('data/event_scripts.s', resolved['script_path']),
+                      ('data/map_events.s', f'data/maps/{resolved["events_owner"]}/events.inc'),
+                      ('data/maps.s', f'data/maps/{name}/header.inc'),
+                      ('data/maps.s', f'data/maps/{name}/connections.inc'))
+        for start, path in components:
+            if path not in _reachable(root, start, native.setdefault('include_graph', {})):
+                errors.append('unreachable_map_component:' + name + '/' + path.rsplit('/', 1)[-1])
     for dep in batch.get('shared_dependencies', []) + batch.get('text_dependencies', []):
         if dep['path'] not in _reachable(root, 'data/event_scripts.s', native.setdefault('include_graph', {})):
             errors.append('unreachable_shared_owner:' + dep['path'])
