@@ -947,7 +947,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                    and args == ['SPECIES_MEW', '30'])
             deoxys = (owner and owner[1] == 'BirthIsland_Exterior_EventScript_Deoxys'
                       and args == ['SPECIES_DEOXYS', '30'])
-            if not (lati or mew or deoxys):
+            navel = (owner and (owner[1], args) in (
+                ('NavelRock_Top_EventScript_HoOh', ['SPECIES_HO_OH', '70']),
+                ('NavelRock_Bottom_EventScript_Lugia', ['SPECIES_LUGIA', '70'])))
+            if not (lati or mew or deoxys or navel):
                 raise ValueError('unsupported_profile_seteventmon')
             waits = special_waits(root) if waits is None else waits
             function = 'CreateEnemyEventMon'
