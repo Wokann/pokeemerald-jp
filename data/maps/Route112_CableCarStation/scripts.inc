@@ -6,12 +6,12 @@ Route112_CableCarStation_MapScripts::
 	.byte 0
 
 Route112_CableCarStation_OnTransition:: @ 0x08211F15
-	setescapewarp MAP_ROUTE112, 0x1C, 0x1C
+	setescapewarp MAP_ROUTE112, 28, 28
 	call_if_eq VAR_CABLE_CAR_STATION_STATE, 2, Route112_CableCarStation_EventScript_MoveAttendantAside
 	end
 
 Route112_CableCarStation_EventScript_MoveAttendantAside:: @ 0x08211F29
-	setobjectxyperm LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, 0x7, 0x4
+	setobjectxyperm LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, 7, 4
 	setobjectmovementtype LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, MOVEMENT_TYPE_FACE_LEFT
 	return
 
@@ -25,7 +25,7 @@ Route112_CableCarStation_EventScript_ExitCableCar:: @ 0x08211F3F
 	applymovement LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, Route112_CableCarStation_Movement_FollowPlayerOutFromCableCar
 	waitmovement 0
 	setvar VAR_CABLE_CAR_STATION_STATE, 0
-	setobjectxyperm LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, 0x6, 0x7
+	setobjectxyperm LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, 6, 7
 	setobjectmovementtype LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, MOVEMENT_TYPE_FACE_DOWN
 	releaseall
 	end

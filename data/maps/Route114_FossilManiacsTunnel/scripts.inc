@@ -10,7 +10,7 @@ Route114_FossilManiacsTunnel_OnTransition:: @ 0x08212298
 	end
 
 Route114_FossilManiacsTunnel_EventScript_MoveFossilManiac:: @ 0x082122A2
-	setobjectxyperm LOCALID_FOSSIL_MANIAC, 0x6, 0x5
+	setobjectxyperm LOCALID_FOSSIL_MANIAC, 6, 5
 	setobjectmovementtype LOCALID_FOSSIL_MANIAC, MOVEMENT_TYPE_FACE_DOWN
 	return
 
@@ -19,8 +19,8 @@ Route114_FossilManiacsTunnel_OnLoad:: @ 0x082122AE
 	end
 
 Route114_FossilManiacsTunnel_EventScript_CloseDesertUnderpass:: @ 0x082122B8
-	setmetatile 0x6, 0x1, METATILE_Fallarbor_RedRockWall, TRUE
-	setmetatile 0x6, 0x2, METATILE_Fallarbor_RedRockWall, TRUE
+	setmetatile 6, 1, METATILE_Fallarbor_RedRockWall, TRUE
+	setmetatile 6, 2, METATILE_Fallarbor_RedRockWall, TRUE
 	return
 
 Route114_FossilManiacsTunnel_EventScript_ManiacMentionCaveIn:: @ 0x082122CB

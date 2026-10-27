@@ -12,7 +12,7 @@ Route104_PrettyPetalFlowerShop_OnTransition:: @ 0x082119BA
 	end
 
 Route104_PrettyPetalFlowerShop_EventScript_MoveShopOwner:: @ 0x082119D3
-	setobjectxyperm LOCALID_FLOWER_SHOP_OWNER, 0x4, 0x6
+	setobjectxyperm LOCALID_FLOWER_SHOP_OWNER, 4, 6
 	end
 
 Route104_PrettyPetalFlowerShop_EventScript_ShopOwner:: @ 0x082119DB
@@ -83,7 +83,7 @@ Route104_PrettyPetalFlowerShop_EventScript_RandomBerryGirl:: @ 0x08211AAA
 	dotimebasedevents
 	goto_if_set FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY, Route104_PrettyPetalFlowerShop_EventScript_AlreadyReceivedBerry
 	msgbox Route104_PrettyPetalFlowerShop_Text_ImGrowingFlowers, MSGBOX_DEFAULT
-	random 0x8
+	random 8
 	addvar VAR_RESULT, FIRST_BERRY_INDEX
 	giveitem VAR_RESULT
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull

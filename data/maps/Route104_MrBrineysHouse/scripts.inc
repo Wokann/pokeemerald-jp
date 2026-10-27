@@ -15,9 +15,9 @@ Route104_MrBrineysHouse_EventScript_HideRustboroRival:: @ 0x0821160E
 	return
 
 Route104_MrBrineysHouse_EventScript_SetBrineyPeekoPos:: @ 0x08211612
-	setobjectxyperm LOCALID_BRINEYS_HOUSE_BRINEY, 0x9, 0x3
+	setobjectxyperm LOCALID_BRINEYS_HOUSE_BRINEY, 9, 3
 	setobjectmovementtype LOCALID_BRINEYS_HOUSE_BRINEY, MOVEMENT_TYPE_WALK_SEQUENCE_DOWN_LEFT_UP_RIGHT
-	setobjectxyperm LOCALID_BRINEYS_HOUSE_PEEKO, 0x9, 0x6
+	setobjectxyperm LOCALID_BRINEYS_HOUSE_PEEKO, 9, 6
 	setobjectmovementtype LOCALID_BRINEYS_HOUSE_PEEKO, MOVEMENT_TYPE_WALK_SEQUENCE_LEFT_UP_RIGHT_DOWN
 	return
 
@@ -41,7 +41,7 @@ Route104_MrBrineysHouse_EventScript_SailingIntro:: @ 0x0821164C
 Route104_MrBrineysHouse_EventScript_WhereAreWeBound:: @ 0x08211670
 	message Route104_MrBrineysHouse_Text_WhereAreWeBound
 	waitmessage
-	multichoicedefault 0x14, 0x8, MULTI_BRINEY_OFF_DEWFORD, 0x1, FALSE
+	multichoicedefault 20, 8, MULTI_BRINEY_OFF_DEWFORD, 1, FALSE
 	switch VAR_RESULT
 	case 0, Route104_MrBrineysHouse_EventScript_SailToDewford
 	case 1, Route104_MrBrineysHouse_EventScript_DeclineSailing
@@ -81,7 +81,7 @@ Route104_MrBrineysHouse_EventScript_SailToDewford:: @ 0x082116E9
 	setvar VAR_ROUTE104_STATE, 2
 	setflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
 	setflag FLAG_HIDE_ROUTE_104_RIVAL
-	warp MAP_ROUTE104, 0xD, 0x33
+	warp MAP_ROUTE104, 13, 51
 	waitstate
 	releaseall
 	end
