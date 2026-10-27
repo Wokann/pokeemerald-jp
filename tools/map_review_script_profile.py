@@ -48,7 +48,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
                            'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
                            'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right',
-                           'walk_slow_down'}
+                           'walk_slow_down', 'slide_up'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -453,6 +453,16 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                            for value in args[1:])):
                 raise ValueError('unsupported_profile_setwarp')
             size = 8
+        elif version == 4 and op == 'dofieldeffectsparkle':
+            if (len(args) != 3
+                    or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
+                           for value in args)):
+                raise ValueError('unsupported_profile_sparkle')
+            values = [int(value, 16 if value.lower().startswith('0x') else 10) for value in args]
+            if any(not 0 <= value <= 65535 for value in values[:2]) or not 0 <= values[2] <= 3:
+                raise ValueError('unsupported_profile_sparkle')
+            # Three four-byte argument writes and one three-byte field effect.
+            size = 15
         elif version == 4 and op == 'setholewarp':
             if len(args) != 1 or not re.fullmatch(r'MAP_\w+', args[0]):
                 raise ValueError('unsupported_profile_setholewarp')

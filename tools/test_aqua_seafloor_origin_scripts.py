@@ -7,6 +7,9 @@ import unittest
 import jp_emit_maps as emitter
 import jp_script_parser as parser
 import verify_generated_map_scripts as verifier
+import map_review_script_profile as review_profile
+import map_semantic_review as semantic_review
+import test_map_review_script_profile as native_forms
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,6 +43,61 @@ SERIAL_COUNTS = {
     "CaveOfOrigin_B1F": 4,
 }
 PARALLEL_SIZES = {"AquaHideout_B2F": [2], "SeafloorCavern_Room9": [2, 3, 2]}
+
+
+class AquaMeasuredProfileTests(unittest.TestCase):
+    def parse(self, text, version=4):
+        return review_profile.profile_block(ROOT, 'Entry::\n' + text, {},
+                                            version=version, address=0x082189FE)
+
+    def test_sparkle_expands_to_three_arguments_and_one_field_effect(self):
+        for text in ('dofieldeffectsparkle 16, 42, 0',
+                     'dofieldeffectsparkle 0x10, 0x2A, 0x0'):
+            result = self.parse(text)
+            self.assertEqual(result.size, 15)
+            self.assertFalse(result.targets or result.texts or result.specials)
+
+    def test_sparkle_rejects_wrong_arity_unmodeled_variables_and_bad_priority(self):
+        for text in ('dofieldeffectsparkle', 'dofieldeffectsparkle 16, 42',
+                     'dofieldeffectsparkle 16, 42, 0, 0',
+                     'dofieldeffectsparkle VAR_0x8004, 42, 0',
+                     'dofieldeffectsparkle 65536, 42, 0',
+                     'dofieldeffectsparkle 16, -1, 0',
+                     'dofieldeffectsparkle 16, 42, 4'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                self.parse(text)
+
+    def test_upward_slide_is_a_terminated_movement_not_a_script(self):
+        result = self.parse('slide_up\nslide_up\nstep_end')
+        self.assertEqual((result.kind, result.size), ('movement', 3))
+        for text in ('slide_up', 'slide_up\nend', 'slide_up 1\nstep_end'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                self.parse(text)
+
+    def test_new_forms_leave_legacy_profile_rules_closed(self):
+        for text in ('dofieldeffectsparkle 16, 42, 0', 'slide_up\nstep_end'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                self.parse(text, version=3)
+
+    @unittest.skipUnless((ROOT / 'pokeemerald_jp.elf').is_file(), 'requires native JP artifacts')
+    def test_new_forms_match_the_real_macro_assembler_pipeline(self):
+        native_forms.StoryProfileTests().check_native_forms([
+            'dofieldeffectsparkle 16, 42, 0', 'slide_up'], version=4)
+
+    @unittest.skipUnless((ROOT / 'pokeemerald_jp.elf').is_file(), 'requires native JP artifacts')
+    def test_full_kyogre_owner_closes_the_actual_1714_byte_span(self):
+        name = 'SeafloorCavern_Room9'
+        symbols, _ = semantic_review.native_elf((ROOT / 'pokeemerald_jp.elf').read_bytes())
+        start = next(iter(symbols[name + '_MapScripts']))
+        end = next(iter(symbols['CaveOfOrigin_Entrance_MapScripts']))
+        self.assertEqual(end - start, 1714)
+        at = start
+        for label, part in review_profile.profile_owner(ROOT,
+                (ROOT / f'data/maps/{name}/scripts.inc').read_text(),
+                version=4, address=start).items():
+            self.assertEqual(symbols[label], {at}, label)
+            at += part.size
+        self.assertEqual(at, end)
 
 
 def source_lines(source, include_text=True):
