@@ -858,6 +858,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                    and (op == 'buffernumberstring' and args[0] == 'STR_VAR_1'
                         or op == 'setvar' and args[0] == 'VAR_0x8004')
                    for value in FRONTIER_BET_AMOUNTS)
+               or op == 'setfieldeffectargument' and index == 1 and owner
+               and owner[1] == 'BirthIsland_Exterior_EventScript_Deoxys'
+               and (args[0], arg) in (('1', 'MAP_NUM(MAP_BIRTH_ISLAND_EXTERIOR)'),
+                                      ('2', 'MAP_GROUP(MAP_BIRTH_ISLAND_EXTERIOR)'))
                or op == 'goto_if_eq' and index == 1 and args[0] == 'VAR_RESULT' and arg == FAN_CLUB_NONFAN_EXPRESSION
                or op == 'copyvar' and index == 2 and arg == 'warn=FALSE')) for index, arg in enumerate(args)):
             raise ValueError('unsupported_profile_argument_expression:' + op)
@@ -904,7 +908,9 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                     and args[1] == '50' and (len(args) == 2 or args[2] in ('ITEM_NONE', 'ITEM_SOUL_DEW')))
             mew = (owner and owner[1] == 'FarawayIsland_Interior_EventScript_Mew'
                    and args == ['SPECIES_MEW', '30'])
-            if not (lati or mew):
+            deoxys = (owner and owner[1] == 'BirthIsland_Exterior_EventScript_Deoxys'
+                      and args == ['SPECIES_DEOXYS', '30'])
+            if not (lati or mew or deoxys):
                 raise ValueError('unsupported_profile_seteventmon')
             waits = special_waits(root) if waits is None else waits
             function = 'CreateEnemyEventMon'
