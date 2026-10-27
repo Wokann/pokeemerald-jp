@@ -298,9 +298,7 @@ MossdeepCity_Gym_EventScript_YellowFloorSwitch:: @ 0x0820B7D0
 	playse SE_REPEL
 	initrotatingtilepuzzle FALSE
 	moverotatingtileobjects 0
-	waitmovement 0
 	turnrotatingtileobjects
-	waitmovement 0
 	freerotatingtilepuzzle
 	end
 
@@ -310,9 +308,7 @@ MossdeepCity_Gym_EventScript_BlueFloorSwitch:: @ 0x0820B7E6
 	playse SE_REPEL
 	initrotatingtilepuzzle FALSE
 	moverotatingtileobjects 1
-	waitmovement 0
 	turnrotatingtileobjects
-	waitmovement 0
 	freerotatingtilepuzzle
 	end
 
@@ -322,9 +318,7 @@ MossdeepCity_Gym_EventScript_GreenFloorSwitch:: @ 0x0820B7FC
 	playse SE_REPEL
 	initrotatingtilepuzzle FALSE
 	moverotatingtileobjects 2
-	waitmovement 0
 	turnrotatingtileobjects
-	waitmovement 0
 	freerotatingtilepuzzle
 	end
 
@@ -334,9 +328,7 @@ MossdeepCity_Gym_EventScript_PurpleFloorSwitch:: @ 0x0820B812
 	playse SE_REPEL
 	initrotatingtilepuzzle FALSE
 	moverotatingtileobjects 3
-	waitmovement 0
 	turnrotatingtileobjects
-	waitmovement 0
 	freerotatingtilepuzzle
 	end
 
@@ -346,9 +338,7 @@ MossdeepCity_Gym_EventScript_RedFloorSwitch:: @ 0x0820B828
 	playse SE_REPEL
 	initrotatingtilepuzzle FALSE
 	moverotatingtileobjects 4
-	waitmovement 0
 	turnrotatingtileobjects
-	waitmovement 0
 	freerotatingtilepuzzle
 	end
 

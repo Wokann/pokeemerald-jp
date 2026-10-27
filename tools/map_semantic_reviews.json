@@ -305,7 +305,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -1540,7 +1540,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -3878,7 +3878,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/map.inc",
@@ -12871,7 +12871,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -13891,7 +13891,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -16044,7 +16044,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -17084,7 +17084,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -18927,7 +18927,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -20152,7 +20152,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -22135,7 +22135,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -23390,7 +23390,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -24674,7 +24674,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -25799,7 +25799,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -27403,7 +27403,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -28763,7 +28763,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -30575,7 +30575,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -31780,7 +31780,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -33433,7 +33433,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -34693,7 +34693,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -35835,7 +35835,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -36895,7 +36895,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -37863,7 +37863,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -39073,7 +39073,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -40294,7 +40294,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -41389,7 +41389,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -42751,7 +42751,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -43951,7 +43951,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -45563,7 +45563,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -46808,7 +46808,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -47992,7 +47992,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -49162,7 +49162,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -52333,7 +52333,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -53583,7 +53583,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -60273,7 +60273,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -61608,7 +61608,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -72896,7 +72896,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -74226,7 +74226,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -88395,7 +88395,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -89745,7 +89745,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -103424,7 +103424,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -104849,7 +104849,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -115287,7 +115287,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -116627,7 +116627,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -123441,7 +123441,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -124741,7 +124741,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -130809,7 +130809,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -132149,7 +132149,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -138377,7 +138377,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -139717,7 +139717,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -145637,7 +145637,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -146967,7 +146967,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -150801,7 +150801,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -152136,7 +152136,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -160343,7 +160343,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -161763,7 +161763,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -170119,7 +170119,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -171564,7 +171564,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -179657,7 +179657,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -181152,7 +181152,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -188730,7 +188730,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -190170,7 +190170,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -198971,7 +198971,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -200466,7 +200466,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -211016,7 +211016,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -212486,7 +212486,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -222126,7 +222126,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -223581,7 +223581,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -232978,7 +232978,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -234458,7 +234458,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -245434,7 +245434,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -246814,7 +246814,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -263284,7 +263284,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -263429,7 +263429,7 @@
         {
           "path": "data/maps/MossdeepCity_Gym/scripts.inc",
           "selector": "file",
-          "sha256": "99256fea7d293e2232576ab1702116853d1a6404c8ac68417b7994f24869f459"
+          "sha256": "b34afacc1f4c0b708dd6ffb35aca2e04b793e32206ac2150fe343bbab9a8d83a"
         },
         {
           "path": "data/maps/connections.inc",
@@ -264759,7 +264759,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -264869,7 +264869,7 @@
         {
           "path": "tools/test_map_review_mossdeep_interiors.py",
           "selector": "file",
-          "sha256": "8cc02e1743cc544ea718e3eb43818c407a2b21df8b5191d68d8a5e7b877dabb7"
+          "sha256": "acb118bafe54bb0b272349a97290299bcc0dd51af682c3ca8d5fbe9fbd52235c"
         },
         {
           "path": "tools/test_map_review_script_profile.py",
@@ -272064,7 +272064,7 @@
           "header_flags": "Actual28-byte header/four pointers, layout ID/table binding, music=MUS_GYM,weather=WEATHER_NONE,type=MAP_TYPE_INDOOR,battle=MAP_BATTLE_SCENE_GYM; all indoor/running/cycling/escape/name flags compared to JSON and native bytes.",
           "connections": "All13 metadata connection fields null, empty generated connection files and native null pointers; no synthetic owner or missed connection migration.",
           "layout_resources": "Actual central layout {'id': 'LAYOUT_MOSSDEEP_CITY_GYM', 'name': 'MossdeepCity_Gym_Layout', 'width': 26, 'height': 36, 'primary_tileset': 'gTileset_Building', 'secondary_tileset': 'gTileset_MossdeepGym', 'border_filepath': 'data/layouts/MossdeepCity_Gym/border.bin', 'blockdata_filepath': 'data/layouts/MossdeepCity_Gym/map.bin'}; family24 distinct border/block assets/4464B equal fixed-US and native ROM/ELF. Shared center/shop/house layouts retain central ownership and real gMapLayouts index; no map-named duplicate or dynamic-layout assumption.",
-          "shared_call_closure": "Recursive typed local/event/Std/script/movement/text/Special closure, 228 distinct shared entries and87 borrowed texts across family; no unexplained physical fallthrough. All13 fresh CPP/preproc/AS/LD proofs byte-identical;62 distinct Special entry/wait contracts bound to unique native C owners. Trainer parameter handlers, rotating-tile/object warp, selected-party save/restore, callback-reset and wireless-selection boundaries checked. Not certification of all C internals, rendering, save UI, remote-player or gameplay behavior; SRC remains paused, no C conversion.",
+          "shared_call_closure": "Recursive typed local/event/Std/script/movement/text/Special closure, 228 distinct shared entries and87 borrowed texts across family; no unexplained physical fallthrough. All13 fresh CPP/preproc/AS/LD proofs byte-identical;62 distinct Special entry/wait contracts bound to unique native C owners. Trainer parameter handlers, rotating-tile/object warp, selected-party save/restore, callback-reset and wireless-selection boundaries checked. Not certification of all C internals, rendering, save UI, remote-player or gameplay behavior; SRC remains paused, no C conversion. Rechecked20261028: move/turn rotating-tile waits now reside in the US-style macros, with ten explicit caller wait0 lines removed. Whole map and shared closure freshly assembled4918B equalROM; runtime and native spans unchanged. Existing earlier source-layout notes describe the prior spelling.",
           "localization": "52 localtexts/2804B;16 JP/US control-vector differences. Whole family150texts/7755B/57 differing vectors; all actual JP strings and new borrowed minigame/MatchCall texts read, re-encoded and matched to exact ROM spans. PLAYER/KUN/STR_VAR1/2 roles follow context and producers, not mechanical STRING/ESCAPE; retain JP newline/scroll/page/EOS and unused objects, not English wrapping. No text-byte rewrite."
         },
         "MossdeepCity_House1": {
@@ -274550,7 +274550,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -275985,7 +275985,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -284762,7 +284762,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -286222,7 +286222,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -293509,7 +293509,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -294934,7 +294934,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -299788,7 +299788,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -301148,7 +301148,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -306091,7 +306091,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -307546,7 +307546,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -311903,7 +311903,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -313313,7 +313313,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -318225,7 +318225,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -319665,7 +319665,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -324142,7 +324142,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -325552,7 +325552,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -329156,7 +329156,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -331036,7 +331036,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -336215,7 +336215,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -337650,7 +337650,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -344369,7 +344369,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -345884,7 +345884,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -351496,7 +351496,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -352936,7 +352936,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -355608,7 +355608,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -357113,7 +357113,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -359467,7 +359467,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -360922,7 +360922,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -363986,7 +363986,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -365471,7 +365471,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -368841,7 +368841,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -370291,7 +370291,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -372565,7 +372565,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -374005,7 +374005,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -376530,7 +376530,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -378015,7 +378015,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -380243,7 +380243,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -381773,7 +381773,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -383785,7 +383785,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -385305,7 +385305,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -387425,7 +387425,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -388950,7 +388950,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -391307,7 +391307,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -392842,7 +392842,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -394738,7 +394738,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -396283,7 +396283,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -398336,7 +398336,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -399861,7 +399861,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -404135,7 +404135,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -405680,7 +405680,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -412556,7 +412556,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -414056,7 +414056,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -416492,7 +416492,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -418412,7 +418412,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -420486,7 +420486,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -421946,7 +421946,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -424521,7 +424521,7 @@
         {
           "path": "asm/macros/event.inc",
           "selector": "file",
-          "sha256": "869268aa672d7794e0df714ac714a1855ad171e6900071455585b4b02c5d456b"
+          "sha256": "e3db1e2c8c5b48dc4b46f393386571560479db4b5e87cc8cc587c2a2be1207bd"
         },
         {
           "path": "asm/macros/field_effect_script.inc",
@@ -425871,7 +425871,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "0c8c3bf895be7e19d20bbace965d340a459283e5058eaf8cdb6b88fbb731131a"
+          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
         },
         {
           "path": "tools/map_semantic_review.py",

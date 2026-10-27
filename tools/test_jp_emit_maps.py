@@ -846,7 +846,7 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                     self.assertEqual(source.count('\tclearflag ' + flag + '\n'), 1)
         self.assertEqual(emitter.ROM[0x20B799:0x20B79C], bytes((0x14, 0x14, 0xFE)))
 
-    def test_mossdeep_gym_regeneration_retains_explicit_rotating_tile_waits(self):
+    def test_mossdeep_gym_regeneration_uses_upstream_rotating_macro_waits(self):
         name = 'MossdeepCity_Gym'
         generated = render_map(name)
         reference = (emitter.US_MAPS / name / 'scripts.inc').read_text(encoding='utf-8')
@@ -860,16 +860,15 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                     block = match.group(1)
                     block = re.sub(r'\b0x([0-9A-Fa-f]+)\b',
                                    lambda m: str(int(m.group(1), 16)), block)
-                    wait = '\twaitmovement 0\n' if tag == 'JP generated' else ''
+                    wait = ''
                     self.assertEqual(block.strip(), (
                         '\tplayse SE_SWITCH\n\twaitse\n\tplayse SE_REPEL\n'
                         '\tinitrotatingtilepuzzle FALSE\n'
                         '\tmoverotatingtileobjects ' + str(number) + '\n'
                         + wait + '\tturnrotatingtileobjects\n' + wait
                         + '\tfreerotatingtilepuzzle\n\tend').strip())
-        self.assertEqual(generated.count('\twaitmovement 0\n'), 10)
-        # Unlike upstream, current JP primitive macros do not emit waits.
-        # Keep the source waits until the entire macro/caller contract migrates.
+        self.assertEqual(generated.count('\twaitmovement 0\n'), 0)
+        # Both current macro sets emit exactly one wait per rotating command.
         for tag, path in (
                 ('JP', ROOT / 'asm/macros/event.inc'),
                 ('US', emitter.US_MAPS.parents[1] / 'asm/macros/event.inc')):
@@ -881,7 +880,7 @@ class ReviewedMapShorthandTest(unittest.TestCase):
                     self.assertIsNotNone(body)
                     self.assertEqual(len(re.findall(r'^\s*waitmovement\b',
                                                     body.group(1), re.M)),
-                                     int(tag == 'US'))
+                                     1)
 
     def test_mossdeep_gym_regeneration_retains_jp_text_and_label_boundaries(self):
         name = 'MossdeepCity_Gym'

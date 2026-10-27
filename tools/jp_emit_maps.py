@@ -17778,6 +17778,8 @@ def _reviewed_commands_by_address(source, expand_movement_waits=False):
         if (expand_movement_waits and name == 'applywaitmovement'
                 and len((args or '').split(',')) == 2):
             commands[address].extend((('applymovement', args), ('waitmovement', '0')))
+        elif expand_movement_waits and name in ('moverotatingtileobjects', 'turnrotatingtileobjects'):
+            commands[address].extend(((name, args or ''), ('waitmovement', '0')))
         else:
             commands[address].append((name, args or ''))
     return commands
@@ -18095,6 +18097,41 @@ def collapse_reviewed_movement_wait_macros(mname, generated_source):
     return '\n'.join(out) + ('\n' if generated_source.endswith('\n') else '')
 
 
+def collapse_rotating_tile_wait_macros(mname, generated_source):
+    """Consume the exact native wait now emitted by each upstream macro.
+
+    Only the two current rotating-puzzle owners are covered. A label, a
+    missing wait, or a different wait target must not be swallowed: that
+    would change an entry point or introduce bytes absent from the ROM.
+    """
+    if mname not in ('MossdeepCity_Gym', 'Route110_TrickHousePuzzle7'):
+        return generated_source
+    lines = generated_source.splitlines()
+    out = []
+    index = 0
+    while index < len(lines):
+        line = lines[index]
+        command = _REVIEWED_COMMAND_RE.match(line)
+        if command is not None and command.group(1) in (
+                'moverotatingtileobjects', 'turnrotatingtileobjects'):
+            name, args = command.groups()
+            if ((name == 'moverotatingtileobjects'
+                 and _numeric_operand((args or '').strip()) not in range(5))
+                    or (name == 'turnrotatingtileobjects' and args)):
+                raise RuntimeError('unsupported rotating macro operands for %s' % mname)
+            following = (_REVIEWED_COMMAND_RE.match(lines[index + 1])
+                         if index + 1 < len(lines) else None)
+            if (following is None or following.group(1) != 'waitmovement'
+                    or _numeric_operand((following.group(2) or '0').strip()) != 0):
+                raise RuntimeError('missing native rotating macro wait for %s' % mname)
+            out.append(line)
+            index += 2
+            continue
+        out.append(line)
+        index += 1
+    return '\n'.join(out) + ('\n' if generated_source.endswith('\n') else '')
+
+
 def preserve_reviewed_cracked_ground_fix(mname, generated_source):
     """Keep the reviewed upstream UBFIX alternative, not just its ROM branch."""
     branch = (
@@ -18122,6 +18159,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         text_label_map, region_labels, std_addrs, events_addr)
     overrides = reviewed_operand_overrides(mname, result[0])
     source = apply_reviewed_operand_overrides(result[0], overrides)
+    source = collapse_rotating_tile_wait_macros(mname, source)
     source = collapse_reviewed_high_level_macros(mname, source)
     source = collapse_reviewed_movement_wait_macros(mname, source)
     if MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {}).get('ubfix_ice_step_count'):

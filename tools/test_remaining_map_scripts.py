@@ -68,13 +68,6 @@ def jp_reference_instructions(name, source):
             old = '\tsetvar VAR_0x8006, %d\n' % value
             assert source.count(old) == 2
             source = source.replace(old, '')
-    elif name == 'Route110_TrickHousePuzzle7':
-        for value in range(5):
-            old = '\tmoverotatingtileobjects %d\n\tturnrotatingtileobjects\n' % value
-            assert source.count(old) == 1
-            source = source.replace(old, '\tmoverotatingtileobjects %d\n'
-                                    '\twaitmovement 0\n\tturnrotatingtileobjects\n'
-                                    '\twaitmovement 0\n' % value)
     lines = instruction_lines(source)
     if name == 'TrainerHill_Entrance':
         excluded_blocks = {name + '_EventScript_' + suffix for suffix in

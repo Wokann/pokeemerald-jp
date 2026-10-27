@@ -65,7 +65,7 @@ class MossdeepCommandTests(unittest.TestCase):
         self.assertEqual(parse('initrotatingtilepuzzle FALSE').size,3)
         for n in range(5):
             for number in (str(n),hex(n)):
-                self.assertEqual(parse('moverotatingtileobjects '+number).size,3)
+                self.assertEqual(parse('moverotatingtileobjects '+number).size,6)
         for body in ('initrotatingtilepuzzle TRUE','initrotatingtilepuzzle 0',
                      'moverotatingtileobjects 5','moverotatingtileobjects VAR_RESULT',
                      'turnrotatingtileobjects 0','freerotatingtilepuzzle 0'):
@@ -129,12 +129,12 @@ class MossdeepStoryTests(unittest.TestCase):
         self.assertIn('goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull',initial)
         self.assertIn('goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull',retry)
 
-    def test_five_colored_floor_scripts_keep_both_jp_waits(self):
+    def test_five_colored_floor_scripts_use_both_upstream_macro_waits(self):
         for n,color in enumerate(('Yellow','Blue','Green','Purple','Red')):
             body=script('Gym','EventScript_'+color+'FloorSwitch')
             self.assertEqual(body[3:],[
                 'initrotatingtilepuzzle FALSE','moverotatingtileobjects '+str(n),
-                'waitmovement 0','turnrotatingtileobjects','waitmovement 0',
+                'turnrotatingtileobjects',
                 'freerotatingtilepuzzle','end'])
         # Retained RS switches use four persistent flags, not the five colors.
         for n in range(1,5):

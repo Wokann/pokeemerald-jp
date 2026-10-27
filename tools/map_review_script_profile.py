@@ -53,7 +53,8 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right',
                            'walk_slow_down', 'slide_up', 'walk_down_start_affine',
                            'walk_down_affine', 'emote_heart', 'face_away_player', 'slide_down',
-                           'jump_2_left', 'enable_jump_landing_ground_effect', 'delay_2', 'jump_in_place_up'}
+                           'jump_2_left', 'enable_jump_landing_ground_effect', 'delay_2',
+                           'jump_in_place_up', 'disable_anim'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -83,7 +84,7 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
                    'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2),
                    'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2), 'dowildbattle': (1, 0),
                    'choosecontestmon': (1, 0), 'contestlinktransfer': (1, 0), 'nop1': (1, 0),
-                   'turnrotatingtileobjects': (1, 0), 'freerotatingtilepuzzle': (1, 0),
+                   'turnrotatingtileobjects': (4, 0), 'freerotatingtilepuzzle': (1, 0),
                    'closebraillemessage': (1, 0), 'startcontest': (1, 0),
                    'showcontestresults': (1, 0)}
 
@@ -1000,13 +1001,16 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             # then elevation/direction bytes (including the macro defaults).
             size = 9
         elif version == 4 and op == 'dofieldeffectsparkle':
-            if (len(args) != 3
+            trick = (owner and owner[1] == 'Route110_TrickHouseEntrance_EventScript_DoHidingSpotSparkle'
+                     and args == ['VAR_0x8004', 'VAR_0x8005', 'VAR_0x8006'])
+            if not trick and (len(args) != 3
                     or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
                            for value in args)):
                 raise ValueError('unsupported_profile_sparkle')
-            values = [int(value, 16 if value.lower().startswith('0x') else 10) for value in args]
-            if any(not 0 <= value <= 65535 for value in values[:2]) or not 0 <= values[2] <= 3:
-                raise ValueError('unsupported_profile_sparkle')
+            if not trick:
+                values = [int(value, 16 if value.lower().startswith('0x') else 10) for value in args]
+                if any(not 0 <= value <= 65535 for value in values[:2]) or not 0 <= values[2] <= 3:
+                    raise ValueError('unsupported_profile_sparkle')
             # Three four-byte argument writes and one three-byte field effect.
             size = 15
         elif version == 4 and op == 'setholewarp':
@@ -1018,13 +1022,21 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_warphole')
             size = 3
         elif version == 4 and op == 'initrotatingtilepuzzle':
-            if args != ['FALSE']:
+            trick = (owner and owner[1] in {'Route110_TrickHousePuzzle7_EventScript_' + color + 'Button'
+                                          for color in ('Yellow', 'Blue', 'Green', 'Purple', 'Red')}
+                     and args == ['TRUE'])
+            if args != ['FALSE'] and not trick:
                 raise ValueError('unsupported_profile_rotating_tile_initialization')
             size = 3
+        elif version == 4 and op == 'warpteleport':
+            if (not owner or owner[1] != 'Route110_TrickHousePuzzle7_EventScript_TeleportPad'
+                    or args != ['MAP_ROUTE110_TRICK_HOUSE_PUZZLE7', '3', '19']):
+                raise ValueError('unsupported_profile_teleport_warp')
+            size = 8
         elif version == 4 and op == 'moverotatingtileobjects':
             if len(args) != 1 or not re.fullmatch(r'(?:0x[0-4]|[0-4])', args[0]):
                 raise ValueError('unsupported_profile_rotating_tile_number')
-            size = 3
+            size = 6
         elif version == 4 and op == 'trywondercardscript':
             if args:
                 raise ValueError('unsupported_profile_arguments:trywondercardscript')
