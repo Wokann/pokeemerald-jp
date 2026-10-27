@@ -178,7 +178,9 @@ class StoryProfileTests(unittest.TestCase):
                     self.assertIn(re.sub(r'\s+', ' ', line), {f'.set {name}, {value}'
                                         for name, value in profile.GAME_CORNER_PRICES.items()}
                                         | {f'.set BET_AMOUNT_{value}, {value}'
-                                           for value in profile.FRONTIER_BET_AMOUNTS})
+                                           for value in profile.FRONTIER_BET_AMOUNTS}
+                                        | {f'.set {name}, {value}' for name, value in profile.GLASS_WORKSHOP_PRICES.items()}
+                                        | {'.set LOWEST_ASH_PRICE, BLUE_FLUTE_PRICE'})
                     predicted = 0
                 elif op in ('map_script', 'map_script_2'):
                     tail, size = ('\n.byte 0', 1) if op == 'map_script' else ('\n.2byte 0', 2)

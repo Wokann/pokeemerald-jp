@@ -20,6 +20,12 @@ GAME_CORNER_PRICES = {'TM_DOUBLE_TEAM_COINS': 1500, 'TM_PSYCHIC_COINS': 3500,
     'DOLL_COINS': 1000, 'COINS_PRICE_50': 1000, 'COINS_PRICE_500': 10000}
 COIN_CAPACITY_EXPRESSIONS = {'(MAX_COINS + 1 - 50)', '(MAX_COINS + 1 - 500)'}
 FRONTIER_BET_AMOUNTS = (5, 10, 15)
+GLASS_WORKSHOP_PRICES = {'BLUE_FLUTE_PRICE': 250, 'YELLOW_FLUTE_PRICE': 500,
+    'RED_FLUTE_PRICE': 500, 'WHITE_FLUTE_PRICE': 1000, 'BLACK_FLUTE_PRICE': 1000,
+    'PRETTY_CHAIR_PRICE': 6000, 'PRETTY_DESK_PRICE': 8000}
+GLASS_WORKSHOP_PURCHASES = dict(zip(
+    ('BlueFlute', 'YellowFlute', 'RedFlute', 'WhiteFlute', 'BlackFlute', 'PrettyChair', 'PrettyDesk'),
+    GLASS_WORKSHOP_PRICES))
 FAN_CLUB_NONFAN_EXPRESSION = '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'
 CONTEST_PAINTING_SELECTORS = frozenset(['CONTEST_WINNER_ARTIST']
     + [f'CONTEST_WINNER_HALL_{i}' for i in range(1, 7)]
@@ -54,7 +60,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'walk_slow_down', 'slide_up', 'walk_down_start_affine',
                            'walk_down_affine', 'emote_heart', 'face_away_player', 'slide_down',
                            'jump_2_left', 'enable_jump_landing_ground_effect', 'delay_2',
-                           'jump_in_place_up', 'disable_anim'}
+                           'jump_in_place_up', 'disable_anim', 'ride_water_current_up'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -817,6 +823,17 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         # These are the three original US-style scalar constants, not
         # address aliases. They add no bytes to the one-byte map table.
         return BlockProfile(size=1, kind='map_table')
+    if version == 4 and owner and owner[1] == 'Route113_GlassWorkshop_MapScripts':
+        expected = ['map_script MAP_SCRIPT_ON_TRANSITION, Route113_GlassWorkshop_OnTransition',
+                    '.byte 0'] + [f'.set {name}, {value}' for name, value in GLASS_WORKSHOP_PRICES.items()]
+        expected.append('.set LOWEST_ASH_PRICE, BLUE_FLUTE_PRICE')
+        normalized = [re.sub(r'\s+', ' ', line) for line in lines]
+        if normalized != expected:
+            raise ValueError('changed_glass_workshop_price_definitions')
+        # Seven scalar prices and their minimum alias emit zero bytes;
+        # the actual transition pointer/table still occupies six bytes.
+        return BlockProfile(size=6, kind='map_table',
+                            targets={'Route113_GlassWorkshop_OnTransition': 'script'})
     operations = [line.split(None, 1)[0] for line in lines]
     movements = MOVEMENTS_V4 if version == 4 else MOVEMENTS
     fixed = FIXED_V4 if version == 4 else FIXED
@@ -1113,9 +1130,18 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_givemon')
             size = 15
         elif version == 4 and op == 'subvar':
-            if (len(args) != 2 or not re.fullmatch(r'VAR_\w+', args[0])
-                    or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])
-                    or not 0 <= int(args[1], 16 if args[1].lower().startswith('0x') else 10) <= 65535):
+            glass_owner = owner[1].removeprefix('Route113_GlassWorkshop_EventScript_') if owner else ''
+            glass_price = (owner and owner[1].startswith('Route113_GlassWorkshop_EventScript_')
+                           and glass_owner in GLASS_WORKSHOP_PURCHASES
+                           and args == ['VAR_ASH_GATHER_COUNT', GLASS_WORKSHOP_PURCHASES[glass_owner]])
+            glass_difference = (owner and owner[1] in (
+                'Route113_GlassWorkshop_EventScript_NotEnoughAsh',
+                'Route113_GlassWorkshop_EventScript_NotEnoughAshForItem')
+                and args == ['VAR_0x800A', 'VAR_ASH_GATHER_COUNT'])
+            literal = (len(args) == 2 and re.fullmatch(r'VAR_\w+', args[0])
+                       and re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[1])
+                       and 0 <= int(args[1], 16 if args[1].lower().startswith('0x') else 10) <= 65535)
+            if not (literal or glass_price or glass_difference):
                 raise ValueError('unsupported_profile_subvar')
             size = 5
         elif version == 4 and op == 'showmonpic':

@@ -1540,7 +1540,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -13891,7 +13891,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -17084,7 +17084,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -20152,7 +20152,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -23390,7 +23390,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -25799,7 +25799,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -28763,7 +28763,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -31780,7 +31780,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -34693,7 +34693,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -36895,7 +36895,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -39073,7 +39073,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -41389,7 +41389,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -43951,7 +43951,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -46808,7 +46808,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -49162,7 +49162,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -53583,7 +53583,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -61608,7 +61608,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -74226,7 +74226,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -89745,7 +89745,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -104849,7 +104849,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -116627,7 +116627,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -124741,7 +124741,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -132149,7 +132149,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -139717,7 +139717,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -146967,7 +146967,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -152136,7 +152136,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -152246,7 +152246,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/event_scripts.s",
@@ -161763,7 +161763,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -161873,7 +161873,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/move_tutors.inc",
@@ -171564,7 +171564,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -171674,7 +171674,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/std_msgbox.inc",
@@ -181152,7 +181152,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -181262,7 +181262,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/cable_club.inc",
@@ -190170,7 +190170,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -190285,7 +190285,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/std_msgbox.inc",
@@ -200466,7 +200466,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -200576,7 +200576,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_slateport_interiors.py",
@@ -212486,7 +212486,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -212601,7 +212601,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/event_scripts.s",
@@ -223581,7 +223581,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -223696,7 +223696,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "graphics/trade/jp/animation/830d114.bin",
@@ -234458,7 +234458,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -234573,7 +234573,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "graphics/trade/jp/animation/830d114.bin",
@@ -246814,7 +246814,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -246929,7 +246929,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/tv/text_groups.inc",
@@ -264759,7 +264759,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -264874,7 +264874,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/event_scripts.s",
@@ -275985,7 +275985,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -276095,7 +276095,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_sootopolis_interiors.py",
@@ -286222,7 +286222,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -286337,7 +286337,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/trainer_battle.inc",
@@ -294934,7 +294934,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -295049,7 +295049,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/event_scripts.s",
@@ -301148,7 +301148,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -301263,7 +301263,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/movement.inc",
@@ -307546,7 +307546,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -307656,7 +307656,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_wilderness_mt_pyre_scripts.py",
@@ -313313,7 +313313,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -313428,7 +313428,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/trainer_battle.inc",
@@ -319665,7 +319665,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -319780,7 +319780,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/movement.inc",
@@ -325552,7 +325552,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -325667,7 +325667,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/layouts/AbandonedShip_Deck/border.bin",
@@ -331036,7 +331036,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -331156,7 +331156,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_preproc_braille_unicode.py",
@@ -337650,7 +337650,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -337770,7 +337770,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/trainer_battle.inc",
@@ -345884,7 +345884,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -346004,7 +346004,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/cable_club.inc",
@@ -352936,7 +352936,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -353051,7 +353051,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/std_msgbox.inc",
@@ -357113,7 +357113,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -357233,7 +357233,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/maps/BattleFrontier_BattlePyramidFloor/scripts.inc",
@@ -360922,7 +360922,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -361037,7 +361037,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/item_ball_scripts.inc",
@@ -365471,7 +365471,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -365586,7 +365586,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_tower_family.py",
@@ -370291,7 +370291,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -370406,7 +370406,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_southern_island.py",
@@ -374005,7 +374005,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -374120,7 +374120,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/std_msgbox.inc",
@@ -378015,7 +378015,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -378135,7 +378135,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/event_scripts.s",
@@ -381773,7 +381773,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -381893,7 +381893,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/maps/BattleFrontier_BattleTowerLobby/scripts.inc",
@@ -385305,7 +385305,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -385425,7 +385425,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/maps/BattleFrontier_BattleTowerLobby/scripts.inc",
@@ -388950,7 +388950,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -389070,7 +389070,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/maps/BattleFrontier_BattleDomeLobby/scripts.inc",
@@ -392842,7 +392842,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -392962,7 +392962,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/maps/BattleFrontier_BattleTowerLobby/scripts.inc",
@@ -396283,7 +396283,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -396403,7 +396403,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/maps/BattleFrontier_BattleTowerLobby/scripts.inc",
@@ -399861,7 +399861,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -399981,7 +399981,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/maps/BattleFrontier_BattleTowerLobby/scripts.inc",
@@ -405680,7 +405680,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -405800,7 +405800,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/scripts/std_msgbox.inc",
@@ -414056,7 +414056,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -414176,7 +414176,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/event_scripts.s",
@@ -418412,7 +418412,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -418532,7 +418532,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/event_scripts.s",
@@ -421946,7 +421946,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -422056,7 +422056,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_trainer_hill.py",
@@ -425871,7 +425871,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -425986,7 +425986,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "data/layouts/NavelRock_Exterior/border.bin",
@@ -431320,7 +431320,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -431430,7 +431430,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_trick_house.py",
@@ -433327,7 +433327,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -433437,7 +433437,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_trick_house.py",
@@ -436054,7 +436054,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -436164,7 +436164,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_trick_house.py",
@@ -439462,7 +439462,7 @@
         {
           "path": "tools/map_review_script_profile.py",
           "selector": "file",
-          "sha256": "f27ad02d131129a32e062e44e942cc6d8f2ce5d7facae4ffa506e5d42c1d7220"
+          "sha256": "08e247a47cf7c5173835741106d21a14d239aafadbe9f893dd0c9fea9266707a"
         },
         {
           "path": "tools/map_semantic_review.py",
@@ -439572,7 +439572,7 @@
         {
           "path": "tools/test_map_review_script_profile.py",
           "selector": "file",
-          "sha256": "36a27e8631cf435655bf4e90f0ed4240258a1d02768d884dd119d49094df8e21"
+          "sha256": "e517364aed0b0f696234592b3fa53ece81c64feb7f5fb5f403128e701121f359"
         },
         {
           "path": "tools/test_map_review_trick_house.py",
