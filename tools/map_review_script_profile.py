@@ -78,7 +78,8 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
                    'bufferpartymonnick': (4, 2), 'buffermovename': (4, 2),
                    'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2), 'dowildbattle': (1, 0),
                    'choosecontestmon': (1, 0), 'contestlinktransfer': (1, 0), 'nop1': (1, 0),
-                   'turnrotatingtileobjects': (1, 0), 'freerotatingtilepuzzle': (1, 0)}
+                   'turnrotatingtileobjects': (1, 0), 'freerotatingtilepuzzle': (1, 0),
+                   'closebraillemessage': (1, 0)}
 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
@@ -326,14 +327,18 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
     lines = statements(block)
     if not lines:
         raise ValueError('empty_profile_block')
-    if version == 4 and lines == [
-            '#ifdef UBFIX', 'setvar VAR_ICE_STEP_COUNT, 1', '#else',
-            'copyvar VAR_ICE_STEP_COUNT, 1, warn=FALSE', '#endif', 'end']:
-        # Both exact CaveHole branches are six bytes with no external edges.
-        # Profile that common shape; fresh CPP/AS/native proof still selects
-        # and verifies the actual configured opcode without rewriting source.
-        return profile_block(root, 'Entry::\ncopyvar VAR_ICE_STEP_COUNT, 1\nend',
-                             waits, version=version, address=address)
+    if version == 4 and any(line.startswith('#') for line in lines):
+        conditional = ['#ifdef UBFIX', 'setvar VAR_ICE_STEP_COUNT, 1', '#else',
+                       'copyvar VAR_ICE_STEP_COUNT, 1, warn=FALSE', '#endif']
+        starts = [i for i, line in enumerate(lines) if line == conditional[0]]
+        directives = [i for i, line in enumerate(lines) if line.startswith('#')]
+        if (len(starts) != 1 or lines[starts[0]:starts[0] + 5] != conditional
+                or directives != [starts[0], starts[0] + 2, starts[0] + 4]):
+            raise ValueError('unsupported_profile_conditional')
+        # Only these exact branches share a five-byte, edge-free shape.
+        # Keep surrounding calls and termination in the profile; actual
+        # CPP/AS/native checks still select the configured source opcode.
+        lines[starts[0]:starts[0] + 5] = ['copyvar VAR_ICE_STEP_COUNT, 1']
     if any(';' in line for line in lines):
         raise ValueError('unmodeled_statement_separator')
     owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
@@ -453,6 +458,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                            for value in args[1:])):
                 raise ValueError('unsupported_profile_setwarp')
             size = 8
+        elif version == 4 and op in ('fadeoutbgm', 'fadeinbgm'):
+            if (len(args) != 1 or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[0])
+                    or not 0 <= int(args[0], 16 if args[0].lower().startswith('0x') else 10) <= 255):
+                raise ValueError('unsupported_profile_bgm_fade')
+            size = 2
         elif version == 4 and op == 'dofieldeffectsparkle':
             if (len(args) != 3
                     or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
@@ -788,12 +798,12 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_bufferstring')
             result.texts[args[1]] = 'string'
             size = 6
-        elif version == 4 and op == 'braillemsgbox':
+        elif version == 4 and op in ('braillemessage', 'braillemsgbox'):
             if (len(args) != 1 or not NAME.fullmatch(args[0])
                     or args[0] in ('NULL', 'gStringVar4')):
                 raise ValueError('unsupported_profile_braille_message')
             result.texts[args[0]] = 'braille'
-            size = 7
+            size = 5 if op == 'braillemessage' else 7
         elif op == 'msgbox':
             if len(args) != 2 or args[1] not in standard or not NAME.fullmatch(args[0]):
                 raise ValueError('unsupported_profile_message')
