@@ -900,8 +900,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_' + op)
             size = 3
         elif version == 4 and op == 'seteventmon':
-            if (len(args) not in (2, 3) or args[0] not in ('SPECIES_LATIAS', 'SPECIES_LATIOS')
-                    or args[1] != '50' or len(args) == 3 and args[2] not in ('ITEM_NONE', 'ITEM_SOUL_DEW')):
+            lati = (len(args) in (2, 3) and args[0] in ('SPECIES_LATIAS', 'SPECIES_LATIOS')
+                    and args[1] == '50' and (len(args) == 2 or args[2] in ('ITEM_NONE', 'ITEM_SOUL_DEW')))
+            mew = (owner and owner[1] == 'FarawayIsland_Interior_EventScript_Mew'
+                   and args == ['SPECIES_MEW', '30'])
+            if not (lati or mew):
                 raise ValueError('unsupported_profile_seteventmon')
             waits = special_waits(root) if waits is None else waits
             function = 'CreateEnemyEventMon'
