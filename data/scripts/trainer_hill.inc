@@ -32,10 +32,10 @@ EventScript_TrainerHillTimer::
 TrainerHill_1F_EventScript_DummyWarpToEntranceCounter::
 	setvar VAR_TEMP_2, 1
 	trainerhill_getusingereader
-	goto_if_eq VAR_RESULT, TRUE, TrainerHill_1F_EventScript_WarpSilentToEntranceCounter  @ VAR_RESULT always FALSE here
+	goto_if_eq VAR_RESULT, TRUE, TrainerHill_1F_EventScript_WarpSilentToEntranceCounter
 	end
 
-@ Never reached
+@ JP: return to the counter when the e-Reader challenge data changed or became invalid.
 TrainerHill_1F_EventScript_WarpSilentToEntranceCounter::
 	warpsilent MAP_TRAINER_HILL_ENTRANCE, 9, 6
 	waitstate

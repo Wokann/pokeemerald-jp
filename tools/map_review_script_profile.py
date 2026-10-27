@@ -90,6 +90,15 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
 FALLTHROUGHS = {
+    'TrainerHill_Entrance_EventScript_ExitChallenge': 'TrainerHill_Entrance_EventScript_ExitChallengeLost',
+    'TrainerHill_Entrance_EventScript_ExitChallengeECard': 'TrainerHill_Entrance_EventScript_PlayerExitChallenge',
+    'TrainerHill_Entrance_EventScript_PlayerExitChallenge': 'TrainerHill_Entrance_EventScript_EndExitChallenge',
+    'TrainerHill_Entrance_EventScript_ThanksForPlaying': 'TrainerHill_Entrance_EventScript_AttendantEnd',
+    'TrainerHill_Entrance_EventScript_AllFloorsUsed': 'TrainerHill_Entrance_EventScript_AskChallengeTrainers',
+    'TrainerHill_Roof_EventScript_Owner': 'TrainerHill_Roof_EventScript_Arrived',
+    'TrainerHill_Roof_EventScript_Arrived': 'TrainerHill_Roof_EventScript_GivePrize',
+    'TrainerHill_Roof_EventScript_GivePrize': 'TrainerHill_Roof_EventScript_ReceivePrize',
+    'TrainerHill_Roof_EventScript_CheckFinalTime': 'TrainerHill_Roof_EventScript_NewRecord',
     'BattlePyramid_FindItemBall': 'BattlePyramid_FindItemBallEnd',
     'SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles': 'SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs',
     'SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs': 'SootopolisCity_Gym_1F_EventScript_OpenFirstStairs',
@@ -495,6 +504,13 @@ UNREACHABLE_WAIT_TAILS = {
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    **{name: ('CallTrainerHillFunction', 8, ()) for name in (
+        'trainerhill_start', 'trainerhill_getownerstate', 'trainerhill_giveprize',
+        'trainerhill_finaltime', 'trainerhill_resumetimer', 'trainerhill_lost',
+        'trainerhill_getstatus', 'trainerhill_gettime', 'trainerhill_allfloorsused',
+        'trainerhill_getusingereader', 'trainerhill_inchallenge', 'trainerhill_postbattletext',
+        'trainerhill_settrainerflags', 'trainerhill_getsaved', 'trainerhill_setsaved',
+        'trainerhill_clearsaved', 'trainerhill_getwon')},
     **{name: ('CallBattlePikeFunction', 8, ()) for name in (
         'pike_setnextroom', 'pike_isfinalroom', 'pike_setroomobjects', 'pike_getroomtype',
         'pike_inwildmonroom', 'pike_exitwildmonroom', 'pike_getstatus', 'pike_getstatusmon',
@@ -764,6 +780,14 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             ['cpp', '-P', '-nostdinc', '-undef', '-include', str(root / 'include/config.h'), '-'],
             input='\n'.join(lines) + '\n', text=True)
         lines = statements(configured)
+    elif (version == 4 and owner and owner[1] == 'TrainerHill_1F_EventScript_DummyOnWarp'
+          and any(line.startswith('#') for line in lines)):
+        if lines != ['setvar VAR_TEMP_3, 1', '#ifdef BUGFIX', 'end', '#endif']:
+            raise ValueError('unsupported_trainer_hill_warp_conditional')
+        configured = subprocess.check_output(
+            ['cpp', '-P', '-nostdinc', '-undef', '-include', str(root / 'include/config.h'), '-'],
+            input='\n'.join(lines) + '\n', text=True)
+        lines = statements(configured)
     elif version == 4 and any(line.startswith('#') for line in lines):
         conditional = ['#ifdef UBFIX', 'setvar VAR_ICE_STEP_COUNT, 1', '#else',
                        'copyvar VAR_ICE_STEP_COUNT, 1, warn=FALSE', '#endif']
@@ -824,6 +848,19 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             raise ValueError('unsupported_movement_arguments')
         return BlockProfile(size=len(lines), kind='movement')
     result = BlockProfile()
+    if (version == 4 and owner
+            and re.fullmatch(r'TrainerHill_[1-4]F_MapScripts', owner[1])):
+        expected = ['map_script MAP_SCRIPT_ON_RESUME, TrainerHill_OnResume',
+                    'map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, TrainerHill_OnWarp',
+                    'map_script MAP_SCRIPT_ON_FRAME_TABLE, TrainerHill_OnFrame', '.byte 0']
+        if owner[1] in ('TrainerHill_3F_MapScripts', 'TrainerHill_4F_MapScripts'):
+            expected.pop(1)
+        if lines != expected:
+            raise ValueError('changed_trainer_hill_floor_callbacks')
+        # These floors receive trainers from C-generated object templates;
+        # their JSON's empty object array is not the runtime object list.
+        result.targets['TrainerHill_EventScript_TrainerBattle'] = 'script'
+        result.runtime_scripts.add('trainer_hill_trainers')
     if lines == ['.byte 0']:
         return BlockProfile(size=1, kind='map_table')
     table_ops = set(operations) & {'map_script', 'map_script_2'}
@@ -1116,16 +1153,20 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             # battle script or the next byte. Do not invent a battle frame.
             result.texts.update({value: 'string' for value in args[3:]})
             size = 14
-        elif version == 4 and op == 'trainerbattle' and args and args[0] == 'TRAINER_BATTLE_PYRAMID':
+        elif (version == 4 and op == 'trainerbattle' and args
+              and args[0] in ('TRAINER_BATTLE_PYRAMID', 'TRAINER_BATTLE_HILL')):
             placeholder = 'BattleFacility_TrainerBattle_PlaceholderText'
-            if (args != ['TRAINER_BATTLE_PYRAMID', 'TRAINER_PHILLIP', 'LOCALID_NONE', placeholder, placeholder]
+            mode = args[0]
+            if (args != [mode, 'TRAINER_PHILLIP', 'LOCALID_NONE', placeholder, placeholder]
                     or position == len(lines) - 1 or owner is None):
-                raise ValueError('unsupported_pyramid_trainer_battle_form')
+                raise ValueError('unsupported_facility_trainer_battle_form')
+            if mode == 'TRAINER_BATTLE_HILL' and owner[1] != 'TrainerHill_EventScript_TrainerBattle':
+                raise ValueError('unsupported_trainer_hill_battle_owner')
             target('EventScript_TryDoNormalTrainerBattle', 'script')
             target('EventScript_StartTrainerApproach', 'script')
             result.texts[placeholder] = 'string'
             size = 14
-            result.trainer_battles.append(dict(owner=owner[1], mode='TRAINER_BATTLE_PYRAMID',
+            result.trainer_battles.append(dict(owner=owner[1], mode=mode,
                 trainer='TRAINER_PHILLIP', intro_text=placeholder, defeat_text=placeholder,
                 address=f'0x{address + result.size:08X}', resume=f'0x{address + result.size + size:08X}'))
         elif version == 4 and op == 'trainerbattle':
@@ -1424,6 +1465,15 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
     if version == 4 and owner and owner[1] in FALLTHROUGHS:
         result.fallthrough = FALLTHROUGHS[owner[1]]
         target(result.fallthrough, 'script')
+    if version == 4 and owner and owner[1] == 'TrainerHill_1F_EventScript_DummyOnWarp':
+        if lines not in (['setvar VAR_TEMP_3, 1'], ['setvar VAR_TEMP_3, 1', 'end']):
+            raise ValueError('changed_trainer_hill_implicit_end_prefix')
+        if tail != 'end':
+            # Default JP bytes omit END. The first byte of the adjacent
+            # condition table (VAR_TEMP_2's low byte, 0x02) acts as END.
+            # Keep the target typed as a table; native checks bind that byte.
+            result.fallthrough = 'TrainerHill_OnFrame'
+            target(result.fallthrough, 'condition_table')
     if version == 4 and owner and owner[1] in CONTEXT_WARP_EXITS:
         destination, x, y = CONTEXT_WARP_EXITS[owner[1]]
         if lines[-2:] != [f'warp {destination}, {x}, {y}', 'waitstate']:

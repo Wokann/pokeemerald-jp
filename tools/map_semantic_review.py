@@ -547,8 +547,15 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                 callback_exits[label] = profile.context_callback
             if profile.runtime_scripts:
                 bound = {c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}
-                if (profile.runtime_scripts != {'saved_wonder_card'}
-                        or not {'src/script.c', 'src/scrcmd.c', 'src/mystery_gift.c', 'src/util.c'} <= bound):
+                contexts = {
+                    'saved_wonder_card': {'src/script.c', 'src/scrcmd.c', 'src/mystery_gift.c', 'src/util.c'},
+                    'trainer_hill_trainers': {'src/trainer_hill.c', 'src/field_control_avatar.c',
+                        'src/trainer_see.c', 'src/fieldmap.c', 'src/battle_setup.c',
+                        'include/constants/trainer_hill.h'},
+                }
+                if (len(profile.runtime_scripts) != 1
+                        or any(name not in contexts or not contexts[name] <= bound
+                               for name in profile.runtime_scripts)):
                     raise ValueError('missing_runtime_script_interface_context')
             if profile.runtime_texts:
                 bound = {c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}
@@ -1357,10 +1364,48 @@ def _trainer_native(root: Path, batch: dict, native: dict, errors: list[str], pa
     if extended:
         tables = {table for mode, _, table in TRAINER_FORMS.values()
                   if mode in {b.get('mode') for b in batch['trainer_battles']}}
+        if any(b.get('mode') == 'TRAINER_BATTLE_HILL' for b in batch['trainer_battles']):
+            tables.add('sOrdinaryBattleParams')
         if any('mode' not in b for b in batch['trainer_battles']):
             tables.add('sOrdinaryNoIntroBattleParams')
         tables |= {'sTrainerBOrdinaryBattleParams', 'sTrainerBContinueScriptBattleParams'}
         _trainer_parameter_tables(root, native, tables, errors)
+
+
+def _script_fallthrough_native(label: str, profile, address: int, native: dict, errors: list[str]) -> None:
+    """Bind physical continuation, including the one measured implicit END."""
+    if not profile.fallthrough:
+        return
+    after = address + profile.size
+    if native['symbols'].get(profile.fallthrough) != {after}:
+        errors.append('native_script_fallthrough_mismatch:' + label)
+    if label == 'TrainerHill_1F_EventScript_DummyOnWarp':
+        at = after - 0x08000000
+        if (profile.fallthrough != 'TrainerHill_OnFrame'
+                or profile.targets.get(profile.fallthrough) != 'condition_table'
+                or native['rom'][at:at + 1] != b'\x02'):
+            errors.append('native_trainer_hill_implicit_end_mismatch')
+
+
+def _trainer_hill_script_native(profile, native: dict, errors: list[str]) -> None:
+    """Bind the exact C-returned script for the four generated trainer floors."""
+    if profile.runtime_scripts != {'trainer_hill_trainers'}:
+        return
+    symbol = 'GetTrainerHillTrainerScript'
+    values = {v & ~1 for v in native['symbols'].get(symbol, set())}
+    scripts = native['symbols'].get('TrainerHill_EventScript_TrainerBattle', set())
+    if len(values) != 1 or len(scripts) != 1:
+        errors.append('native_trainer_hill_script_symbol_mismatch')
+        return
+    address = next(iter(values))
+    if not any(start <= address and address + 8 <= start + size
+               and (owner == 'src/trainer_hill.o' or owner.endswith('/src/trainer_hill.o'))
+               for start, size, owner in native['owners']):
+        errors.append('native_trainer_hill_script_owner_mismatch')
+    at = address - 0x08000000
+    expected = b'\x00\x48\x70\x47' + struct.pack('<I', next(iter(scripts)))
+    if native['rom'][at:at + 8] != expected:
+        errors.append('native_trainer_hill_script_producer_mismatch')
 
 
 def _trainer_parameter_tables(root: Path, native: dict, tables: set[str], errors: list[str]) -> None:
@@ -1710,8 +1755,8 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 for label, profile in profiles.items():
                     if native['symbols'].get(label) != {address}:
                         errors.append('native_addressed_label_mismatch:' + label)
-                    if profile.fallthrough and native['symbols'].get(profile.fallthrough) != {address + profile.size}:
-                        errors.append('native_script_fallthrough_mismatch:' + label)
+                    _script_fallthrough_native(label, profile, address, native, errors)
+                    _trainer_hill_script_native(profile, native, errors)
                     _runtime_text_native(root, profile, native, errors)
                     address += profile.size
             for dep in batch.get('shared_dependencies', []):
@@ -1721,8 +1766,7 @@ def _native_batch(root: Path, batch: dict, maps: list[str], errors: list[str], n
                 profiles = profile_owner(root, '\n'.join(block[label] for label in dep['labels']),
                                          version=4, address=address)
                 for label, profile in profiles.items():
-                    if profile.fallthrough and native['symbols'].get(profile.fallthrough) != {address + profile.size}:
-                        errors.append('native_script_fallthrough_mismatch:' + label)
+                    _script_fallthrough_native(label, profile, address, native, errors)
                     _runtime_text_native(root, profile, native, errors)
                     address += profile.size
             _trainer_native(root, batch, native, errors, parsed)
