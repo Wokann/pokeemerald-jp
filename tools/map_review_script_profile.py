@@ -343,9 +343,45 @@ FALLTHROUGHS |= {'BattleFrontier_BattlePyramid' + room + '_' + owner:
         ('Top', 'EventScript_BrandonHeardGoldSpeech', 'EventScript_BattleBrandonGold'),
     )}
 
+FALLTHROUGHS |= {'BattleFrontier_BattleArena' + room + '_EventScript_' + owner:
+                'BattleFrontier_BattleArena' + room + '_EventScript_' + target
+    for room, owner, target in (
+        ('Lobby', 'DefeatedTycoon', 'GiveBattlePoints'),
+        ('Lobby', 'SaveAfterChallenge', 'RecordMatch'),
+        ('Lobby', 'RecordMatch', 'EndSaveAfterChallenge'),
+        ('Lobby', 'Attendant', 'AskTakeChallenge'),
+        ('Lobby', 'AskTakeChallenge', 'TryEnterChallenge'),
+        ('Lobby', 'TryEnterChallenge', 'SaveBeforeChallenge'),
+        ('Lobby', 'SaveBeforeChallenge', 'EnterChallenge'),
+        ('Lobby', 'NotEnoughValidMons', 'NotEnoughValidMonsLv50'),
+        ('Lobby', 'LoadPartyAndCancelChallenge', 'CancelChallenge'),
+        ('Lobby', 'CancelChallenge', 'EndCancelChallenge'),
+        ('BattleRoom', 'AnnounceTrainers', 'DeclareOpponentWinner'),
+        ('BattleRoom', 'DeclareOpponentWinner', 'WarpToLobbyLost'),
+        ('BattleRoom', 'DefeatedOpponent', 'AskReadyForOpponent'),
+        ('BattleRoom', 'AskReadyForOpponent', 'AskReadyForOpponentNoRecord'),
+        ('BattleRoom', 'AskReadyForOpponentNoRecord', 'AskRecordBattle'),
+        ('BattleRoom', 'AskRecordBattle', 'RecordBattle'),
+        ('BattleRoom', 'AskPauseChallenge', 'AskRetireChallenge'),
+        ('BattleRoom', 'AskRetireChallenge', 'ContinueChallenge'),
+        ('BattleRoom', 'TycoonUpNext', 'AskReadyForTycoon'),
+        ('BattleRoom', 'AskReadyForTycoon', 'AskReadyForTycoonNoRecord'),
+        ('BattleRoom', 'AskReadyForTycoonNoRecord', 'BattleGreta'),
+        ('BattleRoom', 'BattleGreta', 'BattleGretaSilver'),
+        ('BattleRoom', 'IntroGretaGold', 'BattleGretaGold'),
+    )}
+
 # These exact movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
 MOVEMENT_PREFIXES = {
+    'BattleFrontier_BattleArenaBattleRoom_Movement_PlayerEnter':
+        ('BattleFrontier_BattleArenaBattleRoom_Movement_PlayerStepForwardLong', ('walk_right', 'walk_right')),
+    'BattleFrontier_BattleArenaBattleRoom_Movement_PlayerStepForwardLong':
+        ('BattleFrontier_BattleArenaBattleRoom_Movement_PlayerStepForward', ('walk_right',)),
+    'BattleFrontier_BattleArenaBattleRoom_Movement_OpponentEnter':
+        ('BattleFrontier_BattleArenaBattleRoom_Movement_OpponentStepForwardLong', ('walk_left', 'walk_left')),
+    'BattleFrontier_BattleArenaBattleRoom_Movement_OpponentStepForwardLong':
+        ('BattleFrontier_BattleArenaBattleRoom_Movement_OpponentStepForward', ('walk_left',)),
     'BattleFrontier_BattlePalaceCorridor_Movement_PlayerEnterBattleRoom':
         ('BattleFrontier_BattlePalaceCorridor_Movement_AttendantEnterBattleRoom', ('walk_up',)),
     'BattleFrontier_BattlePalaceBattleRoom_Movement_PlayerEnterRoom':
@@ -371,6 +407,10 @@ MOVEMENT_PREFIXES = {
 # This audited warp replaces the old script context before the following
 # movement bytes. It is not a bytecode edge into that movement definition.
 CONTEXT_WARP_EXITS = {
+    'BattleFrontier_BattleArenaBattleRoom_EventScript_WarpToLobbyLost':
+        ('MAP_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY', 7, 8),
+    'BattleFrontier_BattleArenaBattleRoom_EventScript_ReturnToLobbyWon':
+        ('MAP_BATTLE_FRONTIER_BATTLE_ARENA_LOBBY', 7, 8),
     'BattleFrontier_BattleDomeBattleRoom_EventScript_DefeatedOpponent':
         ('MAP_BATTLE_FRONTIER_BATTLE_DOME_PRE_BATTLE_ROOM', 5, 3),
     'SlateportCity_BattleTentBattleRoom_EventScript_WarpToLobbyWon':
@@ -387,9 +427,19 @@ CONTEXT_CALLBACK_EXITS = {
     'MossdeepCity_SpaceCenter_2F_EventScript_DoStevenMultiBattle': 'SetCB2WhiteOut',
 }
 
+# The wait is physically present after an unconditional jump, so it cannot
+# continue into the following winner label. Admit only this measured tail.
+UNREACHABLE_WAIT_TAILS = {
+    'BattleFrontier_BattleArenaBattleRoom_EventScript_ContinueChallenge':
+        'BattleFrontier_BattleArenaBattleRoom_EventScript_AnnounceTrainers',
+}
+
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    'arena_init': ('CallBattleArenaFunction', 8, ()),
+    'arena_gettrainername': ('CallBattleArenaFunction', 8, ()),
+    'arena_save': ('CallBattleArenaFunction', 13, (r'(?:0|CHALLENGE_STATUS_(?:SAVING|PAUSED))',)),
     'pyramid_init': ('CallBattlePyramidFunction', 8, ()),
     'pyramid_get': ('CallBattlePyramidFunction', 13, (r'PYRAMID_DATA_WIN_STREAK(?:_(?:50|OPEN)|_ACTIVE_(?:50|OPEN))?',)),
     'pyramid_set': ('CallBattlePyramidFunction', 18, (r'PYRAMID_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|TRAINER_FLAGS)', r'(?:0|255|TRUE|FALSE)')),
@@ -491,7 +541,7 @@ FACILITY_FORMS = {
     'apprentice_shouldleave': ('CallApprenticeFunction', 8, ()),
     'apprentice_shiftsaved': ('CallApprenticeFunction', 8, ()),
     'arena_get': ('CallBattleArenaFunction', 13, (r'ARENA_DATA_\w+',)),
-    'arena_set': ('CallBattleArenaFunction', 18, (r'ARENA_DATA_\w+', r'(?:VAR_\w+|\d+)')),
+    'arena_set': ('CallBattleArenaFunction', 18, (r'ARENA_DATA_\w+', r'(?:VAR_\w+|\d+|TRUE|FALSE)')),
     'fallarbortent_init': ('CallFallarborTentFunction', 8, ()),
     'fallarbortent_getprize': ('CallFallarborTentFunction', 8, ()),
     'fallarbortent_save': ('CallFallarborTentFunction', 13, (r'(?:CHALLENGE_STATUS_\w+|0)',)),
@@ -848,7 +898,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                             'dome_set': 'CallBattleDomeFunction'}[op]
                 size = 13 if omitted else 18
             elif op == 'frontier_results':
-                valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER', 'FRONTIER_FACILITY_PYRAMID')
+                valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER', 'FRONTIER_FACILITY_PYRAMID', 'FRONTIER_FACILITY_ARENA')
                          or len(args) == 2 and args[0] == 'FRONTIER_FACILITY_TOWER'
                          and re.fullmatch(r'(?:FRONTIER_MODE_(?:SINGLES|DOUBLES|MULTIS|LINK_MULTIS)|0xFF|255)', args[1])
                          or len(args) == 2 and args[0] in ('FRONTIER_FACILITY_DOME', 'FRONTIER_FACILITY_PALACE')
@@ -859,6 +909,9 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             else:
                 function, size, patterns = FACILITY_FORMS[op]
                 if len(args) != len(patterns) or any(not re.fullmatch(p, a) for p, a in zip(patterns, args)):
+                    raise ValueError('unsupported_profile_facility_macro:' + op)
+                if (op == 'arena_set' and args[1] in ('TRUE', 'FALSE')
+                        and args[0] != 'ARENA_DATA_WIN_STREAK_ACTIVE'):
                     raise ValueError('unsupported_profile_facility_macro:' + op)
             waits = special_waits(root) if waits is None else waits
             if waits.get(function) not in (0, 1):
@@ -1191,7 +1244,9 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 ereader = position > 0 and lines[position - 1] == 'special CopyEReaderTrainerGreeting'
                 tower = position > 0 and lines[position - 1] == 'tower_getopponentintro 0'
                 tower |= _multi_intro_message(owner[1] if owner else None, lines, position, op)
-                palace = (owner is not None and owner[1] == 'BattleFrontier_BattlePalaceBattleRoom_EventScript_NextOpponentEnter'
+                palace = (owner is not None and owner[1] in (
+                              'BattleFrontier_BattlePalaceBattleRoom_EventScript_NextOpponentEnter',
+                              'BattleFrontier_BattleArenaBattleRoom_EventScript_AnnounceTrainers')
                           and position > 0 and lines[position - 1] == 'palace_getopponentintro'
                           and args[1] == 'MSGBOX_DEFAULT')
                 if version != 4 or not (produced or ereader or tower or palace):
@@ -1256,6 +1311,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 or result.specials.get(special) != 1):
             raise ValueError('changed_context_replacing_callback')
         result.context_callback = special
+        result.may_fall_through = False
+    if version == 4 and owner and owner[1] in UNREACHABLE_WAIT_TAILS:
+        destination = UNREACHABLE_WAIT_TAILS[owner[1]]
+        if lines[-2:] != ['goto ' + destination, 'waitstate']:
+            raise ValueError('changed_unreachable_wait_tail')
         result.may_fall_through = False
     return result
 
