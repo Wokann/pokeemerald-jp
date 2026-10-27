@@ -404,9 +404,31 @@ FALLTHROUGHS |= {'BattleFrontier_BattleFactory' + room + '_EventScript_' + owner
         ('BattleRoom', 'IntroNolandGold', 'BattleNolandGold'),
     )}
 
+FALLTHROUGHS |= {'BattleFrontier_BattlePike' + room + '_EventScript_' + owner:
+                'BattleFrontier_BattlePike' + room + '_EventScript_' + target
+    for room, owner, target in (
+        ('Lobby', 'DefeatedQueen', 'GiveBattlePoints'),
+        ('Lobby', 'Attendant', 'AskTakeChallenge'),
+        ('Lobby', 'AskTakeChallenge', 'TryEnterChallenge'),
+        ('Lobby', 'TryEnterChallenge', 'SaveBeforeChallenge'),
+        ('Lobby', 'NotEnoughValidMons', 'NotEnoughValidMonsLv50'),
+        ('Lobby', 'LoadPartyAndCancelChallenge', 'CancelChallenge'),
+        ('Lobby', 'CancelChallenge', 'EndCancelChallenge'),
+        ('RoomNormal', 'EnterSingleBattleRoom', 'WarpToLobbyLost'),
+        ('RoomNormal', 'EnterBrainRoom', 'LucyEnter'),
+        ('RoomNormal', 'LucyEnter', 'BattleLucySilver'),
+        ('RoomNormal', 'IntroLucyGold', 'BattleLucyGold'),
+        ('RoomNormal', 'NPC', 'NormalNPC'),
+    )}
+FALLTHROUGHS['BattleFrontier_BattlePikeRoom_OnResume'] = 'BattleFrontier_BattlePikeThreePathRoom_EventScript_EndOnResume'
+
 # These exact movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
 MOVEMENT_PREFIXES = {
+    'BattleFrontier_BattlePikeLobby_Movement_PlayerWalkToCorridor':
+        ('BattleFrontier_BattlePikeLobby_Movement_AttendantWalkToCorridor', ('walk_up',)),
+    'BattleFrontier_BattlePikeRoomNormal_Movement_MonMoveAside':
+        ('BattleFrontier_BattlePikeRoomNormal_Movement_MonFaceRight', ('walk_left',)),
     'BattleFrontier_BattleArenaBattleRoom_Movement_PlayerEnter':
         ('BattleFrontier_BattleArenaBattleRoom_Movement_PlayerStepForwardLong', ('walk_right', 'walk_right')),
     'BattleFrontier_BattleArenaBattleRoom_Movement_PlayerStepForwardLong':
@@ -472,6 +494,18 @@ UNREACHABLE_WAIT_TAILS = {
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    **{name: ('CallBattlePikeFunction', 8, ()) for name in (
+        'pike_setnextroom', 'pike_isfinalroom', 'pike_setroomobjects', 'pike_getroomtype',
+        'pike_inwildmonroom', 'pike_exitwildmonroom', 'pike_getstatus', 'pike_getstatusmon',
+        'pike_healonetwomons', 'pike_getnpcmsg', 'pike_flashscreen', 'pike_sethintroom',
+        'pike_gethintroomid', 'pike_gethint', 'pike_cleartrainerids', 'pike_getbrainstatus',
+        'pike_prequeenheal', 'pike_ispartyfullhealth', 'pike_savehelditems', 'pike_resethelditems',
+        'pike_init')},
+    'pike_get': ('CallBattlePikeFunction', 13, (r'PIKE_DATA_(?:WIN_STREAK|TOTAL_STREAKS)',)),
+    'pike_set': ('CallBattlePikeFunction', 18, (r'PIKE_DATA_(?:WIN_STREAK|TOTAL_STREAKS|WIN_STREAK_ACTIVE)', r'(?:0|TRUE|FALSE|VAR_RESULT)')),
+    'pike_save': ('CallBattlePikeFunction', 13, (r'(?:0|CHALLENGE_STATUS_(?:SAVING|PAUSED))',)),
+    'pike_nohealing': ('CallBattlePikeFunction', 13, (r'(?:TRUE|FALSE)',)),
+    'pike_gettrainerintro': ('CallBattlePikeFunction', 13, (r'[01]',)),
     'factory_init': ('CallBattleFactoryFunction', 8, ()),
     'factory_save': ('CallBattleFactoryFunction', 13, (r'(?:0|CHALLENGE_STATUS_(?:SAVING|PAUSED))',)),
     'factory_get': ('CallBattleFactoryFunction', 13, (r'FACTORY_DATA_WIN_STREAK(?:_SWAPS)?',)),
@@ -803,6 +837,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         parts = line.split(None, 1)
         op = parts[0]
         args = [v.strip() for v in parts[1].split(',')] if len(parts) == 2 else []
+        if (version == 4 and op == 'frontier_set'
+                and args == ['FRONTIER_DATA_CHALLENGE_STATUS CHALLENGE_STATUS_LOST']):
+            # The shared Pike retire script uses this US assembler spelling.
+            args = ['FRONTIER_DATA_CHALLENGE_STATUS', 'CHALLENGE_STATUS_LOST']
         if any(not ATOM.fullmatch(arg) and not (version == 4 and (
                op == 'goto_if_ge' and index == 1 and arg in COIN_CAPACITY_EXPRESSIONS
                or op == 'goto_if_eq' and index == 1 and args[0] == 'VAR_RESULT' and arg == FAN_CLUB_NONFAN_EXPRESSION
@@ -947,7 +985,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                             'dome_set': 'CallBattleDomeFunction', 'factory_set': 'CallBattleFactoryFunction'}[op]
                 size = 13 if omitted else 18
             elif op == 'frontier_results':
-                valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER', 'FRONTIER_FACILITY_PYRAMID', 'FRONTIER_FACILITY_ARENA')
+                valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER', 'FRONTIER_FACILITY_PYRAMID', 'FRONTIER_FACILITY_ARENA', 'FRONTIER_FACILITY_PIKE')
                          or len(args) == 2 and args[0] == 'FRONTIER_FACILITY_TOWER'
                          and re.fullmatch(r'(?:FRONTIER_MODE_(?:SINGLES|DOUBLES|MULTIS|LINK_MULTIS)|0xFF|255)', args[1])
                          or len(args) == 2 and args[0] in ('FRONTIER_FACILITY_DOME', 'FRONTIER_FACILITY_PALACE', 'FRONTIER_FACILITY_FACTORY')
@@ -1301,11 +1339,22 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 palace |= (owner is not None and owner[1] == 'BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleOpponent'
                            and position > 1 and lines[position - 2:position] == ['palace_getopponentintro', 'lockall']
                            and args[1] == 'MSGBOX_DEFAULT')
-                if version != 4 or not (produced or ereader or tower or palace):
+                pike = None
+                if owner is not None and position > 0 and args[1] == 'MSGBOX_DEFAULT':
+                    prefix = 'BattleFrontier_BattlePikeRoomNormal_EventScript_'
+                    if (owner[1] == prefix + 'NormalNPC' and lines[position - 1] == 'pike_getnpcmsg'):
+                        pike = 'pike_getnpcmsg'
+                    elif (owner[1] in (prefix + 'EnterSingleBattleRoom', prefix + 'EnterHardBattleRoom')
+                          and lines[position - 1] == 'pike_gettrainerintro 0'
+                          or owner[1] == prefix + 'EnterDoubleBattleRoom'
+                          and lines[position - 1] in ('pike_gettrainerintro 0', 'pike_gettrainerintro 1')):
+                        pike = 'pike_gettrainerintro'
+                if version != 4 or not (produced or ereader or tower or palace or pike):
                     raise ValueError('unproven_runtime_message_producer')
                 result.runtime_texts['gStringVar4'] = ('CopyEReaderTrainerGreeting' if ereader
                                                      else 'tower_getopponentintro' if tower
                                                      else 'palace_getopponentintro' if palace
+                                                     else pike if pike
                                                      else 'battletent_getopponentintro')
             else:
                 result.texts[args[0]] = 'string'

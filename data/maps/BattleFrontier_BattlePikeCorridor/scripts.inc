@@ -16,7 +16,7 @@ BattleFrontier_BattlePikeCorridor_EventScript_EnterCorridor::
 	pike_nohealing TRUE
 	applymovement LOCALID_PLAYER, BattleFrontier_BattlePikeCorridor_Movement_PlayerEnterCorridor
 	applymovement LOCALID_PIKE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePikeCorridor_Movement_AttendantEnterCorridor
-	waitmovement 0x0
+	waitmovement 0
 	lockall
 	msgbox BattleFrontier_BattlePikeCorridor_Text_YourChallengeHasBegun, MSGBOX_DEFAULT
 	closemessage

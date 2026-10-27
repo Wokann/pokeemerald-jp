@@ -568,6 +568,16 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                         'asm/macros/battle_frontier/battle_palace.inc', 'src/battle_tower.c',
                         'include/battle_tower.h', 'src/frontier_util.c', 'src/easy_chat.c',
                         'src/scrcmd.c', 'src/string_util.c', 'include/string_util.h'},
+                    'pike_gettrainerintro': {
+                        'src/battle_pike.c', 'include/constants/battle_pike.h',
+                        'asm/macros/battle_frontier/battle_pike.inc', 'src/battle_tower.c',
+                        'include/battle_tower.h', 'src/frontier_util.c', 'src/easy_chat.c',
+                        'src/scrcmd.c', 'src/string_util.c', 'include/string_util.h'},
+                    'pike_getnpcmsg': {
+                        'src/battle_pike.c', 'include/constants/battle_pike.h',
+                        'asm/macros/battle_frontier/battle_pike.inc', 'src/battle_tower.c',
+                        'include/battle_tower.h', 'src/frontier_util.c', 'src/easy_chat.c',
+                        'src/scrcmd.c', 'src/string_util.c', 'include/string_util.h'},
                 }
                 producer = profile.runtime_texts.get('gStringVar4')
                 if (set(profile.runtime_texts) != {'gStringVar4'} or producer not in contexts
@@ -1089,12 +1099,16 @@ def _runtime_text_native(root: Path, profile, native: dict, errors: list):
             errors.append('native_runtime_text_buffer_mismatch:' + symbol)
     tower = profile.runtime_texts == {'gStringVar4': 'tower_getopponentintro'}
     palace = profile.runtime_texts == {'gStringVar4': 'palace_getopponentintro'}
-    if not (tower or palace) and profile.runtime_texts != {'gStringVar4': 'CopyEReaderTrainerGreeting'}:
+    pike_npc = profile.runtime_texts == {'gStringVar4': 'pike_getnpcmsg'}
+    pike_intro = profile.runtime_texts == {'gStringVar4': 'pike_gettrainerintro'}
+    pike = pike_npc or pike_intro
+    if not (tower or palace or pike) and profile.runtime_texts != {'gStringVar4': 'CopyEReaderTrainerGreeting'}:
         return
     producer = ('sub_0816383C' if tower else 'BufferOpponentIntroSpeech' if palace
+                else 'BufferNPCMessage' if pike_npc else 'BufferRecordMixingTrainerMessage' if pike_intro
                 else 'CopyEReaderTrainerGreeting')
     addresses = {}
-    for symbol, owner in ((producer, 'src/battle_palace.o' if palace else 'src/battle_tower.o'),
+    for symbol, owner in ((producer, 'src/battle_pike.o' if pike else 'src/battle_palace.o' if palace else 'src/battle_tower.o'),
                           ('FrontierSpeechToString', 'src/battle_tower.o'),
                           ('ConvertEasyChatWordsToString', 'src/easy_chat.o')):
         values = {value & ~1 for value in native['symbols'].get(symbol, set())}
@@ -1121,7 +1135,7 @@ def _runtime_text_native(root: Path, profile, native: dict, errors: list):
                     delta -= 0x800000
                 targets.add(address + offset + 4 + delta)
         return targets
-    size = 0x98 if tower else 0x2C if palace else 0x1C
+    size = 0x98 if tower else 0x2C if palace else 0x78 if pike_npc else 0x68 if pike_intro else 0x1C
     address, greeting = code(producer, size)
     if len(greeting) != size or addresses['FrontierSpeechToString'] not in calls(address, greeting):
         errors.append('native_runtime_text_greeting_call_mismatch')
@@ -1146,6 +1160,31 @@ def _runtime_text_native(root: Path, profile, native: dict, errors: list):
             data = native['rom'][slot:slot + 4]
             if len(data) != 4 or struct.unpack('<I', data)[0] != (addresses[producer] | 1):
                 errors.append('native_runtime_text_palace_dispatch_mismatch')
+    if pike:
+        tables = native['symbols'].get('gUnknown_85DDE30', set())
+        if len(tables) != 1 or not all(0x08000000 <= value < 0x0A000000 for value in tables):
+            errors.append('native_runtime_text_pike_dispatch_mismatch')
+        else:
+            slot = next(iter(tables)) - 0x08000000 + (14 if pike_npc else 21) * 4
+            data = native['rom'][slot:slot + 4]
+            if len(data) != 4 or struct.unpack('<I', data)[0] != (addresses[producer] | 1):
+                errors.append('native_runtime_text_pike_dispatch_mismatch')
+    if pike_npc:
+        for symbol, size in (('gUnknown_85DDB54', 0xC8), ('gUnknown_85DDC1C', 0x1F8)):
+            values = native['symbols'].get(symbol, set())
+            if len(values) != 1 or not all(0x08000000 <= value < 0x0A000000 for value in values):
+                errors.append('native_runtime_text_pike_npc_tables_mismatch')
+                continue
+            at = next(iter(values))
+            if (struct.pack('<I', at) not in greeting
+                    or len(native['rom'][at - 0x08000000:at - 0x08000000 + size]) != size):
+                errors.append('native_runtime_text_pike_npc_tables_mismatch')
+    if pike_intro:
+        for symbol in ('gSpecialVar_0x8005', 'gTrainerBattleOpponent_A', 'gTrainerBattleOpponent_B', 'gFacilityTrainers'):
+            values = native['runtime_text_symbols'].get(symbol, set())
+            if (len(values) != 1 or not all(0x02000000 <= value < 0x02040000 for value in values)
+                    or struct.pack('<I', next(iter(values))) not in greeting):
+                errors.append('native_runtime_text_pike_trainer_selector_mismatch')
     address, speech = code('FrontierSpeechToString', 0x70)
     buffers = native['runtime_text_symbols'].get('gStringVar4', set())
     if (len(speech) != 0x70 or addresses['ConvertEasyChatWordsToString'] not in calls(address, speech)
