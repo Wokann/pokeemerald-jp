@@ -241,6 +241,21 @@ FALLTHROUGHS |= {
     'Apprentice_EventScript_UseWhatHeldItem': 'Apprentice_EventScript_ChooseHoldItem',
     'Apprentice_EventScript_ConfirmHoldNothing': 'Apprentice_EventScript_HoldNothing',
 }
+FALLTHROUGHS |= {'BattleFrontier_BattleTowerMultiBattleRoom_EventScript_' + owner:
+                'BattleFrontier_BattleTowerMultiBattleRoom_EventScript_' + target
+    for owner, target in (
+        ('DoOpponentIntrosLink', 'DoTowerBattle'),
+        ('DoTowerBattle', 'WarpToLobbyLost'),
+        ('RetorePartyMsgLink', 'RestoreParty'),
+        ('RestoreParty', 'AskReadyForOpponents'),
+        ('AskReadyForOpponents', 'AskReadyForOpponentsNoRecord'),
+        ('AskReadyForOpponentsNoRecord', 'AskRecordBattle'),
+        ('AskRecordBattle', 'RecordBattle'),
+        ('AskPauseChallenge', 'AskRetireChallenge'),
+        ('AskRetireChallenge', 'ContinueChallenge'),
+        ('ReadyForNextOpponentSet', 'ReadyFor2ndOpponentSet'),
+        ('ReadyForNextOpponentSetLink', 'ReadyFor2ndOpponentSetLink'),
+    )}
 
 # These exact movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
@@ -282,13 +297,14 @@ FACILITY_FORMS = {
     'pyramid_setitem': ('CallBattlePyramidFunction', 8, ()),
     'pyramid_hideitem': ('CallBattlePyramidFunction', 8, ()),
     'pyramid_showhint': ('CallBattlePyramidFunction', 8, ()),
+    'pyramid_resetparty': ('CallBattlePyramidFunction', 8, ()),
     'frontier_checkvisittrainer': ('CallFrontierUtilFunc', 8, ()),
     'frontier_saveparty': ('CallFrontierUtilFunc', 8, ()),
     'frontier_results': ('CallFrontierUtilFunc', 13, (r'FACILITY_LINK_CONTEST',)),
     'frontier_getstatus': ('CallFrontierUtilFunc', 8, ()),
     'frontier_get': ('CallFrontierUtilFunc', 13, (r'FRONTIER_DATA_\w+',)),
     'frontier_checkineligible': ('CallFrontierUtilFunc', 8, ()),
-    'frontier_setpartyorder': ('CallFrontierUtilFunc', 13, (r'(?:[1-6]|FRONTIER_PARTY_SIZE)',)),
+    'frontier_setpartyorder': ('CallFrontierUtilFunc', 13, (r'(?:[1-6]|FRONTIER_PARTY_SIZE|FRONTIER_MULTI_PARTY_SIZE)',)),
     'frontier_reset': ('CallFrontierUtilFunc', 8, ()),
     'frontier_restorehelditems': ('CallFrontierUtilFunc', 8, ()),
     'frontier_resetsketch': ('CallFrontierUtilFunc', 8, ()),
@@ -297,7 +313,10 @@ FACILITY_FORMS = {
     'tower_setinterviewdata': ('CallBattleTowerFunc', 8, ()),
     'tower_setbattlewon': ('CallBattleTowerFunc', 8, ()),
     'tower_get': ('CallBattleTowerFunc', 13, (r'TOWER_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|LVL_MODE)',)),
-    'tower_getopponentintro': ('CallBattleTowerFunc', 13, (r'0',)),
+    'tower_getopponentintro': ('CallBattleTowerFunc', 13, (r'[01]',)),
+    'tower_loadpartners': ('CallBattleTowerFunc', 8, ()),
+    'tower_setpartnergfx': ('CallBattleTowerFunc', 8, ()),
+    'tower_dopartnermsg': ('CallBattleTowerFunc', 13, (r'PARTNER_MSGID_(?:INTRO|MON1|MON2_ASK|ACCEPT|REJECT)',)),
     'tower_giveribbons': ('CallBattleTowerFunc', 8, ()),
     'tower_save': ('CallBattleTowerFunc', 13, (r'(?:CHALLENGE_STATUS_(?:SAVING|PAUSED)|0)',)),
     'tower_loadlinkopponents': ('CallBattleTowerFunc', 8, ()),
@@ -428,6 +447,26 @@ def special_waits(root: Path) -> dict[str, int]:
     if not result:
         raise ValueError('missing_special_profile')
     return result
+
+
+def _multi_intro_message(owner: str | None, lines: list[str], position: int, operation: str) -> bool:
+    """Only the four native-checked Multi introductions retain this RAM producer.
+
+    These precise delay/movement windows do not model general data flow or
+    permit arbitrary commands between a producer and a message consumer.
+    """
+    prefix = 'BattleFrontier_BattleTowerMultiBattleRoom'
+    expected = prefix + '_EventScript_' + ('OpponentsEnter' if operation == 'msgbox' else 'DoOpponentIntrosLink')
+    if operation not in ('msgbox', 'messageautoscroll') or owner != expected:
+        return False
+    for index in (0, 1):
+        window = ['tower_getopponentintro ' + str(index)]
+        if index == 0:
+            window.append('delay 15')
+        window.append(f'applywaitmovement LOCALID_TOWER_MULTI_BATTLE_OPPONENT_{index + 1}, {prefix}_Movement_WalkInPlaceLeft')
+        if position >= len(window) and lines[position - len(window):position] == window:
+            return True
+    return False
 
 
 def profile_block(root: Path, block: str, waits=None, *, version=3, address=None) -> BlockProfile:
@@ -1006,6 +1045,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                              == ['battletent_getopponentintro', 'lockall'])
                 ereader = position > 0 and lines[position - 1] == 'special CopyEReaderTrainerGreeting'
                 tower = position > 0 and lines[position - 1] == 'tower_getopponentintro 0'
+                tower |= _multi_intro_message(owner[1] if owner else None, lines, position, op)
                 if version != 4 or not (produced or ereader or tower):
                     raise ValueError('unproven_runtime_message_producer')
                 result.runtime_texts['gStringVar4'] = ('CopyEReaderTrainerGreeting' if ereader
@@ -1018,7 +1058,12 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         elif version == 4 and op == 'messageautoscroll':
             if len(args) != 1 or not NAME.fullmatch(args[0]) or args[0] == 'NULL':
                 raise ValueError('unsupported_profile_autoscroll_message')
-            result.texts[args[0]] = 'string'
+            if args[0] == 'gStringVar4':
+                if not _multi_intro_message(owner[1] if owner else None, lines, position, op):
+                    raise ValueError('unproven_runtime_autoscroll_producer')
+                result.runtime_texts['gStringVar4'] = 'tower_getopponentintro'
+            else:
+                result.texts[args[0]] = 'string'
             size = 5
         elif version == 4 and op == 'messageinstant':
             if len(args) != 1 or not NAME.fullmatch(args[0]) or args[0] in ('NULL', 'gStringVar4'):

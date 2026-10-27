@@ -111,7 +111,7 @@ BattleFrontier_BattleTowerMultiPartnerRoom_EventScript_EnterElevator::
 BattleFrontier_BattleTowerMultiPartnerRoom_EventScript_MoveToElevator::
 	applymovement LOCALID_TOWER_PARTNER_ROOM_ATTENDANT, BattleFrontier_BattleTowerMultiPartnerRoom_Movement_AttendantEnterElevator
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerMultiPartnerRoom_Movement_PlayerEnterElevator
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 @ Unused
