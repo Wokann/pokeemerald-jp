@@ -9,9 +9,9 @@ from pathlib import Path
 import re
 import subprocess
 try:
-    from map_semantic_review import encoded_text, label_blocks, statements, text_kind
+    from map_semantic_review import _literal_define, encoded_text, label_blocks, statements, text_kind
 except ModuleNotFoundError:
-    from tools.map_semantic_review import encoded_text, label_blocks, statements, text_kind
+    from tools.map_semantic_review import _literal_define, encoded_text, label_blocks, statements, text_kind
 
 NAME = re.compile(r'[A-Za-z_]\w*\Z')
 ATOM = re.compile(r'(?:[A-Za-z_]\w*|0x[0-9A-Fa-f]+|-?\d+)\Z')
@@ -918,6 +918,9 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                and (args[0], arg) in (('1', 'MAP_NUM(MAP_BIRTH_ISLAND_EXTERIOR)'),
                                       ('2', 'MAP_GROUP(MAP_BIRTH_ISLAND_EXTERIOR)'))
                or op == 'goto_if_eq' and index == 1 and args[0] == 'VAR_RESULT' and arg == FAN_CLUB_NONFAN_EXPRESSION
+               or op == 'setberrytree' and index == 1 and owner
+               and owner[1] == 'EventScript_ResetAllBerries'
+               and re.fullmatch(r'ITEM_TO_BERRY\(ITEM_[A-Z0-9_]+_BERRY\)', arg)
                or op == 'copyvar' and index == 2 and arg == 'warn=FALSE')) for index, arg in enumerate(args)):
             raise ValueError('unsupported_profile_argument_expression:' + op)
         if version == 4 and op == 'copyvar' and len(args) == 3:
@@ -1290,9 +1293,26 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             size = 15 + waits[function]
         elif version == 4 and op == 'pokenavcall':
             if len(args) != 1 or not NAME.fullmatch(args[0]) or args[0] == 'NULL':
-                raise ValueError('unsupported_pokenav_call')
-            result.texts[args[0]] = 'string'
+                if not (owner and owner[1] == 'Std_MsgboxPokenav' and args == ['NULL']):
+                    raise ValueError('unsupported_pokenav_call')
+                # Like message NULL, this standard script reads ctx->data[0].
+                # NULL is an indirect operand, never a literal text owner.
+            else:
+                result.texts[args[0]] = 'string'
             size = 5
+        elif version == 4 and op == 'setberrytree':
+            if (not owner or owner[1] != 'EventScript_ResetAllBerries' or len(args) != 3
+                    or not re.fullmatch(r'BERRY_TREE_ROUTE_\w+', args[0])
+                    or not re.fullmatch(r'ITEM_TO_BERRY\(ITEM_[A-Z0-9_]+_BERRY\)', args[1])
+                    or args[2] != 'BERRY_STAGE_BERRIES'):
+                raise ValueError('unsupported_profile_initial_berry_tree')
+            tree = _literal_define(root, 'include/constants/berry.h', args[0])
+            berry = _literal_define(root, 'include/constants/items.h', args[1][14:-1])
+            first = _literal_define(root, 'include/constants/items.h', 'ITEM_CHERI_BERRY')
+            last = _literal_define(root, 'include/constants/items.h', 'ITEM_ENIGMA_BERRY')
+            if not 0 <= tree <= 255 or not first <= berry <= last:
+                raise ValueError('unsupported_profile_initial_berry_tree')
+            size = 4
         elif version == 4 and op in ('checkitem', 'checkpcitem'):
             if len(args) not in (1, 2) or not re.fullmatch(r'(?:ITEM|VAR)_\w+', args[0]):
                 raise ValueError('unsupported_profile_' + op)
