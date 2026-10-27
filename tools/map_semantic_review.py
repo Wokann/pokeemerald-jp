@@ -187,8 +187,15 @@ def shared_script_blocks(root: Path, dep: dict) -> dict[str, str]:
     text_owner = dep.get('kind') in ('string', 'braille')
     terminal = (bool(encoded_text(root, body, dep['kind'])) if text_owner
                 else bool(statements(body)) and statements(body)[-1] in ('return', 'end'))
+    tail = statements(''.join(lines[cut:]))
+    expected_tail = ['.include "' + p + '"' for p in dep['end_before_includes']]
+    if (not text_owner and dep['path'] == 'data/event_scripts.s'
+            and tail == expected_tail + ['.byte 0']):
+        # JP keeps one byte of section-end padding after the complete sibling
+        # include list. It stays in the full source hash, outside this script.
+        tail = tail[:-1]
     if (not terminal
-            or statements(''.join(lines[cut:])) != ['.include "' + p + '"' for p in dep['end_before_includes']]):
+            or tail != expected_tail):
         raise ValueError('nonterminal_or_mixed_shared_include_boundary')
     blocks[label] = body
     return blocks
@@ -464,6 +471,11 @@ def story_event_target(event: dict, field: str, *, version=3):
             # The BG union stores a base ID, not this pointer. The C dispatcher
             # selects this root only when facing north and TrySetCurSecretBase succeeds.
             target = 'SecretBase_EventScript_CheckEntrance'
+        elif (version == 4 and kind == 'sign'
+              and (target in ('NULL', '0', '0x0') or type(target) is int and target == 0)):
+            # The JP C dispatcher handles a zero BG script before its kind
+            # switch and selects this actual shared script, not no event.
+            target = 'EventScript_TestSignpostMsg'
         elif kind != 'sign' or target in (None, 'NULL', '0', '0x0', 0):
             raise ValueError('unsupported_story_background_dispatch')
     elif field == 'coord_events':
@@ -613,6 +625,9 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                     if addressed and field == 'bg_events' and event.get('type') == 'secret_base':
                         event_context = {'src/field_control_avatar.c', 'src/secret_base.c', 'src/fldeff_misc.c',
                                          'include/constants/secret_bases.h'}
+                    elif (addressed and field == 'bg_events' and event.get('type') == 'sign'
+                          and target == 'EventScript_TestSignpostMsg'):
+                        event_context = {'src/field_control_avatar.c'}
                     elif addressed and field == 'coord_events' and event.get('type') == 'weather':
                         event_context = {'src/field_control_avatar.c', 'src/coord_event_weather.c',
                                          'include/constants/weather.h'}

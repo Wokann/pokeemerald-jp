@@ -44,7 +44,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'clear_affine_anim', 'levitate', 'destroy_extra_task',
                            'walk_fast_left', 'jump_right', 'jump_in_place_right',
                            'disable_jump_landing_ground_effect', 'walk_faster_left', 'walk_fast_down',
-                           'walk_in_place_fast_left', 'walk_in_place_fast_right', 'jump_2_down', 'cut_tree',
+                           'walk_in_place_fast_left', 'walk_in_place_fast_right', 'walk_in_place_fast_up', 'jump_2_down', 'cut_tree',
                            'walk_faster_down', 'lock_anim', 'walk_in_place_left', 'walk_in_place_up',
                            'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
                            'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right',
@@ -326,6 +326,14 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
     lines = statements(block)
     if not lines:
         raise ValueError('empty_profile_block')
+    if version == 4 and lines == [
+            '#ifdef UBFIX', 'setvar VAR_ICE_STEP_COUNT, 1', '#else',
+            'copyvar VAR_ICE_STEP_COUNT, 1, warn=FALSE', '#endif', 'end']:
+        # Both exact CaveHole branches are six bytes with no external edges.
+        # Profile that common shape; fresh CPP/AS/native proof still selects
+        # and verifies the actual configured opcode without rewriting source.
+        return profile_block(root, 'Entry::\ncopyvar VAR_ICE_STEP_COUNT, 1\nend',
+                             waits, version=version, address=address)
     if any(';' in line for line in lines):
         raise ValueError('unmodeled_statement_separator')
     owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
@@ -444,6 +452,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                            or not 0 <= int(value, 16 if value.lower().startswith('0x') else 10) <= 65535
                            for value in args[1:])):
                 raise ValueError('unsupported_profile_setwarp')
+            size = 8
+        elif version == 4 and op == 'setholewarp':
+            if len(args) != 1 or not re.fullmatch(r'MAP_\w+', args[0]):
+                raise ValueError('unsupported_profile_setholewarp')
             size = 8
         elif version == 4 and op == 'warphole':
             if len(args) != 1 or not re.fullmatch(r'MAP_\w+', args[0]):
@@ -766,6 +778,12 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_bufferstring')
             result.texts[args[1]] = 'string'
             size = 6
+        elif version == 4 and op == 'braillemsgbox':
+            if (len(args) != 1 or not NAME.fullmatch(args[0])
+                    or args[0] in ('NULL', 'gStringVar4')):
+                raise ValueError('unsupported_profile_braille_message')
+            result.texts[args[0]] = 'braille'
+            size = 7
         elif op == 'msgbox':
             if len(args) != 2 or args[1] not in standard or not NAME.fullmatch(args[0]):
                 raise ValueError('unsupported_profile_message')
