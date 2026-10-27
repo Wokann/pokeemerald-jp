@@ -8,7 +8,7 @@ SootopolisCity_Gym_1F_MapScripts::
 	.byte 0
 
 SootopolisCity_Gym_1F_OnTransition:: @ 0x0820E239
-	setvar VAR_ICE_STEP_COUNT, 0x1
+	setvar VAR_ICE_STEP_COUNT, 1
 	end
 
 SootopolisCity_Gym_1F_OnResume:: @ 0x0820E23F
@@ -21,19 +21,19 @@ SootopolisCity_Gym_1F_OnLoad:: @ 0x0820E242
 	end
 
 SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles:: @ 0x0820E24B
-	goto_if_lt VAR_ICE_STEP_COUNT, 0x8, SootopolisCity_Gym_1F_EventScript_StopCheckingStairs
-	goto_if_lt VAR_ICE_STEP_COUNT, 0x1C, SootopolisCity_Gym_1F_EventScript_OpenFirstStairs
-	goto_if_lt VAR_ICE_STEP_COUNT, 0x43, SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs
-	setmetatile 0x8, 0x4, METATILE_SootopolisGym_Stairs, FALSE
-	setmetatile 0x8, 0x5, METATILE_SootopolisGym_Stairs, FALSE
+	goto_if_lt VAR_ICE_STEP_COUNT, 8, SootopolisCity_Gym_1F_EventScript_StopCheckingStairs
+	goto_if_lt VAR_ICE_STEP_COUNT, 28, SootopolisCity_Gym_1F_EventScript_OpenFirstStairs
+	goto_if_lt VAR_ICE_STEP_COUNT, 67, SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs
+	setmetatile 8, 4, METATILE_SootopolisGym_Stairs, FALSE
+	setmetatile 8, 5, METATILE_SootopolisGym_Stairs, FALSE
 
 SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs:: @ 0x0820E27E
-	setmetatile 0x8, 0xA, METATILE_SootopolisGym_Stairs, FALSE
-	setmetatile 0x8, 0xB, METATILE_SootopolisGym_Stairs, FALSE
+	setmetatile 8, 10, METATILE_SootopolisGym_Stairs, FALSE
+	setmetatile 8, 11, METATILE_SootopolisGym_Stairs, FALSE
 
 SootopolisCity_Gym_1F_EventScript_OpenFirstStairs:: @ 0x0820E290
-	setmetatile 0x8, 0xF, METATILE_SootopolisGym_Stairs, FALSE
-	setmetatile 0x8, 0x10, METATILE_SootopolisGym_Stairs, FALSE
+	setmetatile 8, 15, METATILE_SootopolisGym_Stairs, FALSE
+	setmetatile 8, 16, METATILE_SootopolisGym_Stairs, FALSE
 
 SootopolisCity_Gym_1F_EventScript_StopCheckingStairs:: @ 0x0820E2A2
 	return
@@ -46,24 +46,24 @@ SootopolisCity_Gym_1F_OnFrame:: @ 0x0820E2A3
 	.2byte 0
 
 SootopolisCity_Gym_1F_EventScript_UnlockFirstStairs:: @ 0x0820E2C5
-	addvar VAR_ICE_STEP_COUNT, 0x1
-	delay 0x28
+	addvar VAR_ICE_STEP_COUNT, 1
+	delay 40
 	playse SE_ICE_STAIRS
 	call SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles
 	special DrawWholeMapView
 	end
 
 SootopolisCity_Gym_1F_EventScript_UnlockSecondStairs:: @ 0x0820E2D9
-	addvar VAR_ICE_STEP_COUNT, 0x1
-	delay 0x28
+	addvar VAR_ICE_STEP_COUNT, 1
+	delay 40
 	playse SE_ICE_STAIRS
 	call SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles
 	special DrawWholeMapView
 	end
 
 SootopolisCity_Gym_1F_EventScript_UnlockThirdStairs:: @ 0x0820E2ED
-	addvar VAR_ICE_STEP_COUNT, 0x1
-	delay 0x28
+	addvar VAR_ICE_STEP_COUNT, 1
+	delay 40
 	playse SE_ICE_STAIRS
 	call SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles
 	special DrawWholeMapView
@@ -71,10 +71,10 @@ SootopolisCity_Gym_1F_EventScript_UnlockThirdStairs:: @ 0x0820E2ED
 
 SootopolisCity_Gym_1F_EventScript_FallThroughIce:: @ 0x0820E301
 	lockall
-	delay 0x14
+	delay 20
 	applywaitmovement LOCALID_PLAYER, SootopolisCity_Gym_1F_Movement_FallThroughIce
 	playse SE_FALL
-	delay 0x3C
+	delay 60
 	warphole MAP_SOOTOPOLIS_CITY_GYM_B1F
 	waitstate
 	end
@@ -103,18 +103,18 @@ SootopolisCity_Gym_1F_EventScript_JuanDefeated:: @ 0x0820E35A
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_STEVEN
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE
-	setvar VAR_SOOTOPOLIS_CITY_STATE, 0x6
+	setvar VAR_SOOTOPOLIS_CITY_STATE, 6
 	clearflag FLAG_HIDE_SOOTOPOLIS_CITY_MAN_1
-	setvar VAR_0x8008, 0x8
+	setvar VAR_0x8008, 8
 	call Common_EventScript_SetGymTrainers
 	call SootopolisCity_Gym_1F_EventScript_GiveWaterPulse
 	closemessage
-	delay 0x1E
+	delay 30
 	playfanfare MUS_REGISTER_MATCH_CALL
 	msgbox SootopolisCity_Gym_1F_Text_RegisteredJuan, MSGBOX_DEFAULT
 	waitfanfare
 	closemessage
-	delay 0x1E
+	delay 30
 	setflag FLAG_ENABLE_JUAN_MATCH_CALL
 	release
 	end

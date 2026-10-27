@@ -30,7 +30,7 @@ SootopolisCity_MysteryEventsHouse_B1F_EventScript_BattleVisitingTrainer:: @ 0x08
 	applywaitmovement LOCALID_PLAYER, SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerExitBasement
 	special LoadPlayerParty
 	setvar VAR_TEMP_1, 1
-	warp MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F, 0x3, 0x1
+	warp MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F, 3, 1
 	waitstate
 	releaseall
 	end

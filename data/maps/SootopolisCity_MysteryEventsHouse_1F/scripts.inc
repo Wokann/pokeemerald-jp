@@ -12,14 +12,14 @@ SootopolisCity_MysteryEventsHouse_1F_OnTransition:: @ 0x0820FD6B
 	end
 
 SootopolisCity_MysteryEventsHouse_1F_EventScript_SetTrainerVisitingLayout:: @ 0x0820FD8A
-	setvar VAR_TEMP_1, 0x1
-	setobjectxyperm LOCALID_MYSTERY_EVENTS_OLD_MAN, 0x3, 0x2
+	setvar VAR_TEMP_1, 1
+	setobjectxyperm LOCALID_MYSTERY_EVENTS_OLD_MAN, 3, 2
 	setobjectmovementtype LOCALID_MYSTERY_EVENTS_OLD_MAN, MOVEMENT_TYPE_FACE_DOWN
 	setmaplayoutindex LAYOUT_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_STAIRS_UNBLOCKED
 	return
 
 SootopolisCity_MysteryEventsHouse_1F_EventScript_MoveOldManToDoor:: @ 0x0820FD9E
-	setobjectxyperm LOCALID_MYSTERY_EVENTS_OLD_MAN, 0x2, 0x2
+	setobjectxyperm LOCALID_MYSTERY_EVENTS_OLD_MAN, 2, 2
 	setobjectmovementtype LOCALID_MYSTERY_EVENTS_OLD_MAN, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
@@ -98,7 +98,7 @@ SootopolisCity_MysteryEventsHouse_1F_EventScript_TrainerVisiting:: @ 0x0820FE65
 	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_MysteryEventsHouse_1F_EventScript_EnterBasementNorth
 	call_if_eq VAR_FACING, DIR_EAST, SootopolisCity_MysteryEventsHouse_1F_EventScript_EnterBasementEast
 	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_MysteryEventsHouse_1F_EventScript_EnterBasementWest
-	warp MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F, 0x3, 0x1
+	warp MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F, 3, 1
 	waitstate
 	release
 	end

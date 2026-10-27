@@ -485,6 +485,23 @@ def story_event_target(event: dict, field: str, *, version=3):
     return target
 
 
+def _external_message_dependencies(texts: dict, local_labels: set, actual_kinds: dict,
+                                   explicit_dependencies=()) -> dict:
+    """A typed local owner covers its text even when another map references it."""
+    external = {}
+    for target, kind in texts.items():
+        if target in local_labels:
+            if actual_kinds.get(target) != kind:
+                raise ValueError('incompatible_message_target:' + target)
+            if target in explicit_dependencies:
+                # Older batches retain a separate, fully bound native text
+                # claim even when the enclosing map owner also covers it.
+                external[target] = kind
+        else:
+            external[target] = kind
+    return external
+
+
 def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict, dict]:
     """Derive component identity/extent and actual shared-call closure from source."""
     contracts, external, external_text = {}, set(), {}
@@ -523,10 +540,17 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
                     raise ValueError('missing_runtime_script_interface_context')
             if profile.runtime_texts:
                 bound = {c.get('path') for c in batch['sources'] if c.get('selector') == 'file'}
-                if (profile.runtime_texts != {'gStringVar4': 'battletent_getopponentintro'}
-                        or not {'src/battle_tent.c', 'src/battle_tower.c', 'include/battle_tower.h',
-                                'src/frontier_util.c', 'src/scrcmd.c', 'src/string_util.c',
-                                'include/string_util.h'} <= bound):
+                contexts = {
+                    'battletent_getopponentintro': {
+                        'src/battle_tent.c', 'src/battle_tower.c', 'include/battle_tower.h',
+                        'src/frontier_util.c', 'src/scrcmd.c', 'src/string_util.c', 'include/string_util.h'},
+                    'CopyEReaderTrainerGreeting': {
+                        'src/battle_tower.c', 'include/battle_tower.h', 'src/easy_chat.c',
+                        'src/scrcmd.c', 'src/string_util.c', 'include/string_util.h'},
+                }
+                producer = profile.runtime_texts.get('gStringVar4')
+                if (set(profile.runtime_texts) != {'gStringVar4'} or producer not in contexts
+                        or not contexts[producer] <= bound):
                     raise ValueError('missing_runtime_text_interface_context')
             if label in actual_kinds and actual_kinds[label] != profile.kind:
                 raise ValueError('incompatible_definition_kind:' + label)
@@ -739,6 +763,9 @@ def component_contracts(root: Path, batch: dict, maps: list[str]) -> tuple[dict,
         if not isinstance(dep, dict) or not MAP_RE.fullmatch(str(dep.get('entry', ''))) or dep['entry'] in text_entries:
             raise ValueError('invalid_or_duplicate_text_dependency')
         text_entries[dep['entry']] = dep
+    if addressed:
+        external_text = _external_message_dependencies(external_text, local_labels, actual_kinds,
+                                                       set(text_entries))
     if set(text_entries) != set(external_text):
         raise ValueError('incomplete_or_unreachable_text_dependencies')
     for entry, dep in text_entries.items():
@@ -1036,6 +1063,44 @@ def _runtime_text_native(root: Path, profile, native: dict, errors: list):
         values = native['runtime_text_symbols'].get(symbol, set())
         if len(values) != 1 or not all(0x02000000 <= value < 0x02040000 for value in values):
             errors.append('native_runtime_text_buffer_mismatch:' + symbol)
+    if profile.runtime_texts != {'gStringVar4': 'CopyEReaderTrainerGreeting'}:
+        return
+    addresses = {}
+    for symbol, owner in (('CopyEReaderTrainerGreeting', 'src/battle_tower.o'),
+                          ('FrontierSpeechToString', 'src/battle_tower.o'),
+                          ('ConvertEasyChatWordsToString', 'src/easy_chat.o')):
+        values = {value & ~1 for value in native['symbols'].get(symbol, set())}
+        if len(values) != 1:
+            errors.append('native_runtime_text_producer_symbol_mismatch:' + symbol)
+            continue
+        address = addresses[symbol] = next(iter(values))
+        if not any(start <= address < start + size and (actual == owner or actual.endswith('/' + owner))
+                   for start, size, actual in native['owners']):
+            errors.append('native_runtime_text_producer_owner_mismatch:' + symbol)
+    if len(addresses) != 3:
+        return
+    def code(symbol, size):
+        address = addresses[symbol]
+        at = address - 0x08000000
+        return address, native['rom'][at:at + size]
+    def calls(address, data):
+        targets = set()
+        for offset in range(0, len(data) - 3, 2):
+            high, low = struct.unpack_from('<HH', data, offset)
+            if high & 0xF800 == 0xF000 and low & 0xF800 == 0xF800:
+                delta = ((high & 0x7FF) << 12) | ((low & 0x7FF) << 1)
+                if delta & 0x400000:
+                    delta -= 0x800000
+                targets.add(address + offset + 4 + delta)
+        return targets
+    address, greeting = code('CopyEReaderTrainerGreeting', 0x1C)
+    if len(greeting) != 0x1C or addresses['FrontierSpeechToString'] not in calls(address, greeting):
+        errors.append('native_runtime_text_greeting_call_mismatch')
+    address, speech = code('FrontierSpeechToString', 0x70)
+    buffers = native['runtime_text_symbols'].get('gStringVar4', set())
+    if (len(speech) != 0x70 or addresses['ConvertEasyChatWordsToString'] not in calls(address, speech)
+            or len(buffers) != 1 or struct.pack('<I', next(iter(buffers))) not in speech):
+        errors.append('native_runtime_text_speech_buffer_mismatch')
 
 
 def _literal_define(root: Path, path: str, name: str) -> int:

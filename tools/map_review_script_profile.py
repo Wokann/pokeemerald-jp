@@ -83,6 +83,9 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
 FALLTHROUGHS = {
+    'SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles': 'SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs',
+    'SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs': 'SootopolisCity_Gym_1F_EventScript_OpenFirstStairs',
+    'SootopolisCity_Gym_1F_EventScript_OpenFirstStairs': 'SootopolisCity_Gym_1F_EventScript_StopCheckingStairs',
     'Route117_EventScript_TryMoveDayCareMan': 'Route117_EventScript_StopMoveDayCareMan',
     'Route111_EventScript_CheckSetSandstorm': 'Route111_EventScript_SetSandstorm',
     'Route111_EventScript_SetSandstorm': 'Route111_EventScript_EndCheckSetSandstorm',
@@ -207,6 +210,7 @@ CONTEXT_CALLBACK_EXITS = {
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    'frontier_checkvisittrainer': ('CallFrontierUtilFunc', 8, ()),
     'frontier_saveparty': ('CallFrontierUtilFunc', 8, ()),
     'frontier_results': ('CallFrontierUtilFunc', 13, (r'FACILITY_LINK_CONTEST',)),
     'frontier_getstatus': ('CallFrontierUtilFunc', 8, ()),
@@ -441,6 +445,10 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                            for value in args[1:])):
                 raise ValueError('unsupported_profile_setwarp')
             size = 8
+        elif version == 4 and op == 'warphole':
+            if len(args) != 1 or not re.fullmatch(r'MAP_\w+', args[0]):
+                raise ValueError('unsupported_profile_warphole')
+            size = 3
         elif version == 4 and op == 'initrotatingtilepuzzle':
             if args != ['FALSE']:
                 raise ValueError('unsupported_profile_rotating_tile_initialization')
@@ -767,9 +775,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 produced = position > 0 and lines[position - 1] == 'battletent_getopponentintro'
                 produced |= (position > 1 and lines[position - 2:position]
                              == ['battletent_getopponentintro', 'lockall'])
-                if version != 4 or not produced:
+                ereader = position > 0 and lines[position - 1] == 'special CopyEReaderTrainerGreeting'
+                if version != 4 or not (produced or ereader):
                     raise ValueError('unproven_runtime_message_producer')
-                result.runtime_texts['gStringVar4'] = 'battletent_getopponentintro'
+                result.runtime_texts['gStringVar4'] = ('CopyEReaderTrainerGreeting' if ereader
+                                                     else 'battletent_getopponentintro')
             else:
                 result.texts[args[0]] = 'string'
             result.standard_scripts[index] = entry
