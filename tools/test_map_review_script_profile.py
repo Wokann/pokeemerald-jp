@@ -146,7 +146,7 @@ class StoryProfileTests(unittest.TestCase):
         self.assertEqual(len(samples), 144)
         self.check_native_forms(samples)
 
-    def check_native_forms(self, samples, forced_waits=None, *, version=3, source_prefix=''):
+    def check_native_forms(self, samples, forced_waits=None, *, version=3, source_prefix='', source_owners=None):
         source = (ROOT / 'data/event_scripts.s').read_text()
         prefix = source[:source.index('\t.include "data/maps/PetalburgCity/scripts.inc"')]
         item_owner = (ROOT / 'data/scripts/obtain_item.inc').read_text()
@@ -175,8 +175,10 @@ class StoryProfileTests(unittest.TestCase):
                 if op in ('.byte', '.2byte'):
                     predicted = 1 if op == '.byte' else 2
                 elif version == 4 and op == '.set':
-                    self.assertIn(line, {f'.set {name}, {value}'
-                                        for name, value in profile.GAME_CORNER_PRICES.items()})
+                    self.assertIn(re.sub(r'\s+', ' ', line), {f'.set {name}, {value}'
+                                        for name, value in profile.GAME_CORNER_PRICES.items()}
+                                        | {f'.set BET_AMOUNT_{value}, {value}'
+                                           for value in profile.FRONTIER_BET_AMOUNTS})
                     predicted = 0
                 elif op in ('map_script', 'map_script_2'):
                     tail, size = ('\n.byte 0', 1) if op == 'map_script' else ('\n.2byte 0', 2)
@@ -199,7 +201,8 @@ class StoryProfileTests(unittest.TestCase):
                     tail = '\nstep_end' if op in movements and op != 'step_end' else ''
                     if version == 4 and (op == 'trainerbattle' or op.startswith('trainerbattle_')):
                         tail = '\nend'
-                    predicted = profile.profile_block(ROOT, 'Entry::\n' + line + tail, waits, **options).size - bool(tail)
+                    owner = (source_owners or {}).get(line, 'Entry')
+                    predicted = profile.profile_block(ROOT, owner + '::\n' + line + tail, waits, **options).size - bool(tail)
                 self.assertEqual(symbols['ProfileEnd_%d' % i] - symbols['ProfileStart_%d' % i], predicted, line)
 
     @unittest.skipUnless((ROOT / 'tools/preproc/preproc').is_file(), 'requires native build tools')

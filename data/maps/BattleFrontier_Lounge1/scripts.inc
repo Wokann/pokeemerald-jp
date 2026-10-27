@@ -11,7 +11,6 @@ BattleFrontier_Lounge1_EventScript_Breeder::
 	goto BattleFrontier_Lounge1_EventScript_ChooseMonToShowBreeder
 	end
 
-@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.
 BattleFrontier_Lounge1_EventScript_ChooseMonToShowBreeder::
 	special ChoosePartyMon
 	goto_if_ne VAR_0x8004, PARTY_NOTHING_CHOSEN, BattleFrontier_Lounge1_EventScript_ShowMonToBreeder

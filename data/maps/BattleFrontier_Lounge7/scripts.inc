@@ -65,52 +65,52 @@ BattleFrontier_Lounge7_EventScript_ChooseNewLeftTutorMove:: @ 0x0823984E
 	end
 
 BattleFrontier_Lounge7_EventScript_Softboiled:: @ 0x082398F1
-	setvar VAR_0x8008, 0x10
+	setvar VAR_0x8008, 16
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_SeismicToss:: @ 0x082398FC
-	setvar VAR_0x8008, 0x18
+	setvar VAR_0x8008, 24
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_DreamEater:: @ 0x08239907
-	setvar VAR_0x8008, 0x18
+	setvar VAR_0x8008, 24
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_MegaPunch:: @ 0x08239912
-	setvar VAR_0x8008, 0x18
+	setvar VAR_0x8008, 24
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_MegaKick:: @ 0x0823991D
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_BodySlam:: @ 0x08239928
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_RockSlide:: @ 0x08239933
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_Counter:: @ 0x0823993E
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_ThunderWave:: @ 0x08239949
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_SwordsDance:: @ 0x08239954
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
@@ -175,52 +175,52 @@ BattleFrontier_Lounge7_EventScript_ChooseNewRightTutorMove:: @ 0x08239A34
 	end
 
 BattleFrontier_Lounge7_EventScript_DefenseCurl:: @ 0x08239AD7
-	setvar VAR_0x8008, 0x10
+	setvar VAR_0x8008, 16
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_Snore:: @ 0x08239AE2
-	setvar VAR_0x8008, 0x18
+	setvar VAR_0x8008, 24
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_MudSlap:: @ 0x08239AED
-	setvar VAR_0x8008, 0x18
+	setvar VAR_0x8008, 24
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_Swift:: @ 0x08239AF8
-	setvar VAR_0x8008, 0x18
+	setvar VAR_0x8008, 24
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_IcyWind:: @ 0x08239B03
-	setvar VAR_0x8008, 0x18
+	setvar VAR_0x8008, 24
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_Endure:: @ 0x08239B0E
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_PsychUp:: @ 0x08239B19
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_IcePunch:: @ 0x08239B24
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_ThunderPunch:: @ 0x08239B2F
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
 BattleFrontier_Lounge7_EventScript_FirePunch:: @ 0x08239B3A
-	setvar VAR_0x8008, 0x30
+	setvar VAR_0x8008, 48
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
@@ -257,7 +257,7 @@ BattleFrontier_Lounge7_EventScript_TeachTutorMove:: @ 0x08239BA6
 	special CloseBattlePointsWindow
 	special CloseBattleFrontierTutorWindow
 	special ChooseMonForMoveTutor
-	goto_if_eq VAR_RESULT, 0, BattleFrontier_Lounge7_EventScript_CancelChooseMon
+	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_Lounge7_EventScript_CancelChooseMon
 	msgbox BattleFrontier_Lounge7_Text_IllTakeBattlePoints, MSGBOX_DEFAULT
 	copyvar VAR_0x8004, VAR_0x8008
 	special TakeFrontierBattlePoints

@@ -10,12 +10,12 @@ BattleFrontier_ReceptionGate_OnTransition:: @ 0x0823A237
 	end
 
 BattleFrontier_ReceptionGate_OnFrame:: @ 0x0823A23B
-	map_script_2 VAR_HAS_ENTERED_BATTLE_FRONTIER, FALSE, BattleFrontier_ReceptionGate_EventScript_FirstTimeEntering
+	map_script_2 VAR_HAS_ENTERED_BATTLE_FRONTIER, 0, BattleFrontier_ReceptionGate_EventScript_FirstTimeEntering
 	.2byte 0
 
 BattleFrontier_ReceptionGate_EventScript_FirstTimeEntering:: @ 0x0823A245
 	lockall
-	setvar VAR_HAS_ENTERED_BATTLE_FRONTIER, TRUE
+	setvar VAR_HAS_ENTERED_BATTLE_FRONTIER, 1
 	playse SE_PIN
 	applywaitmovement LOCALID_FRONTIER_RECEPTION_GREETER, Common_Movement_ExclamationMark
 	applywaitmovement LOCALID_FRONTIER_RECEPTION_GREETER, Common_Movement_Delay48

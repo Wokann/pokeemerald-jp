@@ -19,6 +19,7 @@ GAME_CORNER_PRICES = {'TM_DOUBLE_TEAM_COINS': 1500, 'TM_PSYCHIC_COINS': 3500,
     'TM_FLAMETHROWER_COINS': 4000, 'TM_THUNDERBOLT_COINS': 4000, 'TM_ICE_BEAM_COINS': 4000,
     'DOLL_COINS': 1000, 'COINS_PRICE_50': 1000, 'COINS_PRICE_500': 10000}
 COIN_CAPACITY_EXPRESSIONS = {'(MAX_COINS + 1 - 50)', '(MAX_COINS + 1 - 500)'}
+FRONTIER_BET_AMOUNTS = (5, 10, 15)
 FAN_CLUB_NONFAN_EXPRESSION = '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'
 CONTEST_PAINTING_SELECTORS = frozenset(['CONTEST_WINNER_ARTIST']
     + [f'CONTEST_WINNER_HALL_{i}' for i in range(1, 7)]
@@ -783,6 +784,14 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             raise ValueError('changed_game_corner_price_definitions')
         # These US-style local prices emit no bytes, unlike address aliases.
         return BlockProfile(size=1, kind='map_table')
+    if version == 4 and owner and owner[1] == 'BattleFrontier_Lounge3_MapScripts':
+        expected = ['.byte 0'] + [f'.set BET_AMOUNT_{value}, {value}'
+                                 for value in FRONTIER_BET_AMOUNTS]
+        if [re.sub(r'\s+', ' ', line) for line in lines] != expected:
+            raise ValueError('changed_frontier_bet_definitions')
+        # These are the three original US-style scalar constants, not
+        # address aliases. They add no bytes to the one-byte map table.
+        return BlockProfile(size=1, kind='map_table')
     operations = [line.split(None, 1)[0] for line in lines]
     movements = MOVEMENTS_V4 if version == 4 else MOVEMENTS
     fixed = FIXED_V4 if version == 4 else FIXED
@@ -843,6 +852,12 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             args = ['FRONTIER_DATA_CHALLENGE_STATUS', 'CHALLENGE_STATUS_LOST']
         if any(not ATOM.fullmatch(arg) and not (version == 4 and (
                op == 'goto_if_ge' and index == 1 and arg in COIN_CAPACITY_EXPRESSIONS
+               or index == 1 and owner and any(
+                   owner[1] == f'BattleFrontier_Lounge3_EventScript_RewardBet{value}'
+                   and arg == f'(BET_AMOUNT_{value} * 2)'
+                   and (op == 'buffernumberstring' and args[0] == 'STR_VAR_1'
+                        or op == 'setvar' and args[0] == 'VAR_0x8004')
+                   for value in FRONTIER_BET_AMOUNTS)
                or op == 'goto_if_eq' and index == 1 and args[0] == 'VAR_RESULT' and arg == FAN_CLUB_NONFAN_EXPRESSION
                or op == 'copyvar' and index == 2 and arg == 'warn=FALSE')) for index, arg in enumerate(args)):
             raise ValueError('unsupported_profile_argument_expression:' + op)
