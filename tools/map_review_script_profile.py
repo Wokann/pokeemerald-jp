@@ -293,10 +293,43 @@ FALLTHROUGHS |= {'BattleFrontier_BattleDome' + room + '_EventScript_' + owner:
         ('BattleRoom', 'TuckerGoldIntro', 'BattleTuckerGold'),
         ('BattleRoom', 'SetUpObjects', 'EndSetUpObjects'),
     )}
+FALLTHROUGHS |= {'BattleFrontier_BattlePalace' + room + '_EventScript_' + owner:
+                'BattleFrontier_BattlePalace' + room + '_EventScript_' + target
+    for room, owner, target in (
+        ('Lobby', 'DefeatedMaven', 'GiveBattlePoints'),
+        ('Lobby', 'SaveAfterChallenge', 'RecordMatch'),
+        ('Lobby', 'RecordMatch', 'EndSaveAfterChallenge'),
+        ('Lobby', 'Attendant', 'AskTakeChallenge'),
+        ('Lobby', 'AskTakeChallenge', 'TryEnterChallenge'),
+        ('Lobby', 'TryEnterChallenge', 'SaveBeforeChallenge'),
+        ('Lobby', 'SaveBeforeChallenge', 'EnterChallenge'),
+        ('Lobby', 'NotEnoughValidMons', 'NotEnoughValidMonsLv50'),
+        ('Lobby', 'LoadPartyAndCancelChallenge', 'CancelChallenge'),
+        ('Lobby', 'CancelChallenge', 'EndCancelChallenge'),
+        ('Corridor', 'WalkToOpenBattleRoom', 'WarpToBattleRoom'),
+        ('BattleRoom', 'BeginChallenge', 'NextOpponentEnter'),
+        ('BattleRoom', 'NextOpponentEnter', 'WarpToLobbyLost'),
+        ('BattleRoom', 'DefeatedOpponent', 'AskReadyForOpponent'),
+        ('BattleRoom', 'AskReadyForOpponent', 'AskReadyForOpponentNoRecord'),
+        ('BattleRoom', 'AskReadyForOpponentNoRecord', 'AskRecordBattle'),
+        ('BattleRoom', 'AskRecordBattle', 'RecordBattle'),
+        ('BattleRoom', 'AskPauseChallenge', 'AskRetireChallenge'),
+        ('BattleRoom', 'AskRetireChallenge', 'ContinueChallenge'),
+        ('BattleRoom', 'MavenUpNext', 'AskReadyForMaven'),
+        ('BattleRoom', 'AskReadyForMaven', 'AskReadyForMavenNoRecord'),
+        ('BattleRoom', 'AskReadyForMavenNoRecord', 'BattleSpenser'),
+        ('BattleRoom', 'BattleSpenser', 'BattleSpenserSilver'),
+        ('BattleRoom', 'IntroSpenserGold', 'BattleSpenserGold'),
+    )}
 
 # These exact movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
 MOVEMENT_PREFIXES = {
+    'BattleFrontier_BattlePalaceCorridor_Movement_PlayerEnterBattleRoom':
+        ('BattleFrontier_BattlePalaceCorridor_Movement_AttendantEnterBattleRoom', ('walk_up',)),
+    'BattleFrontier_BattlePalaceBattleRoom_Movement_PlayerEnterRoom':
+        ('BattleFrontier_BattlePalaceBattleRoom_Movement_FaceRight',
+         ('set_visible', 'walk_up', 'walk_up', 'walk_up', 'walk_up')),
     'BattleFrontier_BattleDomeBattleRoom_Movement_PlayerEnter':
         ('BattleFrontier_BattleDomeBattleRoom_Movement_PlayerStepForward',
          ('set_visible', 'delay_16', 'walk_up', 'walk_up', 'walk_up', 'walk_right')),
@@ -344,6 +377,7 @@ FACILITY_FORMS = {
     'frontier_saveparty': ('CallFrontierUtilFunc', 8, ()),
     'frontier_results': ('CallFrontierUtilFunc', 13, (r'FACILITY_LINK_CONTEST',)),
     'frontier_getstatus': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_settrainers': ('CallFrontierUtilFunc', 8, ()),
     'frontier_gettrainername': ('CallFrontierUtilFunc', 13, (r'STR_VAR_[12]',)),
     'frontier_get': ('CallFrontierUtilFunc', 13, (r'FRONTIER_DATA_\w+',)),
     'frontier_checkineligible': ('CallFrontierUtilFunc', 8, ()),
@@ -385,6 +419,13 @@ FACILITY_FORMS = {
     'dome_getwinnersname': ('CallBattleDomeFunction', 8, ()),
     'dome_initresultstree': ('CallBattleDomeFunction', 8, ()),
     'dome_inittrainers': ('CallBattleDomeFunction', 8, ()),
+    'palace_init': ('CallBattlePalaceFunction', 8, ()),
+    'palace_get': ('CallBattlePalaceFunction', 13, (r'PALACE_DATA_PRIZE',)),
+    'palace_set': ('CallBattlePalaceFunction', 18, (r'PALACE_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE)', r'(?:0|TRUE|FALSE)')),
+    'palace_getcomment': ('CallBattlePalaceFunction', 8, ()),
+    'palace_getopponentintro': ('CallBattlePalaceFunction', 8, ()),
+    'palace_incrementstreak': ('CallBattlePalaceFunction', 8, ()),
+    'palace_save': ('CallBattlePalaceFunction', 13, (r'(?:0|CHALLENGE_STATUS_(?:SAVING|PAUSED))',)),
     'frontier_getsymbols': ('CallFrontierUtilFunc', 8, ()),
     'frontier_givesymbol': ('CallFrontierUtilFunc', 8, ()),
     'frontier_setbrainobj': ('CallFrontierUtilFunc', 8, ()),
@@ -778,7 +819,7 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 valid = (len(args) == 1 and args[0] in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER')
                          or len(args) == 2 and args[0] == 'FRONTIER_FACILITY_TOWER'
                          and re.fullmatch(r'(?:FRONTIER_MODE_(?:SINGLES|DOUBLES|MULTIS|LINK_MULTIS)|0xFF|255)', args[1])
-                         or len(args) == 2 and args[0] == 'FRONTIER_FACILITY_DOME'
+                         or len(args) == 2 and args[0] in ('FRONTIER_FACILITY_DOME', 'FRONTIER_FACILITY_PALACE')
                          and args[1] in ('FRONTIER_MODE_SINGLES', 'FRONTIER_MODE_DOUBLES'))
                 if not valid:
                     raise ValueError('unsupported_profile_facility_macro:' + op)
@@ -1118,10 +1159,14 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 ereader = position > 0 and lines[position - 1] == 'special CopyEReaderTrainerGreeting'
                 tower = position > 0 and lines[position - 1] == 'tower_getopponentintro 0'
                 tower |= _multi_intro_message(owner[1] if owner else None, lines, position, op)
-                if version != 4 or not (produced or ereader or tower):
+                palace = (owner is not None and owner[1] == 'BattleFrontier_BattlePalaceBattleRoom_EventScript_NextOpponentEnter'
+                          and position > 0 and lines[position - 1] == 'palace_getopponentintro'
+                          and args[1] == 'MSGBOX_DEFAULT')
+                if version != 4 or not (produced or ereader or tower or palace):
                     raise ValueError('unproven_runtime_message_producer')
                 result.runtime_texts['gStringVar4'] = ('CopyEReaderTrainerGreeting' if ereader
                                                      else 'tower_getopponentintro' if tower
+                                                     else 'palace_getopponentintro' if palace
                                                      else 'battletent_getopponentintro')
             else:
                 result.texts[args[0]] = 'string'
