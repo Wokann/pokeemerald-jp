@@ -86,6 +86,7 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
 FALLTHROUGHS = {
+    'BattlePyramid_FindItemBall': 'BattlePyramid_FindItemBallEnd',
     'SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles': 'SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs',
     'SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs': 'SootopolisCity_Gym_1F_EventScript_OpenFirstStairs',
     'SootopolisCity_Gym_1F_EventScript_OpenFirstStairs': 'SootopolisCity_Gym_1F_EventScript_StopCheckingStairs',
@@ -213,6 +214,9 @@ CONTEXT_CALLBACK_EXITS = {
 # Selector macros measured against the current JP assembler. Handler identity
 # and waitstate are taken from the real Special table, not a US table index.
 FACILITY_FORMS = {
+    'pyramid_setitem': ('CallBattlePyramidFunction', 8, ()),
+    'pyramid_hideitem': ('CallBattlePyramidFunction', 8, ()),
+    'pyramid_showhint': ('CallBattlePyramidFunction', 8, ()),
     'frontier_checkvisittrainer': ('CallFrontierUtilFunc', 8, ()),
     'frontier_saveparty': ('CallFrontierUtilFunc', 8, ()),
     'frontier_results': ('CallFrontierUtilFunc', 13, (r'FACILITY_LINK_CONTEST',)),
@@ -256,6 +260,8 @@ FACILITY_FORMS = {
 # Only explicitly measured forms are supported. The final NO_MUSIC argument
 # selects a mode; it is not a pointer or an independently emitted field.
 TRAINER_FORMS = {
+    ('trainerbattle', 5): ('TRAINER_BATTLE_PYRAMID', 'EventScript_TryDoNormalTrainerBattle',
+                         'sOrdinaryBattleParams'),
     ('trainerbattle_single', 3): ('TRAINER_BATTLE_SINGLE', 'EventScript_TryDoNormalTrainerBattle',
                                 'sOrdinaryBattleParams'),
     ('trainerbattle_single', 4): ('TRAINER_BATTLE_CONTINUE_SCRIPT', 'EventScript_TryDoNormalTrainerBattle',
@@ -619,6 +625,18 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             # battle script or the next byte. Do not invent a battle frame.
             result.texts.update({value: 'string' for value in args[3:]})
             size = 14
+        elif version == 4 and op == 'trainerbattle' and args and args[0] == 'TRAINER_BATTLE_PYRAMID':
+            placeholder = 'BattleFacility_TrainerBattle_PlaceholderText'
+            if (args != ['TRAINER_BATTLE_PYRAMID', 'TRAINER_PHILLIP', 'LOCALID_NONE', placeholder, placeholder]
+                    or position == len(lines) - 1 or owner is None):
+                raise ValueError('unsupported_pyramid_trainer_battle_form')
+            target('EventScript_TryDoNormalTrainerBattle', 'script')
+            target('EventScript_StartTrainerApproach', 'script')
+            result.texts[placeholder] = 'string'
+            size = 14
+            result.trainer_battles.append(dict(owner=owner[1], mode='TRAINER_BATTLE_PYRAMID',
+                trainer='TRAINER_PHILLIP', intro_text=placeholder, defeat_text=placeholder,
+                address=f'0x{address + result.size:08X}', resume=f'0x{address + result.size + size:08X}'))
         elif version == 4 and op == 'trainerbattle':
             if (len(args) != 6 or args[0] != 'TRAINER_BATTLE_CONTINUE_SCRIPT'
                     or not re.fullmatch(r'TRAINER_\w+', args[1])
@@ -680,6 +698,12 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             if op == 'gotobeatenscript':
                 target('EventScript_TryGetTrainerScript', 'script')
             size = 1
+        elif version == 4 and op == 'callstd':
+            if args != ['STD_FIND_ITEM']:
+                raise ValueError('unsupported_profile_standard_script_call')
+            result.standard_scripts[1] = 'Std_FindItem'
+            target('Std_FindItem', 'script')
+            size = 2
         elif version == 4 and op == 'register_matchcall':
             if len(args) != 1 or not re.fullmatch(r'TRAINER_\w+', args[0]):
                 raise ValueError('unsupported_match_call_registration')
