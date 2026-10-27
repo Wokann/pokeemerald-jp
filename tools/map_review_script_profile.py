@@ -49,7 +49,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
                            'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right',
                            'walk_slow_down', 'slide_up', 'walk_down_start_affine',
-                           'walk_down_affine'}
+                           'walk_down_affine', 'emote_heart'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -80,7 +80,8 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
                    'fadescreenswapbuffers': (2, 1), 'setorcopyvar': (5, 2), 'dowildbattle': (1, 0),
                    'choosecontestmon': (1, 0), 'contestlinktransfer': (1, 0), 'nop1': (1, 0),
                    'turnrotatingtileobjects': (1, 0), 'freerotatingtilepuzzle': (1, 0),
-                   'closebraillemessage': (1, 0)}
+                   'closebraillemessage': (1, 0), 'startcontest': (1, 0),
+                   'showcontestresults': (1, 0)}
 
 # These source blocks deliberately continue into the next physical label.
 # A native adjacency check is mandatory; a named target alone is not proof.
@@ -420,13 +421,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_warp')
         elif (op in ('call', 'goto', 'call_if_eq', 'goto_if_eq', 'case')
               or version == 4 and op in ('goto_if_ge', 'goto_if_le', 'goto_if_ne', 'goto_if_lt',
-                                         'goto_if_gt', 'call_if_ne', 'call_if_ge', 'call_if_lt', 'call_if_le')):
+                                         'goto_if_gt', 'call_if_ne', 'call_if_ge', 'call_if_lt', 'call_if_le', 'call_if_gt')):
             count = 2 if op == 'case' else 3 if '_if_' in op else 1
             if len(args) != count:
                 raise ValueError('unsupported_profile_arguments:' + op)
             if count == 3 and not re.fullmatch(r'VAR_\w+', args[0]):
                 raise ValueError('unsupported_profile_compare')
-            if op in ('call_if_ge', 'call_if_lt', 'call_if_le') and args[-1] == 'NULL':
+            if op in ('call_if_ge', 'call_if_lt', 'call_if_le', 'call_if_gt') and args[-1] == 'NULL':
                 raise ValueError('unsupported_profile_null_call')
             size = 11 if count in (2, 3) else 5
             target(args[-1], 'script')
@@ -464,6 +465,28 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                     or not 0 <= int(args[0], 16 if args[0].lower().startswith('0x') else 10) <= 255):
                 raise ValueError('unsupported_profile_bgm_fade')
             size = 2
+        elif version == 4 and op == 'turnvobject':
+            if (len(args) != 2
+                    or not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', args[0])
+                    or int(args[0], 16 if args[0].lower().startswith('0x') else 10) > 255
+                    or args[1] not in ('DIR_SOUTH', 'DIR_NORTH', 'DIR_WEST', 'DIR_EAST')):
+                raise ValueError('unsupported_profile_virtual_object_turn')
+            size = 3
+        elif version == 4 and op == 'createvobject':
+            def literal_in_range(value, maximum):
+                return (re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
+                        and 0 <= int(value, 16 if value.lower().startswith('0x') else 10) <= maximum)
+            if (len(args) not in (4, 5, 6)
+                    or not re.fullmatch(r'OBJ_EVENT_GFX_\w+', args[0])
+                    or not literal_in_range(args[1], 255)
+                    or any(not (re.fullmatch(r'VAR_\w+', value) or literal_in_range(value, 65535))
+                           for value in args[2:4])
+                    or len(args) >= 5 and not literal_in_range(args[4], 255)
+                    or len(args) == 6 and args[5] not in ('DIR_SOUTH', 'DIR_NORTH', 'DIR_WEST', 'DIR_EAST')):
+                raise ValueError('unsupported_profile_virtual_object')
+            # Opcode, graphics/id bytes, two variable-or-literal halfwords,
+            # then elevation/direction bytes (including the macro defaults).
+            size = 9
         elif version == 4 and op == 'dofieldeffectsparkle':
             if (len(args) != 3
                     or any(not re.fullmatch(r'(?:0[xX][0-9A-Fa-f]+|[0-9]+)', value)
