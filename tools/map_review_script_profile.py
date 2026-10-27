@@ -7,6 +7,7 @@ records, real macro expansion tests and native byte checks remain mandatory.
 from dataclasses import dataclass, field
 from pathlib import Path
 import re
+import subprocess
 try:
     from map_semantic_review import encoded_text, label_blocks, statements, text_kind
 except ModuleNotFoundError:
@@ -34,7 +35,8 @@ MOVEMENTS = frozenset(('walk_up', 'walk_down', 'walk_left', 'walk_right',
 STANDARD = {'MSGBOX_NPC': (2, 'Std_MsgboxNPC'), 'MSGBOX_SIGN': (3, 'Std_MsgboxSign'),
             'MSGBOX_DEFAULT': (4, 'Std_MsgboxDefault')}
 STANDARD_V4 = STANDARD | {'MSGBOX_YESNO': (5, 'Std_MsgboxYesNo'),
-                          'MSGBOX_AUTOCLOSE': (6, 'Std_MsgboxAutoclose')}
+                          'MSGBOX_AUTOCLOSE': (6, 'Std_MsgboxAutoclose'),
+                          'MSGBOX_GETPOINTS': (9, 'Std_MsgboxGetPoints')}
 MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'face_up', 'face_down', 'face_left', 'face_right', 'delay_4', 'reveal_trainer',
                            'walk_in_place_down', 'walk_faster_right', 'walk_fast_right', 'walk_fast_up',
@@ -49,7 +51,7 @@ MOVEMENTS_V4 = MOVEMENTS | {'lock_facing_direction', 'unlock_facing_direction',
                            'rock_smash_break', 'walk_in_place_right', 'walk_slow_up', 'nurse_joy_bow',
                            'jump_in_place_down', 'jump_in_place_left', 'jump_up', 'walk_slow_right',
                            'walk_slow_down', 'slide_up', 'walk_down_start_affine',
-                           'walk_down_affine', 'emote_heart'}
+                           'walk_down_affine', 'emote_heart', 'face_away_player', 'slide_down'}
 FIXED = {'lock': (1, 0), 'lockall': (1, 0), 'release': (1, 0), 'releaseall': (1, 0),
     'end': (1, 0), 'return': (1, 0), 'faceplayer': (1, 0), 'closemessage': (1, 0),
     'waitmessage': (1, 0), 'waitbuttonpress': (1, 0), 'waitstate': (1, 0),
@@ -185,13 +187,76 @@ FALLTHROUGHS = {
     'LilycoveCity_PokemonCenter_1F_EventScript_WriteQuiz': 'LilycoveCity_PokemonCenter_1F_EventScript_WriteQuizQuestion',
 }
 
-# These one-byte movement prefixes deliberately share the next movement's
+FALLTHROUGHS |= {'BattleFrontier_BattleTowerLobby_' + owner: 'BattleFrontier_BattleTowerLobby_' + target
+    for owner, target in (
+        ('OnTransition', 'EventScript_ShowApprentice'),
+        ('EventScript_ShowApprentice', 'EventScript_EndShowOrHideApprentice'),
+        ('EventScript_DefeatedMaiden', 'EventScript_GiveRibbons'),
+        ('EventScript_GiveRibbons', 'EventScript_GiveBattlePoints'),
+        ('EventScript_GiveBattlePoints', 'EventScript_LookForwardToChallenge'),
+        ('EventScript_LostChallenge', 'EventScript_CancelWinStreak'),
+        ('EventScript_CancelWinStreak', 'EventScript_LostThanksForPlaying'),
+        ('EventScript_SinglesAttendant', 'EventScript_AskEnterSinglesChallenge'),
+        ('EventScript_AskEnterSinglesChallenge', 'EventScript_TryEnterSinglesChallenge'),
+        ('EventScript_TryEnterSinglesChallenge', 'EventScript_SaveBeforeSinglesChallenge'),
+        ('EventScript_DoublesAttendant', 'EventScript_AskEnterDoublesChallenge'),
+        ('EventScript_AskEnterDoublesChallenge', 'EventScript_TryEnterDoublesChallenge'),
+        ('EventScript_TryEnterDoublesChallenge', 'EventScript_SaveBeforeDoublesChallenge'),
+        ('EventScript_MultisAttendant', 'EventScript_AskEnterMultisChallenge'),
+        ('EventScript_AskEnterMultisChallenge', 'EventScript_TryEnterMultisChallenge'),
+        ('EventScript_TryEnterMultisChallenge', 'EventScript_SaveBeforeMultisChallenge'),
+        ('EventScript_LinkMultisAttendant', 'EventScript_AskEnterLinkMultisChallenge'),
+        ('EventScript_AskEnterLinkMultisChallenge', 'EventScript_TryEnterLinkMultisChallenge'),
+        ('EventScript_TryEnterLinkMultisChallenge', 'EventScript_SaveBeforeLinkMultisChallenge'),
+        ('EventScript_NotEnoughValidMons', 'EventScript_NotEnoughValidMonsLv50'),
+        ('EventScript_LoadPartyCancelChallenge', 'EventScript_CancelChallenge'),
+        ('EventScript_CancelChallenge', 'EventScript_EndCancelChallenge'),
+        ('EventScript_EnterElevator', 'EventScript_WaitForLinkOpponentLoad'),
+        ('EventScript_ShowYouToLinkMultiBattleRoom', 'EventScript_WalkToElevator'),
+    )}
+FALLTHROUGHS |= {'BattleFrontier_BattleTowerBattleRoom_EventScript_' + owner:
+                'BattleFrontier_BattleTowerBattleRoom_EventScript_' + target
+    for owner, target in (
+        ('DefeatedOpponent', 'AskReadyForOpponent'),
+        ('AskReadyForOpponent', 'AskReadyForOpponentNoRecord'),
+        ('AskReadyForOpponentNoRecord', 'AskRecordBattle'),
+        ('AskRecordBattle', 'RecordBattle'),
+        ('AskPauseChallenge', 'AskRetireChallenge'),
+        ('AskRetireChallenge', 'ContinueChallenge'),
+        ('ReadyForOpponent', 'ReadyFor2ndOpponent'),
+        ('MaidenUpNext', 'AskReadyForMaiden'),
+        ('AskReadyForMaiden', 'AskReadyForMaidenNoRecord'),
+        ('AskReadyForMaidenNoRecord', 'BattleAnabel'),
+        ('BattleAnabel', 'BattleAnabelSilver'),
+        ('AnabelGoldIntro', 'BattleAnabelGold'),
+        ('DoTowerBattle', 'EndTowerBattle'),
+    )}
+FALLTHROUGHS |= {
+    'BattleFrontier_BattleTowerBattleRoom_EventScript_OpponentEnter': 'BattleFrontier_BattleTower_EventScript_WarpToLobbyLost',
+    'BattleFrontier_BattleTowerLobby_EventScript_AskSaveBattle': 'BattleFrontier_EventScript_SaveBattle',
+    'BattleFrontier_EventScript_BattleSaveFailed': 'BattleFrontier_BattleTowerLobby_EventScript_EndSaveBattle',
+    'BattleFrontier_BattleTowerCorridor_EventScript_WalkToFarDoor': 'BattleFrontier_BattleTowerCorridor_EventScript_WarpToBattleRoom',
+    'BattleFrontier_BattleTowerLobby_EventScript_Apprentice': 'Apprentice_EventScript_AskQuestion',
+    'Apprentice_EventScript_FirstMeeting': 'Apprentice_EventScript_WhichLvlMode',
+    'Apprentice_EventScript_UseWhatHeldItem': 'Apprentice_EventScript_ChooseHoldItem',
+    'Apprentice_EventScript_ConfirmHoldNothing': 'Apprentice_EventScript_HoldNothing',
+}
+
+# These exact movement prefixes deliberately share the next movement's
 # terminator. Never insert a step_end or accept arbitrary unterminated paths.
 MOVEMENT_PREFIXES = {
     'FallarborTown_BattleTentCorridor_Movement_PlayerEnterDoor':
-        'FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor',
+        ('FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor', ('walk_up',)),
     'VerdanturfTown_BattleTentCorridor_Movement_PlayerEnterDoor':
-        'VerdanturfTown_BattleTentCorridor_Movement_AttendantEnterDoor',
+        ('VerdanturfTown_BattleTentCorridor_Movement_AttendantEnterDoor', ('walk_up',)),
+    'BattleFrontier_BattleTowerCorridor_Movement_PlayerWalkToFarDoor':
+        ('BattleFrontier_BattleTowerCorridor_Movement_AttendantWalkToFarDoor', ('walk_right',)),
+    'BattleFrontier_BattleTowerCorridor_Movement_AttendantWalkToFarDoor':
+        ('BattleFrontier_BattleTowerCorridor_Movement_PlayerWalkToDoor', ('walk_right', 'walk_right')),
+    'BattleFrontier_BattleTowerCorridor_Movement_PlayerWalkToDoor':
+        ('BattleFrontier_BattleTowerCorridor_Movement_AttendantWalkToDoor', ('walk_right',)),
+    'Apprentice_Movement_LeaveNorth':
+        ('Apprentice_Movement_Leave', ('walk_fast_right',)),
 }
 
 # This audited warp replaces the old script context before the following
@@ -228,6 +293,47 @@ FACILITY_FORMS = {
     'frontier_restorehelditems': ('CallFrontierUtilFunc', 8, ()),
     'frontier_resetsketch': ('CallFrontierUtilFunc', 8, ()),
     'tower_setopponent': ('CallBattleTowerFunc', 8, ()),
+    'tower_init': ('CallBattleTowerFunc', 8, ()),
+    'tower_setinterviewdata': ('CallBattleTowerFunc', 8, ()),
+    'tower_setbattlewon': ('CallBattleTowerFunc', 8, ()),
+    'tower_get': ('CallBattleTowerFunc', 13, (r'TOWER_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|LVL_MODE)',)),
+    'tower_getopponentintro': ('CallBattleTowerFunc', 13, (r'0',)),
+    'tower_giveribbons': ('CallBattleTowerFunc', 8, ()),
+    'tower_save': ('CallBattleTowerFunc', 13, (r'(?:CHALLENGE_STATUS_(?:SAVING|PAUSED)|0)',)),
+    'tower_loadlinkopponents': ('CallBattleTowerFunc', 8, ()),
+    'tower_closelink': ('CallBattleTowerFunc', 8, ()),
+    'frontier_getsymbols': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_givesymbol': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_setbrainobj': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_incrementstreak': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_getbrainstatus': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_checkairshow': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_isbrain': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_givepoints': ('CallFrontierUtilFunc', 8, ()),
+    'frontier_savebattle': ('CallFrontierUtilFunc', 8, ()),
+    'apprentice_gavelvlmode': ('CallApprenticeFunction', 8, ()),
+    'apprentice_setlvlmode': ('CallApprenticeFunction', 18, (r'VAR_RESULT',)),
+    'apprentice_answeredquestion': ('CallApprenticeFunction', 8, ()),
+    'apprentice_menu': ('CallApprenticeFunction', 14, (r'APPRENTICE_ASK_\w+',)),
+    'apprentice_shufflespecies': ('CallApprenticeFunction', 8, ()),
+    'apprentice_randomizequestions': ('CallApprenticeFunction', 8, ()),
+    'apprentice_msg': ('CallApprenticeFunction', 19, (r'(?:TRUE|FALSE)', r'APPRENTICE_MSG_\w+')),
+    'apprentice_reset': ('CallApprenticeFunction', 8, ()),
+    'apprentice_shouldcheckgone': ('CallApprenticeFunction', 8, ()),
+    'apprentice_getquestion': ('CallApprenticeFunction', 8, ()),
+    'apprentice_getnumpartymons': ('CallApprenticeFunction', 8, ()),
+    'apprentice_setpartymon': ('CallApprenticeFunction', 13, (r'VAR_RESULT',)),
+    'apprentice_initquestion': ('CallApprenticeFunction', 13, (r'APPRENTICE_QUESTION_\w+',)),
+    'apprentice_freequestion': ('CallApprenticeFunction', 8, ()),
+    'apprentice_buff': ('CallApprenticeFunction', 18, (r'STR_VAR_[123]', r'(?:APPRENTICE_BUFF_\w+|VAR_0x8007)')),
+    'apprentice_setmove': ('CallApprenticeFunction', 8, ()),
+    'apprentice_setleadmon': ('CallApprenticeFunction', 13, (r'VAR_RESULT',)),
+    'apprentice_openbag': ('CallApprenticeFunction', 9, ()),
+    'apprentice_trysetitem': ('CallApprenticeFunction', 8, ()),
+    'apprentice_save': ('CallApprenticeFunction', 8, ()),
+    'apprentice_setgfx': ('CallApprenticeFunction', 8, ()),
+    'apprentice_shouldleave': ('CallApprenticeFunction', 8, ()),
+    'apprentice_shiftsaved': ('CallApprenticeFunction', 8, ()),
     'arena_get': ('CallBattleArenaFunction', 13, (r'ARENA_DATA_\w+',)),
     'arena_set': ('CallBattleArenaFunction', 18, (r'ARENA_DATA_\w+', r'(?:VAR_\w+|\d+)')),
     'fallarbortent_init': ('CallFallarborTentFunction', 8, ()),
@@ -335,7 +441,24 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
     lines = statements(block)
     if not lines:
         raise ValueError('empty_profile_block')
-    if version == 4 and any(line.startswith('#') for line in lines):
+    owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
+    if (version == 4 and owner and owner[1] == 'BattleFrontier_BattleTowerLobby_EventScript_SaveBeforeLinkMultisChallenge'
+            and any(line.startswith('#') for line in lines)):
+        guarded = [('tower_save 0',), ('incrementgamestat GAME_STAT_ENTERED_BATTLE_TOWER',)]
+        starts = [i for i, line in enumerate(lines) if line == '#ifndef BUGFIX']
+        if (len(starts) != 2 or any(lines[i:i + 3] != ['#ifndef BUGFIX', body[0], '#endif']
+                                   for i, body in zip(starts, guarded))
+                or [i for i, line in enumerate(lines) if line.startswith('#')]
+                != [starts[0], starts[0] + 2, starts[1], starts[1] + 2]):
+            raise ValueError('unsupported_tower_link_save_conditional')
+        # Evaluate only this exact existing pair of guards with the current
+        # project configuration. The native proof independently selects the
+        # same default build; enabling BUGFIX must not silently retain bytes.
+        configured = subprocess.check_output(
+            ['cpp', '-P', '-nostdinc', '-undef', '-include', str(root / 'include/config.h'), '-'],
+            input='\n'.join(lines) + '\n', text=True)
+        lines = statements(configured)
+    elif version == 4 and any(line.startswith('#') for line in lines):
         conditional = ['#ifdef UBFIX', 'setvar VAR_ICE_STEP_COUNT, 1', '#else',
                        'copyvar VAR_ICE_STEP_COUNT, 1, warn=FALSE', '#endif']
         starts = [i for i, line in enumerate(lines) if line == conditional[0]]
@@ -349,7 +472,6 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         lines[starts[0]:starts[0] + 5] = ['copyvar VAR_ICE_STEP_COUNT, 1']
     if any(';' in line for line in lines):
         raise ValueError('unmodeled_statement_separator')
-    owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
     if version == 4 and owner and owner[1] == 'MauvilleCity_GameCorner_MapScripts':
         expected = ['.byte 0'] + [f'.set {name}, {value}' for name, value in GAME_CORNER_PRICES.items()]
         if lines != expected:
@@ -375,10 +497,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
         owner = re.search(r'(?m)^([A-Za-z_]\w*)::?', block)
         prefix = (MOVEMENT_PREFIXES.get(owner[1]) if version == 4 and owner else None)
         if prefix and not ends:
-            if lines != ['walk_up']:
+            target, expected = prefix
+            if lines != list(expected):
                 raise ValueError('unsupported_movement_prefix')
-            return BlockProfile(size=len(lines), kind='movement', targets={prefix: 'movement'},
-                                fallthrough=prefix, may_fall_through=True)
+            return BlockProfile(size=len(lines), kind='movement', targets={target: 'movement'},
+                                fallthrough=target, may_fall_through=True)
         if (any(op not in movements for op in operations) or operations[-1] != 'step_end'
                 or ends not in ((1, 2) if version == 4 else (1,))
                 or operations[-ends:] != ['step_end'] * ends):
@@ -524,13 +647,21 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 raise ValueError('unsupported_profile_arguments:trywondercardscript')
             result.runtime_scripts.add('saved_wonder_card')
             size = 1
-        elif version == 4 and (op in FACILITY_FORMS or op == 'frontier_set'):
-            if op == 'frontier_set':
-                if (len(args) not in (1, 2) or not re.fullmatch(r'FRONTIER_DATA_\w+', args[0])
+        elif version == 4 and (op in FACILITY_FORMS or op in ('frontier_set', 'tower_set')):
+            if op in ('frontier_set', 'tower_set'):
+                selector = r'FRONTIER_DATA_\w+' if op == 'frontier_set' else r'TOWER_DATA_(?:WIN_STREAK|WIN_STREAK_ACTIVE|LVL_MODE)'
+                if (len(args) not in (1, 2) or not re.fullmatch(selector, args[0])
                         or len(args) == 2 and not re.fullmatch(r'(?:[A-Z][A-Z0-9_]*|0x[0-9A-Fa-f]+|\d+)', args[1])):
                     raise ValueError('unsupported_profile_facility_macro:' + op)
                 omitted = len(args) == 1 or args[1].lower() in ('0xffff', '65535')
-                function, size = 'CallFrontierUtilFunc', 13 if omitted else 18
+                function = 'CallFrontierUtilFunc' if op == 'frontier_set' else 'CallBattleTowerFunc'
+                size = 13 if omitted else 18
+            elif op == 'frontier_results':
+                if (len(args) not in (1, 2) or args[0] not in ('FACILITY_LINK_CONTEST', 'FRONTIER_FACILITY_TOWER')
+                        or len(args) == 2 and (args[0] != 'FRONTIER_FACILITY_TOWER'
+                            or not re.fullmatch(r'(?:FRONTIER_MODE_(?:SINGLES|DOUBLES|MULTIS|LINK_MULTIS)|0xFF|255)', args[1]))):
+                    raise ValueError('unsupported_profile_facility_macro:' + op)
+                function, size = 'CallFrontierUtilFunc', 13 if len(args) == 1 or args[1] in ('0xFF', '255') else 18
             else:
                 function, size, patterns = FACILITY_FORMS[op]
                 if len(args) != len(patterns) or any(not re.fullmatch(p, a) for p, a in zip(patterns, args)):
@@ -538,6 +669,8 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
             waits = special_waits(root) if waits is None else waits
             if waits.get(function) not in (0, 1):
                 raise ValueError('missing_facility_macro_special:' + function)
+            if op in ('apprentice_menu', 'apprentice_msg', 'apprentice_openbag') and waits[function]:
+                raise ValueError('duplicate_apprentice_macro_waitstate')
             result.specials[function] = waits[function]
             size += waits[function]
         elif version == 4 and op == 'erasebox':
@@ -862,9 +995,11 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
                 produced |= (position > 1 and lines[position - 2:position]
                              == ['battletent_getopponentintro', 'lockall'])
                 ereader = position > 0 and lines[position - 1] == 'special CopyEReaderTrainerGreeting'
-                if version != 4 or not (produced or ereader):
+                tower = position > 0 and lines[position - 1] == 'tower_getopponentintro 0'
+                if version != 4 or not (produced or ereader or tower):
                     raise ValueError('unproven_runtime_message_producer')
                 result.runtime_texts['gStringVar4'] = ('CopyEReaderTrainerGreeting' if ereader
+                                                     else 'tower_getopponentintro' if tower
                                                      else 'battletent_getopponentintro')
             else:
                 result.texts[args[0]] = 'string'
