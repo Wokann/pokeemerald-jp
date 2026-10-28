@@ -9174,7 +9174,10 @@ SECTIONS {
         data/data.o(.rodata.data_before_bg_data);
         src/bg.o(.rodata.bg_data);
         src/window.o(.rodata.window_data);
-        data/data.o(.rodata.data_after_window_data);
+        src/text.o(.rodata.text_core_data);
+        src/fonts.o(.rodata.font_data);
+        src/text.o(.rodata.text_bold_font);
+        src/sprite.o(.rodata.sprite_retained_data);
         src/sprite.o(.rodata.sprite_center_vectors);
         . = ALIGN(4);
         src/sprite.o(.rodata.sprite_reset_template);

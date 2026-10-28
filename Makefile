@@ -2370,6 +2370,36 @@ $(C_BUILDDIR)/easy_chat.o: src/easy_chat.c graphics/easy_chat/scroll_indicator.p
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/easy_chat.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/easy_chat.gen.s
 
+$(C_BUILDDIR)/text.d: src/text.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/text.d
+
+$(C_BUILDDIR)/text.o: src/text.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/text.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/text.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/text.gen.s
+
+$(C_BUILDDIR)/fonts.d: src/fonts.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/fonts.d
+
+$(C_BUILDDIR)/fonts.o: src/fonts.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/fonts.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/fonts.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/fonts.gen.s
+
+$(C_BUILDDIR)/sprite.o: src/sprite.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/sprite.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/sprite.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/sprite.gen.s
+
 $(C_BUILDDIR)/string_util.o: src/string_util.c charmap.txt
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/string_util.gen.s

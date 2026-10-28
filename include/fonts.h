@@ -16,4 +16,12 @@ extern const u8 gFontNarrowLatinGlyphWidths[];
 extern const u16 gFontSmallNarrowLatinGlyphs[];
 extern const u8 gFontSmallNarrowLatinGlyphWidths[];
 
+extern const u16 gFontFRLGMaleJapaneseGlyphs[];
+
+extern const u16 gFontFRLGFemaleJapaneseGlyphs[];
+
+extern const u8 gFontFRLGMaleJapaneseGlyphWidths[];
+
+extern const u8 gFontFRLGFemaleJapaneseGlyphWidths[];
+
 #endif // GUARD_FONTS_H

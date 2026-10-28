@@ -123,6 +123,13 @@ const union AnimCmd *const gDummySpriteAnimTable[];
 const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
 extern const struct SpriteTemplate gDummySpriteTemplate;
 
+// JP retains the unused DMA request overflow message before sprite data.
+static const u8 sText_DmaRequestOverflow[] __attribute__((section(".rodata.sprite_retained_data"), aligned(1))) = _("DMA　OVER\nDMAてんそう\nリクエストテーブルが\nオーバーしました");
+static const u8 sUnknownData[24] __attribute__((section(".rodata.sprite_retained_data"), aligned(1))) = {
+    0x01, 0x04, 0x10, 0x40, 0x02, 0x04, 0x08, 0x20, 0x02, 0x04, 0x08, 0x20, 0x01, 0x04, 0x10, 0x40,
+    0x02, 0x04, 0x08, 0x20, 0x02, 0x04, 0x08, 0x20,
+};
+
 static const u8 sCenterToCornerVecTable[3][4][2] __attribute__((section(".rodata.sprite_center_vectors"), aligned(1))) =
 {
     {   // square

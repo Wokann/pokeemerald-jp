@@ -33,30 +33,12 @@ extern const struct FontInfo *gFonts;
 extern bool8 gDisableTextPrinters;
 extern struct TextGlyph gCurGlyph;
 extern TextFlags gTextFlags;
-extern const u8 sDownArrowTiles[];
-extern const u8 sDarkDownArrowTiles[];
-extern const u8 sDownArrowYCoords[];
-extern const u8 sWindowVerticalScrollSpeeds[];
-extern const u8 sKeypadIconTiles[];
 struct KeypadIcon
 {
     u16 tileOffset;
     u8 width;
     u8 height;
 };
-extern const struct KeypadIcon sKeypadIcons[];
-extern const struct FontInfo sFontInfos[];
-extern const u8 sMenuCursorDimensions[][2];
-extern const struct GlyphWidthFunc sGlyphWidthFuncs[6];
-extern const u8 sFontGlyphData_A0F14[];
-extern const u8 sFontGlyphData_A4F14[];
-extern const u8 sFontGlyphData_AD02C[];
-extern const u8 sFontGlyphData_B5144[];
-extern const u8 sFontGlyphData_9CF14[];
-extern const u8 sFontGlyphData_BD25C[];
-extern const u8 sGlyphWidthTable_ACF14[];
-extern const u8 sGlyphWidthTable_B502C[];
-extern const u8 sGlyphWidthTable_BD144[];
 void DecompressGlyphFont9(u16 glyph);
 void sub_08006304(u16 glyph);
 void sub_08006354(u16 glyph);
@@ -64,6 +46,163 @@ void sub_08006418(u16 glyph);
 void sub_080064B8(u16 glyph);
 void sub_0800657C(u16 glyph);
 void sub_08006640(u16 glyph);
+
+u32 sub_08006300(u16 glyphId);
+u32 sub_08006350(u16 glyphId);
+u32 sub_080063F8(u16 glyphId);
+u32 sub_080064B4(u16 glyphId);
+u32 sub_0800655C(u16 glyphId);
+u32 sub_08006620(u16 glyphId);
+
+static const u8 sFontHalfRowOffsets[] __attribute__((section(".rodata.text_core_data"))) = {
+    0x00, 0x01, 0x02, 0x00, 0x03, 0x04, 0x05, 0x03, 0x06, 0x07, 0x08, 0x06, 0x00, 0x01, 0x02, 0x00,
+    0x09, 0x0A, 0x0B, 0x09, 0x0C, 0x0D, 0x0E, 0x0C, 0x0F, 0x10, 0x11, 0x0F, 0x09, 0x0A, 0x0B, 0x09,
+    0x12, 0x13, 0x14, 0x12, 0x15, 0x16, 0x17, 0x15, 0x18, 0x19, 0x1A, 0x18, 0x12, 0x13, 0x14, 0x12,
+    0x00, 0x01, 0x02, 0x00, 0x03, 0x04, 0x05, 0x03, 0x06, 0x07, 0x08, 0x06, 0x00, 0x01, 0x02, 0x00,
+    0x1B, 0x1C, 0x1D, 0x1B, 0x1E, 0x1F, 0x20, 0x1E, 0x21, 0x22, 0x23, 0x21, 0x1B, 0x1C, 0x1D, 0x1B,
+    0x24, 0x25, 0x26, 0x24, 0x27, 0x28, 0x29, 0x27, 0x2A, 0x2B, 0x2C, 0x2A, 0x24, 0x25, 0x26, 0x24,
+    0x2D, 0x2E, 0x2F, 0x2D, 0x30, 0x31, 0x32, 0x30, 0x33, 0x34, 0x35, 0x33, 0x2D, 0x2E, 0x2F, 0x2D,
+    0x1B, 0x1C, 0x1D, 0x1B, 0x1E, 0x1F, 0x20, 0x1E, 0x21, 0x22, 0x23, 0x21, 0x1B, 0x1C, 0x1D, 0x1B,
+    0x36, 0x37, 0x38, 0x36, 0x39, 0x3A, 0x3B, 0x39, 0x3C, 0x3D, 0x3E, 0x3C, 0x36, 0x37, 0x38, 0x36,
+    0x3F, 0x40, 0x41, 0x3F, 0x42, 0x43, 0x44, 0x42, 0x45, 0x46, 0x47, 0x45, 0x3F, 0x40, 0x41, 0x3F,
+    0x48, 0x49, 0x4A, 0x48, 0x4B, 0x4C, 0x4D, 0x4B, 0x4E, 0x4F, 0x50, 0x4E, 0x48, 0x49, 0x4A, 0x48,
+    0x36, 0x37, 0x38, 0x36, 0x39, 0x3A, 0x3B, 0x39, 0x3C, 0x3D, 0x3E, 0x3C, 0x36, 0x37, 0x38, 0x36,
+    0x00, 0x01, 0x02, 0x00, 0x03, 0x04, 0x05, 0x03, 0x06, 0x07, 0x08, 0x06, 0x00, 0x01, 0x02, 0x00,
+    0x09, 0x0A, 0x0B, 0x09, 0x0C, 0x0D, 0x0E, 0x0C, 0x0F, 0x10, 0x11, 0x0F, 0x09, 0x0A, 0x0B, 0x09,
+    0x12, 0x13, 0x14, 0x12, 0x15, 0x16, 0x17, 0x15, 0x18, 0x19, 0x1A, 0x18, 0x12, 0x13, 0x14, 0x12,
+    0x00, 0x01, 0x02, 0x00, 0x03, 0x04, 0x05, 0x03, 0x06, 0x07, 0x08, 0x06, 0x00, 0x01, 0x02, 0x00,
+};
+static const u8 sDownArrowTiles[] __attribute__((section(".rodata.text_core_data"))) = INCGFX_U8("graphics/fonts/down_arrow.png", ".4bpp");
+static const u8 sDarkDownArrowTiles[] __attribute__((section(".rodata.text_core_data"))) = INCGFX_U8("graphics/fonts/down_arrow_alt.png", ".4bpp");
+static const u8 sUnusedFRLGBlankedDownArrow[] __attribute__((section(".rodata.text_core_data"))) = INCGFX_U8("graphics/fonts/unused_frlg_blanked_down_arrow.png", ".4bpp");
+static const u8 sUnusedFRLGDownArrow[] __attribute__((section(".rodata.text_core_data"))) = INCGFX_U8("graphics/fonts/unused_frlg_down_arrow.png", ".4bpp");
+static const u8 sDownArrowYCoords[] __attribute__((section(".rodata.text_core_data"))) = { 0, 1, 2, 1 };
+static const u8 sWindowVerticalScrollSpeeds[] __attribute__((section(".rodata.text_core_data"))) = { 1, 2, 4, 0 };
+static const struct GlyphWidthFunc sGlyphWidthFuncs[] __attribute__((section(".rodata.text_core_data"))) = {
+    { FONT_SMALL, (u32 (*)(u16, bool32))sub_08006300 },
+    { FONT_NORMAL, (u32 (*)(u16, bool32))sub_08006350 },
+    { FONT_SHORT, (u32 (*)(u16, bool32))sub_080063F8 },
+    { FONT_SHORT_COPY_1, (u32 (*)(u16, bool32))sub_080064B4 },
+    { FONT_SHORT_COPY_2, (u32 (*)(u16, bool32))sub_0800655C },
+    { FONT_SHORT_COPY_3, (u32 (*)(u16, bool32))sub_08006620 },
+};
+static const struct KeypadIcon sKeypadIcons[] __attribute__((section(".rodata.text_core_data"))) = {
+    [CHAR_A_BUTTON] = { 0x00,  8, 12 },
+    [CHAR_B_BUTTON] = { 0x01,  8, 12 },
+    [CHAR_L_BUTTON] = { 0x02, 16, 12 },
+    [CHAR_R_BUTTON] = { 0x04, 16, 12 },
+    [CHAR_START_BUTTON] = { 0x06, 24, 12 },
+    [CHAR_SELECT_BUTTON] = { 0x09, 24, 12 },
+    [CHAR_DPAD_UP] = { 0x0C,  8, 12 },
+    [CHAR_DPAD_DOWN] = { 0x0D,  8, 12 },
+    [CHAR_DPAD_LEFT] = { 0x0E,  8, 12 },
+    [CHAR_DPAD_RIGHT] = { 0x0F,  8, 12 },
+    [CHAR_DPAD_UPDOWN] = { 0x20,  8, 12 },
+    [CHAR_DPAD_LEFTRIGHT] = { 0x21,  8, 12 },
+    [CHAR_DPAD_NONE] = { 0x22,  8, 12 },
+};
+static const u8 sKeypadIconTiles[] __attribute__((section(".rodata.text_core_data"))) = INCGFX_U8("graphics/fonts/keypad_icons.png", ".4bpp");
+static const struct FontInfo sFontInfos[] __attribute__((section(".rodata.text_core_data"))) = {
+    [FONT_SMALL] = {
+        .fontFunction = FontFunc_Small,
+        .maxLetterWidth = 8,
+        .maxLetterHeight = 12,
+        .letterSpacing = 0,
+        .lineSpacing = 2,
+        .unk = 0,
+        .fgColor = 2,
+        .bgColor = 1,
+        .shadowColor = 3,
+    },
+    [FONT_NORMAL] = {
+        .fontFunction = FontFunc_Normal,
+        .maxLetterWidth = 8,
+        .maxLetterHeight = 16,
+        .letterSpacing = 0,
+        .lineSpacing = 0,
+        .unk = 0,
+        .fgColor = 2,
+        .bgColor = 1,
+        .shadowColor = 3,
+    },
+    [FONT_SHORT] = {
+        .fontFunction = FontFunc_Short,
+        .maxLetterWidth = 10,
+        .maxLetterHeight = 12,
+        .letterSpacing = 1,
+        .lineSpacing = 2,
+        .unk = 0,
+        .fgColor = 2,
+        .bgColor = 1,
+        .shadowColor = 3,
+    },
+    [FONT_SHORT_COPY_1] = {
+        .fontFunction = FontFunc_ShortCopy1,
+        .maxLetterWidth = 10,
+        .maxLetterHeight = 12,
+        .letterSpacing = 1,
+        .lineSpacing = 2,
+        .unk = 0,
+        .fgColor = 2,
+        .bgColor = 1,
+        .shadowColor = 3,
+    },
+    [FONT_SHORT_COPY_2] = {
+        .fontFunction = FontFunc_ShortCopy2,
+        .maxLetterWidth = 10,
+        .maxLetterHeight = 12,
+        .letterSpacing = 0,
+        .lineSpacing = 0,
+        .unk = 0,
+        .fgColor = 2,
+        .bgColor = 1,
+        .shadowColor = 3,
+    },
+    [FONT_SHORT_COPY_3] = {
+        .fontFunction = FontFunc_ShortCopy3,
+        .maxLetterWidth = 10,
+        .maxLetterHeight = 12,
+        .letterSpacing = 0,
+        .lineSpacing = 0,
+        .unk = 0,
+        .fgColor = 2,
+        .bgColor = 1,
+        .shadowColor = 3,
+    },
+    [FONT_BRAILLE] = {
+        .fontFunction = FontFunc_Braille,
+        .maxLetterWidth = 8,
+        .maxLetterHeight = 16,
+        .letterSpacing = 0,
+        .lineSpacing = 16,
+        .unk = 0,
+        .fgColor = 2,
+        .bgColor = 1,
+        .shadowColor = 3,
+    },
+    [FONT_BOLD] = {
+        .fontFunction = NULL,
+        .maxLetterWidth = 8,
+        .maxLetterHeight = 8,
+        .letterSpacing = 0,
+        .lineSpacing = 0,
+        .unk = 0,
+        .fgColor = 1,
+        .bgColor = 2,
+        .shadowColor = 15,
+    },
+};
+static const u8 sMenuCursorDimensions[][2] __attribute__((section(".rodata.text_core_data"))) = {
+    [FONT_SMALL] = { 8, 12 },
+    [FONT_NORMAL] = { 8, 16 },
+    [FONT_SHORT] = { 6, 12 },
+    [FONT_SHORT_COPY_1] = { 6, 12 },
+    [FONT_SHORT_COPY_2] = { 6, 12 },
+    [FONT_SHORT_COPY_3] = { 6, 12 },
+    [FONT_BRAILLE] = { 8, 16 },
+    [FONT_BOLD] = { 0, 0 },
+};
+static const u16 sFontBoldJapaneseGlyphs[] __attribute__((section(".rodata.text_bold_font"))) = INCGFX_U16("graphics/fonts/japanese_bold.png", ".hwjpnfont");
 
 static void SetFontsPointer(const struct FontInfo *fonts)
 {
@@ -332,7 +471,6 @@ void RestoreTextColors(u8 *fgColor, u8 *bgColor, u8 *shadowColor)
 }
 
 // JP ROM data at 0x0829BEB8 (glyph nibble -> palette index)
-extern const u8 sGlyphPaletteIdxTable[];
 
 void DecompressGlyphTile(const void *src_, void *dest_)
 {
@@ -352,7 +490,7 @@ void DecompressGlyphTile(const void *src_, void *dest_)
         {
             idx = *(const u16 *)src >> 8;
         }
-        *dest++ = sFontHalfRowLookupTable[sGlyphPaletteIdxTable[idx]];
+        *dest++ = sFontHalfRowLookupTable[sFontHalfRowOffsets[idx]];
     }
 }
 
@@ -2909,7 +3047,7 @@ u8 GetMenuCursorDimensionByFont(u8 fontId, u8 whichDimension)
 // JP-specific glyph functions (JP ROM 0x080062B4-0x0800668C)
 void DecompressGlyphFont9(u16 glyphId)
 {
-    const u8 *glyphs = sFontGlyphData_9CF14 + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
+    const u8 *glyphs = ((const u8 *)gFontSmallJapaneseGlyphs) + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
     DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
     DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
     gCurGlyph.width = 8;
@@ -2923,7 +3061,7 @@ u32 sub_08006300(u16 glyphId)
 
 void sub_08006304(u16 glyphId)
 {
-    const u8 *glyphs = sFontGlyphData_A0F14 + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
+    const u8 *glyphs = ((const u8 *)gFontNormalJapaneseGlyphs) + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
     DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
     DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
     gCurGlyph.width = 8;
@@ -2954,12 +3092,12 @@ void sub_08006354(u16 glyphId)
     {
         u32 hi = (glyphId >> 3) * 0x200;
         u32 lo = (glyphId & 7) * 0x20;
-        const u8 *glyphs = sFontGlyphData_A4F14 + hi + lo;
+        const u8 *glyphs = ((const u8 *)gFontShortJapaneseGlyphs) + hi + lo;
         DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
         DecompressGlyphTile(glyphs + 0x10, (u8 *)gCurGlyph.gfxBufferTop + 0x20);
         DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
         DecompressGlyphTile(glyphs + 0x110, (u8 *)gCurGlyph.gfxBufferBottom + 0x20);
-        gCurGlyph.width = sGlyphWidthTable_ACF14[glyphId];
+        gCurGlyph.width = gFontShortJapaneseGlyphWidths[glyphId];
         gCurGlyph.height = 12;
     }
 }
@@ -2968,7 +3106,7 @@ u32 sub_080063F8(u16 glyphId)
 {
     if (glyphId == 0)
         return 10;
-    return sGlyphWidthTable_ACF14[glyphId];
+    return gFontShortJapaneseGlyphWidths[glyphId];
 }
 
 void sub_08006418(u16 glyphId)
@@ -2990,7 +3128,7 @@ void sub_08006418(u16 glyphId)
     {
         u32 hi = (glyphId >> 3) * 0x200;
         u32 lo = (glyphId & 7) * 0x20;
-        const u8 *glyphs = sFontGlyphData_A4F14 + hi + lo;
+        const u8 *glyphs = ((const u8 *)gFontShortJapaneseGlyphs) + hi + lo;
         DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
         DecompressGlyphTile(glyphs + 0x10, (u8 *)gCurGlyph.gfxBufferTop + 0x20);
         DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
@@ -3024,12 +3162,12 @@ void sub_080064B8(u16 glyphId)
     {
         u32 hi = (glyphId >> 3) * 0x200;
         u32 lo = (glyphId & 7) * 0x20;
-        const u8 *glyphs = sFontGlyphData_AD02C + hi + lo;
+        const u8 *glyphs = ((const u8 *)gFontFRLGMaleJapaneseGlyphs) + hi + lo;
         DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
         DecompressGlyphTile(glyphs + 0x10, (u8 *)gCurGlyph.gfxBufferTop + 0x20);
         DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
         DecompressGlyphTile(glyphs + 0x110, (u8 *)gCurGlyph.gfxBufferBottom + 0x20);
-        gCurGlyph.width = sGlyphWidthTable_B502C[glyphId];
+        gCurGlyph.width = gFontFRLGMaleJapaneseGlyphWidths[glyphId];
         gCurGlyph.height = 12;
     }
 }
@@ -3038,7 +3176,7 @@ u32 sub_0800655C(u16 glyphId)
 {
     if (glyphId == 0)
         return 10;
-    return sGlyphWidthTable_B502C[glyphId];
+    return gFontFRLGMaleJapaneseGlyphWidths[glyphId];
 }
 
 void sub_0800657C(u16 glyphId)
@@ -3060,12 +3198,12 @@ void sub_0800657C(u16 glyphId)
     {
         u32 hi = (glyphId >> 3) * 0x200;
         u32 lo = (glyphId & 7) * 0x20;
-        const u8 *glyphs = sFontGlyphData_B5144 + hi + lo;
+        const u8 *glyphs = ((const u8 *)gFontFRLGFemaleJapaneseGlyphs) + hi + lo;
         DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
         DecompressGlyphTile(glyphs + 0x10, (u8 *)gCurGlyph.gfxBufferTop + 0x20);
         DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
         DecompressGlyphTile(glyphs + 0x110, (u8 *)gCurGlyph.gfxBufferBottom + 0x20);
-        gCurGlyph.width = sGlyphWidthTable_BD144[glyphId];
+        gCurGlyph.width = gFontFRLGFemaleJapaneseGlyphWidths[glyphId];
         gCurGlyph.height = 12;
     }
 }
@@ -3074,12 +3212,12 @@ u32 sub_08006620(u16 glyphId)
 {
     if (glyphId == 0)
         return 10;
-    return sGlyphWidthTable_BD144[glyphId];
+    return gFontFRLGFemaleJapaneseGlyphWidths[glyphId];
 }
 
 void sub_08006640(u16 glyphId)
 {
-    const u8 *glyphs = sFontGlyphData_BD25C + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
+    const u8 *glyphs = ((const u8 *)sFontBoldJapaneseGlyphs) + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
     DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
     DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
     gCurGlyph.width = 8;
