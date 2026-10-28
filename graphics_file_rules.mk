@@ -1,3 +1,13 @@
+CASTFORMGFXDIR := graphics/pokemon/castform
+
+### Castform ###
+
+$(CASTFORMGFXDIR)/anim_front.4bpp: $(CASTFORMGFXDIR)/normal/anim_front.4bpp \
+                                   $(CASTFORMGFXDIR)/sunny/anim_front.4bpp \
+                                   $(CASTFORMGFXDIR)/rainy/anim_front.4bpp \
+                                   $(CASTFORMGFXDIR)/snowy/anim_front.4bpp
+	@cat $^ >$@
+
 WALLPAPERGFXDIR := graphics/pokemon_storage/wallpapers
 
 ### Pokémon Storage System ###

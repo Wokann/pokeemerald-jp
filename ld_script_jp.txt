@@ -10415,7 +10415,10 @@ SECTIONS {
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
         data/rom_padding.o(.rodata);
-        data/data_b2d_gfx_front.o(.rodata);
+        src/anim_mon_front_pics.o(.rodata);
+        FILL(0xFFFFFFFF);
+        . = ALIGN(0x100000);
+        FILL(0x00000000);
         src/graphics.o(.rodata.battle_textbox);
         data/data_b2d_gfx_pokemon_none.o(.rodata);
         data/data_b2d_gfx_pokemon_none.o(.rodata.data_b2d_gfx_pokemon_none_before_smokescreen_impact);

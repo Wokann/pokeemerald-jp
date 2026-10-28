@@ -135,3 +135,9 @@ graphics/battle_transitions/*.png*.4bpp.lz
 graphics/battle_transitions/*.png.gbapal
 graphics/battle_transitions/*.png.gbapal.lz
 graphics/battle_transitions/vs_frame.bin.lz
+
+# Rebuilt animated Pokemon front pictures and Castform's combined forms.
+graphics/pokemon/**/anim_front.png.4bpp
+graphics/pokemon/**/anim_front.png.4bpp.lz
+graphics/pokemon/castform/**/anim_front.4bpp
+graphics/pokemon/castform/anim_front.4bpp.lz
