@@ -10,13 +10,23 @@ extern u8 gStringVar3[0x100];
 extern u8 gStringVar4[0x3E8];
 extern u8 sUnknownStringVar[16];
 
-// JP const data lives in data.s (0x082BF43C etc.).
-extern const u8 sDigits[];
-extern const s32 sPowersOfTen[];
-extern const u8 sBrailleFont[];
-extern const u8 sBrailleGotoLine2[];
+static const u8 sDigits[] = __("0123456789ABCDEF");
+
+static const s32 sPowersOfTen[] =
+{
+             1,
+            10,
+           100,
+          1000,
+         10000,
+        100000,
+       1000000,
+      10000000,
+     100000000,
+    1000000000,
+};
 typedef const u8 *(*ExpandPlaceholderFunc)(void);
-extern const ExpandPlaceholderFunc sPlaceholderFuncs[];
+static const ExpandPlaceholderFunc sPlaceholderFuncs[];
 
 
 u8 *StringCopy10(u8 *dest, const u8 *src)
@@ -376,11 +386,19 @@ u8 *StringExpandPlaceholders(u8 *dest, const u8 *src)
 
 u8 *StringBraille(u8 *dest, const u8 *src)
 {
-    u8 setBrailleFont[4];
-    u8 gotoLine2[5];
-
-    memcpy(setBrailleFont, sBrailleFont, sizeof(setBrailleFont));
-    memcpy(gotoLine2, sBrailleGotoLine2, sizeof(gotoLine2));
+    const u8 setBrailleFont[] = {
+        EXT_CTRL_CODE_BEGIN,
+        EXT_CTRL_CODE_FONT,
+        FONT_BRAILLE,
+        EOS
+    };
+    const u8 gotoLine2[] = {
+        CHAR_NEWLINE,
+        EXT_CTRL_CODE_BEGIN,
+        EXT_CTRL_CODE_SHIFT_DOWN,
+        2,
+        EOS
+    };
 
     dest = StringCopy(dest, setBrailleFont);
 
@@ -480,7 +498,7 @@ static const u8 *ExpandPlaceholder_Groudon(void)
     return gText_ExpandedPlaceholder_Groudon;
 }
 
-const ExpandPlaceholderFunc sPlaceholderFuncs[] __attribute__((section(".rodata.string_util_placeholder_funcs"))) =
+static const ExpandPlaceholderFunc sPlaceholderFuncs[] __attribute__((section(".rodata.string_util_placeholder_funcs"))) =
 {
     [PLACEHOLDER_ID_UNKNOWN]      = ExpandPlaceholder_UnknownStringVar,
     [PLACEHOLDER_ID_PLAYER]       = ExpandPlaceholder_PlayerName,

@@ -239,24 +239,6 @@ sGlyphWidthTable_BD144: @ 0x82BD144
 sFontGlyphData_BD25C: @ 0x82BD25C
 	.incbin "graphics/fonts/jp_font_glyph_BD25C.bin"
 
-	.section .rodata.data_after_sprite_oam_dimensions
-
-	.globl sDigits
-sDigits: @ 0x82BF43C
-	.byte 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xBB, 0xBC
-	.byte 0xBD, 0xBE, 0xBF, 0xC0
-
-	.globl sPowersOfTen
-sPowersOfTen: @ 0x82BF44C
-	.4byte 0x00000001, 0x0000000A, 0x00000064, 0x000003E8, 0x00002710, 0x000186A0, 0x000F4240, 0x00989680, 0x05F5E100, 0x3B9ACA00
-
-	.globl sBrailleFont
-sBrailleFont: @ 0x82BF474
-	.string "{FONT 6}$"
-	.globl sBrailleGotoLine2
-sBrailleGotoLine2: @ 0x82BF478
-	.byte 0xFE, 0xFC, 0x0E, 0x02, 0xFF, 0x00, 0x00, 0x00
-
 	.section .rodata.data_after_string_util_placeholder_funcs
 
 	.globl sWirelessLinkDisplayPal

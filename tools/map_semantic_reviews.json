@@ -1866,7 +1866,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -4704,7 +4704,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -14433,7 +14433,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "data/maps/PetalburgCity_Gym/map.json",
@@ -17546,7 +17546,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -20742,7 +20742,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -23948,7 +23948,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -26045,7 +26045,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -29337,7 +29337,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -32322,7 +32322,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -34668,7 +34668,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -35165,7 +35165,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -37101,7 +37101,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -39343,7 +39343,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -41787,7 +41787,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -44341,7 +44341,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -45058,7 +45058,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "0cfb410533a62983e446152faacd44280b92d799a40984aefb2897a8399ea3a6"
+            "makefile_sha256": "5763f9c8d7426900268e42b55d6bbeb74707017c31b256434e882d9aab95dae0"
           }
         },
         {
@@ -45493,7 +45493,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "0cfb410533a62983e446152faacd44280b92d799a40984aefb2897a8399ea3a6"
+          "sha256": "5763f9c8d7426900268e42b55d6bbeb74707017c31b256434e882d9aab95dae0"
         },
         {
           "path": "asm/macros.inc",
@@ -47318,7 +47318,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -49536,7 +49536,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -53941,7 +53941,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -63110,7 +63110,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -75952,7 +75952,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -91511,7 +91511,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -107207,7 +107207,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -117865,7 +117865,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -125437,7 +125437,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -133331,7 +133331,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -139899,7 +139899,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -147485,7 +147485,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -152467,7 +152467,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -161733,7 +161733,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -162062,7 +162062,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -171534,7 +171534,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -172111,7 +172111,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -181112,7 +181112,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -181699,7 +181699,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -190140,7 +190140,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -190474,7 +190474,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -200426,7 +200426,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -200682,7 +200682,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -212451,7 +212451,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -213014,7 +213014,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -223541,7 +223541,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -223786,7 +223786,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -234423,7 +234423,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -234671,7 +234671,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -246779,7 +246779,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -247054,7 +247054,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -264734,7 +264734,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -265311,7 +265311,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -275955,7 +275955,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -276505,7 +276505,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -286192,7 +286192,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -286478,7 +286478,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -294904,7 +294904,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -295142,7 +295142,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -301612,7 +301612,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -308266,7 +308266,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -313593,7 +313593,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -320217,7 +320217,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -325728,7 +325728,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -331286,7 +331286,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -338183,7 +338183,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -346113,7 +346113,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -353128,7 +353128,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -357582,7 +357582,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -361298,7 +361298,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -365441,7 +365441,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -365828,7 +365828,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -370568,7 +370568,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -374221,7 +374221,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -377985,7 +377985,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -378268,7 +378268,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -381743,7 +381743,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -382082,7 +382082,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -385275,7 +385275,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -385598,7 +385598,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -388920,7 +388920,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -389219,7 +389219,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -392812,7 +392812,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -393135,7 +393135,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -396253,7 +396253,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -396568,7 +396568,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -399831,7 +399831,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -400106,7 +400106,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -405640,7 +405640,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -405901,7 +405901,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -414026,7 +414026,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -414365,7 +414365,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -418382,7 +418382,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -418633,7 +418633,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -421906,7 +421906,7 @@
         {
           "path": "src/string_util.c",
           "selector": "file",
-          "sha256": "4dc1f0ff531bb49c320f8b899ac3616d7998fdb9e30a18caf1d8f60a081a88f3"
+          "sha256": "6d175494b93aa7fcc7593b59b05b92e8bdc3929d4afa4aadcf1b75c1497faf30"
         },
         {
           "path": "src/strings.c",
@@ -422442,7 +422442,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -426047,7 +426047,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -431520,7 +431520,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -433503,7 +433503,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -436462,7 +436462,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -439966,7 +439966,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -444540,7 +444540,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -447056,7 +447056,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -449667,7 +449667,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -452377,7 +452377,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -454925,7 +454925,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -457204,7 +457204,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -462801,7 +462801,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "099c8a5a3db11793d5dce61bc6946c3f17f960b6ea6a4458f4ecb69e7e66a666"
+          "sha256": "8714b89abb35c984ff107bf598927a5140347a9cfb5997f58abcc2fa70b88710"
         },
         {
           "path": "src/battle_tower.c",
