@@ -79,7 +79,8 @@ FIXED_V4 = {op: form for op, form in FIXED.items() if op != 'checkitemspace'} | 
                    'setmetatile': (9, 4), 'dotimebasedevents': (1, 0), 'random': (3, 1),
                    'setfieldeffectargument': (4, 2), 'dofieldeffect': (3, 1), 'waitfieldeffect': (3, 1),
                    'setweather': (3, 1), 'doweather': (1, 0), 'fadenewbgm': (3, 1),
-                   'fadescreenspeed': (3, 2), 'turnobject': (4, 2), 'hideplayer': (5, 0),
+                   'fadescreenspeed': (3, 2), 'turnobject': (4, 2),
+                   'showplayer': (5, 0), 'hideplayer': (5, 0),
                    'multichoice': (5, 4), 'multichoicedefault': (6, 5),
                    'setobjectsubpriority': (6, 3), 'resetobjectsubpriority': (5, 2),
                    'showobjectat': (5, 2), 'incrementgamestat': (2, 1),
@@ -1556,6 +1557,13 @@ def profile_block(root: Path, block: str, waits=None, *, version=3, address=None
     return result
 
 
+OWNER_PREFIXES_V4 = {
+    'BattleFrontier_BattleDomeBattleRoom_MapScripts': [
+        '.set NO_DRAW, 0', '.set DRAW_TRAINER, 1', '.set DRAW_TUCKER, 2'],
+    'Std_ObtainItem': ['.set ITEMID, VAR_0x8000', '.set AMOUNT, VAR_0x8001'],
+}
+
+
 def profile_owner(root: Path, text: str, waits=None, *, version=3, address=None) -> dict[str, BlockProfile]:
     waits = special_waits(root) if waits is None else waits
     blocks = label_blocks(text)
@@ -1563,9 +1571,7 @@ def profile_owner(root: Path, text: str, waits=None, *, version=3, address=None)
         raise ValueError('missing_profile_labels')
     first = re.search(r'(?m)^' + re.escape(next(iter(blocks))) + r'::?', text)
     prefix = [re.sub(r'\s+', ' ', line) for line in statements(text[:first.start()])]
-    if prefix and not (version == 4
-                       and next(iter(blocks)) == 'BattleFrontier_BattleDomeBattleRoom_MapScripts'
-                       and prefix == ['.set NO_DRAW, 0', '.set DRAW_TRAINER, 1', '.set DRAW_TUCKER, 2']):
+    if prefix and not (version == 4 and prefix == OWNER_PREFIXES_V4.get(next(iter(blocks)))):
         raise ValueError('unmodeled_owner_prefix')
     result = {}
     for name, block in blocks.items():
