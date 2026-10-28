@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Extract JP pokemon battle gfx resources from baserom_jp.gba.
 
-Handles the four resource families in data/data_b2d_gfx_pokemon_main.s and
-data/data_b2d_gfx_pokemon_none.s:
+Handles the remaining question-mark resources in data/data_b2d_gfx_pokemon_none.s:
   gMonStillFrontPic_*  -> graphics/pokemon/<species>/front.4bpp.lz
   gMonPalette_*        -> graphics/pokemon/<species>/normal.gbapal.lz
   gMonBackPic_*        -> graphics/pokemon/<species>/back.4bpp.lz
@@ -33,7 +32,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ROM_PATH = ROOT / "baserom_jp.gba"
 S_FILES = [
-    ROOT / "data" / "data_b2d_gfx_pokemon_main.s",
     ROOT / "data" / "data_b2d_gfx_pokemon_none.s",
 ]
 MAP_CACHE = ROOT / "tools" / "pokemon_gfx_map.txt"

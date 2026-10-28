@@ -1224,7 +1224,7 @@ $(C_BUILDDIR)/link_rfu_2.o: src/link_rfu_2.c
 include sound/song_order.mk
 SONG_OBJS := $(patsubst sound/songs/midi/%.s,$(OBJ_DIR)/sound/songs/midi/%.o,$(SONG_SRCS))
 
-DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_main.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
+DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 # Migrated data files now build from C or no longer contribute data.
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b2d_mid33.o,$(DATA_OBJS))
@@ -1281,6 +1281,7 @@ clean: clean-tools
 	rm -f $(JP_MAIL_ASSETS) $(JP_MAIL_INTERMEDIATES)
 	rm -f $(JP_CRY_SCREEN_ASSETS) $(JP_CRY_SCREEN_INTERMEDIATES)
 	rm -f $(JP_ANIM_MON_FRONT_PIC_ASSETS) $(JP_ANIM_MON_FRONT_PIC_INTERMEDIATES)
+	rm -f $(JP_TRAINER_GRAPHICS_ASSETS) $(JP_TRAINER_GRAPHICS_INTERMEDIATES)
 	rm -f $(JP_BATTLE_TEXTBOX_PALETTE)
 	rm -f $(JP_CONTEST_RESULTS_ASSETS)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
@@ -2973,9 +2974,6 @@ $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o: data/data_b2d_gfx_pokemon_none.s ba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/data_b2d_gfx_pokemon_main.o: data/data_b2d_gfx_pokemon_main.s baserom_jp.gba
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/multiboot_ereader.o: data/multiboot_ereader.s data/mb_ereader.gba
 	@mkdir -p $(dir $@)
@@ -6473,3 +6471,214 @@ $(C_BUILDDIR)/anim_mon_front_pics.o: src/anim_mon_front_pics.c $(JP_ANIM_MON_FRO
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/anim_mon_front_pics.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/anim_mon_front_pics.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/anim_mon_front_pics.gen.s
+
+# Trainer pictures and palettes are generated from their editable inputs.
+JP_TRAINER_GRAPHICS_ASSETS := \
+	graphics/trainers/back_pics/brendan.png.4bpp \
+	graphics/trainers/back_pics/brendan_rs.png.4bpp \
+	graphics/trainers/back_pics/leaf.png.4bpp \
+	graphics/trainers/back_pics/leaf.png.gbapal.lz \
+	graphics/trainers/back_pics/may.png.4bpp \
+	graphics/trainers/back_pics/may_rs.png.4bpp \
+	graphics/trainers/back_pics/red.png.4bpp \
+	graphics/trainers/back_pics/red.png.gbapal.lz \
+	graphics/trainers/back_pics/steven.png.4bpp \
+	graphics/trainers/back_pics/wally.png.4bpp \
+	graphics/trainers/front_pics/aqua_admin_f.png.4bpp.lz \
+	graphics/trainers/front_pics/aqua_admin_f.png.gbapal.lz \
+	graphics/trainers/front_pics/aqua_admin_m.png.4bpp.lz \
+	graphics/trainers/front_pics/aqua_admin_m.png.gbapal.lz \
+	graphics/trainers/front_pics/aqua_grunt_f.png.4bpp.lz \
+	graphics/trainers/front_pics/aqua_grunt_f.png.gbapal.lz \
+	graphics/trainers/front_pics/aqua_grunt_m.png.4bpp.lz \
+	graphics/trainers/front_pics/aqua_grunt_m.png.gbapal.lz \
+	graphics/trainers/front_pics/aqua_leader_archie.png.4bpp.lz \
+	graphics/trainers/front_pics/aqua_leader_archie.png.gbapal.lz \
+	graphics/trainers/front_pics/arena_tycoon_greta.png.4bpp.lz \
+	graphics/trainers/front_pics/arena_tycoon_greta.png.gbapal.lz \
+	graphics/trainers/front_pics/aroma_lady.png.4bpp.lz \
+	graphics/trainers/front_pics/aroma_lady.png.gbapal.lz \
+	graphics/trainers/front_pics/battle_girl.png.4bpp.lz \
+	graphics/trainers/front_pics/battle_girl.png.gbapal.lz \
+	graphics/trainers/front_pics/beauty.png.4bpp.lz \
+	graphics/trainers/front_pics/beauty.png.gbapal.lz \
+	graphics/trainers/front_pics/bird_keeper.png.4bpp.lz \
+	graphics/trainers/front_pics/bird_keeper.png.gbapal.lz \
+	graphics/trainers/front_pics/black_belt.png.4bpp.lz \
+	graphics/trainers/front_pics/black_belt.png.gbapal.lz \
+	graphics/trainers/front_pics/brendan.png.4bpp.lz \
+	graphics/trainers/front_pics/brendan_rs.png.4bpp.lz \
+	graphics/trainers/front_pics/bug_catcher.png.4bpp.lz \
+	graphics/trainers/front_pics/bug_catcher.png.gbapal.lz \
+	graphics/trainers/front_pics/bug_maniac.png.4bpp.lz \
+	graphics/trainers/front_pics/bug_maniac.png.gbapal.lz \
+	graphics/trainers/front_pics/camper.png.4bpp.lz \
+	graphics/trainers/front_pics/camper.png.gbapal.lz \
+	graphics/trainers/front_pics/champion_wallace.png.4bpp.lz \
+	graphics/trainers/front_pics/champion_wallace.png.gbapal.lz \
+	graphics/trainers/front_pics/collector.png.4bpp.lz \
+	graphics/trainers/front_pics/collector.png.gbapal.lz \
+	graphics/trainers/front_pics/cooltrainer_f.png.4bpp.lz \
+	graphics/trainers/front_pics/cooltrainer_f.png.gbapal.lz \
+	graphics/trainers/front_pics/cooltrainer_m.png.4bpp.lz \
+	graphics/trainers/front_pics/cooltrainer_m.png.gbapal.lz \
+	graphics/trainers/front_pics/cycling_triathlete_f.png.4bpp.lz \
+	graphics/trainers/front_pics/cycling_triathlete_f.png.gbapal.lz \
+	graphics/trainers/front_pics/cycling_triathlete_m.png.4bpp.lz \
+	graphics/trainers/front_pics/cycling_triathlete_m.png.gbapal.lz \
+	graphics/trainers/front_pics/dome_ace_tucker.png.4bpp.lz \
+	graphics/trainers/front_pics/dome_ace_tucker.png.gbapal.lz \
+	graphics/trainers/front_pics/dragon_tamer.png.4bpp.lz \
+	graphics/trainers/front_pics/dragon_tamer.png.gbapal.lz \
+	graphics/trainers/front_pics/elite_four_drake.png.4bpp.lz \
+	graphics/trainers/front_pics/elite_four_drake.png.gbapal.lz \
+	graphics/trainers/front_pics/elite_four_glacia.png.4bpp.lz \
+	graphics/trainers/front_pics/elite_four_glacia.png.gbapal.lz \
+	graphics/trainers/front_pics/elite_four_phoebe.png.4bpp.lz \
+	graphics/trainers/front_pics/elite_four_phoebe.png.gbapal.lz \
+	graphics/trainers/front_pics/elite_four_sidney.png.4bpp.lz \
+	graphics/trainers/front_pics/elite_four_sidney.png.gbapal.lz \
+	graphics/trainers/front_pics/expert_f.png.4bpp.lz \
+	graphics/trainers/front_pics/expert_f.png.gbapal.lz \
+	graphics/trainers/front_pics/expert_m.png.4bpp.lz \
+	graphics/trainers/front_pics/expert_m.png.gbapal.lz \
+	graphics/trainers/front_pics/factory_head_noland.png.4bpp.lz \
+	graphics/trainers/front_pics/factory_head_noland.png.gbapal.lz \
+	graphics/trainers/front_pics/fisherman.png.4bpp.lz \
+	graphics/trainers/front_pics/fisherman.png.gbapal.lz \
+	graphics/trainers/front_pics/gentleman.png.4bpp.lz \
+	graphics/trainers/front_pics/gentleman.png.gbapal.lz \
+	graphics/trainers/front_pics/guitarist.png.4bpp.lz \
+	graphics/trainers/front_pics/guitarist.png.gbapal.lz \
+	graphics/trainers/front_pics/hex_maniac.png.4bpp.lz \
+	graphics/trainers/front_pics/hex_maniac.png.gbapal.lz \
+	graphics/trainers/front_pics/hiker.png.4bpp.lz \
+	graphics/trainers/front_pics/hiker.png.gbapal.lz \
+	graphics/trainers/front_pics/interviewer.png.4bpp.lz \
+	graphics/trainers/front_pics/interviewer.png.gbapal.lz \
+	graphics/trainers/front_pics/kindler.png.4bpp.lz \
+	graphics/trainers/front_pics/kindler.png.gbapal.lz \
+	graphics/trainers/front_pics/lady.png.4bpp.lz \
+	graphics/trainers/front_pics/lady.png.gbapal.lz \
+	graphics/trainers/front_pics/lass.png.4bpp.lz \
+	graphics/trainers/front_pics/lass.png.gbapal.lz \
+	graphics/trainers/front_pics/leader_brawly.png.4bpp.lz \
+	graphics/trainers/front_pics/leader_brawly.png.gbapal.lz \
+	graphics/trainers/front_pics/leader_flannery.png.4bpp.lz \
+	graphics/trainers/front_pics/leader_flannery.png.gbapal.lz \
+	graphics/trainers/front_pics/leader_juan.png.4bpp.lz \
+	graphics/trainers/front_pics/leader_juan.png.gbapal.lz \
+	graphics/trainers/front_pics/leader_norman.png.4bpp.lz \
+	graphics/trainers/front_pics/leader_norman.png.gbapal.lz \
+	graphics/trainers/front_pics/leader_roxanne.png.4bpp.lz \
+	graphics/trainers/front_pics/leader_roxanne.png.gbapal.lz \
+	graphics/trainers/front_pics/leader_tate_and_liza.png.4bpp.lz \
+	graphics/trainers/front_pics/leader_tate_and_liza.png.gbapal.lz \
+	graphics/trainers/front_pics/leader_wattson.png.4bpp.lz \
+	graphics/trainers/front_pics/leader_wattson.png.gbapal.lz \
+	graphics/trainers/front_pics/leader_winona.png.4bpp.lz \
+	graphics/trainers/front_pics/leader_winona.png.gbapal.lz \
+	graphics/trainers/front_pics/leaf.png.4bpp.lz \
+	graphics/trainers/front_pics/leaf.png.gbapal.lz \
+	graphics/trainers/front_pics/magma_admin.png.4bpp.lz \
+	graphics/trainers/front_pics/magma_admin.png.gbapal.lz \
+	graphics/trainers/front_pics/magma_grunt_f.png.4bpp.lz \
+	graphics/trainers/front_pics/magma_grunt_f.png.gbapal.lz \
+	graphics/trainers/front_pics/magma_grunt_m.png.4bpp.lz \
+	graphics/trainers/front_pics/magma_grunt_m.png.gbapal.lz \
+	graphics/trainers/front_pics/magma_leader_maxie.png.4bpp.lz \
+	graphics/trainers/front_pics/magma_leader_maxie.png.gbapal.lz \
+	graphics/trainers/front_pics/may.png.4bpp.lz \
+	graphics/trainers/front_pics/may_rs.png.4bpp.lz \
+	graphics/trainers/front_pics/ninja_boy.png.4bpp.lz \
+	graphics/trainers/front_pics/ninja_boy.png.gbapal.lz \
+	graphics/trainers/front_pics/old_couple.png.4bpp.lz \
+	graphics/trainers/front_pics/old_couple.png.gbapal.lz \
+	graphics/trainers/front_pics/palace_maven_spenser.png.4bpp.lz \
+	graphics/trainers/front_pics/palace_maven_spenser.png.gbapal.lz \
+	graphics/trainers/front_pics/parasol_lady.png.4bpp.lz \
+	graphics/trainers/front_pics/parasol_lady.png.gbapal.lz \
+	graphics/trainers/front_pics/picnicker.png.4bpp.lz \
+	graphics/trainers/front_pics/picnicker.png.gbapal.lz \
+	graphics/trainers/front_pics/pike_queen_lucy.png.4bpp.lz \
+	graphics/trainers/front_pics/pike_queen_lucy.png.gbapal.lz \
+	graphics/trainers/front_pics/pokefan_f.png.4bpp.lz \
+	graphics/trainers/front_pics/pokefan_f.png.gbapal.lz \
+	graphics/trainers/front_pics/pokefan_m.png.4bpp.lz \
+	graphics/trainers/front_pics/pokefan_m.png.gbapal.lz \
+	graphics/trainers/front_pics/pokemaniac.png.4bpp.lz \
+	graphics/trainers/front_pics/pokemaniac.png.gbapal.lz \
+	graphics/trainers/front_pics/pokemon_breeder_f.png.4bpp.lz \
+	graphics/trainers/front_pics/pokemon_breeder_f.png.gbapal.lz \
+	graphics/trainers/front_pics/pokemon_breeder_m.png.4bpp.lz \
+	graphics/trainers/front_pics/pokemon_breeder_m.png.gbapal.lz \
+	graphics/trainers/front_pics/pokemon_ranger_f.png.4bpp.lz \
+	graphics/trainers/front_pics/pokemon_ranger_f.png.gbapal.lz \
+	graphics/trainers/front_pics/pokemon_ranger_m.png.4bpp.lz \
+	graphics/trainers/front_pics/pokemon_ranger_m.png.gbapal.lz \
+	graphics/trainers/front_pics/psychic_f.png.4bpp.lz \
+	graphics/trainers/front_pics/psychic_f.png.gbapal.lz \
+	graphics/trainers/front_pics/psychic_m.png.4bpp.lz \
+	graphics/trainers/front_pics/psychic_m.png.gbapal.lz \
+	graphics/trainers/front_pics/pyramid_king_brandon.png.4bpp.lz \
+	graphics/trainers/front_pics/pyramid_king_brandon.png.gbapal.lz \
+	graphics/trainers/front_pics/red.png.4bpp.lz \
+	graphics/trainers/front_pics/red.png.gbapal.lz \
+	graphics/trainers/front_pics/rich_boy.png.4bpp.lz \
+	graphics/trainers/front_pics/rich_boy.png.gbapal.lz \
+	graphics/trainers/front_pics/ruin_maniac.png.4bpp.lz \
+	graphics/trainers/front_pics/ruin_maniac.png.gbapal.lz \
+	graphics/trainers/front_pics/running_triathlete_f.png.4bpp.lz \
+	graphics/trainers/front_pics/running_triathlete_f.png.gbapal.lz \
+	graphics/trainers/front_pics/running_triathlete_m.png.4bpp.lz \
+	graphics/trainers/front_pics/running_triathlete_m.png.gbapal.lz \
+	graphics/trainers/front_pics/sailor.png.4bpp.lz \
+	graphics/trainers/front_pics/sailor.png.gbapal.lz \
+	graphics/trainers/front_pics/salon_maiden_anabel.png.4bpp.lz \
+	graphics/trainers/front_pics/salon_maiden_anabel.png.gbapal.lz \
+	graphics/trainers/front_pics/school_kid_f.png.4bpp.lz \
+	graphics/trainers/front_pics/school_kid_f.png.gbapal.lz \
+	graphics/trainers/front_pics/school_kid_m.png.4bpp.lz \
+	graphics/trainers/front_pics/school_kid_m.png.gbapal.lz \
+	graphics/trainers/front_pics/sis_and_bro.png.4bpp.lz \
+	graphics/trainers/front_pics/sis_and_bro.png.gbapal.lz \
+	graphics/trainers/front_pics/sr_and_jr.png.4bpp.lz \
+	graphics/trainers/front_pics/sr_and_jr.png.gbapal.lz \
+	graphics/trainers/front_pics/steven.png.4bpp.lz \
+	graphics/trainers/front_pics/steven.png.gbapal.lz \
+	graphics/trainers/front_pics/swimmer_f.png.4bpp.lz \
+	graphics/trainers/front_pics/swimmer_f.png.gbapal.lz \
+	graphics/trainers/front_pics/swimmer_m.png.4bpp.lz \
+	graphics/trainers/front_pics/swimmer_m.png.gbapal.lz \
+	graphics/trainers/front_pics/swimming_triathlete_f.png.4bpp.lz \
+	graphics/trainers/front_pics/swimming_triathlete_f.png.gbapal.lz \
+	graphics/trainers/front_pics/swimming_triathlete_m.png.4bpp.lz \
+	graphics/trainers/front_pics/swimming_triathlete_m.png.gbapal.lz \
+	graphics/trainers/front_pics/tuber_f.png.4bpp.lz \
+	graphics/trainers/front_pics/tuber_f.png.gbapal.lz \
+	graphics/trainers/front_pics/tuber_m.png.4bpp.lz \
+	graphics/trainers/front_pics/tuber_m.png.gbapal.lz \
+	graphics/trainers/front_pics/twins.png.4bpp.lz \
+	graphics/trainers/front_pics/twins.png.gbapal.lz \
+	graphics/trainers/front_pics/wally.png.4bpp.lz \
+	graphics/trainers/front_pics/young_couple.png.4bpp.lz \
+	graphics/trainers/front_pics/young_couple.png.gbapal.lz \
+	graphics/trainers/front_pics/youngster.png.4bpp.lz \
+	graphics/trainers/front_pics/youngster.png.gbapal.lz \
+	graphics/trainers/palettes/brendan.pal.gbapal.lz \
+	graphics/trainers/palettes/brendan_rs.pal.gbapal.lz \
+	graphics/trainers/palettes/may.pal.gbapal.lz \
+	graphics/trainers/palettes/may_rs.pal.gbapal.lz \
+	graphics/trainers/palettes/wally.pal.gbapal.lz
+JP_TRAINER_GRAPHICS_INTERMEDIATES := $(patsubst %.lz,%,$(filter %.lz,$(JP_TRAINER_GRAPHICS_ASSETS)))
+
+graphics/trainers/%.png.4bpp: graphics/trainers/%.png | tools
+	$(GFX) $< $@
+
+graphics/trainers/%.png.gbapal: graphics/trainers/%.png | tools
+	$(GFX) $< $@
+
+graphics/trainers/%.pal.gbapal: graphics/trainers/%.pal | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: src/data/graphics/trainers.h $(JP_TRAINER_GRAPHICS_ASSETS)

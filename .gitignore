@@ -141,3 +141,11 @@ graphics/pokemon/**/anim_front.png.4bpp
 graphics/pokemon/**/anim_front.png.4bpp.lz
 graphics/pokemon/castform/**/anim_front.4bpp
 graphics/pokemon/castform/anim_front.4bpp.lz
+
+# Rebuilt trainer pictures and palettes.
+graphics/trainers/**/*.png.4bpp
+graphics/trainers/**/*.png.4bpp.lz
+graphics/trainers/**/*.png.gbapal
+graphics/trainers/**/*.png.gbapal.lz
+graphics/trainers/**/*.pal.gbapal
+graphics/trainers/**/*.pal.gbapal.lz

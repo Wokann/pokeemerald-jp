@@ -5,13 +5,6 @@
 #include "graphics.h"
 #include "constants/trainers.h"
 
-// These JP back-picture palettes have not yet been split from the raw trainer
-// graphics block.  Keep local semantic aliases for the standard table.
-extern const u32 gUnknown_82D961C_2_Pal[];
-extern const u32 gUnknown_82D961C_3_Pal[];
-#define gTrainerBackPicPalette_Red gUnknown_82D961C_2_Pal
-#define gTrainerBackPicPalette_Leaf gUnknown_82D961C_3_Pal
-
 // This table goes functionally unused, since none of these pics are compressed
 // and the place they would get extracted to gets overwritten later anyway.
 const struct CompressedSpriteSheet gTrainerBackPicTable[] TRAINER_BACK_PIC_TABLE_DATA =
@@ -73,7 +66,5 @@ const struct CompressedSpritePalette gTrainerBackPicPaletteTable[] TRAINER_BACK_
 };
 
 #undef TRAINER_BACK_PAL
-#undef gTrainerBackPicPalette_Leaf
-#undef gTrainerBackPicPalette_Red
 
 #endif // POKEEMERALD_JP_TRAINER_BACK_PIC_TABLES_H

@@ -3,6 +3,8 @@
 #include "string_util.h"
 #include "constants/comparison_operators.h"
 
+#include "data/graphics/trainers.h"
+
 #define POKEDEX_AREA_UNKNOWN_GRAPHICS __attribute__((section(".rodata.pokedex_area_unknown_graphics"), aligned(4)))
 
 POKEDEX_AREA_UNKNOWN_GRAPHICS const u16 gPokedexAreaScreenAreaUnknown_Pal[] = INCGFX_U16("graphics/pokedex/area_unknown.png", ".gbapal");
