@@ -5622,7 +5622,7 @@ __attribute__((naked)) void DisplaySellItemAskString(void)
         "_081AD418: .4byte gSpecialVar_ItemId\n\t"
         "_081AD41C: .4byte gStringVar2\n\t"
         "_081AD420: .4byte gStringVar4\n\t"
-        "_081AD424: .4byte gUnknown_85C97BD + 0x28A\n\t"
+        "_081AD424: .4byte gText_CantBuyKeyItem\n\t"
         "_081AD428: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_081AD42C:\n\t"
         "	movs r0, #1\n\t"
@@ -5655,7 +5655,7 @@ __attribute__((naked)) void DisplaySellItemAskString(void)
         "	.align 2, 0\n\t"
         "_081AD468: .4byte gStringVar2\n\t"
         "_081AD46C: .4byte gStringVar4\n\t"
-        "_081AD470: .4byte gUnknown_85C97BD + 0x2A0\n\t"
+        "_081AD470: .4byte gText_HowManyToSell\n\t"
         "_081AD474: .4byte sub_081AD528 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -5704,7 +5704,7 @@ __attribute__((naked)) void sub_081AD478(void)
         "_081AD4C8: .4byte gStringVar1\n\t"
         "_081AD4CC: .4byte gSpecialVar_ItemId\n\t"
         "_081AD4D0: .4byte gStringVar4\n\t"
-        "_081AD4D4: .4byte gUnknown_85C97BD + 0x2AF\n\t"
+        "_081AD4D4: .4byte gText_ICanPayVar1\n\t"
         "_081AD4D8: .4byte sub_081AD4DC + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -5966,7 +5966,7 @@ __attribute__((naked)) void BagMenu_ConfirmSell(void)
         "_081AD6C8: .4byte gStringVar2\n\t"
         "_081AD6CC: .4byte gStringVar1\n\t"
         "_081AD6D0: .4byte gStringVar4\n\t"
-        "_081AD6D4: .4byte gUnknown_85C97BD + 0x2CB\n\t"
+        "_081AD6D4: .4byte gText_TurnedOverVar1ForVar2\n\t"
         "_081AD6D8: .4byte sub_081AD6DC + 1\n\t"
         ".syntax divided\n\t"
     );

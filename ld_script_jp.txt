@@ -10230,8 +10230,8 @@ SECTIONS {
         src/strings.o(.rodata.strings_bag_return_text);
         src/strings.o(.rodata.strings_bag_return_tables);
         src/strings.o(.rodata.strings_item_menu_text);
-        data/data_b2d.o(.rodata.mid76_pokeblock_name_text_prefix);
-        src/pokeblock.o(.rodata.pokeblock_name_text_data);
+        src/strings.o(.rodata.strings_berry_tag_text);
+        src/strings.o(.rodata.strings_pokeblock_names);
         src/strings.o(.rodata.strings_pokeblock_text);
         src/strings.o(.rodata.strings_shop_text);
         src/strings.o(.rodata.strings_party_menu_text);
@@ -10261,7 +10261,8 @@ SECTIONS {
         src/strings.o(.rodata.strings_frontier_pass_text);
         src/strings.o(.rodata.strings_minigame_text);
         src/strings.o(.rodata.strings_ereader_text);
-        data/data_b2d.o(.rodata.mid97_prefix);
+        src/strings.o(.rodata.strings_color_choices);
+        . = ALIGN(4);
         src/berry_tag_screen.o(.rodata.berry_tag_screen_data);
         src/strings.o(.rodata.strings_mystery_event_text);
         src/mystery_event_menu.o(.rodata.mid98_prefix);

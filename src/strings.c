@@ -31,6 +31,9 @@
 #define STRINGS_BIRCH_MENU __attribute__((section(".rodata.strings_birch_menu"), aligned(1)))
 #define STRINGS_POKEDEX __attribute__((section(".rodata.strings_pokedex"), aligned(1)))
 #define STRINGS_HOF_TEXT __attribute__((section(".rodata.strings_hall_of_fame"), aligned(1)))
+#define STRINGS_BERRY_TAG_TEXT __attribute__((section(".rodata.strings_berry_tag_text"), aligned(1)))
+#define STRINGS_POKEBLOCK_NAMES __attribute__((section(".rodata.strings_pokeblock_names"), aligned(1)))
+#define STRINGS_COLOR_CHOICES __attribute__((section(".rodata.strings_color_choices"), aligned(1)))
 #define STRINGS_POKEBLOCK_TEXT __attribute__((section(".rodata.strings_pokeblock_text"), aligned(1)))
 #define STRINGS_SHOP_TEXT __attribute__((section(".rodata.strings_shop_text"), aligned(1)))
 #define STRINGS_PARTY_MENU_TEXT __attribute__((section(".rodata.strings_party_menu_text"), aligned(1)))
@@ -524,6 +527,9 @@ STRINGS_SCRIPT_MENU_TEXT const u8 gText_PokemonOrder[] = _("ポケモンの　�
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_BattlePokemon[] = _("でてくるポケモン");
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_BattleTrainers[] = _("たたかう　トレーナー");
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_GoOn[] = _("つづける");
+
+STRINGS_COLOR_CHOICES const u8 gText_Red[] = _("あか");
+STRINGS_COLOR_CHOICES const u8 gText_Blue[] = _("あお");
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_Record2[] = _("きろくする");
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_Rest[] = _("やすむ");
 STRINGS_SCRIPT_MENU_TEXT const u8 gText_Retire[] = _("リタイア");
@@ -1179,6 +1185,24 @@ STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Soft[] = _("やわらかい
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_Hard[] = _("かたい");
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_VeryHard[] = _("とても　かたい");
 STRINGS_ITEM_MENU_TEXT const u8 gBerryFirmnessString_SuperHard[] = _("とてつもなく　かたい");
+
+STRINGS_BERRY_TAG_TEXT const u8 gText_NumberVar1Var2[] = _("{NO}{STR_VAR_1}　{STR_VAR_2}");
+STRINGS_BERRY_TAG_TEXT const u8 gText_BerryTag[] = _("きのみのタグ");
+
+STRINGS_POKEBLOCK_NAMES const u8 gText_RedPokeblock[] = _("あかいポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_BluePokeblock[] = _("あおいポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_PinkPokeblock[] = _("ももいろポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_GreenPokeblock[] = _("みどりのポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_YellowPokeblock[] = _("きいろのポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_PurplePokeblock[] = _("むらさきポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_IndigoPokeblock[] = _("こんいろポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_BrownPokeblock[] = _("ちゃいろポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_LiteBluePokeblock[] = _("そらいろポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_OlivePokeblock[] = _("きみどりポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_GrayPokeblock[] = _("はいいろポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_BlackPokeblock[] = _("くろいポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_WhitePokeblock[] = _("しろいポロック");
+STRINGS_POKEBLOCK_NAMES const u8 gText_GoldPokeblock[] = _("きんいろポロック");
 
 STRINGS_POKEBLOCK_TEXT const u8 gText_Spicy[] = _("からい");
 STRINGS_POKEBLOCK_TEXT const u8 gText_Dry[] = _("しぶい");

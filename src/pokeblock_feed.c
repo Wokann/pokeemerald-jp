@@ -1,4 +1,5 @@
 #include "global.h"
+#include "strings.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle.h"
 #include "bg.h"
@@ -53,7 +54,6 @@ extern u8 *gUnknown_203B9E4;
 extern struct CompressedSpritePalette gUnknown_203B9E8;
 extern u8 gUnknown_203B968;
 extern s16 gUnknown_203B96A;
-extern const u8 gUnknown_85C97BD[];
 extern s16 sub_0813700C(const struct Pokeblock *pokeblock, u8 field);
 extern s16 sub_08137054(u8 nature, const struct Pokeblock *pokeblock);
 extern void sub_081370B4(const struct Pokeblock *pokeblock, u8 *dest);
@@ -883,11 +883,11 @@ void Task_HandleMonAtePokeblock(u8 taskId)
     sub_081370B4(pokeblock, gStringVar2);
 
     if (gUnknown_203B96A == 0)
-        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0xC8);
+        StringExpandPlaceholders(gStringVar4, gText_Var1AteTheVar2);
     else if (gUnknown_203B96A > 0)
-        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0xD7);
+        StringExpandPlaceholders(gStringVar4, gText_Var1HappilyAteVar2);
     else
-        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0xEC);
+        StringExpandPlaceholders(gStringVar4, gText_Var1DisdainfullyAteVar2);
 
     gTextFlags.canABSpeedUpPrint = TRUE;
     AddTextPrinterParameterized2(0, FONT_NORMAL, gStringVar4, GetPlayerTextSpeedDelay(), NULL, 2, 1, 3);

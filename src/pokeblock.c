@@ -19,7 +19,6 @@
 #define POKEBLOCK_CASE_GRAPHICS_DATA __attribute__((section(".rodata.pokeblock_case_graphics_data")))
 #define POKEBLOCK_CASE_FAVORITE_DATA __attribute__((section(".rodata.pokeblock_case_favorite_data")))
 #define POKEBLOCK_WINDOW_TEMPLATE_DATA __attribute__((section(".rodata.pokeblock_window_template_data")))
-#define POKEBLOCK_NAME_TEXT_DATA __attribute__((section(".rodata.pokeblock_name_text_data")))
 
 #define TAG_POKEBLOCK_CASE 14800
 
@@ -121,20 +120,6 @@ static const struct BgTemplate sBgTemplatesForPokeblockMenu[] POKEBLOCK_MENU_BG_
     }
 };
 
-const u8 gText_RedPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("あかいポロック");
-const u8 gText_BluePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("あおいポロック");
-const u8 gText_PinkPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("ももいろポロック");
-const u8 gText_GreenPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("みどりのポロック");
-const u8 gText_YellowPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("きいろのポロック");
-const u8 gText_PurplePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("むらさきポロック");
-const u8 gText_IndigoPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("こんいろポロック");
-const u8 gText_BrownPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("ちゃいろポロック");
-const u8 gText_LiteBluePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("そらいろポロック");
-const u8 gText_OlivePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("きみどりポロック");
-const u8 gText_GrayPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("はいいろポロック");
-const u8 gText_BlackPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("くろいポロック");
-const u8 gText_WhitePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("しろいポロック");
-const u8 gText_GoldPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("きんいろポロック");
 
 const u8 *const gPokeblockNames[] POKEBLOCK_NAME_TABLE_DATA =
 {
@@ -1176,11 +1161,11 @@ __attribute__((naked)) void sub_08135DF8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08135E48: .4byte SPECIAL_MoveElevator\n\t"
-        "_08135E4C: .4byte gUnknown_85C97BD + 0x81\n\t"
-        "_08135E50: .4byte gUnknown_85C97BD + 0x85\n\t"
-        "_08135E54: .4byte gUnknown_85C97BD + 0x89\n\t"
-        "_08135E58: .4byte gUnknown_85C97BD + 0x8D\n\t"
-        "_08135E5C: .4byte gUnknown_85C97BD + 0x91\n\t"
+        "_08135E4C: .4byte gText_Spicy\n\t"
+        "_08135E50: .4byte gText_Dry\n\t"
+        "_08135E54: .4byte gText_Sweet\n\t"
+        "_08135E58: .4byte gText_Bitter\n\t"
+        "_08135E5C: .4byte gText_Sour\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1282,7 +1267,7 @@ __attribute__((naked)) void sub_08135E60(void)
         "_08135F14: .4byte 0x0000080A\n\t"
         "_08135F18: .4byte 0x00000954\n\t"
         "_08135F1C: .4byte 0x0000080C\n\t"
-        "_08135F20: .4byte gUnknown_85C97BD + 0x9F\n\t"
+        "_08135F20: .4byte gText_StowCase\n\t"
         "_08135F24: .4byte gMultiuseListMenuTemplate\n\t"
         "_08135F28: .4byte sPokeblockListMenuTemplate\n\t"
         "_08135F2C: .4byte 0x0000080B\n\t"
@@ -1349,7 +1334,7 @@ __attribute__((naked)) void sub_08135F30(void)
         "_08135FA4: .4byte gSaveBlock1Ptr\n\t"
         "_08135FA8: .4byte 0x00000848\n\t"
         "_08135FAC: .4byte gStringVar1\n\t"
-        "_08135FB0: .4byte gUnknown_85C97BD + 0xA7\n\t"
+        "_08135FB0: .4byte gText_LvVar1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2960,7 +2945,7 @@ __attribute__((naked)) void sub_08136B24(void)
         "_08136BA4: .4byte gSpecialVar_ItemId\n\t"
         "_08136BA8: .4byte 0x00000848\n\t"
         "_08136BAC: .4byte gStringVar4\n\t"
-        "_08136BB0: .4byte gUnknown_85C97BD + 0xAC\n\t"
+        "_08136BB0: .4byte gText_ThrowAwayVar1\n\t"
         "_08136BB4: .4byte sub_08136BB8 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3029,7 +3014,7 @@ __attribute__((naked)) void sub_08136BE8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08136C24: .4byte gStringVar4\n\t"
-        "_08136C28: .4byte gUnknown_85C97BD + 0xBE\n\t"
+        "_08136C28: .4byte gText_Var1ThrownAway\n\t"
         "_08136C2C: .4byte sub_08136C30 + 1\n\t"
         ".syntax divided\n\t"
     );

@@ -104,8 +104,6 @@ void PrintBerryNumberAndName(void);
 void PrintBerryFirmness(void);
 void PrintBerryDescription1(void);
 void PrintBerryDescription2(void);
-extern const u8 gUnknown_85C97B5[];
-extern const u8 gUnknown_85C97BD[];
 
 void DoBerryTagScreen(void)
 {
@@ -317,7 +315,7 @@ void PrintBerrySize(void)
 {
     memcpy(GetBgTilemapBuffer(0), sBerryTag->tilemapBuffers[2], 0x800);
     FillWindowPixelBuffer(3, 0xFF);
-    PrintTextInBerryTagScreen(3, gUnknown_85C97BD, 0, 2, 0, 1);
+    PrintTextInBerryTagScreen(3, gText_BerryTag, 0, 2, 0, 1);
     PutWindowTilemap(3);
     ScheduleBgCopyTilemapToVram(0);
 }
@@ -338,7 +336,7 @@ void PrintBerryNumberAndName(void)
 
     ConvertIntToDecimalStringN(gStringVar1, sBerryTag->berryId, 2, 2);
     StringCopy(gStringVar2, berry->name);
-    StringExpandPlaceholders(gStringVar4, gUnknown_85C97B5);
+    StringExpandPlaceholders(gStringVar4, gText_NumberVar1Var2);
     PrintTextInBerryTagScreen(0, gStringVar4, 0, 2, 0, 0);
 }
 
