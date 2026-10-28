@@ -912,7 +912,7 @@ BattleScript_EffectRecoilIfMiss:: @ 0x082876B0
 	attackcanceler
 	accuracycheck BattleScript_MoveMissedDoDamage, ACC_CURR_MOVE
 	goto BattleScript_HitFromAtkString
-BattleScript_MoveMissedDoDamage:: @ 0x082876BC
+BattleScript_MoveMissedDoDamage:: @ 0x082876BD
 	attackstring
 	ppreduce
 	pause B_WAIT_TIME_LONG

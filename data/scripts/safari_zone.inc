@@ -4,7 +4,7 @@ SafariZone_EventScript_OutOfBallsMidBattle:: @ 0x082623AA
 	setwarp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 2, 5
 	end
 
-SafariZone_EventScript_Exit:: @ 0x082623BA
+SafariZone_EventScript_Exit:: @ 0x082623BB
 	setvar VAR_SAFARI_ZONE_STATE, 1
 	special ExitSafariMode
 	warp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 2, 5
@@ -18,7 +18,7 @@ SafariZone_EventScript_RetirePrompt:: @ 0x082623CD
 	releaseall
 	end
 
-SafariZone_EventScript_Retire:: @ 0x082623E6
+SafariZone_EventScript_Retire:: @ 0x082623E3
 	goto SafariZone_EventScript_Exit
 
 SafariZone_EventScript_TimesUp:: @ 0x082623E8
