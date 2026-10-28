@@ -135,32 +135,26 @@ void DoSend(void);
 void StopTimer(void);
 void SendRecvDone(void);
 
-// JP const data lives in data.s (bound in ld_script_jp.txt).
-extern const u16 sLinkTestDigitsPal[];
-extern const u16 sLinkTestDigitsGfx[0x110];
-extern const u16 sCommErrorBg_Gfx[];
-extern const u16 sWirelessLinkDisplayPal[];
-extern const u32 sWirelessLinkDisplayGfx[];
-extern const u32 sWirelessLinkDisplayTilemap[];
-extern const u8 sTextColors[];
-extern const u8 gText_CommErrorEllipsis[];
-extern const u8 gText_MoveCloserToLinkPartner[];
-extern const u8 gText_CommErrorCheckConnections[];
-extern const u8 gText_ABtnTitleScreen[];
-extern const u8 gText_ABtnRegistrationCounter[];
+static const u16 sWirelessLinkDisplayPal[] __attribute__((section(".rodata.link_ui_graphics"))) = INCGFX_U16("graphics/link/wireless_display.png", ".gbapal");
+static const u32 sWirelessLinkDisplayGfx[] __attribute__((section(".rodata.link_ui_graphics"))) = INCGFX_U32("graphics/link/wireless_display.png", ".4bpp.lz");
+static const u32 sWirelessLinkDisplayTilemap[] __attribute__((section(".rodata.link_ui_graphics"))) = INCGFX_U32("graphics/link/wireless_display.bin", ".lz");
+static const u16 sLinkTestDigitsPal[] __attribute__((section(".rodata.link_ui_graphics"))) = INCGFX_U16("graphics/link/test_digits.png", ".gbapal");
+static const u16 sLinkTestDigitsGfx[] __attribute__((section(".rodata.link_ui_graphics"))) = INCGFX_U16("graphics/link/test_digits.png", ".4bpp");
 
-struct LinkErrorTextData
-{
-    u8 textColors[3];
-    u8 unusedData[5];
-};
+// Retained JP link-test status messages, each with its original alignment.
+static const u8 sUnusedLinkTestText0[] __attribute__((section(".rodata.link_test_unused_text"), aligned(4))) = _("せつぞく　ちゅうです");
+static const u8 sUnusedLinkTestText1[] __attribute__((section(".rodata.link_test_unused_text"), aligned(4))) = _("せつぞく　できません");
+static const u8 sUnusedLinkTestText2[] __attribute__((section(".rodata.link_test_unused_text"), aligned(4))) = _("かくにん　ちゅうです");
+static const u8 sUnusedLinkTestText3[] __attribute__((section(".rodata.link_test_unused_text"), aligned(4))) = _("かくにん　できました");
+static const u8 sUnusedLinkTestText4[] __attribute__((section(".rodata.link_test_unused_text"), aligned(4))) = _("かくにん　できません");
+static const u8 sUnusedLinkTestText5[] __attribute__((section(".rodata.link_test_unused_text"), aligned(4))) = _("かくにん　を　かくにん");
+static const u8 sUnusedLinkTestText6[] __attribute__((section(".rodata.link_test_unused_text"), aligned(4))) = _("かくにん　は　しっぱい");
 
-const struct LinkErrorTextData sLinkErrorTextData
-    __attribute__((section(".rodata.link_error_text_data"))) =
-{
-    .textColors = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY},
-    .unusedData = {0x00, 0xFF, 0xFE, 0xFF, 0x00},
-};
+static const u8 sUnusedTransparentWhite[] __attribute__((section(".rodata.link_unused_control"), aligned(1))) = _("{HIGHLIGHT 0}{COLOR 1}");
+static const u16 sCommErrorBg_Gfx[] __attribute__((section(".rodata.link_comm_error_graphics"))) = INCGFX_U16("graphics/link/comm_error_bg.png", ".4bpp");
+
+static const u8 sTextColors[] __attribute__((section(".rodata.link_error_text_data"), aligned(1))) = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
+static const u8 sUnusedData[] __attribute__((section(".rodata.link_error_text_data"), aligned(1))) = {0x00, 0xFF, 0xFE, 0xFF, 0x00};
 
 static const struct BlockRequest sBlockRequests[] = {
     [BLOCK_REQ_SIZE_NONE] = {gBlockSendBuffer, 200},
@@ -175,8 +169,8 @@ static const u8 sBGControlRegs[] = {
     REG_OFFSET_BG2CNT,
     REG_OFFSET_BG3CNT
 };
-static const char sASCIIGameFreakInc[] = "GameFreak inc.";
-static const char sASCIITestPrint[] = "TEST PRINT\nP0\nP1\nP2\nP3";
+static const char sASCIIGameFreakInc[] __attribute__((aligned(4))) = "GameFreak inc.";
+static const char sASCIITestPrint[] __attribute__((aligned(4))) = "TEST PRINT\nP0\nP1\nP2\nP3";
 static const struct BgTemplate sLinkErrorBgTemplates[] = {
     {
         .bg = 0,

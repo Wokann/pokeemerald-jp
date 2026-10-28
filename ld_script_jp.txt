@@ -9186,13 +9186,13 @@ SECTIONS {
         src/io_reg.o(.rodata.io_reg_data.gOrbEffectBackgroundLayerFlags);
         src/string_util.o(.rodata);
         src/string_util.o(.rodata.string_util_placeholder_funcs);
-        data/data.o(.rodata.data_after_string_util_placeholder_funcs);
-        src/data/text/comm_error_texts.o(.rodata);
-        data/data.o(.rodata.data_tail);
+        src/link.o(.rodata.link_ui_graphics);
+        src/link.o(.rodata.link_test_unused_text);
+        src/strings.o(.rodata.strings_link_comm_error);
+        src/link.o(.rodata.link_unused_control);
+        src/link.o(.rodata.link_comm_error_graphics);
         src/link.o(.rodata);
         src/link.o(.rodata.link_error_text_data);
-        sTextColors = sLinkErrorTextData;
-        sUnusedData = sLinkErrorTextData + 3;
         src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_palette_data);
         src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_graphics_data);
         src/link_rfu_3.o(.rodata.link_rfu_3_ascii_to_rse);

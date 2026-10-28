@@ -4,6 +4,7 @@
 #include "item_menu.h"
 #include "constants/songs.h"
 
+#define STRINGS_LINK_COMM_ERROR __attribute__((section(".rodata.strings_link_comm_error"), aligned(1)))
 #define STRINGS_FISHING_BITE __attribute__((section(".rodata.strings_fishing_bite"), aligned(1)))
 #define STRINGS_FISHING_MESSAGES __attribute__((section(".rodata.strings_fishing_messages"), aligned(1)))
 #define STRINGS_SAVING_STATUS __attribute__((section(".rodata.strings_saving_status"), aligned(1)))
@@ -2581,3 +2582,13 @@ STRINGS_RECORD_MIXING const u8 gText_RecordMixingComplete[] = _(
     "おつかれさまでした");
 
 #undef STRINGS_RECORD_MIXING
+
+STRINGS_LINK_COMM_ERROR const u8 gText_CommErrorCheckConnections[] = _("　　つうしん　エラーが　はっせいしました\n　　　しゅうへんきき　との　せつぞくを\n　　　　きちんと　かくにん　してから\n　　　でんげんを　いれなおしてください");
+
+STRINGS_LINK_COMM_ERROR const u8 gText_CommErrorEllipsis[] = _("つうしんエラーが　はっせいしました");
+
+STRINGS_LINK_COMM_ERROR const u8 gText_MoveCloserToLinkPartner[] = _("　つうしんあいてと　ちかづいて　ください\nしょうがいぶつが　ないように　してください");
+
+STRINGS_LINK_COMM_ERROR const u8 gText_ABtnRegistrationCounter[] = _("Aボタンで　うけつけに　もどります");
+
+STRINGS_LINK_COMM_ERROR const u8 gText_ABtnTitleScreen[] = _("Aボタンで　タイトルに　もどります");

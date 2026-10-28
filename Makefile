@@ -2395,10 +2395,16 @@ $(C_BUILDDIR)/battle_interface.o: src/battle_interface.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
-$(C_BUILDDIR)/link.o: src/link.c
+$(C_BUILDDIR)/link.d: src/link.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/link.d
+
+$(C_BUILDDIR)/link.o: src/link.c Makefile charmap.txt
 	@mkdir -p $(C_BUILDDIR)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
-		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; \
+		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t.*\.Lfe[0-9]+-/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/event_scripts.d: data/event_scripts.s | tools
 	@mkdir -p $(dir $@)
