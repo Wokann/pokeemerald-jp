@@ -9175,8 +9175,11 @@ SECTIONS {
         src/bg.o(.rodata.bg_data);
         src/window.o(.rodata.window_data);
         data/data.o(.rodata.data_after_window_data);
+        src/sprite.o(.rodata.sprite_center_vectors);
+        . = ALIGN(4);
+        src/sprite.o(.rodata.sprite_reset_template);
         src/sprite.o(.rodata.sprite_dummy_data);
-        data/data.o(.rodata.data_after_sprite_dummy_data);
+        src/sprite.o(.rodata.sprite_animation_data);
         src/sprite.o(.rodata.sprite_oam_dimensions);
         src/io_reg.o(.rodata.io_reg_data.sUnused);
         src/io_reg.o(.rodata.io_reg_data.gOverworldBackgroundLayerFlags);

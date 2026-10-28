@@ -239,54 +239,6 @@ sGlyphWidthTable_BD144: @ 0x82BD144
 sFontGlyphData_BD25C: @ 0x82BD25C
 	.incbin "graphics/fonts/jp_font_glyph_BD25C.bin"
 
-	.globl sCenterToCornerVecTable
-sCenterToCornerVecTable: @ 0x82BF299
-	.byte 0xFC, 0xFC, 0xF8, 0xF8, 0xF0, 0xF0, 0xE0, 0xE0, 0xF8, 0xFC, 0xF0, 0xFC
-	.byte 0xF0, 0xF8, 0xE0, 0xF0, 0xFC, 0xF8, 0xFC, 0xF0, 0xF8, 0xF0, 0xF0, 0xE0
-	.byte 0x00, 0x00, 0x00
-
-	.globl sDummySprite
-sDummySprite: @ 0x82BF2B4
-	.string "ッ　ぃあ　し　　えÜろく　　　　たÜろくとÜろく　　　　だム　くぃあッ　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　$"
-
-	.section .rodata.data_after_sprite_dummy_data
-
-	.globl gDummySpriteTemplate
-gDummySpriteTemplate: @ 0x82BF314
-	.hword 0x0000, 0xFFFF
-	.4byte gDummyOamData, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-
-	.globl sAnimFuncs
-sAnimFuncs: @ 0x82BF32C
-	.4byte 0x08007491, 0x080073A1
-
-	.globl sAffineAnimFuncs
-sAffineAnimFuncs: @ 0x82BF334
-	.4byte 0x0800783D, 0x080077A9
-
-	.globl sAnimCmdFuncs
-sAnimCmdFuncs: @ 0x82BF33C
-	.4byte 0x080076BD, 0x080075F5, 0x080075DD, 0x08007531
-
-	.globl sAffineAnimCmdFuncs
-sAffineAnimCmdFuncs: @ 0x82BF34C
-	.4byte 0x08007925, 0x08007A31, 0x08007A7D, 0x08007AB9
-
-	.globl sOamDimensions32
-sOamDimensions32: @ 0x82BF35C
-	.4byte 8, 8
-	.4byte 16, 16
-	.4byte 32, 32
-	.4byte 64, 64
-	.4byte 16, 8
-	.4byte 32, 8
-	.4byte 32, 16
-	.4byte 64, 32
-	.4byte 8, 16
-	.4byte 8, 32
-	.4byte 16, 32
-	.4byte 32, 64
-
 	.section .rodata.data_after_sprite_oam_dimensions
 
 	.globl sDigits

@@ -121,18 +121,95 @@ typedef void (*AffineAnimCmdFunc)(u8 matrixNum, struct Sprite *);
 // forward declarations
 const union AnimCmd *const gDummySpriteAnimTable[];
 const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
-const struct SpriteTemplate gDummySpriteTemplate;
+extern const struct SpriteTemplate gDummySpriteTemplate;
 
-// Unreferenced data. Also unreferenced in R/S.
-// JP const data lives in the sprite data region (data.s).
-extern const s8 sCenterToCornerVecTable[3][4][2];
-extern const struct Sprite sDummySprite;
-extern const AnimFunc sAnimFuncs[];
-extern const AnimFunc sAffineAnimFuncs[];
-extern const AnimCmdFunc sAnimCmdFuncs[];
-extern const AffineAnimCmdFunc sAffineAnimCmdFuncs[];
-extern const struct OamDimensions32 sOamDimensions32[3][4];
-const struct OamDimensions sOamDimensions[3][4] __attribute__((section(".rodata.sprite_oam_dimensions"))) =
+static const u8 sCenterToCornerVecTable[3][4][2] __attribute__((section(".rodata.sprite_center_vectors"), aligned(1))) =
+{
+    {   // square
+        {  -4,  -4 },
+        {  -8,  -8 },
+        { -16, -16 },
+        { -32, -32 },
+    },
+    {   // horizontal rectangle
+        {  -8,  -4 },
+        { -16,  -4 },
+        { -16,  -8 },
+        { -32, -16 },
+    },
+    {   // vertical rectangle
+        {  -4,  -8 },
+        {  -4, -16 },
+        {  -8, -16 },
+        { -16, -32 },
+    },
+};
+
+static const struct Sprite sDummySprite __attribute__((section(".rodata.sprite_reset_template"))) =
+{
+    .oam = DUMMY_OAM_DATA,
+    .anims = gDummySpriteAnimTable,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .template = &gDummySpriteTemplate,
+    .callback = SpriteCallbackDummy,
+    .x = DISPLAY_WIDTH + 64,
+    .y = DISPLAY_HEIGHT,
+    .subpriority = 0xFF
+};
+
+static const AnimFunc sAnimFuncs[] __attribute__((section(".rodata.sprite_animation_data"))) =
+{
+    ContinueAnim,
+    BeginAnim,
+};
+
+static const AnimFunc sAffineAnimFuncs[] __attribute__((section(".rodata.sprite_animation_data"))) =
+{
+    ContinueAffineAnim,
+    BeginAffineAnim,
+};
+
+static const AnimCmdFunc sAnimCmdFuncs[] __attribute__((section(".rodata.sprite_animation_data"))) =
+{
+    AnimCmd_loop,
+    AnimCmd_jump,
+    AnimCmd_end,
+    AnimCmd_frame,
+};
+
+static const AffineAnimCmdFunc sAffineAnimCmdFuncs[] __attribute__((section(".rodata.sprite_animation_data"))) =
+{
+    AffineAnimCmd_loop,
+    AffineAnimCmd_jump,
+    AffineAnimCmd_end,
+    AffineAnimCmd_frame,
+};
+
+static const struct OamDimensions32 sOamDimensions32[3][4] __attribute__((section(".rodata.sprite_animation_data"))) =
+{
+    [ST_OAM_SQUARE] =
+    {
+        [SPRITE_SIZE(8x8)]   = {  8,  8 },
+        [SPRITE_SIZE(16x16)] = { 16, 16 },
+        [SPRITE_SIZE(32x32)] = { 32, 32 },
+        [SPRITE_SIZE(64x64)] = { 64, 64 },
+    },
+    [ST_OAM_H_RECTANGLE] =
+    {
+        [SPRITE_SIZE(16x8)]  = { 16,  8 },
+        [SPRITE_SIZE(32x8)]  = { 32,  8 },
+        [SPRITE_SIZE(32x16)] = { 32, 16 },
+        [SPRITE_SIZE(64x32)] = { 64, 32 },
+    },
+    [ST_OAM_V_RECTANGLE] =
+    {
+        [SPRITE_SIZE(8x16)]  = {  8, 16 },
+        [SPRITE_SIZE(8x32)]  = {  8, 32 },
+        [SPRITE_SIZE(16x32)] = { 16, 32 },
+        [SPRITE_SIZE(32x64)] = { 32, 64 },
+    },
+};
+static const struct OamDimensions sOamDimensions[3][4] __attribute__((section(".rodata.sprite_oam_dimensions"))) =
 {
     [ST_OAM_SQUARE] =
     {
@@ -167,6 +244,17 @@ const union AnimCmd *const gDummySpriteAnimTable[] SPRITE_DUMMY_DATA = { &sDummy
 static const union AffineAnimCmd sDummyAffineAnim SPRITE_DUMMY_DATA = { AFFINE_ANIM_END };
 
 const union AffineAnimCmd *const gDummySpriteAffineAnimTable[] SPRITE_DUMMY_DATA = { &sDummyAffineAnim };
+
+const struct SpriteTemplate gDummySpriteTemplate SPRITE_DUMMY_DATA =
+{
+    .tileTag = 0,
+    .paletteTag = TAG_NONE,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
 
 #undef SPRITE_DUMMY_DATA
 
