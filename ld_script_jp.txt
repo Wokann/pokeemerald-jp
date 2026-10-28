@@ -10422,6 +10422,8 @@ SECTIONS {
         src/siirtc.o(.rodata.siirtc_pointer_copies);
         src/librfu_rodata.o(.rodata);
         src/libisagbprn_rodata.o(.rodata);
+        asm/libgcc.o(.rodata.__clz_tab_divdi3);
+        asm/libgcc.o(.rodata.__clz_tab_udivdi3);
         asm/libgcc_rodata.o(.rodata);
         src/libc/libc_rodata.o(.rodata);
         data/multiboot_ereader.o(.rodata);
