@@ -807,8 +807,8 @@ sSong462_Part6: @ 0x088BEFBE
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8BF05A, 0x2
-	.globl sSongHeader_462
-sSongHeader_462: @ 0x088BF05C
+	.globl mus_b_pyramid_top
+mus_b_pyramid_top: @ 0x088BF05C
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861E590  @ tone
 	.4byte sSong462_Part0, sSong462_Part1, sSong462_Part2, sSong462_Part3, sSong462_Part4, sSong462_Part5, sSong462_Part6  @ parts

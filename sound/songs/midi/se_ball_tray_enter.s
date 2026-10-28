@@ -44,8 +44,8 @@ sSong114_Part1: @ 0x0886A40D
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86A41D, 0x3
-	.globl sSongHeader_114
-sSongHeader_114: @ 0x0886A420
+	.globl se_ball_tray_enter
+se_ball_tray_enter: @ 0x0886A420
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886A3E0, 0x0886A40D  @ parts

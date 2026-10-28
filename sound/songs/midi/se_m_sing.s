@@ -208,8 +208,8 @@ sSong172_Part2: @ 0x0886BDD9
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86BE3B, 0x1
-	.globl sSongHeader_172
-sSongHeader_172: @ 0x0886BE3C
+	.globl se_m_sing
+se_m_sing: @ 0x0886BE3C
 	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886BD18, 0x0886BD76, 0x0886BDD9  @ parts

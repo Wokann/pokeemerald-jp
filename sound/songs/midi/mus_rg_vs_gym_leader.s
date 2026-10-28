@@ -5061,8 +5061,8 @@ sSong508_Part9: @ 0x088E9871
 	.byte	W14
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_508
-sSongHeader_508: @ 0x088E9950
+	.globl mus_rg_vs_gym_leader
+mus_rg_vs_gym_leader: @ 0x088E9950
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08630578  @ tone
 	.4byte sSong508_Part0, sSong508_Part1, sSong508_Part2, sSong508_Part3, sSong508_Part4, sSong508_Part5, sSong508_Part6, sSong508_Part7, sSong508_Part8, sSong508_Part9  @ parts

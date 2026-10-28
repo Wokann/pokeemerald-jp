@@ -2426,8 +2426,8 @@ sSong481_Part7: @ 0x088D153C
 	.byte	W13
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_481
-sSongHeader_481: @ 0x088D1658
+	.globl mus_vs_rival
+mus_vs_rival: @ 0x088D1658
 	.byte 0x08, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08623E10  @ tone
 	.4byte sSong481_Part0, sSong481_Part1, sSong481_Part2, sSong481_Part3, sSong481_Part4, sSong481_Part5, sSong481_Part6, sSong481_Part7  @ parts

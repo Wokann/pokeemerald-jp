@@ -3720,8 +3720,8 @@ sSong468_Part9: @ 0x088C49B3
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8C4AB6, 0x2
-	.globl sSongHeader_468
-sSongHeader_468: @ 0x088C4AB8
+	.globl mus_b_pike
+mus_b_pike: @ 0x088C4AB8
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08620174  @ tone
 	.4byte sSong468_Part0, sSong468_Part1, sSong468_Part2, sSong468_Part3, sSong468_Part4, sSong468_Part5, sSong468_Part6, sSong468_Part7, sSong468_Part8, sSong468_Part9  @ parts

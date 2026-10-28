@@ -2306,8 +2306,8 @@ sSong442_Part8: @ 0x088B0FE1
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B10F5, 0x3
-	.globl sSongHeader_442
-sSongHeader_442: @ 0x088B10F8
+	.globl mus_intro_battle
+mus_intro_battle: @ 0x088B10F8
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861799C  @ tone
+	.4byte voicegroup_intro_battle  @ tone
 	.4byte 0x088B0504, 0x088B05B8, 0x088B0727, 0x088B07A5, 0x088B0927, 0x088B0AE4, 0x088B0C55, 0x088B0DEE, 0x088B0FE1  @ parts

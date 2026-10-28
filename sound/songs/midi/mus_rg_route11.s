@@ -2521,8 +2521,8 @@ sSong506_Part9: @ 0x088E7027
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8E7129, 0x3
-	.globl sSongHeader_506
-sSongHeader_506: @ 0x088E712C
+	.globl mus_rg_route11
+mus_rg_route11: @ 0x088E712C
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862FB1C  @ tone
 	.4byte sSong506_Part0, sSong506_Part1, sSong506_Part2, sSong506_Part3, sSong506_Part4, sSong506_Part5, sSong506_Part6, sSong506_Part7, sSong506_Part8, sSong506_Part9  @ parts

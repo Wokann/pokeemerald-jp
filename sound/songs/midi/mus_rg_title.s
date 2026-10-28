@@ -3286,8 +3286,8 @@ sSong490_Part9: @ 0x088D88F3
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D898B, 0x1
-	.globl sSongHeader_490
-sSongHeader_490: @ 0x088D898C
+	.globl mus_rg_title
+mus_rg_title: @ 0x088D898C
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862A890  @ tone
 	.4byte sSong490_Part0, sSong490_Part1, sSong490_Part2, sSong490_Part3, sSong490_Part4, sSong490_Part5, sSong490_Part6, sSong490_Part7, sSong490_Part8, sSong490_Part9  @ parts

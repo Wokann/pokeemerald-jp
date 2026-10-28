@@ -16,8 +16,8 @@ sSong29_Part0: @ 0x08868984
 	.byte	W24
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_29
-sSongHeader_29: @ 0x08868998
+	.globl se_o
+se_o: @ 0x08868998
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong29_Part0  @ parts

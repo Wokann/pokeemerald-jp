@@ -2030,8 +2030,8 @@ sSong398_Part9: @ 0x088856C8
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x88576E, 0x2
-	.globl sSongHeader_398
-sSongHeader_398: @ 0x08885770
+	.globl mus_verdanturf
+mus_verdanturf: @ 0x08885770
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08608204  @ tone
+	.4byte voicegroup_verdanturf  @ tone
 	.4byte 0x08884CDC, 0x08884D70, 0x08884FAB, 0x088850DB, 0x0888518E, 0x0888525D, 0x08885325, 0x08885447, 0x0888556C, 0x088856C8  @ parts

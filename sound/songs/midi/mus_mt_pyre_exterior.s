@@ -5911,8 +5911,8 @@ sSong434_Part9: @ 0x088ABD5D
 	.byte	W10
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_434
-sSongHeader_434: @ 0x088ABEDC
+	.globl mus_mt_pyre_exterior
+mus_mt_pyre_exterior: @ 0x088ABEDC
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08615194  @ tone
+	.4byte voicegroup_mt_pyre_exterior  @ tone
 	.4byte 0x088A9CB8, 0x088A9E43, 0x088AA168, 0x088AA38C, 0x088AA91F, 0x088AAC89, 0x088AB1CE, 0x088AB58A, 0x088AB9ED, 0x088ABD5D  @ parts

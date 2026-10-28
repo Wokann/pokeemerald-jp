@@ -52,8 +52,8 @@ sSong41_Part1: @ 0x08868C1E
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x868C32, 0x2
-	.globl sSongHeader_41
-sSongHeader_41: @ 0x08868C34
+	.globl se_ice_break
+se_ice_break: @ 0x08868C34
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x08868BF0, 0x08868C1E  @ parts

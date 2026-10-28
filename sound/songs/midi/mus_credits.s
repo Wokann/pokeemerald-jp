@@ -7418,8 +7418,8 @@ sSong455_Part9: @ 0x88B9BA1
 .byte	W96
 .byte	W96
 .byte	FINE
-	.globl sSongHeader_455
-sSongHeader_455: @ 0x088BA044
+	.globl mus_credits
+mus_credits: @ 0x088BA044
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861C79C  @ tone
+	.4byte voicegroup_credits  @ tone
 	.4byte sSong455_Part0, sSong455_Part1, sSong455_Part2, sSong455_Part3, sSong455_Part4, sSong455_Part5, sSong455_Part6, sSong455_Part7, sSong455_Part8, sSong455_Part9  @ parts

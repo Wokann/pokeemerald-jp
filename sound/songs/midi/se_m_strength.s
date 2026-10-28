@@ -53,8 +53,8 @@ sSong214_Part1: @ 0x0886D90D
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86D931, 0x3
-	.globl sSongHeader_214
-sSongHeader_214: @ 0x0886D934
+	.globl se_m_strength
+se_m_strength: @ 0x0886D934
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886D8DC, 0x0886D90D  @ parts

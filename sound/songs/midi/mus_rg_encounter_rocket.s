@@ -667,8 +667,8 @@ sSong495_Part6: @ 0x088DB52F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8DB5B1, 0x3
-	.globl sSongHeader_495
-sSongHeader_495: @ 0x088DB5B4
+	.globl mus_rg_encounter_rocket
+mus_rg_encounter_rocket: @ 0x088DB5B4
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862C0C0  @ tone
 	.4byte sSong495_Part0, sSong495_Part1, sSong495_Part2, sSong495_Part3, sSong495_Part4, sSong495_Part5, sSong495_Part6  @ parts

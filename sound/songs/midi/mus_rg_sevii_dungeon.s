@@ -3039,8 +3039,8 @@ sSong546_Part9: @ 0x0890540A
 	.byte	W16
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_546
-sSongHeader_546: @ 0x0890564C
+	.globl mus_rg_sevii_dungeon
+mus_rg_sevii_dungeon: @ 0x0890564C
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862D6B0  @ tone
 	.4byte sSong546_Part0, sSong546_Part1, sSong546_Part2, sSong546_Part3, sSong546_Part4, sSong546_Part5, sSong546_Part6, sSong546_Part7, sSong546_Part8, sSong546_Part9  @ parts

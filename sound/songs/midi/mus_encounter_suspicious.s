@@ -1693,8 +1693,8 @@ sSong423_Part8: @ 0x088A0D2F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A0EA1, 0x3
-	.globl sSongHeader_423
-sSongHeader_423: @ 0x088A0EA4
+	.globl mus_encounter_suspicious
+mus_encounter_suspicious: @ 0x088A0EA4
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08610F94  @ tone
+	.4byte voicegroup_encounter_suspicious  @ tone
 	.4byte 0x088A0604, 0x088A0787, 0x088A07D9, 0x088A08B4, 0x088A099E, 0x088A0A74, 0x088A0BAF, 0x088A0C44, 0x088A0D2F  @ parts

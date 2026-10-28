@@ -53,8 +53,8 @@ sSong119_Part1: @ 0x0886A57D
 	.byte	N02, Gn3, 48
 	.byte	W18
 	.byte	FINE
-	.globl sSongHeader_119
-sSongHeader_119: @ 0x0886A5A8
+	.globl se_m_thunderbolt2
+se_m_thunderbolt2: @ 0x0886A5A8
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886A54C, 0x0886A57D  @ parts

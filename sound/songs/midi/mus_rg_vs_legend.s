@@ -3578,8 +3578,8 @@ sSong553_Part7: @ 0x0890CBAA
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x90CC11, 0x3
-	.globl sSongHeader_553
-sSongHeader_553: @ 0x0890CC14
+	.globl mus_rg_vs_legend
+mus_rg_vs_legend: @ 0x0890CC14
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08631178  @ tone
 	.4byte sSong553_Part0, sSong553_Part1, sSong553_Part2, sSong553_Part3, sSong553_Part4, sSong553_Part5, sSong553_Part6, sSong553_Part7  @ parts

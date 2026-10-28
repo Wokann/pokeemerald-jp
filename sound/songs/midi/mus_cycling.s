@@ -4604,8 +4604,8 @@ sSong403_Part8: @ 0x0888BDEB
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x88BF5F, 0x1
-	.globl sSongHeader_403
-sSongHeader_403: @ 0x0888BF60
+	.globl mus_cycling
+mus_cycling: @ 0x0888BF60
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08609BF0  @ tone
+	.4byte voicegroup_cycling  @ tone
 	.4byte 0x0888A7A8, 0x0888AA86, 0x0888AD7E, 0x0888B0EE, 0x0888B2B8, 0x0888B649, 0x0888B9AF, 0x0888BD77, 0x0888BDEB  @ parts

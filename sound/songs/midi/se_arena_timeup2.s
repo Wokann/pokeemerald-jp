@@ -39,8 +39,8 @@ sSong266_Part1: @ 0x0886FB18
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86FB2F, 0x1
-	.globl sSongHeader_266
-sSongHeader_266: @ 0x0886FB30
+	.globl se_arena_timeup2
+se_arena_timeup2: @ 0x0886FB30
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte 0x0886FAFC, 0x0886FB18  @ parts

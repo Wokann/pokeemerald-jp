@@ -112,8 +112,8 @@ sSong368_Part3: @ 0x08879F23
 	.byte	En5, 28
 	.byte	W18
 	.byte	FINE
-	.globl sSongHeader_368
-sSongHeader_368: @ 0x08879F68
+	.globl mus_heal
+mus_heal: @ 0x08879F68
 	.byte 0x04, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x08879EB8, 0x08879EE0, 0x08879F03, 0x08879F23  @ parts

@@ -186,8 +186,8 @@ sSong211_Part1: @ 0x0886D6DE
 	.byte	W24
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_211
-sSongHeader_211: @ 0x0886D760
+	.globl se_m_moonlight
+se_m_moonlight: @ 0x0886D760
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886D648, 0x0886D6DE  @ parts

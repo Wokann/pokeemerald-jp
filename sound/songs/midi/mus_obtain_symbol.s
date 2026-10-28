@@ -689,8 +689,8 @@ sSong466_Part8: @ 0x088C20A8
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8C2141, 0x3
-	.globl sSongHeader_466
-sSongHeader_466: @ 0x088C2144
+	.globl mus_obtain_symbol
+mus_obtain_symbol: @ 0x088C2144
 	.byte 0x09, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861D09C  @ tone
 	.4byte sSong466_Part0, sSong466_Part1, sSong466_Part2, sSong466_Part3, sSong466_Part4, sSong466_Part5, sSong466_Part6, sSong466_Part7, sSong466_Part8  @ parts

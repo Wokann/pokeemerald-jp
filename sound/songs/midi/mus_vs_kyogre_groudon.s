@@ -1204,8 +1204,8 @@ sSong480_Part5: @ 0x088D07F8
 	.byte	W13
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_480
-sSongHeader_480: @ 0x088D09B0
+	.globl mus_vs_kyogre_groudon
+mus_vs_kyogre_groudon: @ 0x088D09B0
 	.byte 0x06, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08623810  @ tone
 	.4byte sSong480_Part0, sSong480_Part1, sSong480_Part2, sSong480_Part3, sSong480_Part4, sSong480_Part5  @ parts

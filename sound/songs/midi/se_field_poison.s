@@ -22,8 +22,8 @@ sSong79_Part0: @ 0x08869580
 	.byte	W05
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869599, 0x3
-	.globl sSongHeader_79
-sSongHeader_79: @ 0x0886959C
+	.globl se_field_poison
+se_field_poison: @ 0x0886959C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong79_Part0  @ parts

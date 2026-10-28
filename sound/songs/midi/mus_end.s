@@ -3,7 +3,7 @@
 	.include "asm/macros.inc"
 
 		.globl gUnknown_88BA568
-	.set gUnknown_88BA568, sSongHeader_456  @ 0x088BA568
+	.set gUnknown_88BA568, mus_end  @ 0x088BA568
 	.globl sSong456_Part0
 sSong456_Part0: @ 0x088BA074
 	.byte	KEYSH , 0
@@ -907,8 +907,8 @@ sSong456_Part1: @ 0x088BA399
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8BA565, 0x3
-	.globl sSongHeader_456
-sSongHeader_456: @ 0x088BA568
+	.globl mus_end
+mus_end: @ 0x088BA568
 	.byte 0x02, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861CCC4  @ tone
 	.4byte sSong456_Part0, sSong456_Part1  @ parts

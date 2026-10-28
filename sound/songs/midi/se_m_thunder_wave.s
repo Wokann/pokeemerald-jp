@@ -75,8 +75,8 @@ sSong138_Part1: @ 0x0886ACC4
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86ACEA, 0x2
-	.globl sSongHeader_138
-sSongHeader_138: @ 0x0886ACEC
+	.globl se_m_thunder_wave
+se_m_thunder_wave: @ 0x0886ACEC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886AC78, 0x0886ACC4  @ parts

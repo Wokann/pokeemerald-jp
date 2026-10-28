@@ -115,8 +115,8 @@ sSong263_Part1: @ 0x0886F9FD
 	.byte	W02
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86FA57, 0x1
-	.globl sSongHeader_263
-sSongHeader_263: @ 0x0886FA58
+	.globl se_pokenav_call
+se_pokenav_call: @ 0x0886FA58
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte 0x0886F9C4, 0x0886F9FD  @ parts

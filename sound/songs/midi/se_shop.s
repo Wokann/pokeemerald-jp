@@ -31,8 +31,8 @@ sSong95_Part1: @ 0x08869A1E
 	.byte	W05
 	.byte	W12
 	.byte	FINE
-	.globl sSongHeader_95
-sSongHeader_95: @ 0x08869A30
+	.globl se_shop
+se_shop: @ 0x08869A30
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x08869A04, 0x08869A1E  @ parts

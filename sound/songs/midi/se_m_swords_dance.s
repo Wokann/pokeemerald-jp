@@ -180,8 +180,8 @@ sSong191_Part1: @ 0x0886C92A
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86C946, 0x2
-	.globl sSongHeader_191
-sSongHeader_191: @ 0x0886C948
+	.globl se_m_swords_dance
+se_m_swords_dance: @ 0x0886C948
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886C830, 0x0886C92A  @ parts

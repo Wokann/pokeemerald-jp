@@ -29,8 +29,8 @@ sSong142_Part0: @ 0x0886AEBC
 	.byte	N02, Dn3, 56
 	.byte	W16
 	.byte	FINE
-	.globl sSongHeader_142
-sSongHeader_142: @ 0x0886AEE8
+	.globl se_m_crabhammer
+se_m_crabhammer: @ 0x0886AEE8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong142_Part0  @ parts

@@ -3450,8 +3450,8 @@ sSong475_Part7: @ 0x088CCA44
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8CCBE6, 0x2
-	.globl sSongHeader_475
-sSongHeader_475: @ 0x088CCBE8
+	.globl mus_vs_aqua_magma
+mus_vs_aqua_magma: @ 0x088CCBE8
 	.byte 0x08, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862234C  @ tone
 	.4byte sSong475_Part0, sSong475_Part1, sSong475_Part2, sSong475_Part3, sSong475_Part4, sSong475_Part5, sSong475_Part6, sSong475_Part7  @ parts

@@ -1615,8 +1615,8 @@ sSong518_Part5: @ 0x088F4629
 	.byte	W15
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_518
-sSongHeader_518: @ 0x088F46E4
+	.globl mus_rg_poke_tower
+mus_rg_poke_tower: @ 0x088F46E4
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08633DF4  @ tone
 	.4byte sSong518_Part0, sSong518_Part1, sSong518_Part2, sSong518_Part3, sSong518_Part4, sSong518_Part5  @ parts

@@ -1395,8 +1395,8 @@ sSong438_Part7: @ 0x088AE353
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8AE4A2, 0x2
-	.globl sSongHeader_438
-sSongHeader_438: @ 0x088AE4A4
+	.globl mus_sealed_chamber
+mus_sealed_chamber: @ 0x088AE4A4
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861619C  @ tone
+	.4byte voicegroup_sealed_chamber  @ tone
 	.4byte 0x088ADCBC, 0x088ADD9E, 0x088ADF54, 0x088AE0AA, 0x088AE160, 0x088AE210, 0x088AE23B, 0x088AE353  @ parts

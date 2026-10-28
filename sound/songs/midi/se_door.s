@@ -13,8 +13,8 @@ sSong8_Part0: @ 0x08868504
 	.byte	N12, Fs3
 	.byte	W18
 	.byte	FINE
-	.globl sSongHeader_8
-sSongHeader_8: @ 0x08868514
+	.globl se_door
+se_door: @ 0x08868514
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong8_Part0  @ parts

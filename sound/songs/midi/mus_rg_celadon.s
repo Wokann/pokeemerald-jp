@@ -2130,8 +2130,8 @@ sSong521_Part6: @ 0x088F7195
 	.byte	W15
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_521
-sSongHeader_521: @ 0x088F7394
+	.globl mus_rg_celadon
+mus_rg_celadon: @ 0x088F7394
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08634FF4  @ tone
 	.4byte sSong521_Part0, sSong521_Part1, sSong521_Part2, sSong521_Part3, sSong521_Part4, sSong521_Part5, sSong521_Part6  @ parts

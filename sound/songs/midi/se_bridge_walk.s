@@ -18,8 +18,8 @@ sSong71_Part0: @ 0x088693A0
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8693B6, 0x2
-	.globl sSongHeader_71
-sSongHeader_71: @ 0x088693B8
+	.globl se_bridge_walk
+se_bridge_walk: @ 0x088693B8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong71_Part0  @ parts

@@ -3617,8 +3617,8 @@ sSong361_Part7: @ 0x08876669
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x876831, 0x3
-	.globl sSongHeader_361
-sSongHeader_361: @ 0x08876834
+	.globl mus_route120
+mus_route120: @ 0x08876834
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FFF48  @ tone
+	.4byte voicegroup_route120  @ tone
 	.4byte 0x088755C4, 0x088756EE, 0x08875A2C, 0x08875DA4, 0x08876027, 0x0887605B, 0x0887634D, 0x08876669  @ parts

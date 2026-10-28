@@ -1850,8 +1850,8 @@ sSong364_Part6: @ 0x088783E6
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8785E1, 0x3
-	.globl sSongHeader_364
-sSongHeader_364: @ 0x088785E4
+	.globl mus_gym
+mus_gym: @ 0x088785E4
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FFB10  @ tone
+	.4byte voicegroup_gym  @ tone
 	.4byte 0x08877C08, 0x08877D9D, 0x08877E92, 0x08878075, 0x088781FD, 0x08878303, 0x088783E6  @ parts

@@ -3015,8 +3015,8 @@ sSong440_Part7: @ 0x088AF82D
 	.byte	W10
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_440
-sSongHeader_440: @ 0x088AF974
+	.globl mus_contest
+mus_contest: @ 0x088AF974
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08616D9C  @ tone
+	.4byte voicegroup_contest  @ tone
 	.4byte 0x088AEAD8, 0x088AEC5B, 0x088AED97, 0x088AEE7B, 0x088AF134, 0x088AF3F8, 0x088AF64C, 0x088AF82D  @ parts

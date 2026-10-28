@@ -1651,8 +1651,8 @@ sSong517_Part6: @ 0x088F3C0B
 	.byte	W72
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8F3E17, 0x1
-	.globl sSongHeader_517
-sSongHeader_517: @ 0x088F3E18
+	.globl mus_rg_surf
+mus_rg_surf: @ 0x088F3E18
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086337F4  @ tone
 	.4byte sSong517_Part0, sSong517_Part1, sSong517_Part2, sSong517_Part3, sSong517_Part4, sSong517_Part5, sSong517_Part6  @ parts

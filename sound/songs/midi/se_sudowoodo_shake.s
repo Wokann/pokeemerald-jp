@@ -26,8 +26,8 @@ sSong269_Part0: @ 0x886FCF4
 .byte	8
 .byte	FINE
 .byte	0, 0, 0
-	.globl sSongHeader_269
-sSongHeader_269: @ 0x0886FD20
+	.globl se_sudowoodo_shake
+se_sudowoodo_shake: @ 0x0886FD20
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte sSong269_Part0  @ parts

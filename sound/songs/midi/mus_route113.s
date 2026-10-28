@@ -4063,8 +4063,8 @@ sSong418_Part8: @ 0x0889D414
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x89D662, 0x2
-	.globl sSongHeader_418
-sSongHeader_418: @ 0x0889D664
+	.globl mus_route113
+mus_route113: @ 0x0889D664
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860F194  @ tone
+	.4byte voicegroup_route113  @ tone
 	.4byte 0x0889BF4C, 0x0889C06A, 0x0889C423, 0x0889C7E8, 0x0889C858, 0x0889CABF, 0x0889CD64, 0x0889D186, 0x0889D414  @ parts

@@ -25784,7 +25784,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "tools/jp_generate_layouts.py",
@@ -331006,7 +331006,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -337620,7 +337620,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -345849,7 +345849,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -352906,7 +352906,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -357073,7 +357073,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -360887,7 +360887,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -365436,7 +365436,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/string_util.c",
@@ -370261,7 +370261,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -373975,7 +373975,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -377980,7 +377980,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/string_util.c",
@@ -381733,7 +381733,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/start_menu.c",
@@ -385265,7 +385265,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/start_menu.c",
@@ -388910,7 +388910,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/start_menu.c",
@@ -392802,7 +392802,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/start_menu.c",
@@ -396243,7 +396243,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/start_menu.c",
@@ -399821,7 +399821,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/start_menu.c",
@@ -405635,7 +405635,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/string_util.c",
@@ -414021,7 +414021,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/string_util.c",
@@ -418377,7 +418377,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/string_util.c",
@@ -425846,7 +425846,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -431295,7 +431295,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -433302,7 +433302,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -436029,7 +436029,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -439437,7 +439437,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -444318,7 +444318,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -446626,7 +446626,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -449237,7 +449237,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -452051,7 +452051,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -454695,7 +454695,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -456854,7 +456854,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -470707,7 +470707,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",
@@ -476914,7 +476914,7 @@
         {
           "path": "src/sound.c",
           "selector": "file",
-          "sha256": "b39d684fd2074656b14d82ec60ef8387155b2ba4f7aa82cb35e252c1f0e564a8"
+          "sha256": "c656ee77bb05741cbfb150a324bf39a99120248cd8471b5f36e9f524b90b2f6b"
         },
         {
           "path": "src/strings.c",

@@ -1190,8 +1190,8 @@ sSong452_Part7: @ 0x088B6306
 	.byte	W11
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_452
-sSongHeader_452: @ 0x088B63AC
+	.globl mus_contest_lobby
+mus_contest_lobby: @ 0x088B63AC
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861B59C  @ tone
+	.4byte voicegroup_contest_lobby  @ tone
 	.4byte 0x088B5D4C, 0x088B5DF6, 0x088B5E7D, 0x088B5F87, 0x088B6068, 0x088B6149, 0x088B627C, 0x088B6306  @ parts

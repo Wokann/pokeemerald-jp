@@ -90,8 +90,8 @@ sSong244_Part1: @ 0x0886F071
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F0AA, 0x2
-	.globl sSongHeader_244
-sSongHeader_244: @ 0x0886F0AC
+	.globl se_m_teeter_dance
+se_m_teeter_dance: @ 0x0886F0AC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886F018, 0x0886F071  @ parts

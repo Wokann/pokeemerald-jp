@@ -121,8 +121,8 @@ sSong33_Part0: @ 0x08868A14
 	.byte	W05
 	.byte	EOT
 	.byte	FINE
-	.globl sSongHeader_33
-sSongHeader_33: @ 0x08868A9C
+	.globl se_exp
+se_exp: @ 0x08868A9C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong33_Part0  @ parts

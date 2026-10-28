@@ -45,8 +45,8 @@ sSong44_Part1: @ 0x08868CFA
 	.byte	W18
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x868D09, 0x3
-	.globl sSongHeader_44
-sSongHeader_44: @ 0x08868D0C
+	.globl se_unlock
+se_unlock: @ 0x08868D0C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x08868CD4, 0x08868CFA  @ parts

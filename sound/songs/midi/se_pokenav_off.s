@@ -55,8 +55,8 @@ sSong111_Part1: @ 0x0886A11D
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86A146, 0x2
-	.globl sSongHeader_111
-sSongHeader_111: @ 0x0886A148
+	.globl se_pokenav_off
+se_pokenav_off: @ 0x0886A148
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x0886A0F0, 0x0886A11D  @ parts

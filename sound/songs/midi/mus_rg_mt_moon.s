@@ -3715,8 +3715,8 @@ sSong500_Part6: @ 0x088DEECD
 	.byte	W13
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_500
-sSongHeader_500: @ 0x088DEF38
+	.globl mus_rg_mt_moon
+mus_rg_mt_moon: @ 0x088DEF38
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862DCB0  @ tone
 	.4byte sSong500_Part0, sSong500_Part1, sSong500_Part2, sSong500_Part3, sSong500_Part4, sSong500_Part5, sSong500_Part6  @ parts

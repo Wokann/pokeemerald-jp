@@ -68,8 +68,8 @@ sSong145_Part1: @ 0x0886B00B
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B023, 0x1
-	.globl sSongHeader_145
-sSongHeader_145: @ 0x0886B024
+	.globl se_m_flame_wheel2
+se_m_flame_wheel2: @ 0x0886B024
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886AFC4, 0x0886B00B  @ parts

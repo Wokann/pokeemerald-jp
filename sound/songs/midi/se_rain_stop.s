@@ -45,8 +45,8 @@ sSong86_Part0: @ 0x08869744
 	.byte	6
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_86
-sSongHeader_86: @ 0x08869778
+	.globl se_rain_stop
+se_rain_stop: @ 0x08869778
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong86_Part0  @ parts

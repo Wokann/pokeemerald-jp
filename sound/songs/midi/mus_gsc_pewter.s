@@ -1063,8 +1063,8 @@ sSong357_Part3: @ 0x0887361A
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x873779, 0x3
-	.globl sSongHeader_357
-sSongHeader_357: @ 0x0887377C
+	.globl mus_gsc_pewter
+mus_gsc_pewter: @ 0x0887377C
 	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte voicegroup_dummy  @ tone
 	.4byte 0x088731D0, 0x08873371, 0x088734DD, 0x0887361A  @ parts

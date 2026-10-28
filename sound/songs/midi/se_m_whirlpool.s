@@ -97,8 +97,8 @@ sSong165_Part0: @ 0x0886BA20
 	.byte	EOT
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86BAAB, 0x1
-	.globl sSongHeader_165
-sSongHeader_165: @ 0x0886BAAC
+	.globl se_m_whirlpool
+se_m_whirlpool: @ 0x0886BAAC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong165_Part0  @ parts

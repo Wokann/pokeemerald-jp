@@ -66,8 +66,8 @@ sSong19_Part0: @ 0x0886879C
 	.byte	EOT
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8687E1, 0x3
-	.globl sSongHeader_19
-sSongHeader_19: @ 0x088687E4
+	.globl se_ship
+se_ship: @ 0x088687E4
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong19_Part0  @ parts

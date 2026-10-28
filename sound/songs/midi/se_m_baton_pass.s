@@ -137,8 +137,8 @@ sSong224_Part1: @ 0x0886E129
 	.byte	W03
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_224
-sSongHeader_224: @ 0x0886E14C
+	.globl se_m_baton_pass
+se_m_baton_pass: @ 0x0886E14C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E080, 0x0886E129  @ parts

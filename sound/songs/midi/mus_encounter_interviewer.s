@@ -1017,8 +1017,8 @@ sSong453_Part8: @ 0x088B689D
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B692F, 0x1
-	.globl sSongHeader_453
-sSongHeader_453: @ 0x088B6930
+	.globl mus_encounter_interviewer
+mus_encounter_interviewer: @ 0x088B6930
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861BB9C  @ tone
+	.4byte voicegroup_encounter_interviewer  @ tone
 	.4byte 0x088B63D4, 0x088B64CC, 0x088B655F, 0x088B65C4, 0x088B6657, 0x088B667F, 0x088B675C, 0x088B6839, 0x088B689D  @ parts

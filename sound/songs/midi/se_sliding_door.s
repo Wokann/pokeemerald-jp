@@ -13,8 +13,8 @@ sSong18_Part0: @ 0x08868780
 	.byte	VOL , 0
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86878F, 0x1
-	.globl sSongHeader_18
-sSongHeader_18: @ 0x08868790
+	.globl se_sliding_door
+se_sliding_door: @ 0x08868790
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong18_Part0  @ parts

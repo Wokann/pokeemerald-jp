@@ -4491,8 +4491,8 @@ sSong519_Part8: @ 0x088F5D69
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8F5DD6, 0x2
-	.globl sSongHeader_519
-sSongHeader_519: @ 0x088F5DD8
+	.globl mus_rg_silph
+mus_rg_silph: @ 0x088F5DD8
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086343F4  @ tone
 	.4byte sSong519_Part0, sSong519_Part1, sSong519_Part2, sSong519_Part3, sSong519_Part4, sSong519_Part5, sSong519_Part6, sSong519_Part7, sSong519_Part8  @ parts

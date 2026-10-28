@@ -161,8 +161,8 @@ sSong236_Part1: @ 0x0886EA33
 	.byte	EOT
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86EA9E, 0x2
-	.globl sSongHeader_236
-sSongHeader_236: @ 0x0886EAA0
+	.globl se_m_sweet_scent
+se_m_sweet_scent: @ 0x0886EAA0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E9C0, 0x0886EA33  @ parts

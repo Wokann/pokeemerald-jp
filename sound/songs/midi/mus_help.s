@@ -631,8 +631,8 @@ sSong410_Part6: @ 0x08893425
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8934E5, 0x3
-	.globl sSongHeader_410
-sSongHeader_410: @ 0x088934E8
+	.globl mus_help
+mus_help: @ 0x088934E8
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860C368  @ tone
+	.4byte voicegroup_help  @ tone
 	.4byte 0x0889313C, 0x088931D4, 0x08893246, 0x0889329A, 0x08893317, 0x088933D5, 0x08893425  @ parts

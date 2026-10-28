@@ -1728,8 +1728,8 @@ sSong382_Part7: @ 0x0887F264
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x87F393, 0x1
-	.globl sSongHeader_382
-sSongHeader_382: @ 0x0887F394
+	.globl mus_fortree
+mus_fortree: @ 0x0887F394
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08604664  @ tone
+	.4byte voicegroup_fortree  @ tone
 	.4byte 0x0887EA88, 0x0887EC3B, 0x0887ED44, 0x0887EE35, 0x0887EF3B, 0x0887F03F, 0x0887F11D, 0x0887F264  @ parts

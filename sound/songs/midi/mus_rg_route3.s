@@ -2614,8 +2614,8 @@ sSong505_Part8: @ 0x088E629F
 	.byte	W14
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_505
-sSongHeader_505: @ 0x088E63B8
+	.globl mus_rg_route3
+mus_rg_route3: @ 0x088E63B8
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862F51C  @ tone
 	.4byte sSong505_Part0, sSong505_Part1, sSong505_Part2, sSong505_Part3, sSong505_Part4, sSong505_Part5, sSong505_Part6, sSong505_Part7, sSong505_Part8  @ parts

@@ -52,8 +52,8 @@ sSong170_Part0: @ 0x0886BBF8
 	.byte	BEND , 36
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_170
-sSongHeader_170: @ 0x0886BC44
+	.globl se_m_bind
+se_m_bind: @ 0x0886BC44
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong170_Part0  @ parts

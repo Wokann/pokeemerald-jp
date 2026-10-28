@@ -326,8 +326,8 @@ sSong529_Part6: @ 0x088FC815
 	.byte	W12
 	.byte	W12
 	.byte	FINE
-	.globl sSongHeader_529
-sSongHeader_529: @ 0x088FC850
+	.globl mus_rg_dex_rating
+mus_rg_dex_rating: @ 0x088FC850
 	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08637784  @ tone
 	.4byte sSong529_Part0, sSong529_Part1, sSong529_Part2, sSong529_Part3, sSong529_Part4, sSong529_Part5, sSong529_Part6  @ parts

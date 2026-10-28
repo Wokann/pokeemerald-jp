@@ -39,8 +39,8 @@ sSong166_Part0: @ 0x0886BAB8
 	.byte	W14
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86BAF5, 0x3
-	.globl sSongHeader_166
-sSongHeader_166: @ 0x0886BAF8
+	.globl se_m_horn_attack
+se_m_horn_attack: @ 0x0886BAF8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong166_Part0  @ parts

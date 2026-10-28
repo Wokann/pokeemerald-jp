@@ -220,8 +220,8 @@ sSong158_Part1: @ 0x0886B71C
 	.byte	55
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B77A, 0x2
-	.globl sSongHeader_158
-sSongHeader_158: @ 0x0886B77C
+	.globl se_m_fly
+se_m_fly: @ 0x0886B77C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B628, 0x0886B71C  @ parts

@@ -3267,8 +3267,8 @@ sSong476_Part7: @ 0x088CDA7A
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8CDC89, 0x3
-	.globl sSongHeader_476
-sSongHeader_476: @ 0x088CDC8C
+	.globl mus_vs_trainer
+mus_vs_trainer: @ 0x088CDC8C
 	.byte 0x08, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08622790  @ tone
 	.4byte sSong476_Part0, sSong476_Part1, sSong476_Part2, sSong476_Part3, sSong476_Part4, sSong476_Part5, sSong476_Part6, sSong476_Part7  @ parts

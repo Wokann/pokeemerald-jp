@@ -181,8 +181,8 @@ sSong104_Part1: @ 0x08869D3A
 	.byte	EOT
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869DCB, 0x1
-	.globl sSongHeader_104
-sSongHeader_104: @ 0x08869DCC
+	.globl se_mugshot
+se_mugshot: @ 0x08869DCC
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x08869CF0, 0x08869D3A  @ parts

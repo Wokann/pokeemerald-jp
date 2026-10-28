@@ -1976,8 +1976,8 @@ sSong358_Part2: @ 0x08873DC1
 	.byte	W48
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x874151, 0x3
-	.globl sSongHeader_358
-sSongHeader_358: @ 0x08874154
+	.globl mus_c_vs_legend_beast
+mus_c_vs_legend_beast: @ 0x08874154
 	.byte 0x03, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte voicegroup_dummy  @ tone
 	.4byte 0x08873794, 0x08873A47, 0x08873DC1  @ parts

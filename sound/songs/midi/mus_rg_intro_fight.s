@@ -1807,8 +1807,8 @@ sSong489_Part7: @ 0x088D77D4
 	.byte	W10
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D7917, 0x1
-	.globl sSongHeader_489
-sSongHeader_489: @ 0x088D7918
+	.globl mus_rg_intro_fight
+mus_rg_intro_fight: @ 0x088D7918
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862A290  @ tone
 	.4byte sSong489_Part0, sSong489_Part1, sSong489_Part2, sSong489_Part3, sSong489_Part4, sSong489_Part5, sSong489_Part6, sSong489_Part7  @ parts

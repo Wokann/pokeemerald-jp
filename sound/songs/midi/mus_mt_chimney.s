@@ -6390,8 +6390,8 @@ sSong406_Part8: @ 0x088907CE
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x890933, 0x1
-	.globl sSongHeader_406
-sSongHeader_406: @ 0x08890934
+	.globl mus_mt_chimney
+mus_mt_chimney: @ 0x08890934
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860AB68  @ tone
+	.4byte voicegroup_mt_chimney  @ tone
 	.4byte 0x0888E4A0, 0x0888E9A8, 0x0888EB82, 0x0888F1FA, 0x0888F958, 0x0888FAB3, 0x0888FD46, 0x08890282, 0x088907CE  @ parts

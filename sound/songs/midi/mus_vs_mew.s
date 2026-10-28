@@ -3846,8 +3846,8 @@ sSong472_Part7: @ 0x088CABFC
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8CAC63, 0x1
-	.globl sSongHeader_472
-sSongHeader_472: @ 0x088CAC64
+	.globl mus_vs_mew
+mus_vs_mew: @ 0x088CAC64
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08621974  @ tone
 	.4byte sSong472_Part0, sSong472_Part1, sSong472_Part2, sSong472_Part3, sSong472_Part4, sSong472_Part5, sSong472_Part6, sSong472_Part7  @ parts

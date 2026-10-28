@@ -32,8 +32,8 @@ sSong42_Part1: @ 0x08868C5B
 	.byte	Gs4, 112
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_42
-sSongHeader_42: @ 0x08868C70
+	.globl se_ice_crack
+se_ice_crack: @ 0x08868C70
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x08868C44, 0x08868C5B  @ parts

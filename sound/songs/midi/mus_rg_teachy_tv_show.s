@@ -1000,8 +1000,8 @@ sSong544_Part7: @ 0x089034A9
 	.byte	W16
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_544
-sSongHeader_544: @ 0x08903570
+	.globl mus_rg_teachy_tv_show
+mus_rg_teachy_tv_show: @ 0x08903570
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08628874  @ tone
 	.4byte sSong544_Part0, sSong544_Part1, sSong544_Part2, sSong544_Part3, sSong544_Part4, sSong544_Part5, sSong544_Part6, sSong544_Part7  @ parts

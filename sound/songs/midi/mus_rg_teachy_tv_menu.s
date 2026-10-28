@@ -136,8 +136,8 @@ sSong558_Part3: @ 0x0890EC7F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x90ECBA, 0x2
-	.globl sSongHeader_558
-sSongHeader_558: @ 0x0890ECBC
+	.globl mus_rg_teachy_tv_menu
+mus_rg_teachy_tv_menu: @ 0x0890ECBC
 	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0863A508  @ tone
 	.4byte sSong558_Part0, sSong558_Part1, sSong558_Part2, sSong558_Part3  @ parts

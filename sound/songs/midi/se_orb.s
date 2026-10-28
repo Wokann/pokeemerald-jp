@@ -214,8 +214,8 @@ sSong107_Part1: @ 0x08869F98
 	.byte	W02
 	.byte	EOT
 	.byte	FINE
-	.globl sSongHeader_107
-sSongHeader_107: @ 0x0886A01C
+	.globl se_orb
+se_orb: @ 0x0886A01C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x08869F14, 0x08869F98  @ parts

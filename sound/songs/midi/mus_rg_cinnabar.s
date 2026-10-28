@@ -2658,8 +2658,8 @@ sSong491_Part8: @ 0x088D9816
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D985F, 0x1
-	.globl sSongHeader_491
-sSongHeader_491: @ 0x088D9860
+	.globl mus_rg_cinnabar
+mus_rg_cinnabar: @ 0x088D9860
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862AE90  @ tone
 	.4byte sSong491_Part0, sSong491_Part1, sSong491_Part2, sSong491_Part3, sSong491_Part4, sSong491_Part5, sSong491_Part6, sSong491_Part7, sSong491_Part8  @ parts

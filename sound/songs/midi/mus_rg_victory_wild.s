@@ -1030,8 +1030,8 @@ sSong523_Part6: @ 0x088F89AA
 	.byte	W15
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_523
-sSongHeader_523: @ 0x088F8A4C
+	.globl mus_rg_victory_wild
+mus_rg_victory_wild: @ 0x088F8A4C
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08635BF4  @ tone
 	.4byte sSong523_Part0, sSong523_Part1, sSong523_Part2, sSong523_Part3, sSong523_Part4, sSong523_Part5, sSong523_Part6  @ parts

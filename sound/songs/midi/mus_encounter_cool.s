@@ -2304,8 +2304,8 @@ sSong417_Part8: @ 0x0889BE2E
 	.byte	W09
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_417
-sSongHeader_417: @ 0x0889BF20
+	.globl mus_encounter_cool
+mus_encounter_cool: @ 0x0889BF20
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860EB94  @ tone
+	.4byte voicegroup_encounter_cool  @ tone
 	.4byte 0x0889B278, 0x0889B368, 0x0889B39D, 0x0889B606, 0x0889B908, 0x0889BBF4, 0x0889BC40, 0x0889BD37, 0x0889BE2E  @ parts

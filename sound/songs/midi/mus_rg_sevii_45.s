@@ -2871,8 +2871,8 @@ sSong548_Part8: @ 0x089074CD
 	.byte	W16
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_548
-sSongHeader_548: @ 0x08907568
+	.globl mus_rg_sevii_45
+mus_rg_sevii_45: @ 0x08907568
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0863B108  @ tone
 	.4byte sSong548_Part0, sSong548_Part1, sSong548_Part2, sSong548_Part3, sSong548_Part4, sSong548_Part5, sSong548_Part6, sSong548_Part7, sSong548_Part8  @ parts

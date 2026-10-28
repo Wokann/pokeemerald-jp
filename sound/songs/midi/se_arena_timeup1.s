@@ -27,8 +27,8 @@ sSong265_Part1: @ 0x0886FAD9
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86FAEA, 0x2
-	.globl sSongHeader_265
-sSongHeader_265: @ 0x0886FAEC
+	.globl se_arena_timeup1
+se_arena_timeup1: @ 0x0886FAEC
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte 0x0886FAC8, 0x0886FAD9  @ parts

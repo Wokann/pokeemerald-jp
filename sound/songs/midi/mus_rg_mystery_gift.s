@@ -780,8 +780,8 @@ sSong541_Part6: @ 0x08900D21
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x900D4E, 0x2
-	.globl sSongHeader_541
-sSongHeader_541: @ 0x08900D50
+	.globl mus_rg_mystery_gift
+mus_rg_mystery_gift: @ 0x08900D50
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08639500  @ tone
 	.4byte sSong541_Part0, sSong541_Part1, sSong541_Part2, sSong541_Part3, sSong541_Part4, sSong541_Part5, sSong541_Part6  @ parts

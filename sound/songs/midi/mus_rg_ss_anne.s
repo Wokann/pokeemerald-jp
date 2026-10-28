@@ -3384,8 +3384,8 @@ sSong516_Part9: @ 0x088F341E
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8F349E, 0x2
-	.globl sSongHeader_516
-sSongHeader_516: @ 0x088F34A0
+	.globl mus_rg_ss_anne
+mus_rg_ss_anne: @ 0x088F34A0
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086331F4  @ tone
 	.4byte sSong516_Part0, sSong516_Part1, sSong516_Part2, sSong516_Part3, sSong516_Part4, sSong516_Part5, sSong516_Part6, sSong516_Part7, sSong516_Part8, sSong516_Part9  @ parts

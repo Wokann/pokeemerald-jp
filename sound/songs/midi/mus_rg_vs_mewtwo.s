@@ -3415,8 +3415,8 @@ sSong552_Part7: @ 0x0890B8F4
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x90B95B, 0x1
-	.globl sSongHeader_552
-sSongHeader_552: @ 0x0890B95C
+	.globl mus_rg_vs_mewtwo
+mus_rg_vs_mewtwo: @ 0x0890B95C
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08631178  @ tone
 	.4byte sSong552_Part0, sSong552_Part1, sSong552_Part2, sSong552_Part3, sSong552_Part4, sSong552_Part5, sSong552_Part6, sSong552_Part7  @ parts

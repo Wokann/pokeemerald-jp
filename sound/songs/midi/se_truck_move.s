@@ -115,8 +115,8 @@ sSong49_Part1: @ 0x08868E28
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x868E9B, 0x1
-	.globl sSongHeader_49
-sSongHeader_49: @ 0x08868E9C
+	.globl se_truck_move
+se_truck_move: @ 0x08868E9C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x08868DFC, 0x08868E28  @ parts

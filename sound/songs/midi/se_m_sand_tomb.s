@@ -166,8 +166,8 @@ sSong230_Part1: @ 0x0886E4BE
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86E515, 0x3
-	.globl sSongHeader_230
-sSongHeader_230: @ 0x0886E518
+	.globl se_m_sand_tomb
+se_m_sand_tomb: @ 0x0886E518
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E428, 0x0886E4BE  @ parts

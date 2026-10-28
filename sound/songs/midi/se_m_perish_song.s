@@ -255,8 +255,8 @@ sSong173_Part2: @ 0x0886BF10
 	.byte	W21
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86BF8B, 0x1
-	.globl sSongHeader_173
-sSongHeader_173: @ 0x0886BF8C
+	.globl se_m_perish_song
+se_m_perish_song: @ 0x0886BF8C
 	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886BE50, 0x0886BEB5, 0x0886BF10  @ parts

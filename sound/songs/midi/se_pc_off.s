@@ -20,8 +20,8 @@ sSong3_Part0: @ 0x08868438
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86844F, 0x1
-	.globl sSongHeader_3
-sSongHeader_3: @ 0x08868450
+	.globl se_pc_off
+se_pc_off: @ 0x08868450
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong3_Part0  @ parts

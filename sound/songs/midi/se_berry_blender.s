@@ -21,8 +21,8 @@ sSong53_Part0: @ 0x08868F84
 	.byte	W48
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x868F9E, 0x2
-	.globl sSongHeader_53
-sSongHeader_53: @ 0x08868FA0
+	.globl se_berry_blender
+se_berry_blender: @ 0x08868FA0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong53_Part0  @ parts

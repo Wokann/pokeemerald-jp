@@ -16,8 +16,8 @@ sSong26_Part0: @ 0x08868924
 	.byte	W24
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_26
-sSongHeader_26: @ 0x08868938
+	.globl se_i
+se_i: @ 0x08868938
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong26_Part0  @ parts

@@ -20,8 +20,8 @@ sSong249_Part0: @ 0x0886F43C
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F459, 0x3
-	.globl sSongHeader_249
-sSongHeader_249: @ 0x0886F45C
+	.globl se_rg_card_flip
+se_rg_card_flip: @ 0x0886F45C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte sSong249_Part0  @ parts

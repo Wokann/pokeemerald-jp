@@ -913,8 +913,8 @@ sSong377_Part6: @ 0x0887D2F7
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x87D45A, 0x2
-	.globl sSongHeader_377
-sSongHeader_377: @ 0x0887D45C
+	.globl mus_evolution
+mus_evolution: @ 0x0887D45C
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08602EC4  @ tone
+	.4byte voicegroup_evolution  @ tone
 	.4byte 0x0887CF04, 0x0887CFB6, 0x0887D068, 0x0887D100, 0x0887D1D3, 0x0887D264, 0x0887D2F7  @ parts

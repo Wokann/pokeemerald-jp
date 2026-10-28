@@ -1182,8 +1182,8 @@ sSong420_Part7: @ 0x0889EA11
 	.byte	W09
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_420
-sSongHeader_420: @ 0x0889EAD8
+	.globl mus_follow_me
+mus_follow_me: @ 0x0889EAD8
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860FD94  @ tone
+	.4byte voicegroup_follow_me  @ tone
 	.4byte 0x0889E4D0, 0x0889E5B7, 0x0889E674, 0x0889E728, 0x0889E7D6, 0x0889E883, 0x0889E930, 0x0889EA11  @ parts

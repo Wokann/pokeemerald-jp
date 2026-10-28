@@ -88,8 +88,8 @@ sSong127_Part0: @ 0x0886A840
 	.byte	EOT
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86A8AA, 0x2
-	.globl sSongHeader_127
-sSongHeader_127: @ 0x0886A8AC
+	.globl se_m_rain_dance
+se_m_rain_dance: @ 0x0886A8AC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong127_Part0  @ parts

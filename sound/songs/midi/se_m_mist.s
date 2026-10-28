@@ -66,8 +66,8 @@ sSong168_Part0: @ 0x0886BB44
 	.byte	W08
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86BBAF, 0x1
-	.globl sSongHeader_168
-sSongHeader_168: @ 0x0886BBB0
+	.globl se_m_mist
+se_m_mist: @ 0x0886BBB0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong168_Part0  @ parts

@@ -127,8 +127,8 @@ sSong387_Part4: @ 0x0888146F
 	.byte	W16
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8814AF, 0x1
-	.globl sSongHeader_387
-sSongHeader_387: @ 0x088814B0
+	.globl mus_obtain_berry
+mus_obtain_berry: @ 0x088814B0
 	.byte 0x05, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x088813FC, 0x08881429, 0x0888143F, 0x08881457, 0x0888146F  @ parts

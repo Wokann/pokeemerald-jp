@@ -33,8 +33,8 @@ sSong117_Part0: @ 0x0886A478
 	.byte	W04
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86A4A7, 0x1
-	.globl sSongHeader_117
-sSongHeader_117: @ 0x0886A4A8
+	.globl se_glass_flute
+se_glass_flute: @ 0x0886A4A8
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong117_Part0  @ parts

@@ -219,8 +219,8 @@ sSong246_Part1: @ 0x0886F312
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F34E, 0x2
-	.globl sSongHeader_246
-sSongHeader_246: @ 0x0886F350
+	.globl se_m_haze
+se_m_haze: @ 0x0886F350
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886F22C, 0x0886F312  @ parts

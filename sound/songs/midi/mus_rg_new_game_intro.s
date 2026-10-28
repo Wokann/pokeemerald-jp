@@ -362,8 +362,8 @@ sSong536_Part5: @ 0x088FDE12
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FDEC7, 0x1
-	.globl sSongHeader_536
-sSongHeader_536: @ 0x088FDEC8
+	.globl mus_rg_new_game_intro
+mus_rg_new_game_intro: @ 0x088FDEC8
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086390E0  @ tone
 	.4byte sSong536_Part0, sSong536_Part1, sSong536_Part2, sSong536_Part3, sSong536_Part4, sSong536_Part5  @ parts

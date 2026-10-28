@@ -98,8 +98,8 @@ sSong225_Part1: @ 0x0886E1E1
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86E1F6, 0x2
-	.globl sSongHeader_225
-sSongHeader_225: @ 0x0886E1F8
+	.globl se_m_milk_drink
+se_m_milk_drink: @ 0x0886E1F8
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E15C, 0x0886E1E1  @ parts

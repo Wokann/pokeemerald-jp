@@ -54,8 +54,8 @@ sSong258_Part0: @ 0x0886F73C
 	.byte	W18
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F79B, 0x1
-	.globl sSongHeader_258
-sSongHeader_258: @ 0x0886F79C
+	.globl se_rg_help_close
+se_rg_help_close: @ 0x0886F79C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte sSong258_Part0  @ parts

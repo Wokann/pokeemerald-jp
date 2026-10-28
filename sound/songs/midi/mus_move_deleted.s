@@ -156,8 +156,8 @@ sSong378_Part5: @ 0x0887D527
 	.byte	W24
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_378
-sSongHeader_378: @ 0x0887D540
+	.globl mus_move_deleted
+mus_move_deleted: @ 0x0887D540
 	.byte 0x06, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x0887D480, 0x0887D4A7, 0x0887D4CD, 0x0887D4ED, 0x0887D50D, 0x0887D527  @ parts

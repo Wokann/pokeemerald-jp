@@ -5169,8 +5169,8 @@ sSong486_Part9: @ 0x088D611C
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D6173, 0x1
-	.globl sSongHeader_486
-sSongHeader_486: @ 0x088D6174
+	.globl mus_rg_rocket_hideout
+mus_rg_rocket_hideout: @ 0x088D6174
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08629474  @ tone
 	.4byte sSong486_Part0, sSong486_Part1, sSong486_Part2, sSong486_Part3, sSong486_Part4, sSong486_Part5, sSong486_Part6, sSong486_Part7, sSong486_Part8, sSong486_Part9  @ parts

@@ -3374,8 +3374,8 @@ sSong414_Part9: @ 0x08899B49
 	.byte	W96
 	.byte	W96
 	.byte	FINE
-	.globl sSongHeader_414
-sSongHeader_414: @ 0x08899C18
+	.globl mus_intro
+mus_intro: @ 0x08899C18
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860D994  @ tone
+	.4byte voicegroup_intro  @ tone
 	.4byte 0x08898AAC, 0x08898BE2, 0x08898E6E, 0x08899094, 0x08899372, 0x088994FB, 0x08899697, 0x08899896, 0x08899AD5, 0x08899B49  @ parts

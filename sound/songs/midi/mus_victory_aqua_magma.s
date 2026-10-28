@@ -846,8 +846,8 @@ sSong424_Part8: @ 0x088A12C9
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A1371, 0x3
-	.globl sSongHeader_424
-sSongHeader_424: @ 0x088A1374
+	.globl mus_victory_aqua_magma
+mus_victory_aqua_magma: @ 0x088A1374
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08611594  @ tone
+	.4byte voicegroup_victory_aqua_magma  @ tone
 	.4byte 0x088A0ED0, 0x088A0F7F, 0x088A1040, 0x088A10FE, 0x088A1167, 0x088A11C6, 0x088A1233, 0x088A127A, 0x088A12C9  @ parts

@@ -63,8 +63,8 @@ sSong159_Part1: @ 0x0886B7D5
 	.byte	N01
 	.byte	W22
 	.byte	FINE
-	.globl sSongHeader_159
-sSongHeader_159: @ 0x0886B7E4
+	.globl se_m_sand_attack
+se_m_sand_attack: @ 0x0886B7E4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B78C, 0x0886B7D5  @ parts

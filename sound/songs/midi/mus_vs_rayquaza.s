@@ -1204,8 +1204,8 @@ sSong470_Part5: @ 0x088C6EA4
 	.byte	W12
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_470
-sSongHeader_470: @ 0x088C705C
+	.globl mus_vs_rayquaza
+mus_vs_rayquaza: @ 0x088C705C
 	.byte 0x06, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08620D74  @ tone
 	.4byte sSong470_Part0, sSong470_Part1, sSong470_Part2, sSong470_Part3, sSong470_Part4, sSong470_Part5  @ parts

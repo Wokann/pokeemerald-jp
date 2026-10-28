@@ -8346,8 +8346,8 @@ sSong509_Part9: @ 0x088EC235
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8EC4C3, 0x1
-	.globl sSongHeader_509
-sSongHeader_509: @ 0x088EC4C4
+	.globl mus_rg_vs_trainer
+mus_rg_vs_trainer: @ 0x088EC4C4
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08630B78  @ tone
 	.4byte sSong509_Part0, sSong509_Part1, sSong509_Part2, sSong509_Part3, sSong509_Part4, sSong509_Part5, sSong509_Part6, sSong509_Part7, sSong509_Part8, sSong509_Part9  @ parts

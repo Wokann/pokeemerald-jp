@@ -2672,8 +2672,8 @@ sSong485_Part7: @ 0x088D432F
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D454D, 0x3
-	.globl sSongHeader_485
-sSongHeader_485: @ 0x088D4550
+	.globl mus_rg_game_corner
+mus_rg_game_corner: @ 0x088D4550
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08628E74  @ tone
 	.4byte sSong485_Part0, sSong485_Part1, sSong485_Part2, sSong485_Part3, sSong485_Part4, sSong485_Part5, sSong485_Part6, sSong485_Part7  @ parts

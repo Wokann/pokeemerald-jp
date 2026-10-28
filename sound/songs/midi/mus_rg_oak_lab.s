@@ -1227,8 +1227,8 @@ sSong513_Part5: @ 0x088F0CFD
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8F0E0F, 0x1
-	.globl sSongHeader_513
-sSongHeader_513: @ 0x088F0E10
+	.globl mus_rg_oak_lab
+mus_rg_oak_lab: @ 0x088F0E10
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08632378  @ tone
 	.4byte sSong513_Part0, sSong513_Part1, sSong513_Part2, sSong513_Part3, sSong513_Part4, sSong513_Part5  @ parts

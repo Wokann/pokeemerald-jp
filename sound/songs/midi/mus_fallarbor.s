@@ -2796,8 +2796,8 @@ sSong437_Part8: @ 0x088ADB06
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8ADC8E, 0x2
-	.globl sSongHeader_437
-sSongHeader_437: @ 0x088ADC90
+	.globl mus_fallarbor
+mus_fallarbor: @ 0x088ADC90
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08615DAC  @ tone
+	.4byte voicegroup_fallarbor  @ tone
 	.4byte 0x088ACE04, 0x088AD0AE, 0x088AD160, 0x088AD1CF, 0x088AD395, 0x088AD603, 0x088AD7F0, 0x088AD9D9, 0x088ADB06  @ parts

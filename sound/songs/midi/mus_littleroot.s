@@ -3139,8 +3139,8 @@ sSong405_Part8: @ 0x0888E3F7
 	.byte	W08
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_405
-sSongHeader_405: @ 0x0888E474
+	.globl mus_littleroot
+mus_littleroot: @ 0x0888E474
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860A7F0  @ tone
+	.4byte voicegroup_littleroot  @ tone
 	.4byte 0x0888D248, 0x0888D371, 0x0888D6E6, 0x0888DBB6, 0x0888DC64, 0x0888DD21, 0x0888DED7, 0x0888E2EC, 0x0888E3F7  @ parts

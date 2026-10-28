@@ -124,8 +124,8 @@ sSong261_Part1: @ 0x0886F937
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F983, 0x1
-	.globl sSongHeader_261
-sSongHeader_261: @ 0x0886F984
+	.globl se_rg_poke_jump_success
+se_rg_poke_jump_success: @ 0x0886F984
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886F8D8, 0x0886F937  @ parts

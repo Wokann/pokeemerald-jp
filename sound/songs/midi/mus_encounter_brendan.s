@@ -2560,8 +2560,8 @@ sSong421_Part9: @ 0x0889F62A
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x89F7D3, 0x1
-	.globl sSongHeader_421
-sSongHeader_421: @ 0x0889F7D4
+	.globl mus_encounter_brendan
+mus_encounter_brendan: @ 0x0889F7D4
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08610394  @ tone
+	.4byte voicegroup_encounter_brendan  @ tone
 	.4byte 0x0889EB00, 0x0889ECE6, 0x0889ED5D, 0x0889EF4B, 0x0889F078, 0x0889F0CB, 0x0889F196, 0x0889F346, 0x0889F50A, 0x0889F62A  @ parts

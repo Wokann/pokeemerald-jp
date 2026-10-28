@@ -1570,8 +1570,8 @@ sSong557_Part5: @ 0x0890EA3B
 	.byte	MOD , 0
 	.byte	VOL , 34
 	.byte	FINE
-	.globl sSongHeader_557
-sSongHeader_557: @ 0x0890EBE0
+	.globl mus_rg_slow_pallet
+mus_rg_slow_pallet: @ 0x0890EBE0
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08631D78  @ tone
 	.4byte sSong557_Part0, sSong557_Part1, sSong557_Part2, sSong557_Part3, sSong557_Part4, sSong557_Part5  @ parts

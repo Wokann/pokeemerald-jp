@@ -104,8 +104,8 @@ sSong130_Part1: @ 0x0886A9FF
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86AA27, 0x1
-	.globl sSongHeader_130
-sSongHeader_130: @ 0x0886AA28
+	.globl se_m_string_shot2
+se_m_string_shot2: @ 0x0886AA28
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886A990, 0x0886A9FF  @ parts

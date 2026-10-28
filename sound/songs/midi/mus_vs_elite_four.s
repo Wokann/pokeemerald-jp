@@ -2345,8 +2345,8 @@ sSong482_Part7: @ 0x088D2151
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D2285, 0x3
-	.globl sSongHeader_482
-sSongHeader_482: @ 0x088D2288
+	.globl mus_vs_elite_four
+mus_vs_elite_four: @ 0x088D2288
 	.byte 0x08, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08624224  @ tone
 	.4byte sSong482_Part0, sSong482_Part1, sSong482_Part2, sSong482_Part3, sSong482_Part4, sSong482_Part5, sSong482_Part6, sSong482_Part7  @ parts

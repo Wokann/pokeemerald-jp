@@ -2750,8 +2750,8 @@ sSong419_Part9: @ 0x0889E2EA
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x89E49E, 0x2
-	.globl sSongHeader_419
-sSongHeader_419: @ 0x0889E4A0
+	.globl mus_encounter_aqua
+mus_encounter_aqua: @ 0x0889E4A0
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860F794  @ tone
+	.4byte voicegroup_encounter_aqua  @ tone
 	.4byte 0x0889D690, 0x0889D712, 0x0889D793, 0x0889D9F1, 0x0889DBBA, 0x0889DDA4, 0x0889DDF8, 0x0889DFE7, 0x0889E206, 0x0889E2EA  @ parts

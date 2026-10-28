@@ -1015,8 +1015,8 @@ sSong379_Part7: @ 0x0887DA43
 	.byte	W07
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_379
-sSongHeader_379: @ 0x0887DAC8
+	.globl mus_encounter_girl
+mus_encounter_girl: @ 0x0887DAC8
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_086032C0  @ tone
+	.4byte voicegroup_encounter_girl  @ tone
 	.4byte 0x0887D560, 0x0887D6B7, 0x0887D736, 0x0887D7C1, 0x0887D868, 0x0887D927, 0x0887D99E, 0x0887DA43  @ parts

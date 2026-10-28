@@ -54,8 +54,8 @@ sSong136_Part1: @ 0x0886AC0B
 	.byte	W15
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_136
-sSongHeader_136: @ 0x0886AC1C
+	.globl se_m_razor_wind
+se_m_razor_wind: @ 0x0886AC1C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886ABC8, 0x0886AC0B  @ parts

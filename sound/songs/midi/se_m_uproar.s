@@ -58,8 +58,8 @@ sSong241_Part0: @ 0x0886EE2C
 	.byte	W02
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86EE7B, 0x1
-	.globl sSongHeader_241
-sSongHeader_241: @ 0x0886EE7C
+	.globl se_m_uproar
+se_m_uproar: @ 0x0886EE7C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong241_Part0  @ parts

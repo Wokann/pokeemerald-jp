@@ -186,8 +186,8 @@ sSong105_Part0: @ 0x08869DDC
 	.byte	EOT , 59
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869EE1, 0x3
-	.globl sSongHeader_105
-sSongHeader_105: @ 0x08869EE4
+	.globl se_applause
+se_applause: @ 0x08869EE4
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong105_Part0  @ parts

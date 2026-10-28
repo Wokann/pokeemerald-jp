@@ -2332,8 +2332,8 @@ sSong384_Part8: @ 0x088804D9
 	.byte	W08
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_384
-sSongHeader_384: @ 0x088805CC
+	.globl mus_b_tower_rs
+mus_b_tower_rs: @ 0x088805CC
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08605438  @ tone
+	.4byte voicegroup_b_tower_rs  @ tone
 	.4byte 0x0887FA68, 0x0887FC8E, 0x0887FDE5, 0x0887FEF6, 0x088800C1, 0x088802B8, 0x08880414, 0x08880496, 0x088804D9  @ parts

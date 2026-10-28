@@ -158,8 +158,8 @@ sSong213_Part0: @ 0x0886D7EC
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86D8CD, 0x3
-	.globl sSongHeader_213
-sSongHeader_213: @ 0x0886D8D0
+	.globl se_m_charge
+se_m_charge: @ 0x0886D8D0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong213_Part0  @ parts

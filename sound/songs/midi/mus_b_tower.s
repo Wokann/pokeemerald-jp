@@ -3453,8 +3453,8 @@ sSong465_Part6: @ 0x088C1B5F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8C1D7F, 0x1
-	.globl sSongHeader_465
-sSongHeader_465: @ 0x088C1D80
+	.globl mus_b_tower
+mus_b_tower: @ 0x088C1D80
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861F574  @ tone
 	.4byte sSong465_Part0, sSong465_Part1, sSong465_Part2, sSong465_Part3, sSong465_Part4, sSong465_Part5, sSong465_Part6  @ parts

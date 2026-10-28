@@ -2721,8 +2721,8 @@ sSong477_Part7: @ 0x088CE95F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8CEABB, 0x1
-	.globl sSongHeader_477
-sSongHeader_477: @ 0x088CEABC
+	.globl mus_vs_gym_leader
+mus_vs_gym_leader: @ 0x088CEABC
 	.byte 0x08, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08622BD4  @ tone
 	.4byte sSong477_Part0, sSong477_Part1, sSong477_Part2, sSong477_Part3, sSong477_Part4, sSong477_Part5, sSong477_Part6, sSong477_Part7  @ parts

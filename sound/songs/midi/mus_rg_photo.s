@@ -218,8 +218,8 @@ sSong532_Part4: @ 0x088FCF16
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FCF2E, 0x2
-	.globl sSongHeader_532
-sSongHeader_532: @ 0x088FCF30
+	.globl mus_rg_photo
+mus_rg_photo: @ 0x088FCF30
 	.byte 0x05, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086388AC  @ tone
 	.4byte sSong532_Part0, sSong532_Part1, sSong532_Part2, sSong532_Part3, sSong532_Part4  @ parts

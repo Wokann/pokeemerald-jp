@@ -83,8 +83,8 @@ sSong247_Part1: @ 0x0886F3B7
 	.byte	W06
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_247
-sSongHeader_247: @ 0x0886F3D4
+	.globl se_m_hyper_beam2
+se_m_hyper_beam2: @ 0x0886F3D4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886F360, 0x0886F3B7  @ parts

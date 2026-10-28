@@ -130,8 +130,8 @@ sSong256_Part1: @ 0x0886F687
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F6BA, 0x2
-	.globl sSongHeader_256
-sSongHeader_256: @ 0x0886F6BC
+	.globl se_rg_ss_anne_horn
+se_rg_ss_anne_horn: @ 0x0886F6BC
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte 0x0886F610, 0x0886F687  @ parts

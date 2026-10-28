@@ -3137,8 +3137,8 @@ sSong445_Part7: @ 0x088B271B
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B2B0D, 0x3
-	.globl sSongHeader_445
-sSongHeader_445: @ 0x088B2B10
+	.globl mus_sootopolis
+mus_sootopolis: @ 0x088B2B10
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08618B9C  @ tone
+	.4byte voicegroup_sootopolis  @ tone
 	.4byte 0x088B1A48, 0x088B1B55, 0x088B1F45, 0x088B1F87, 0x088B21EF, 0x088B2463, 0x088B24AF, 0x088B271B  @ parts

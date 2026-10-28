@@ -68,8 +68,8 @@ sSong161_Part1: @ 0x0886B892
 	.byte	N01
 	.byte	W06
 	.byte	FINE
-	.globl sSongHeader_161
-sSongHeader_161: @ 0x0886B8A4
+	.globl se_m_bite
+se_m_bite: @ 0x0886B8A4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B834, 0x0886B892  @ parts

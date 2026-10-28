@@ -2513,8 +2513,8 @@ sSong431_Part8: @ 0x088A70AE
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A719A, 0x2
-	.globl sSongHeader_431
-sSongHeader_431: @ 0x088A719C
+	.globl mus_sailing
+mus_sailing: @ 0x088A719C
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08613F94  @ tone
+	.4byte voicegroup_sailing  @ tone
 	.4byte 0x088A63C0, 0x088A6567, 0x088A663C, 0x088A68D8, 0x088A6A06, 0x088A6C76, 0x088A6DC7, 0x088A6F15, 0x088A70AE  @ parts

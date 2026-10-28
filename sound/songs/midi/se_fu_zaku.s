@@ -26,8 +26,8 @@ sSong37_Part0: @ 0x08868B14
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x868B37, 0x1
-	.globl sSongHeader_37
-sSongHeader_37: @ 0x08868B38
+	.globl se_fu_zaku
+se_fu_zaku: @ 0x08868B38
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong37_Part0  @ parts

@@ -93,8 +93,8 @@ sSong164_Part1: @ 0x0886B9EF
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86BA0D, 0x3
-	.globl sSongHeader_164
-sSongHeader_164: @ 0x0886BA10
+	.globl se_m_hydro_pump
+se_m_hydro_pump: @ 0x0886BA10
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B99C, 0x0886B9EF  @ parts

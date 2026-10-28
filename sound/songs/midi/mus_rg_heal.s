@@ -37,8 +37,8 @@ sSong493_Part1: @ 0x088DA5CB
 	.byte	W24
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_493
-sSongHeader_493: @ 0x088DA5E0
+	.globl mus_rg_heal
+mus_rg_heal: @ 0x088DA5E0
 	.byte 0x02, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862BA90  @ tone
 	.4byte sSong493_Part0, sSong493_Part1  @ parts

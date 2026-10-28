@@ -1922,8 +1922,8 @@ sSong498_Part8: @ 0x088DC869
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8DC8CF, 0x1
-	.globl sSongHeader_498
-sSongHeader_498: @ 0x088DC8D0
+	.globl mus_rg_hall_of_fame
+mus_rg_hall_of_fame: @ 0x088DC8D0
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862D0B0  @ tone
 	.4byte sSong498_Part0, sSong498_Part1, sSong498_Part2, sSong498_Part3, sSong498_Part4, sSong498_Part5, sSong498_Part6, sSong498_Part7, sSong498_Part8  @ parts

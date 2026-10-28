@@ -106,8 +106,8 @@ sSong216_Part1: @ 0x0886DA1D
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86DA41, 0x3
-	.globl sSongHeader_216
-sSongHeader_216: @ 0x0886DA44
+	.globl se_m_waterfall
+se_m_waterfall: @ 0x0886DA44
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886D9A0, 0x0886DA1D  @ parts

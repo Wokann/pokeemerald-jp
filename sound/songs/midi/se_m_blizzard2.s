@@ -44,8 +44,8 @@ sSong154_Part0: @ 0x0886B48C
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B4C9, 0x3
-	.globl sSongHeader_154
-sSongHeader_154: @ 0x0886B4CC
+	.globl se_m_blizzard2
+se_m_blizzard2: @ 0x0886B4CC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong154_Part0  @ parts

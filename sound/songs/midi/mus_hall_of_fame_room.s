@@ -1579,8 +1579,8 @@ sSong447_Part6: @ 0x088B36AB
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B372D, 0x3
-	.globl sSongHeader_447
-sSongHeader_447: @ 0x088B3730
+	.globl mus_hall_of_fame_room
+mus_hall_of_fame_room: @ 0x088B3730
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861979C  @ tone
+	.4byte voicegroup_hall_of_fame_room  @ tone
 	.4byte 0x088B2F9C, 0x088B3360, 0x088B33AC, 0x088B34B3, 0x088B355C, 0x088B35FF, 0x088B36AB  @ parts

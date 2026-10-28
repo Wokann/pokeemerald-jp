@@ -2937,8 +2937,8 @@ sSong501_Part9: @ 0x088E0042
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8E0173, 0x1
-	.globl sSongHeader_501
-sSongHeader_501: @ 0x088E0174
+	.globl mus_rg_poke_mansion
+mus_rg_poke_mansion: @ 0x088E0174
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862E0A0  @ tone
 	.4byte sSong501_Part0, sSong501_Part1, sSong501_Part2, sSong501_Part3, sSong501_Part4, sSong501_Part5, sSong501_Part6, sSong501_Part7, sSong501_Part8, sSong501_Part9  @ parts

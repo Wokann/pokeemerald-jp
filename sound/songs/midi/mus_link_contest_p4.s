@@ -1765,8 +1765,8 @@ sSong396_Part4: @ 0x088844C5
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x88467B, 0x1
-	.globl sSongHeader_396
-sSongHeader_396: @ 0x0888467C
+	.globl mus_link_contest_p4
+mus_link_contest_p4: @ 0x0888467C
 	.byte 0x05, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08607838  @ tone
+	.4byte voicegroup_link_contest_p4  @ tone
 	.4byte 0x08883DFC, 0x08883F3E, 0x088840D2, 0x08884271, 0x088844C5  @ parts

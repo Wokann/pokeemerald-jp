@@ -2901,8 +2901,8 @@ sSong524_Part7: @ 0x088F97B5
 	.byte	W15
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_524
-sSongHeader_524: @ 0x088F993C
+	.globl mus_rg_victory_gym_leader
+mus_rg_victory_gym_leader: @ 0x088F993C
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08635FE4  @ tone
 	.4byte sSong524_Part0, sSong524_Part1, sSong524_Part2, sSong524_Part3, sSong524_Part4, sSong524_Part5, sSong524_Part6, sSong524_Part7  @ parts

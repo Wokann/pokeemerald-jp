@@ -114,8 +114,8 @@ sSong121_Part1: @ 0x0886A652
 	.byte	N03
 	.byte	W18
 	.byte	FINE
-	.globl sSongHeader_121
-sSongHeader_121: @ 0x0886A6B4
+	.globl se_m_nightmare
+se_m_nightmare: @ 0x0886A6B4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886A600, 0x0886A652  @ parts

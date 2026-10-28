@@ -1728,8 +1728,8 @@ sSong393_Part6: @ 0x08882A0E
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x882B16, 0x2
-	.globl sSongHeader_393
-sSongHeader_393: @ 0x08882B18
+	.globl mus_link_contest_p1
+mus_link_contest_p1: @ 0x08882B18
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08606638  @ tone
+	.4byte voicegroup_link_contest_p1  @ tone
 	.4byte 0x088822B4, 0x08882403, 0x0888254E, 0x08882653, 0x0888270B, 0x088827BA, 0x08882A0E  @ parts

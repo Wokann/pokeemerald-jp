@@ -1463,8 +1463,8 @@ sSong527_Part8: @ 0x088FBE43
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FBE79, 0x3
-	.globl sSongHeader_527
-sSongHeader_527: @ 0x088FBE7C
+	.globl mus_rg_encounter_rival
+mus_rg_encounter_rival: @ 0x088FBE7C
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08637028  @ tone
 	.4byte sSong527_Part0, sSong527_Part1, sSong527_Part2, sSong527_Part3, sSong527_Part4, sSong527_Part5, sSong527_Part6, sSong527_Part7, sSong527_Part8  @ parts

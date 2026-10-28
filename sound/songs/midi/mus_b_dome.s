@@ -3971,8 +3971,8 @@ sSong467_Part9: @ 0x088C35FF
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8C3639, 0x3
-	.globl sSongHeader_467
-sSongHeader_467: @ 0x088C363C
+	.globl mus_b_dome
+mus_b_dome: @ 0x088C363C
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861FB74  @ tone
 	.4byte sSong467_Part0, sSong467_Part1, sSong467_Part2, sSong467_Part3, sSong467_Part4, sSong467_Part5, sSong467_Part6, sSong467_Part7, sSong467_Part8, sSong467_Part9  @ parts

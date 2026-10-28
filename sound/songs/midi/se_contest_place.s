@@ -48,8 +48,8 @@ sSong24_Part2: @ 0x088688DE
 	.byte	W12
 	.byte	W12
 	.byte	FINE
-	.globl sSongHeader_24
-sSongHeader_24: @ 0x088688F0
+	.globl se_contest_place
+se_contest_place: @ 0x088688F0
 	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x088688AC, 0x088688C6, 0x088688DE  @ parts

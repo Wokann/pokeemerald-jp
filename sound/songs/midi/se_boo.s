@@ -18,8 +18,8 @@ sSong22_Part0: @ 0x08868864
 	.byte	Cn2, 24
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_22
-sSongHeader_22: @ 0x0886887C
+	.globl se_boo
+se_boo: @ 0x0886887C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong22_Part0  @ parts

@@ -993,8 +993,8 @@ sSong451_Part7: @ 0x088B5C7C
 	.byte	W11
 	.byte	8
 	.byte	FINE
-	.globl sSongHeader_451
-sSongHeader_451: @ 0x088B5D24
+	.globl mus_encounter_hiker
+mus_encounter_hiker: @ 0x088B5D24
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861AF9C  @ tone
+	.4byte voicegroup_encounter_hiker  @ tone
 	.4byte 0x088B57CC, 0x088B57FB, 0x088B58F8, 0x088B5978, 0x088B5A68, 0x088B5B33, 0x088B5BFD, 0x088B5C7C  @ parts

@@ -2916,8 +2916,8 @@ sSong408_Part5: @ 0x08891E5F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x892197, 0x1
-	.globl sSongHeader_408
-sSongHeader_408: @ 0x08892198
+	.globl mus_lilycove
+mus_lilycove: @ 0x08892198
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860B768  @ tone
+	.4byte voicegroup_lilycove  @ tone
 	.4byte 0x08890FD0, 0x088912AC, 0x088916A8, 0x08891A69, 0x08891D71, 0x08891E5F  @ parts

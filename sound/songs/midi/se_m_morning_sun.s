@@ -104,8 +104,8 @@ sSong228_Part1: @ 0x0886E391
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86E3CF, 0x1
-	.globl sSongHeader_228
-sSongHeader_228: @ 0x0886E3D0
+	.globl se_m_morning_sun
+se_m_morning_sun: @ 0x0886E3D0
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E338, 0x0886E391  @ parts

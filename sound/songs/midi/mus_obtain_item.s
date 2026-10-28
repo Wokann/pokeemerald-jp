@@ -239,8 +239,8 @@ sSong370_Part5: @ 0x0887A355
 	.byte	MOD , 0
 	.byte	W48
 	.byte	FINE
-	.globl sSongHeader_370
-sSongHeader_370: @ 0x0887A388
+	.globl mus_obtain_item
+mus_obtain_item: @ 0x0887A388
 	.byte 0x06, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x0887A258, 0x0887A28D, 0x0887A2BF, 0x0887A2E5, 0x0887A31D, 0x0887A355  @ parts

@@ -1112,8 +1112,8 @@ sSong443_Part5: @ 0x088B1592
 	.byte	MOD , 0
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B1756, 0x2
-	.globl sSongHeader_443
-sSongHeader_443: @ 0x088B1758
+	.globl mus_abnormal_weather
+mus_abnormal_weather: @ 0x088B1758
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08617F9C  @ tone
+	.4byte voicegroup_abnormal_weather  @ tone
 	.4byte 0x088B1124, 0x088B1211, 0x088B1295, 0x088B13F9, 0x088B151A, 0x088B1592  @ parts

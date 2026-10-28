@@ -953,8 +953,8 @@ sSong449_Part9: @ 0x088B4A7D
 	.byte	W11
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_449
-sSongHeader_449: @ 0x088B4B18
+	.globl mus_encounter_twins
+mus_encounter_twins: @ 0x088B4B18
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861A39C  @ tone
+	.4byte voicegroup_encounter_twins  @ tone
 	.4byte 0x088B4638, 0x088B46E3, 0x088B4709, 0x088B47A9, 0x088B4851, 0x088B4872, 0x088B4932, 0x088B49A9, 0x088B4A22, 0x088B4A7D  @ parts

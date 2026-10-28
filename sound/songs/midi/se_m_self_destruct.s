@@ -45,8 +45,8 @@ sSong177_Part0: @ 0x0886C0CC
 	.byte	BEND , 49
 	.byte	W22
 	.byte	FINE
-	.globl sSongHeader_177
-sSongHeader_177: @ 0x0886C10C
+	.globl se_m_self_destruct
+se_m_self_destruct: @ 0x0886C10C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong177_Part0  @ parts

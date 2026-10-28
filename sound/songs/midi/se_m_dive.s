@@ -91,8 +91,8 @@ sSong233_Part1: @ 0x0886E68E
 	.byte	Gs3, 12
 	.byte	W08
 	.byte	FINE
-	.globl sSongHeader_233
-sSongHeader_233: @ 0x0886E6AC
+	.globl se_m_dive
+se_m_dive: @ 0x0886E6AC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E620, 0x0886E68E  @ parts

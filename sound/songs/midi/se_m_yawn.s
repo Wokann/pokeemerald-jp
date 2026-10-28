@@ -96,8 +96,8 @@ sSong237_Part1: @ 0x0886EB04
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86EB21, 0x3
-	.globl sSongHeader_237
-sSongHeader_237: @ 0x0886EB24
+	.globl se_m_yawn
+se_m_yawn: @ 0x0886EB24
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886EAB0, 0x0886EB04  @ parts

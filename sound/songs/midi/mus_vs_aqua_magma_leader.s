@@ -2831,8 +2831,8 @@ sSong483_Part7: @ 0x088D2F9B
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D311F, 0x1
-	.globl sSongHeader_483
-sSongHeader_483: @ 0x088D3120
+	.globl mus_vs_aqua_magma_leader
+mus_vs_aqua_magma_leader: @ 0x088D3120
 	.byte 0x08, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08624614  @ tone
 	.4byte sSong483_Part0, sSong483_Part1, sSong483_Part2, sSong483_Part3, sSong483_Part4, sSong483_Part5, sSong483_Part6, sSong483_Part7  @ parts

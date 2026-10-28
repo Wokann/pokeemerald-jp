@@ -641,8 +641,8 @@ sSong496_Part8: @ 0x088DB94C
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8DB96A, 0x2
-	.globl sSongHeader_496
-sSongHeader_496: @ 0x088DB96C
+	.globl mus_rg_encounter_girl
+mus_rg_encounter_girl: @ 0x088DB96C
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862C4B0  @ tone
 	.4byte sSong496_Part0, sSong496_Part1, sSong496_Part2, sSong496_Part3, sSong496_Part4, sSong496_Part5, sSong496_Part6, sSong496_Part7, sSong496_Part8  @ parts

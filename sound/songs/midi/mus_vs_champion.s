@@ -2918,8 +2918,8 @@ sSong478_Part7: @ 0x088CF812
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8CF9AA, 0x2
-	.globl sSongHeader_478
-sSongHeader_478: @ 0x088CF9AC
+	.globl mus_vs_champion
+mus_vs_champion: @ 0x088CF9AC
 	.byte 0x08, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08623018  @ tone
 	.4byte sSong478_Part0, sSong478_Part1, sSong478_Part2, sSong478_Part3, sSong478_Part4, sSong478_Part5, sSong478_Part6, sSong478_Part7  @ parts

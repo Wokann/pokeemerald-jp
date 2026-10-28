@@ -134,8 +134,8 @@ sSong268_Part2: @ 0x0886FCB3
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86FCDF, 0x1
-	.globl sSongHeader_268
-sSongHeader_268: @ 0x0886FCE0
+	.globl se_pike_curtain_open
+se_pike_curtain_open: @ 0x0886FCE0
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte 0x0886FC18, 0x0886FC95, 0x0886FCB3  @ parts

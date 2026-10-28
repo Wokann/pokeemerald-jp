@@ -2676,8 +2676,8 @@ sSong427_Part9: @ 0x088A3E17
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A3F55, 0x3
-	.globl sSongHeader_427
-sSongHeader_427: @ 0x088A3F58
+	.globl mus_dewford
+mus_dewford: @ 0x088A3F58
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08612794  @ tone
+	.4byte voicegroup_dewford  @ tone
 	.4byte 0x088A313C, 0x088A32D9, 0x088A3481, 0x088A35DD, 0x088A37B2, 0x088A37F4, 0x088A39E8, 0x088A3BE2, 0x088A3CB4, 0x088A3E17  @ parts

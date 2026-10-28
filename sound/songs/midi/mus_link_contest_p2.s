@@ -1888,8 +1888,8 @@ sSong394_Part6: @ 0x08883268
 	.byte	W08
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_394
-sSongHeader_394: @ 0x0888345C
+	.globl mus_link_contest_p2
+mus_link_contest_p2: @ 0x0888345C
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08606C38  @ tone
+	.4byte voicegroup_link_contest_p2  @ tone
 	.4byte 0x08882B3C, 0x08882B88, 0x08882D72, 0x08882E45, 0x08882F2C, 0x08883014, 0x08883268  @ parts

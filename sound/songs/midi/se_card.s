@@ -76,8 +76,8 @@ sSong54_Part1: @ 0x08868FE6
 	.byte	W20
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869012, 0x2
-	.globl sSongHeader_54
-sSongHeader_54: @ 0x08869014
+	.globl se_card
+se_card: @ 0x08869014
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x08868FAC, 0x08868FE6  @ parts

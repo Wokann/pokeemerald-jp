@@ -2286,8 +2286,8 @@ sSong400_Part8: @ 0x08887527
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8876A9, 0x3
-	.globl sSongHeader_400
-sSongHeader_400: @ 0x088876AC
+	.globl mus_poke_center
+mus_poke_center: @ 0x088876AC
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08608BD0  @ tone
+	.4byte voicegroup_poke_center  @ tone
 	.4byte 0x08886A94, 0x08886AE4, 0x08886D24, 0x08886DD9, 0x08886FCF, 0x08887106, 0x08887249, 0x088874F8, 0x08887527  @ parts

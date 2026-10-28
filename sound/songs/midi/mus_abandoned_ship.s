@@ -1741,8 +1741,8 @@ sSong381_Part7: @ 0x0887E956
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x87EA5E, 0x2
-	.globl sSongHeader_381
-sSongHeader_381: @ 0x0887EA60
+	.globl mus_abandoned_ship
+mus_abandoned_ship: @ 0x0887EA60
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_086040C4  @ tone
+	.4byte voicegroup_abandoned_ship  @ tone
 	.4byte 0x0887E148, 0x0887E2F3, 0x0887E481, 0x0887E52B, 0x0887E6FF, 0x0887E80F, 0x0887E8A9, 0x0887E956  @ parts

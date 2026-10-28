@@ -2663,8 +2663,8 @@ sSong542_Part7: @ 0x08901A5E
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x901C7B, 0x1
-	.globl sSongHeader_542
-sSongHeader_542: @ 0x08901C7C
+	.globl mus_rg_berry_pick
+mus_rg_berry_pick: @ 0x08901C7C
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08628E74  @ tone
 	.4byte sSong542_Part0, sSong542_Part1, sSong542_Part2, sSong542_Part3, sSong542_Part4, sSong542_Part5, sSong542_Part6, sSong542_Part7  @ parts

@@ -3261,8 +3261,8 @@ sSong404_Part7: @ 0x0888CF1A
 	.byte	W08
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_404
-sSongHeader_404: @ 0x0888D220
+	.globl mus_poke_mart
+mus_poke_mart: @ 0x0888D220
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860A1F0  @ tone
+	.4byte voicegroup_poke_mart  @ tone
 	.4byte 0x0888BF8C, 0x0888C30C, 0x0888C5B6, 0x0888CA3E, 0x0888CACF, 0x0888CD99, 0x0888CE82, 0x0888CF1A  @ parts

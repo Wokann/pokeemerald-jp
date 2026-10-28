@@ -48,8 +48,8 @@ sSong72_Part1: @ 0x088693E9
 	.byte	W03
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_72
-sSongHeader_72: @ 0x08869404
+	.globl se_itemfinder
+se_itemfinder: @ 0x08869404
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x088693C4, 0x088693E9  @ parts

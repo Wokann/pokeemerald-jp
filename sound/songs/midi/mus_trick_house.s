@@ -2963,8 +2963,8 @@ sSong448_Part7: @ 0x088B43EE
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B460F, 0x1
-	.globl sSongHeader_448
-sSongHeader_448: @ 0x088B4610
+	.globl mus_trick_house
+mus_trick_house: @ 0x088B4610
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08619D9C  @ tone
+	.4byte voicegroup_trick_house  @ tone
 	.4byte 0x088B3754, 0x088B380E, 0x088B3A9C, 0x088B3DFE, 0x088B3FCF, 0x088B417C, 0x088B423C, 0x088B43EE  @ parts

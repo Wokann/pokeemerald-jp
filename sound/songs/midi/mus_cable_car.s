@@ -1362,8 +1362,8 @@ sSong425_Part8: @ 0x088A1999
 	.byte	W96
 	.byte	W96
 	.byte	FINE
-	.globl sSongHeader_425
-sSongHeader_425: @ 0x088A19E8
+	.globl mus_cable_car
+mus_cable_car: @ 0x088A19E8
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08611B94  @ tone
+	.4byte voicegroup_cable_car  @ tone
 	.4byte 0x088A13A0, 0x088A14FB, 0x088A1586, 0x088A1699, 0x088A1720, 0x088A17F5, 0x088A18B0, 0x088A196E, 0x088A1999  @ parts

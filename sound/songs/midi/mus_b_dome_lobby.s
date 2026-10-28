@@ -357,8 +357,8 @@ sSong473_Part2: @ 0x088CAE9C
 	.byte	W12
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_473
-sSongHeader_473: @ 0x088CAEC4
+	.globl mus_b_dome_lobby
+mus_b_dome_lobby: @ 0x088CAEC4
 	.byte 0x03, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861FB74  @ tone
 	.4byte sSong473_Part0, sSong473_Part1, sSong473_Part2  @ parts

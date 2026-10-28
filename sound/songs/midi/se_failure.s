@@ -27,8 +27,8 @@ sSong32_Part0: @ 0x088689E4
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x868A07, 0x1
-	.globl sSongHeader_32
-sSongHeader_32: @ 0x08868A08
+	.globl se_failure
+se_failure: @ 0x08868A08
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong32_Part0  @ parts

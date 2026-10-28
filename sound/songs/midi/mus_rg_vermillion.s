@@ -2488,8 +2488,8 @@ sSong525_Part8: @ 0x088FA70E
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FA74D, 0x3
-	.globl sSongHeader_525
-sSongHeader_525: @ 0x088FA750
+	.globl mus_rg_vermillion
+mus_rg_vermillion: @ 0x088FA750
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08636428  @ tone
 	.4byte sSong525_Part0, sSong525_Part1, sSong525_Part2, sSong525_Part3, sSong525_Part4, sSong525_Part5, sSong525_Part6, sSong525_Part7, sSong525_Part8  @ parts

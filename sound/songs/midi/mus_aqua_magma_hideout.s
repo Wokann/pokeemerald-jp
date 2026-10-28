@@ -1553,8 +1553,8 @@ sSong430_Part8: @ 0x088A6211
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A6391, 0x3
-	.globl sSongHeader_430
-sSongHeader_430: @ 0x088A6394
+	.globl mus_aqua_magma_hideout
+mus_aqua_magma_hideout: @ 0x088A6394
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08613994  @ tone
+	.4byte voicegroup_aqua_magma_hideout  @ tone
 	.4byte 0x088A5AB4, 0x088A5B5B, 0x088A5C5B, 0x088A5D5F, 0x088A5E78, 0x088A5F21, 0x088A6037, 0x088A6107, 0x088A6211  @ parts

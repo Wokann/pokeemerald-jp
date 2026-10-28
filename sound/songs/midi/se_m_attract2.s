@@ -95,8 +95,8 @@ sSong227_Part1: @ 0x0886E2E3
 	.byte	W04
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_227
-sSongHeader_227: @ 0x0886E328
+	.globl se_m_attract2
+se_m_attract2: @ 0x0886E328
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E2A0, 0x0886E2E3  @ parts

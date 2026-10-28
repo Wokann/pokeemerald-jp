@@ -781,8 +781,8 @@ sSong446_Part7: @ 0x088B2EFA
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B2F72, 0x2
-	.globl sSongHeader_446
-sSongHeader_446: @ 0x088B2F74
+	.globl mus_contest_results
+mus_contest_results: @ 0x088B2F74
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861919C  @ tone
+	.4byte voicegroup_contest_results  @ tone
 	.4byte 0x088B2B38, 0x088B2BB5, 0x088B2C3B, 0x088B2CC9, 0x088B2DB7, 0x088B2E1B, 0x088B2E7F, 0x088B2EFA  @ parts

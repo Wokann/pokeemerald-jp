@@ -45,8 +45,8 @@ sSong82_Part0: @ 0x0886964C
 	.byte	6
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_82
-sSongHeader_82: @ 0x08869680
+	.globl se_thunderstorm_stop
+se_thunderstorm_stop: @ 0x08869680
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong82_Part0  @ parts

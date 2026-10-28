@@ -2814,8 +2814,8 @@ sSong409_Part7: @ 0x08892F38
 	.byte	W09
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_409
-sSongHeader_409: @ 0x08893114
+	.globl mus_route111
+mus_route111: @ 0x08893114
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860BD68  @ tone
+	.4byte voicegroup_route111  @ tone
 	.4byte 0x088921B8, 0x088923D5, 0x08892631, 0x08892830, 0x08892A45, 0x08892CF0, 0x08892E8F, 0x08892F38  @ parts

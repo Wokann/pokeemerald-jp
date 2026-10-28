@@ -305,8 +305,8 @@ sSong234_Part1: @ 0x0886E80D
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86E8B2, 0x2
-	.globl sSongHeader_234
-sSongHeader_234: @ 0x0886E8B4
+	.globl se_m_earthquake
+se_m_earthquake: @ 0x0886E8B4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E6BC, 0x0886E80D  @ parts

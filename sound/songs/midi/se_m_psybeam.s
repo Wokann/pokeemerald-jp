@@ -113,8 +113,8 @@ sSong189_Part1: @ 0x0886C78F
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86C7BB, 0x1
-	.globl sSongHeader_189
-sSongHeader_189: @ 0x0886C7BC
+	.globl se_m_psybeam
+se_m_psybeam: @ 0x0886C7BC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886C728, 0x0886C78F  @ parts

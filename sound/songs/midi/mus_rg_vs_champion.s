@@ -7579,8 +7579,8 @@ sSong511_Part9: @ 0x088EFD61
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8EFE0D, 0x3
-	.globl sSongHeader_511
-sSongHeader_511: @ 0x088EFE10
+	.globl mus_rg_vs_champion
+mus_rg_vs_champion: @ 0x088EFE10
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08631778  @ tone
 	.4byte sSong511_Part0, sSong511_Part1, sSong511_Part2, sSong511_Part3, sSong511_Part4, sSong511_Part5, sSong511_Part6, sSong511_Part7, sSong511_Part8, sSong511_Part9  @ parts

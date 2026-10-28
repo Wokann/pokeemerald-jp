@@ -2132,8 +2132,8 @@ sSong441_Part9: @ 0x088B0429
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B04D1, 0x3
-	.globl sSongHeader_441
-sSongHeader_441: @ 0x088B04D4
+	.globl mus_encounter_magma
+mus_encounter_magma: @ 0x088B04D4
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861739C  @ tone
+	.4byte voicegroup_encounter_magma  @ tone
 	.4byte 0x088AF99C, 0x088AFBDF, 0x088AFCA1, 0x088AFE6D, 0x088AFF47, 0x088AFFED, 0x088B0129, 0x088B0299, 0x088B02DA, 0x088B0429  @ parts

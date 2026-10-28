@@ -79,8 +79,8 @@ sSong174_Part0: @ 0x0886BFA0
 	.byte	W05
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86C017, 0x1
-	.globl sSongHeader_174
-sSongHeader_174: @ 0x0886C018
+	.globl se_m_pay_day
+se_m_pay_day: @ 0x0886C018
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong174_Part0  @ parts

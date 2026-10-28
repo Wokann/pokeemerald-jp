@@ -12770,8 +12770,8 @@ sSong502_Part8: @ 0x088E3C66
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8E4182, 0x2
-	.globl sSongHeader_502
-sSongHeader_502: @ 0x088E4184
+	.globl mus_rg_credits
+mus_rg_credits: @ 0x088E4184
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862E6A0  @ tone
 	.4byte sSong502_Part0, sSong502_Part1, sSong502_Part2, sSong502_Part3, sSong502_Part4, sSong502_Part5, sSong502_Part6, sSong502_Part7, sSong502_Part8  @ parts

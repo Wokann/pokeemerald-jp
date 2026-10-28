@@ -24,8 +24,8 @@ sSong78_Part0: @ 0x08869550
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869572, 0x2
-	.globl sSongHeader_78
-sSongHeader_78: @ 0x08869574
+	.globl se_mud_ball
+se_mud_ball: @ 0x08869574
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong78_Part0  @ parts

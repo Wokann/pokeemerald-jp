@@ -5387,8 +5387,8 @@ sSong433_Part9: @ 0x088A9A8E
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A9C87, 0x1
-	.globl sSongHeader_433
-sSongHeader_433: @ 0x088A9C88
+	.globl mus_slateport
+mus_slateport: @ 0x088A9C88
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08614B94  @ tone
+	.4byte voicegroup_slateport  @ tone
 	.4byte 0x088A7E7C, 0x088A7FF9, 0x088A82FE, 0x088A867D, 0x088A8835, 0x088A88F4, 0x088A8E37, 0x088A9343, 0x088A9730, 0x088A9A8E  @ parts

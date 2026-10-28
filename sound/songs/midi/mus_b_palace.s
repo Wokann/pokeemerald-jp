@@ -3894,8 +3894,8 @@ sSong463_Part8: @ 0x088C0596
 	.byte	W12
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_463
-sSongHeader_463: @ 0x088C05E4
+	.globl mus_b_palace
+mus_b_palace: @ 0x088C05E4
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861EB90  @ tone
 	.4byte sSong463_Part0, sSong463_Part1, sSong463_Part2, sSong463_Part3, sSong463_Part4, sSong463_Part5, sSong463_Part6, sSong463_Part7, sSong463_Part8  @ parts

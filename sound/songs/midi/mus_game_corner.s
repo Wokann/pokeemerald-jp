@@ -4154,8 +4154,8 @@ sSong426_Part9: @ 0x088A2F81
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A310A, 0x2
-	.globl sSongHeader_426
-sSongHeader_426: @ 0x088A310C
+	.globl mus_game_corner
+mus_game_corner: @ 0x088A310C
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08612194  @ tone
+	.4byte voicegroup_game_corner  @ tone
 	.4byte 0x088A1A14, 0x088A1BED, 0x088A1D97, 0x088A1F4A, 0x088A23B8, 0x088A27BB, 0x088A29E4, 0x088A2C16, 0x088A2CC2, 0x088A2F81  @ parts

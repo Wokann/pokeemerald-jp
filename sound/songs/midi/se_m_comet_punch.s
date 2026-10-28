@@ -44,8 +44,8 @@ sSong139_Part1: @ 0x0886AD26
 	.byte	W18
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86AD3D, 0x3
-	.globl sSongHeader_139
-sSongHeader_139: @ 0x0886AD40
+	.globl se_m_comet_punch
+se_m_comet_punch: @ 0x0886AD40
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886ACFC, 0x0886AD26  @ parts

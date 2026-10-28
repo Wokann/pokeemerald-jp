@@ -81,8 +81,8 @@ sSong181_Part1: @ 0x0886C306
 	.byte	W02
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86C323, 0x1
-	.globl sSongHeader_181
-sSongHeader_181: @ 0x0886C324
+	.globl se_m_screech
+se_m_screech: @ 0x0886C324
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886C2B4, 0x0886C306  @ parts

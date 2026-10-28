@@ -1414,8 +1414,8 @@ sSong504_Part5: @ 0x088E5338
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8E5479, 0x3
-	.globl sSongHeader_504
-sSongHeader_504: @ 0x088E547C
+	.globl mus_rg_route24
+mus_rg_route24: @ 0x088E547C
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862F0FC  @ tone
 	.4byte sSong504_Part0, sSong504_Part1, sSong504_Part2, sSong504_Part3, sSong504_Part4, sSong504_Part5  @ parts

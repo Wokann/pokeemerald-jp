@@ -2691,8 +2691,8 @@ sSong547_Part8: @ 0x089064D7
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x90653D, 0x3
-	.globl sSongHeader_547
-sSongHeader_547: @ 0x08906540
+	.globl mus_rg_sevii_123
+mus_rg_sevii_123: @ 0x08906540
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08636A28  @ tone
 	.4byte sSong547_Part0, sSong547_Part1, sSong547_Part2, sSong547_Part3, sSong547_Part4, sSong547_Part5, sSong547_Part6, sSong547_Part7, sSong547_Part8  @ parts

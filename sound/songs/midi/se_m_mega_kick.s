@@ -122,8 +122,8 @@ sSong140_Part0: @ 0x0886AD50
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86AE0A, 0x2
-	.globl sSongHeader_140
-sSongHeader_140: @ 0x0886AE0C
+	.globl se_m_mega_kick
+se_m_mega_kick: @ 0x0886AE0C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong140_Part0  @ parts

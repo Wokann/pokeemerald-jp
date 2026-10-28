@@ -149,8 +149,8 @@ sSong150_Part1: @ 0x0886B33D
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B35E, 0x2
-	.globl sSongHeader_150
-sSongHeader_150: @ 0x0886B360
+	.globl se_m_sacred_fire2
+se_m_sacred_fire2: @ 0x0886B360
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B290, 0x0886B33D  @ parts

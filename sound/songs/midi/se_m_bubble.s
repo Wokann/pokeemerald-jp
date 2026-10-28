@@ -28,8 +28,8 @@ sSong124_Part0: @ 0x0886A798
 	.byte	N03, En3
 	.byte	W15
 	.byte	FINE
-	.globl sSongHeader_124
-sSongHeader_124: @ 0x0886A7C0
+	.globl se_m_bubble
+se_m_bubble: @ 0x0886A7C0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong124_Part0  @ parts

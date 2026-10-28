@@ -1271,8 +1271,8 @@ sSong383_Part6: @ 0x0887F9DD
 	.byte	W07
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_383
-sSongHeader_383: @ 0x0887FA44
+	.globl mus_birch_lab
+mus_birch_lab: @ 0x0887FA44
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08604C64  @ tone
+	.4byte voicegroup_birch_lab  @ tone
 	.4byte 0x0887F3BC, 0x0887F4D9, 0x0887F5A7, 0x0887F704, 0x0887F824, 0x0887F8F9, 0x0887F9DD  @ parts

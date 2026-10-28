@@ -87,8 +87,8 @@ sSong178_Part1: @ 0x0886C177
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86C191, 0x3
-	.globl sSongHeader_178
-sSongHeader_178: @ 0x0886C194
+	.globl se_m_explosion
+se_m_explosion: @ 0x0886C194
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886C118, 0x0886C177  @ parts

@@ -1876,8 +1876,8 @@ sSong386_Part8: @ 0x08881397
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8813CD, 0x3
-	.globl sSongHeader_386
-sSongHeader_386: @ 0x088813D0
+	.globl mus_cave_of_origin
+mus_cave_of_origin: @ 0x088813D0
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08605E34  @ tone
+	.4byte voicegroup_cave_of_origin  @ tone
 	.4byte 0x08880AD4, 0x08880C57, 0x08880CC0, 0x08880DA7, 0x08880F42, 0x08881128, 0x08881241, 0x088812EE, 0x08881397  @ parts

@@ -1227,8 +1227,8 @@ sSong428_Part8: @ 0x088A464A
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A46E5, 0x3
-	.globl sSongHeader_428
-sSongHeader_428: @ 0x088A46E8
+	.globl mus_safari_zone
+mus_safari_zone: @ 0x088A46E8
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08612D94  @ tone
+	.4byte voicegroup_safari_zone  @ tone
 	.4byte 0x088A3F88, 0x088A3FEF, 0x088A4044, 0x088A40C0, 0x088A429B, 0x088A4315, 0x088A43D8, 0x088A449B, 0x088A464A  @ parts

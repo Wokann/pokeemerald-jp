@@ -1578,8 +1578,8 @@ sSong512_Part5: @ 0x088F04C3
 	.byte	MOD , 0
 	.byte	VOL , 37
 	.byte	FINE
-	.globl sSongHeader_512
-sSongHeader_512: @ 0x088F0674
+	.globl mus_rg_pallet
+mus_rg_pallet: @ 0x088F0674
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08631D78  @ tone
 	.4byte sSong512_Part0, sSong512_Part1, sSong512_Part2, sSong512_Part3, sSong512_Part4, sSong512_Part5  @ parts

@@ -9094,8 +9094,8 @@ sSong413_Part9: @ 0x088986B1
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x898A7B, 0x1
-	.globl sSongHeader_413
-sSongHeader_413: @ 0x08898A7C
+	.globl mus_title
+mus_title: @ 0x08898A7C
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860D568  @ tone
+	.4byte voicegroup_title  @ tone
 	.4byte 0x08895CA4, 0x0889604F, 0x0889666A, 0x08896A58, 0x088970D2, 0x088972AC, 0x088979F5, 0x08897F68, 0x0889852C, 0x088986B1  @ parts

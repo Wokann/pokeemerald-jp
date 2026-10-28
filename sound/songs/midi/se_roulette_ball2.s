@@ -46,8 +46,8 @@ sSong93_Part0: @ 0x08869918
 	.byte	BEND , 18
 	.byte	W06
 	.byte	FINE
-	.globl sSongHeader_93
-sSongHeader_93: @ 0x08869960
+	.globl se_roulette_ball2
+se_roulette_ball2: @ 0x08869960
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong93_Part0  @ parts

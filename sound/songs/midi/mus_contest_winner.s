@@ -1166,8 +1166,8 @@ sSong439_Part7: @ 0x088AE9EB
 	.byte	W10
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_439
-sSongHeader_439: @ 0x088AEAB0
+	.globl mus_contest_winner
+mus_contest_winner: @ 0x088AEAB0
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861679C  @ tone
+	.4byte voicegroup_contest_winner  @ tone
 	.4byte 0x088AE4CC, 0x088AE53A, 0x088AE63D, 0x088AE6B3, 0x088AE7A5, 0x088AE888, 0x088AE910, 0x088AE9EB  @ parts

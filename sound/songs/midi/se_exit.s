@@ -32,8 +32,8 @@ sSong9_Part0: @ 0x08868520
 	.byte	W01
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_9
-sSongHeader_9: @ 0x08868548
+	.globl se_exit
+se_exit: @ 0x08868548
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong9_Part0  @ parts

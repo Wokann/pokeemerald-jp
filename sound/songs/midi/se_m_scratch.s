@@ -42,8 +42,8 @@ sSong155_Part0: @ 0x0886B4D8
 	.byte	W10
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B513, 0x1
-	.globl sSongHeader_155
-sSongHeader_155: @ 0x0886B514
+	.globl se_m_scratch
+se_m_scratch: @ 0x0886B514
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong155_Part0  @ parts

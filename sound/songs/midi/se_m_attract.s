@@ -95,8 +95,8 @@ sSong226_Part1: @ 0x0886E254
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86E28D, 0x3
-	.globl sSongHeader_226
-sSongHeader_226: @ 0x0886E290
+	.globl se_m_attract
+se_m_attract: @ 0x0886E290
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E208, 0x0886E254  @ parts

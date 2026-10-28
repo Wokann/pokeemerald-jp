@@ -73,8 +73,8 @@ sSong197_Part1: @ 0x0886CB75
 	.byte	Dn3
 	.byte	W05
 	.byte	FINE
-	.globl sSongHeader_197
-sSongHeader_197: @ 0x0886CB98
+	.globl se_m_snore
+se_m_snore: @ 0x0886CB98
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886CB40, 0x0886CB75  @ parts

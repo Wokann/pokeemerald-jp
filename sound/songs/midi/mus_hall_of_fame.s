@@ -2264,8 +2264,8 @@ sSong436_Part9: @ 0x088ACCD8
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8ACDD3, 0x1
-	.globl sSongHeader_436
-sSongHeader_436: @ 0x088ACDD4
+	.globl mus_hall_of_fame
+mus_hall_of_fame: @ 0x088ACDD4
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_086157AC  @ tone
+	.4byte voicegroup_hall_of_fame  @ tone
 	.4byte 0x088AC254, 0x088AC2D9, 0x088AC34C, 0x088AC3E1, 0x088AC570, 0x088AC799, 0x088AC978, 0x088ACB1B, 0x088ACB4E, 0x088ACCD8  @ parts

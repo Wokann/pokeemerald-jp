@@ -80,8 +80,8 @@ sSong206_Part1: @ 0x0886D239
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86D24B, 0x1
-	.globl sSongHeader_206
-sSongHeader_206: @ 0x0886D24C
+	.globl se_m_swift
+se_m_swift: @ 0x0886D24C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886D1CC, 0x0886D239  @ parts

@@ -1978,8 +1978,8 @@ sSong503_Part7: @ 0x088E4BD4
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8E4C09, 0x3
-	.globl sSongHeader_503
-sSongHeader_503: @ 0x088E4C0C
+	.globl mus_rg_route1
+mus_rg_route1: @ 0x088E4C0C
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862EAFC  @ tone
 	.4byte sSong503_Part0, sSong503_Part1, sSong503_Part2, sSong503_Part3, sSong503_Part4, sSong503_Part5, sSong503_Part6, sSong503_Part7  @ parts

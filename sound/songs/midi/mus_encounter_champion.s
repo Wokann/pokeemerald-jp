@@ -3273,8 +3273,8 @@ sSong454_Part9: @ 0x088B78E8
 	.byte	W11
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_454
-sSongHeader_454: @ 0x088B7A18
+	.globl mus_encounter_champion
+mus_encounter_champion: @ 0x088B7A18
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861C19C  @ tone
+	.4byte voicegroup_encounter_champion  @ tone
 	.4byte 0x088B695C, 0x088B6A93, 0x088B6D3A, 0x088B6FD5, 0x088B71B2, 0x088B7241, 0x088B73E6, 0x088B75C9, 0x088B76F8, 0x088B78E8  @ parts

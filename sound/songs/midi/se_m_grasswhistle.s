@@ -99,8 +99,8 @@ sSong231_Part1: @ 0x0886E567
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86E5AB, 0x1
-	.globl sSongHeader_231
-sSongHeader_231: @ 0x0886E5AC
+	.globl se_m_grasswhistle
+se_m_grasswhistle: @ 0x0886E5AC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E528, 0x0886E567  @ parts

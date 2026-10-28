@@ -144,8 +144,8 @@ sSong182_Part0: @ 0x0886C334
 	.byte	PAN , 70
 	.byte	W02
 	.byte	FINE
-	.globl sSongHeader_182
-sSongHeader_182: @ 0x0886C3EC
+	.globl se_m_bubble_beam
+se_m_bubble_beam: @ 0x0886C3EC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong182_Part0  @ parts

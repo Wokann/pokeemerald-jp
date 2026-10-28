@@ -2718,8 +2718,8 @@ sSong375_Part6: @ 0x0887CD0C
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x87CE76, 0x2
-	.globl sSongHeader_375
-sSongHeader_375: @ 0x0887CE78
+	.globl mus_oceanic_museum
+mus_oceanic_museum: @ 0x0887CE78
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08602264  @ tone
+	.4byte voicegroup_oceanic_museum  @ tone
 	.4byte 0x0887C044, 0x0887C3FE, 0x0887C536, 0x0887C6E5, 0x0887C8D4, 0x0887CAAC, 0x0887CD0C  @ parts

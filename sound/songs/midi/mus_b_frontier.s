@@ -3931,8 +3931,8 @@ sSong457_Part8: @ 0x088BB5C1
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8BB90A, 0x2
-	.globl sSongHeader_457
-sSongHeader_457: @ 0x088BB90C
+	.globl mus_b_frontier
+mus_b_frontier: @ 0x088BB90C
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861D09C  @ tone
 	.4byte sSong457_Part0, sSong457_Part1, sSong457_Part2, sSong457_Part3, sSong457_Part4, sSong457_Part5, sSong457_Part6, sSong457_Part7, sSong457_Part8  @ parts

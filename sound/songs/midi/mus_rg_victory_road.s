@@ -2125,8 +2125,8 @@ sSong507_Part7: @ 0x088E7B8F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8E7E6B, 0x1
-	.globl sSongHeader_507
-sSongHeader_507: @ 0x088E7E6C
+	.globl mus_rg_victory_road
+mus_rg_victory_road: @ 0x088E7E6C
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0863011C  @ tone
 	.4byte sSong507_Part0, sSong507_Part1, sSong507_Part2, sSong507_Part3, sSong507_Part4, sSong507_Part5, sSong507_Part6, sSong507_Part7  @ parts

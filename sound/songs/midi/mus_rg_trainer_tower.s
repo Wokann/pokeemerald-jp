@@ -1850,8 +1850,8 @@ sSong556_Part6: @ 0x0890E1A2
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x90E39D, 0x3
-	.globl sSongHeader_556
-sSongHeader_556: @ 0x0890E3A0
+	.globl mus_rg_trainer_tower
+mus_rg_trainer_tower: @ 0x0890E3A0
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08629A74  @ tone
 	.4byte sSong556_Part0, sSong556_Part1, sSong556_Part2, sSong556_Part3, sSong556_Part4, sSong556_Part5, sSong556_Part6  @ parts

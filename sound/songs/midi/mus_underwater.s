@@ -3958,8 +3958,8 @@ sSong411_Part9: @ 0x088949E2
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x894AEA, 0x2
-	.globl sSongHeader_411
-sSongHeader_411: @ 0x08894AEC
+	.globl mus_underwater
+mus_underwater: @ 0x08894AEC
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860C968  @ tone
+	.4byte voicegroup_underwater  @ tone
 	.4byte 0x0889350C, 0x08893880, 0x0889394D, 0x08893B42, 0x08893BDB, 0x08893E52, 0x088941BA, 0x088944BB, 0x08894817, 0x088949E2  @ parts

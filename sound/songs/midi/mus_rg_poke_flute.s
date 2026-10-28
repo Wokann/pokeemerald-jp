@@ -274,8 +274,8 @@ sSong550_Part1: @ 0x08908589
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x908659, 0x3
-	.globl sSongHeader_550
-sSongHeader_550: @ 0x0890865C
+	.globl mus_rg_poke_flute
+mus_rg_poke_flute: @ 0x0890865C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08633DF4  @ tone
 	.4byte sSong550_Part0, sSong550_Part1  @ parts

@@ -67,8 +67,8 @@ sSong73_Part1: @ 0x0886943D
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869462, 0x2
-	.globl sSongHeader_73
-sSongHeader_73: @ 0x08869464
+	.globl se_ding_dong
+se_ding_dong: @ 0x08869464
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x08869414, 0x0886943D  @ parts

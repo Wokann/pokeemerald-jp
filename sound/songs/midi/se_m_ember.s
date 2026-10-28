@@ -32,8 +32,8 @@ sSong151_Part0: @ 0x0886B370
 	.byte	VOL , 34
 	.byte	W15
 	.byte	FINE
-	.globl sSongHeader_151
-sSongHeader_151: @ 0x0886B39C
+	.globl se_m_ember
+se_m_ember: @ 0x0886B39C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong151_Part0  @ parts

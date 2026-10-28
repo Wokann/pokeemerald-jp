@@ -40,8 +40,8 @@ sSong89_Part1: @ 0x08869856
 	.byte	EOT
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86986A, 0x2
-	.globl sSongHeader_89
-sSongHeader_89: @ 0x0886986C
+	.globl se_elevator
+se_elevator: @ 0x0886986C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886983C, 0x08869856  @ parts

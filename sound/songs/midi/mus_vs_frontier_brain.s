@@ -7948,8 +7948,8 @@ sSong471_Part9: @ 0x088C95C9
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8C97A5, 0x3
-	.globl sSongHeader_471
-sSongHeader_471: @ 0x088C97A8
+	.globl mus_vs_frontier_brain
+mus_vs_frontier_brain: @ 0x088C97A8
 	.byte 0x0A, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08621374  @ tone
 	.4byte sSong471_Part0, sSong471_Part1, sSong471_Part2, sSong471_Part3, sSong471_Part4, sSong471_Part5, sSong471_Part6, sSong471_Part7, sSong471_Part8, sSong471_Part9  @ parts

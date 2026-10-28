@@ -881,8 +881,8 @@ sSong385_Part7: @ 0x08880A38
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x880AAA, 0x2
-	.globl sSongHeader_385
-sSongHeader_385: @ 0x08880AAC
+	.globl mus_encounter_swimmer
+mus_encounter_swimmer: @ 0x08880AAC
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08605834  @ tone
+	.4byte voicegroup_encounter_swimmer  @ tone
 	.4byte 0x088805F8, 0x0888068D, 0x088806DF, 0x0888077C, 0x08880882, 0x0888098C, 0x088809BF, 0x08880A38  @ parts

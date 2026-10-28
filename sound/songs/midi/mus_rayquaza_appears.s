@@ -819,8 +819,8 @@ sSong464_Part6: @ 0x088C09D3
 	.byte	W48
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8C0A49, 0x3
-	.globl sSongHeader_464
-sSongHeader_464: @ 0x088C0A4C
+	.globl mus_rayquaza_appears
+mus_rayquaza_appears: @ 0x088C0A4C
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861F190  @ tone
 	.4byte sSong464_Part0, sSong464_Part1, sSong464_Part2, sSong464_Part3, sSong464_Part4, sSong464_Part5, sSong464_Part6  @ parts

@@ -132,8 +132,8 @@ sSong267_Part2: @ 0x0886FBD7
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86FC03, 0x1
-	.globl sSongHeader_267
-sSongHeader_267: @ 0x0886FC04
+	.globl se_pike_curtain_close
+se_pike_curtain_close: @ 0x0886FC04
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte 0x0886FB40, 0x0886FBBB, 0x0886FBD7  @ parts

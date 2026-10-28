@@ -2089,8 +2089,8 @@ sSong373_Part5: @ 0x0887B045
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x87B171, 0x3
-	.globl sSongHeader_373
-sSongHeader_373: @ 0x0887B174
+	.globl mus_lilycove_museum
+mus_lilycove_museum: @ 0x0887B174
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_086018E0  @ tone
+	.4byte voicegroup_lilycove_museum  @ tone
 	.4byte 0x0887A6D4, 0x0887AA29, 0x0887AB83, 0x0887ADA7, 0x0887AF17, 0x0887B045  @ parts

@@ -86,8 +86,8 @@ sSong535_Part0: @ 0x088FDC90
 	.byte	W15
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_535
-sSongHeader_535: @ 0x088FDCF8
+	.globl mus_rg_new_game_instruct
+mus_rg_new_game_instruct: @ 0x088FDCF8
 	.byte 0x01, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086390E0  @ tone
 	.4byte sSong535_Part0  @ parts

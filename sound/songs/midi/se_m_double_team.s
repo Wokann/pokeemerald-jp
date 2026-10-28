@@ -42,8 +42,8 @@ sSong135_Part0: @ 0x0886AB7C
 	.byte	BEND , 12
 	.byte	W08
 	.byte	FINE
-	.globl sSongHeader_135
-sSongHeader_135: @ 0x0886ABBC
+	.globl se_m_double_team
+se_m_double_team: @ 0x0886ABBC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong135_Part0  @ parts

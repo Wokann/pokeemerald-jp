@@ -80,8 +80,8 @@ sSong113_Part1: @ 0x0886A39B
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86A3CF, 0x1
-	.globl sSongHeader_113
-sSongHeader_113: @ 0x0886A3D0
+	.globl se_egg_hatch
+se_egg_hatch: @ 0x0886A3D0
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886A354, 0x0886A39B  @ parts

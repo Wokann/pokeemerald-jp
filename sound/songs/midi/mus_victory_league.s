@@ -2287,8 +2287,8 @@ sSong355_Part7: @ 0x08872DCB
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x872ED5, 0x3
-	.globl sSongHeader_355
-sSongHeader_355: @ 0x08872ED8
+	.globl mus_victory_league
+mus_victory_league: @ 0x08872ED8
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08603CA4  @ tone
+	.4byte voicegroup_victory_league  @ tone
 	.4byte 0x0887236C, 0x08872551, 0x08872706, 0x0887280F, 0x088729EA, 0x08872BB3, 0x08872CDF, 0x08872DCB  @ parts

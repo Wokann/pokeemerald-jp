@@ -3416,8 +3416,8 @@ sSong510_Part7: @ 0x088ED5D6
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8ED63D, 0x3
-	.globl sSongHeader_510
-sSongHeader_510: @ 0x088ED640
+	.globl mus_rg_vs_wild
+mus_rg_vs_wild: @ 0x088ED640
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08631178  @ tone
 	.4byte sSong510_Part0, sSong510_Part1, sSong510_Part2, sSong510_Part3, sSong510_Part4, sSong510_Part5, sSong510_Part6, sSong510_Part7  @ parts

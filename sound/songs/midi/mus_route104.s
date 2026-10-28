@@ -3638,8 +3638,8 @@ sSong401_Part9: @ 0x08888890
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x888A71, 0x3
-	.globl sSongHeader_401
-sSongHeader_401: @ 0x08888A74
+	.globl mus_route104
+mus_route104: @ 0x08888A74
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_086091D0  @ tone
+	.4byte voicegroup_route104  @ tone
 	.4byte 0x088876D8, 0x088879FF, 0x08887B20, 0x08887C6A, 0x08887FA7, 0x0888807D, 0x08888206, 0x088884EF, 0x0888869F, 0x08888890  @ parts

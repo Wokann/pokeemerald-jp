@@ -1845,8 +1845,8 @@ sSong515_Part9: @ 0x088F21D4
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8F21F9, 0x3
-	.globl sSongHeader_515
-sSongHeader_515: @ 0x088F21FC
+	.globl mus_rg_poke_center
+mus_rg_poke_center: @ 0x088F21FC
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08632D98  @ tone
 	.4byte sSong515_Part0, sSong515_Part1, sSong515_Part2, sSong515_Part3, sSong515_Part4, sSong515_Part5, sSong515_Part6, sSong515_Part7, sSong515_Part8, sSong515_Part9  @ parts

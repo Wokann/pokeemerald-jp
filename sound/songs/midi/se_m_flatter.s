@@ -39,8 +39,8 @@ sSong229_Part0: @ 0x0886E3E0
 	.byte	W02
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86E41A, 0x2
-	.globl sSongHeader_229
-sSongHeader_229: @ 0x0886E41C
+	.globl se_m_flatter
+se_m_flatter: @ 0x0886E41C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong229_Part0  @ parts

@@ -174,8 +174,8 @@ sSong460_Part4: @ 0x088BC9A3
 	.byte	W02
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_460
-sSongHeader_460: @ 0x088BC9C8
+	.globl mus_register_match_call
+mus_register_match_call: @ 0x088BC9C8
 	.byte 0x05, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861DBAC  @ tone
 	.4byte sSong460_Part0, sSong460_Part1, sSong460_Part2, sSong460_Part3, sSong460_Part4  @ parts

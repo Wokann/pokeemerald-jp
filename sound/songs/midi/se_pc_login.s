@@ -20,8 +20,8 @@ sSong2_Part0: @ 0x0886840C
 	.byte	N04, Cn4, 24
 	.byte	W04
 	.byte	FINE
-	.globl sSongHeader_2
-sSongHeader_2: @ 0x0886842C
+	.globl se_pc_login
+se_pc_login: @ 0x0886842C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong2_Part0  @ parts

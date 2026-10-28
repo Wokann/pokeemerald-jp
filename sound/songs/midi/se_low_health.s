@@ -22,8 +22,8 @@ sSong90_Part0: @ 0x0886987C
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86989B, 0x1
-	.globl sSongHeader_90
-sSongHeader_90: @ 0x0886989C
+	.globl se_low_health
+se_low_health: @ 0x0886989C
 	.byte 0x01, 0x00, 0x03, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong90_Part0  @ parts

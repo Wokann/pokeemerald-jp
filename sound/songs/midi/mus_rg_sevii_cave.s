@@ -3668,8 +3668,8 @@ sSong543_Part6: @ 0x08903012
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x90307D, 0x3
-	.globl sSongHeader_543
-sSongHeader_543: @ 0x08903080
+	.globl mus_rg_sevii_cave
+mus_rg_sevii_cave: @ 0x08903080
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862DCB0  @ tone
 	.4byte sSong543_Part0, sSong543_Part1, sSong543_Part2, sSong543_Part3, sSong543_Part4, sSong543_Part5, sSong543_Part6  @ parts

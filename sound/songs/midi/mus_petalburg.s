@@ -1872,8 +1872,8 @@ sSong362_Part7: @ 0x088771BC
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8772F7, 0x1
-	.globl sSongHeader_362
-sSongHeader_362: @ 0x088772F8
+	.globl mus_petalburg
+mus_petalburg: @ 0x088772F8
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08600344  @ tone
+	.4byte voicegroup_petalburg  @ tone
 	.4byte 0x0887685C, 0x088769EA, 0x08876ADD, 0x08876BC1, 0x08876D51, 0x0887700C, 0x088770BD, 0x088771BC  @ parts

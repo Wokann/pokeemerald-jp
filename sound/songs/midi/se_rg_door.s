@@ -53,8 +53,8 @@ sSong248_Part1: @ 0x0886F3FF
 	.byte	W09
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F429, 0x3
-	.globl sSongHeader_248
-sSongHeader_248: @ 0x0886F42C
+	.globl se_rg_door
+se_rg_door: @ 0x0886F42C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte 0x0886F3E4, 0x0886F3FF  @ parts

@@ -67,8 +67,8 @@ sSong242_Part1: @ 0x0886EECD
 	.byte	W04
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86EEEB, 0x1
-	.globl sSongHeader_242
-sSongHeader_242: @ 0x0886EEEC
+	.globl se_m_hail
+se_m_hail: @ 0x0886EEEC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886EE88, 0x0886EECD  @ parts

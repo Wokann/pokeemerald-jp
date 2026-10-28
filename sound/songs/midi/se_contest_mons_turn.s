@@ -26,8 +26,8 @@ sSong101_Part0: @ 0x08869B88
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869BA7, 0x1
-	.globl sSongHeader_101
-sSongHeader_101: @ 0x08869BA8
+	.globl se_contest_mons_turn
+se_contest_mons_turn: @ 0x08869BA8
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong101_Part0  @ parts

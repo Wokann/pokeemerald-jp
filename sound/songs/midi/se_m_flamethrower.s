@@ -145,8 +145,8 @@ sSong146_Part1: @ 0x0886B0DB
 	.byte	W24
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_146
-sSongHeader_146: @ 0x0886B0F8
+	.globl se_m_flamethrower
+se_m_flamethrower: @ 0x0886B0F8
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B034, 0x0886B0DB  @ parts

@@ -1845,8 +1845,8 @@ sSong540_Part9: @ 0x089008A8
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x9008CD, 0x3
-	.globl sSongHeader_540
-sSongHeader_540: @ 0x089008D0
+	.globl mus_rg_net_center
+mus_rg_net_center: @ 0x089008D0
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08632D98  @ tone
 	.4byte sSong540_Part0, sSong540_Part1, sSong540_Part2, sSong540_Part3, sSong540_Part4, sSong540_Part5, sSong540_Part6, sSong540_Part7, sSong540_Part8, sSong540_Part9  @ parts

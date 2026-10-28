@@ -1096,8 +1096,8 @@ sSong397_Part4: @ 0x08884BC5
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x884CBD, 0x3
-	.globl sSongHeader_397
-sSongHeader_397: @ 0x08884CC0
+	.globl mus_encounter_rich
+mus_encounter_rich: @ 0x08884CC0
 	.byte 0x05, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08607E38  @ tone
+	.4byte voicegroup_encounter_rich  @ tone
 	.4byte 0x08884698, 0x08884857, 0x088849CC, 0x08884AB8, 0x08884BC5  @ parts

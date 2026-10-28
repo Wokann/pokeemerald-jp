@@ -32,8 +32,8 @@ sSong46_Part0: @ 0x08868D54
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x868D86, 0x2
-	.globl sSongHeader_46
-sSongHeader_46: @ 0x08868D88
+	.globl se_warp_out
+se_warp_out: @ 0x08868D88
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong46_Part0  @ parts

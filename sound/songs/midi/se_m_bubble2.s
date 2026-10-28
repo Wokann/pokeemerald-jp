@@ -29,8 +29,8 @@ sSong125_Part1: @ 0x0886A7E5
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86A7F2, 0x2
-	.globl sSongHeader_125
-sSongHeader_125: @ 0x0886A7F4
+	.globl se_m_bubble2
+se_m_bubble2: @ 0x0886A7F4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886A7CC, 0x0886A7E5  @ parts

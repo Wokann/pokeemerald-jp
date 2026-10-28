@@ -174,8 +174,8 @@ sSong218_Part0: @ 0x0886DC50
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86DD5F, 0x1
-	.globl sSongHeader_218
-sSongHeader_218: @ 0x0886DD60
+	.globl se_m_acid_armor
+se_m_acid_armor: @ 0x0886DD60
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong218_Part0  @ parts

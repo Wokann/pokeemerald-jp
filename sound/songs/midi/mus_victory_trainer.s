@@ -3139,8 +3139,8 @@ sSong412_Part8: @ 0x08895B99
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x895C77, 0x1
-	.globl sSongHeader_412
-sSongHeader_412: @ 0x08895C78
+	.globl mus_victory_trainer
+mus_victory_trainer: @ 0x08895C78
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860CF68  @ tone
+	.4byte voicegroup_victory_trainer  @ tone
 	.4byte 0x08894B1C, 0x08894BA0, 0x08894F21, 0x08895191, 0x088954EE, 0x08895624, 0x0889586B, 0x08895AB0, 0x08895B99  @ parts

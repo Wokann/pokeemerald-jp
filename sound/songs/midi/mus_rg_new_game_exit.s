@@ -109,8 +109,8 @@ sSong537_Part6: @ 0x088FDF62
 	.byte	W24
 	.byte	W48
 	.byte	FINE
-	.globl sSongHeader_537
-sSongHeader_537: @ 0x088FDF84
+	.globl mus_rg_new_game_exit
+mus_rg_new_game_exit: @ 0x088FDF84
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086390E0  @ tone
 	.4byte sSong537_Part0, sSong537_Part1, sSong537_Part2, sSong537_Part3, sSong537_Part4, sSong537_Part5, sSong537_Part6  @ parts

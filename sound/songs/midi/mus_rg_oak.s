@@ -1625,8 +1625,8 @@ sSong514_Part8: @ 0x088F1753
 	.byte	W15
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_514
-sSongHeader_514: @ 0x088F179C
+	.globl mus_rg_oak
+mus_rg_oak: @ 0x088F179C
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08632798  @ tone
 	.4byte sSong514_Part0, sSong514_Part1, sSong514_Part2, sSong514_Part3, sSong514_Part4, sSong514_Part5, sSong514_Part6, sSong514_Part7, sSong514_Part8  @ parts

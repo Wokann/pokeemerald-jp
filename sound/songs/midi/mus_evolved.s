@@ -304,8 +304,8 @@ sSong371_Part6: @ 0x0887A4E1
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x87A521, 0x3
-	.globl sSongHeader_371
-sSongHeader_371: @ 0x0887A524
+	.globl mus_evolved
+mus_evolved: @ 0x0887A524
 	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x0887A3A8, 0x0887A3E8, 0x0887A429, 0x0887A449, 0x0887A484, 0x0887A4C2, 0x0887A4E1  @ parts

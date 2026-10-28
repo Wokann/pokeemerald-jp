@@ -68,8 +68,8 @@ sSong212_Part0: @ 0x0886D770
 	.byte	W02
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86D7DE, 0x2
-	.globl sSongHeader_212
-sSongHeader_212: @ 0x0886D7E0
+	.globl se_m_charm
+se_m_charm: @ 0x0886D7E0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong212_Part0  @ parts

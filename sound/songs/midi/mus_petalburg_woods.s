@@ -1606,8 +1606,8 @@ sSong366_Part8: @ 0x08879D61
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x879DA6, 0x2
-	.globl sSongHeader_366
-sSongHeader_366: @ 0x08879DA8
+	.globl mus_petalburg_woods
+mus_petalburg_woods: @ 0x08879DA8
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08600EE4  @ tone
+	.4byte voicegroup_petalburg_woods  @ tone
 	.4byte 0x088794A8, 0x08879532, 0x08879611, 0x0887999D, 0x08879A6E, 0x08879B68, 0x08879C0B, 0x08879CCC, 0x08879D61  @ parts

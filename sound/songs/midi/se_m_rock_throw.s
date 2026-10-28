@@ -36,8 +36,8 @@ sSong131_Part0: @ 0x0886AA38
 	.byte	BEND , 23
 	.byte	W24
 	.byte	FINE
-	.globl sSongHeader_131
-sSongHeader_131: @ 0x0886AA74
+	.globl se_m_rock_throw
+se_m_rock_throw: @ 0x0886AA74
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong131_Part0  @ parts

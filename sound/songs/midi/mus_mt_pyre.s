@@ -2469,8 +2469,8 @@ sSong432_Part9: @ 0x088A7C34
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A7E4B, 0x1
-	.globl sSongHeader_432
-sSongHeader_432: @ 0x088A7E4C
+	.globl mus_mt_pyre
+mus_mt_pyre: @ 0x088A7E4C
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08614594  @ tone
+	.4byte voicegroup_mt_pyre  @ tone
 	.4byte 0x088A71C8, 0x088A72E9, 0x088A73F7, 0x088A74E8, 0x088A767D, 0x088A77E7, 0x088A799A, 0x088A7B4D, 0x088A7B73, 0x088A7C34  @ parts

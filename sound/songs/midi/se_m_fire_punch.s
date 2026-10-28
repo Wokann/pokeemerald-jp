@@ -107,8 +107,8 @@ sSong147_Part1: @ 0x0886B17E
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B19A, 0x2
-	.globl sSongHeader_147
-sSongHeader_147: @ 0x0886B19C
+	.globl se_m_fire_punch
+se_m_fire_punch: @ 0x0886B19C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B108, 0x0886B17E  @ parts

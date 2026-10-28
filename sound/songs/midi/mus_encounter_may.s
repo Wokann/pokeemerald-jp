@@ -2557,8 +2557,8 @@ sSong415_Part9: @ 0x0889A76F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x89A919, 0x3
-	.globl sSongHeader_415
-sSongHeader_415: @ 0x0889A91C
+	.globl mus_encounter_may
+mus_encounter_may: @ 0x0889A91C
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860DF94  @ tone
+	.4byte voicegroup_encounter_may  @ tone
 	.4byte 0x08899C48, 0x08899E2C, 0x08899EA3, 0x0889A091, 0x0889A1BD, 0x0889A210, 0x0889A2DB, 0x0889A48B, 0x0889A64F, 0x0889A76F  @ parts

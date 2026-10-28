@@ -571,8 +571,8 @@ sSong356_Part2: @ 0x088730F0
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8731BB, 0x1
-	.globl sSongHeader_356
-sSongHeader_356: @ 0x088731BC
+	.globl mus_c_comm_center
+mus_c_comm_center: @ 0x088731BC
 	.byte 0x03, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte voicegroup_dummy  @ tone
 	.4byte 0x08872F00, 0x08873012, 0x088730F0  @ parts

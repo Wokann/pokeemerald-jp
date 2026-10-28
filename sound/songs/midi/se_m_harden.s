@@ -42,8 +42,8 @@ sSong120_Part1: @ 0x0886A5DF
 	.byte	N17, Gs4, 96
 	.byte	W20
 	.byte	FINE
-	.globl sSongHeader_120
-sSongHeader_120: @ 0x0886A5F0
+	.globl se_m_harden
+se_m_harden: @ 0x0886A5F0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886A5B8, 0x0886A5DF  @ parts

@@ -11,3 +11,8 @@ sound/%.bin: sound/%.wav | tools
 	$(WAV2AGB) -b $< $@
 
 $(OBJ_DIR)/data/sound_data.o: sound/direct_sound_data.inc $(JP_DIRECT_SOUND_ASSETS) audio_rules.mk
+
+JP_VOICEGROUP_INCLUDES := $(wildcard sound/voicegroups/*.inc sound/voicegroups/drumsets/*.inc sound/voicegroups/keysplits/*.inc)
+JP_PROGRAMMABLE_WAVES := $(wildcard sound/programmable_wave_samples/*.pcm)
+
+$(OBJ_DIR)/data/sound_data.o: asm/macros/m4a.inc asm/macros/music_voice.inc sound/voice_groups.inc sound/cry_tables.inc sound/keysplit_tables.inc sound/programmable_wave_data.inc sound/music_player_table.inc sound/song_table.inc $(JP_VOICEGROUP_INCLUDES) $(JP_PROGRAMMABLE_WAVES)

@@ -46,8 +46,8 @@ sSong77_Part0: @ 0x0886950C
 	.byte	20
 	.byte	W02
 	.byte	FINE
-	.globl sSongHeader_77
-sSongHeader_77: @ 0x08869544
+	.globl se_breakable_door
+se_breakable_door: @ 0x08869544
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong77_Part0  @ parts

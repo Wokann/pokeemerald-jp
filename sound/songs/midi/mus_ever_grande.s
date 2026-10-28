@@ -2809,8 +2809,8 @@ sSong422_Part7: @ 0x088A0446
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A05DB, 0x1
-	.globl sSongHeader_422
-sSongHeader_422: @ 0x088A05DC
+	.globl mus_ever_grande
+mus_ever_grande: @ 0x088A05DC
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08610994  @ tone
+	.4byte voicegroup_ever_grande  @ tone
 	.4byte 0x0889F804, 0x0889FA31, 0x0889FBC2, 0x0889FE75, 0x088A0080, 0x088A01BD, 0x088A0300, 0x088A0446  @ parts

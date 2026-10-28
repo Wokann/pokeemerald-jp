@@ -544,8 +544,8 @@ sSong444_Part2: @ 0x088B1989
 	.byte	MOD , 0
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B1A32, 0x2
-	.globl sSongHeader_444
-sSongHeader_444: @ 0x088B1A34
+	.globl mus_weather_groudon
+mus_weather_groudon: @ 0x088B1A34
 	.byte 0x03, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861859C  @ tone
+	.4byte voicegroup_weather_groudon  @ tone
 	.4byte 0x088B1778, 0x088B184D, 0x088B1989  @ parts

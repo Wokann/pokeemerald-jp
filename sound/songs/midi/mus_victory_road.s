@@ -4001,8 +4001,8 @@ sSong429_Part9: @ 0x088A59FB
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8A5A82, 0x2
-	.globl sSongHeader_429
-sSongHeader_429: @ 0x088A5A84
+	.globl mus_victory_road
+mus_victory_road: @ 0x088A5A84
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08613394  @ tone
+	.4byte voicegroup_victory_road  @ tone
 	.4byte 0x088A4714, 0x088A486F, 0x088A4A35, 0x088A4CC3, 0x088A4F52, 0x088A5235, 0x088A550A, 0x088A57D6, 0x088A5840, 0x088A59FB  @ parts

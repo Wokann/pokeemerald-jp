@@ -5600,8 +5600,8 @@ sSong469_Part8: @ 0x088C680D
 	.byte	W12
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_469
-sSongHeader_469: @ 0x088C6968
+	.globl mus_b_factory
+mus_b_factory: @ 0x088C6968
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08620774  @ tone
 	.4byte sSong469_Part0, sSong469_Part1, sSong469_Part2, sSong469_Part3, sSong469_Part4, sSong469_Part5, sSong469_Part6, sSong469_Part7, sSong469_Part8  @ parts

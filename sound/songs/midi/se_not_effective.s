@@ -25,8 +25,8 @@ sSong12_Part1: @ 0x088685A5
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8685B2, 0x2
-	.globl sSongHeader_12
-sSongHeader_12: @ 0x088685B4
+	.globl se_not_effective
+se_not_effective: @ 0x088685B4
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x08868594, 0x088685A5  @ parts

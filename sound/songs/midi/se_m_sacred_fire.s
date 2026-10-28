@@ -74,8 +74,8 @@ sSong149_Part1: @ 0x0886B260
 	.byte	W02
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B27E, 0x2
-	.globl sSongHeader_149
-sSongHeader_149: @ 0x0886B280
+	.globl se_m_sacred_fire
+se_m_sacred_fire: @ 0x0886B280
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B218, 0x0886B260  @ parts

@@ -181,8 +181,8 @@ sSong391_Part4: @ 0x08881C63
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x881C7B, 0x1
-	.globl sSongHeader_391
-sSongHeader_391: @ 0x08881C7C
+	.globl mus_too_bad
+mus_too_bad: @ 0x08881C7C
 	.byte 0x05, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x08881BA4, 0x08881BE7, 0x08881C1C, 0x08881C46, 0x08881C63  @ parts

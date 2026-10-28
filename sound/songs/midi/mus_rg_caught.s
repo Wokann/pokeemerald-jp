@@ -839,8 +839,8 @@ sSong534_Part6: @ 0x088FDBC6
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FDC6A, 0x2
-	.globl sSongHeader_534
-sSongHeader_534: @ 0x088FDC6C
+	.globl mus_rg_caught
+mus_rg_caught: @ 0x088FDC6C
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08635BF4  @ tone
 	.4byte sSong534_Part0, sSong534_Part1, sSong534_Part2, sSong534_Part3, sSong534_Part4, sSong534_Part5, sSong534_Part6  @ parts

@@ -553,8 +553,8 @@ sSong531_Part7: @ 0x088FCDA7
 	.byte	W72
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FCDBD, 0x3
-	.globl sSongHeader_531
-sSongHeader_531: @ 0x088FCDC0
+	.globl mus_rg_caught_intro
+mus_rg_caught_intro: @ 0x088FCDC0
 	.byte 0x08, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0863848C  @ tone
 	.4byte sSong531_Part0, sSong531_Part1, sSong531_Part2, sSong531_Part3, sSong531_Part4, sSong531_Part5, sSong531_Part6, sSong531_Part7  @ parts

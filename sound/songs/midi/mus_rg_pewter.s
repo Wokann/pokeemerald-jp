@@ -2691,8 +2691,8 @@ sSong526_Part8: @ 0x088FB5D7
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FB63D, 0x3
-	.globl sSongHeader_526
-sSongHeader_526: @ 0x088FB640
+	.globl mus_rg_pewter
+mus_rg_pewter: @ 0x088FB640
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08636A28  @ tone
 	.4byte sSong526_Part0, sSong526_Part1, sSong526_Part2, sSong526_Part3, sSong526_Part4, sSong526_Part5, sSong526_Part6, sSong526_Part7, sSong526_Part8  @ parts

@@ -3139,8 +3139,8 @@ sSong522_Part8: @ 0x088F8435
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8F8513, 0x1
-	.globl sSongHeader_522
-sSongHeader_522: @ 0x088F8514
+	.globl mus_rg_victory_trainer
+mus_rg_victory_trainer: @ 0x088F8514
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086355F4  @ tone
 	.4byte sSong522_Part0, sSong522_Part1, sSong522_Part2, sSong522_Part3, sSong522_Part4, sSong522_Part5, sSong522_Part6, sSong522_Part7, sSong522_Part8  @ parts

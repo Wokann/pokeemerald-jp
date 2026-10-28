@@ -1814,8 +1814,8 @@ sSong363_Part6: @ 0x08877B94
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x877BE1, 0x3
-	.globl sSongHeader_363
-sSongHeader_363: @ 0x08877BE4
+	.globl mus_oldale
+mus_oldale: @ 0x08877BE4
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_086014E4  @ tone
+	.4byte voicegroup_oldale  @ tone
 	.4byte 0x08877320, 0x088774E8, 0x08877637, 0x088777F7, 0x08877920, 0x08877A89, 0x08877B94  @ parts

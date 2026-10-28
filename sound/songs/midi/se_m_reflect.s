@@ -236,8 +236,8 @@ sSong207_Part1: @ 0x0886D374
 	.byte	W05
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86D3D9, 0x3
-	.globl sSongHeader_207
-sSongHeader_207: @ 0x0886D3DC
+	.globl se_m_reflect
+se_m_reflect: @ 0x0886D3DC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886D25C, 0x0886D374  @ parts

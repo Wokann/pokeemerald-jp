@@ -1215,8 +1215,8 @@ sSong407_Part8: @ 0x08890EE7
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x890FA3, 0x1
-	.globl sSongHeader_407
-sSongHeader_407: @ 0x08890FA4
+	.globl mus_encounter_female
+mus_encounter_female: @ 0x08890FA4
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860B168  @ tone
+	.4byte voicegroup_encounter_female  @ tone
 	.4byte 0x08890960, 0x08890A23, 0x08890B52, 0x08890C01, 0x08890C3B, 0x08890CF9, 0x08890E01, 0x08890E5A, 0x08890EE7  @ parts

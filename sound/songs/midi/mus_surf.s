@@ -2962,8 +2962,8 @@ sSong365_Part5: @ 0x088791F7
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x879487, 0x1
-	.globl sSongHeader_365
-sSongHeader_365: @ 0x08879488
+	.globl mus_surf
+mus_surf: @ 0x08879488
 	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08600AA0  @ tone
+	.4byte voicegroup_surf  @ tone
 	.4byte 0x08878608, 0x088788C7, 0x08878AD6, 0x08878CAA, 0x08878F14, 0x088791F7  @ parts

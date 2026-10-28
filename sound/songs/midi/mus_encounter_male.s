@@ -1192,8 +1192,8 @@ sSong380_Part6: @ 0x0887E025
 	.byte	W07
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_380
-sSongHeader_380: @ 0x0887E124
+	.globl mus_encounter_male
+mus_encounter_male: @ 0x0887E124
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_086038C0  @ tone
+	.4byte voicegroup_encounter_male  @ tone
 	.4byte 0x0887DAF0, 0x0887DBC8, 0x0887DC9C, 0x0887DD27, 0x0887DE19, 0x0887DF5D, 0x0887E025  @ parts

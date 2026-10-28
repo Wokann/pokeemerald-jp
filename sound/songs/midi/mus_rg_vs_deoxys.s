@@ -6035,8 +6035,8 @@ sSong551_Part9: @ 0x0890A6C5
 	.byte	W16
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_551
-sSongHeader_551: @ 0x0890A7E4
+	.globl mus_rg_vs_deoxys
+mus_rg_vs_deoxys: @ 0x0890A7E4
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08639F08  @ tone
 	.4byte sSong551_Part0, sSong551_Part1, sSong551_Part2, sSong551_Part3, sSong551_Part4, sSong551_Part5, sSong551_Part6, sSong551_Part7, sSong551_Part8, sSong551_Part9  @ parts

@@ -3039,8 +3039,8 @@ sSong499_Part9: @ 0x088DD8A6
 	.byte	W13
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_499
-sSongHeader_499: @ 0x088DDAE8
+	.globl mus_rg_viridian_forest
+mus_rg_viridian_forest: @ 0x088DDAE8
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862D6B0  @ tone
 	.4byte sSong499_Part0, sSong499_Part1, sSong499_Part2, sSong499_Part3, sSong499_Part4, sSong499_Part5, sSong499_Part6, sSong499_Part7, sSong499_Part8, sSong499_Part9  @ parts

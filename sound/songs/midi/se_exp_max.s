@@ -45,8 +45,8 @@ sSong91_Part1: @ 0x088698CB
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8698E5, 0x3
-	.globl sSongHeader_91
-sSongHeader_91: @ 0x088698E8
+	.globl se_exp_max
+se_exp_max: @ 0x088698E8
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x088698A8, 0x088698CB  @ parts

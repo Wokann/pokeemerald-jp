@@ -1290,8 +1290,8 @@ sSong392_Part6: @ 0x08882201
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x88228E, 0x2
-	.globl sSongHeader_392
-sSongHeader_392: @ 0x08882290
+	.globl mus_roulette
+mus_roulette: @ 0x08882290
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08606260  @ tone
+	.4byte voicegroup_roulette  @ tone
 	.4byte 0x08881C98, 0x08881D3C, 0x08881E0A, 0x08881ED4, 0x08881FA8, 0x088820E1, 0x08882201  @ parts

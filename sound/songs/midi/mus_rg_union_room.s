@@ -2710,8 +2710,8 @@ sSong539_Part7: @ 0x088FFC54
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FFE71, 0x3
-	.globl sSongHeader_539
-sSongHeader_539: @ 0x088FFE74
+	.globl mus_rg_union_room
+mus_rg_union_room: @ 0x088FFE74
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08628E74  @ tone
 	.4byte sSong539_Part0, sSong539_Part1, sSong539_Part2, sSong539_Part3, sSong539_Part4, sSong539_Part5, sSong539_Part6, sSong539_Part7  @ parts

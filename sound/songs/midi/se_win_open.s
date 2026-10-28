@@ -13,8 +13,8 @@ sSong6_Part0: @ 0x088684CC
 	.byte	N15, Gn4
 	.byte	W21
 	.byte	FINE
-	.globl sSongHeader_6
-sSongHeader_6: @ 0x088684DC
+	.globl se_win_open
+se_win_open: @ 0x088684DC
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong6_Part0  @ parts

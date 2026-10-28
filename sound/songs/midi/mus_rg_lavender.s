@@ -2242,8 +2242,8 @@ sSong492_Part7: @ 0x088DA4F7
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8DA58A, 0x2
-	.globl sSongHeader_492
-sSongHeader_492: @ 0x088DA58C
+	.globl mus_rg_lavender
+mus_rg_lavender: @ 0x088DA58C
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0862B490  @ tone
 	.4byte sSong492_Part0, sSong492_Part1, sSong492_Part2, sSong492_Part3, sSong492_Part4, sSong492_Part5, sSong492_Part6, sSong492_Part7  @ parts

@@ -53,8 +53,8 @@ sSong215_Part1: @ 0x0886D972
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86D98F, 0x1
-	.globl sSongHeader_215
-sSongHeader_215: @ 0x0886D990
+	.globl se_m_hyper_beam
+se_m_hyper_beam: @ 0x0886D990
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886D944, 0x0886D972  @ parts

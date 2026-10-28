@@ -91,8 +91,8 @@ sSong94_Part1: @ 0x088699C7
 	.byte	W06
 	.byte	8
 	.byte	FINE
-	.globl sSongHeader_94
-sSongHeader_94: @ 0x088699F4
+	.globl se_taillow_wing_flap
+se_taillow_wing_flap: @ 0x088699F4
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886996C, 0x088699C7  @ parts

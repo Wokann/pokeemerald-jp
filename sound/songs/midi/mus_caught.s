@@ -839,8 +839,8 @@ sSong352_Part6: @ 0x08870E7E
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x870F22, 0x2
-	.globl sSongHeader_352
-sSongHeader_352: @ 0x08870F24
+	.globl mus_caught
+mus_caught: @ 0x08870F24
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08602AD4  @ tone
+	.4byte voicegroup_victory_wild  @ tone
 	.4byte 0x08870B08, 0x08870B9D, 0x08870C0F, 0x08870D80, 0x08870DBE, 0x08870E2B, 0x08870E7E  @ parts

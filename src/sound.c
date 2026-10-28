@@ -49,17 +49,9 @@ SOUND_FANFARE_DATA static const struct Fanfare sFanfares[] = {
     [FANFARE_REGISTER_MATCH_CALL] = { MUS_REGISTER_MATCH_CALL, 135 },
 };
 
-// The JP cry data is eight independent 128-entry tables (normal/reverse pairs
-// per tableId), laid out in the ROM exactly as the original binary, including
-// the overlap between the 4-entry tail of Normal_3 and Reverse_0.
-extern struct ToneData gJP_CryTable_Normal_0[];   // 0x08625814
-extern struct ToneData gJP_CryTable_Normal_1[];   // 0x08625E14
-extern struct ToneData gJP_CryTable_Normal_2[];   // 0x08626414
-extern struct ToneData gJP_CryTable_Normal_3[];   // 0x08626A14
-extern struct ToneData gJP_CryTable_Reverse_0[];  // 0x08626A44
-extern struct ToneData gJP_CryTable_Reverse_1[];  // 0x08627044
-extern struct ToneData gJP_CryTable_Reverse_2[];  // 0x08627644
-extern struct ToneData gJP_CryTable_Reverse_3[];  // 0x08627C44
+// JP selects 128-entry banks within each contiguous 388-entry cry table.
+extern struct ToneData gCryTable[];
+extern struct ToneData gCryTable_Reverse[];
 
 static void Task_Fanfare(u8 taskId);
 static void CreateFanfareTask(void);
@@ -478,8 +470,7 @@ void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode)
     SetPokemonCryChorus(chorus);
     SetPokemonCryPriority(priority);
 
-    // The JP game uses eight independent 128-entry cry tables (4 normal +
-    // 4 reversed), selected by tableId (cryId >> 7) and the reverse flag.
+    // Keep the JP bank-selection control flow while using the real table bases.
     species = SpeciesToCryId(species);
     index = species & 0x7f;
     table = species >> 7;
@@ -488,27 +479,27 @@ void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode)
     {
     case 0:
         if (reverse)
-            gMPlay_PokemonCry = SetPokemonCryTone(&gJP_CryTable_Reverse_0[index]);
+            gMPlay_PokemonCry = SetPokemonCryTone(&gCryTable_Reverse[index]);
         else
-            gMPlay_PokemonCry = SetPokemonCryTone(&gJP_CryTable_Normal_0[index]);
+            gMPlay_PokemonCry = SetPokemonCryTone(&gCryTable[index]);
         break;
     case 1:
         if (reverse)
-            gMPlay_PokemonCry = SetPokemonCryTone(&gJP_CryTable_Reverse_1[index]);
+            gMPlay_PokemonCry = SetPokemonCryTone(&((struct ToneData *)((u8 *)gCryTable_Reverse + 128 * sizeof(struct ToneData)))[index]);
         else
-            gMPlay_PokemonCry = SetPokemonCryTone(&gJP_CryTable_Normal_1[index]);
+            gMPlay_PokemonCry = SetPokemonCryTone(&((struct ToneData *)((u8 *)gCryTable + 128 * sizeof(struct ToneData)))[index]);
         break;
     case 2:
         if (reverse)
-            gMPlay_PokemonCry = SetPokemonCryTone(&gJP_CryTable_Reverse_2[index]);
+            gMPlay_PokemonCry = SetPokemonCryTone(&((struct ToneData *)((u8 *)gCryTable_Reverse + 256 * sizeof(struct ToneData)))[index]);
         else
-            gMPlay_PokemonCry = SetPokemonCryTone(&gJP_CryTable_Normal_2[index]);
+            gMPlay_PokemonCry = SetPokemonCryTone(&((struct ToneData *)((u8 *)gCryTable + 256 * sizeof(struct ToneData)))[index]);
         break;
     case 3:
         if (reverse)
-            gMPlay_PokemonCry = SetPokemonCryTone(&gJP_CryTable_Reverse_3[index]);
+            gMPlay_PokemonCry = SetPokemonCryTone(&((struct ToneData *)((u8 *)gCryTable_Reverse + 384 * sizeof(struct ToneData)))[index]);
         else
-            gMPlay_PokemonCry = SetPokemonCryTone(&gJP_CryTable_Normal_3[index]);
+            gMPlay_PokemonCry = SetPokemonCryTone(&((struct ToneData *)((u8 *)gCryTable + 384 * sizeof(struct ToneData)))[index]);
         break;
     }
 }

@@ -2047,8 +2047,8 @@ sSong533_Part4: @ 0x088FD683
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FD831, 0x3
-	.globl sSongHeader_533
-sSongHeader_533: @ 0x088FD834
+	.globl mus_rg_game_freak
+mus_rg_game_freak: @ 0x088FD834
 	.byte 0x05, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08638EAC  @ tone
 	.4byte sSong533_Part0, sSong533_Part1, sSong533_Part2, sSong533_Part3, sSong533_Part4  @ parts

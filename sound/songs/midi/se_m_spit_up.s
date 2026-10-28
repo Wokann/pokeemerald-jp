@@ -56,8 +56,8 @@ sSong232_Part1: @ 0x0886E5FD
 	.byte	W03
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_232
-sSongHeader_232: @ 0x0886E610
+	.globl se_m_spit_up
+se_m_spit_up: @ 0x0886E610
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886E5BC, 0x0886E5FD  @ parts

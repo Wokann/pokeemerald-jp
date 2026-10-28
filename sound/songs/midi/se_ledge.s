@@ -18,8 +18,8 @@ sSong10_Part0: @ 0x08868554
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86856B, 0x1
-	.globl sSongHeader_10
-sSongHeader_10: @ 0x0886856C
+	.globl se_ledge
+se_ledge: @ 0x0886856C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong10_Part0  @ parts

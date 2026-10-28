@@ -77,8 +77,8 @@ sSong102_Part0: @ 0x08869BB4
 	.byte	N06, Gs6
 	.byte	W06
 	.byte	FINE
-	.globl sSongHeader_102
-sSongHeader_102: @ 0x08869C24
+	.globl se_shiny
+se_shiny: @ 0x08869C24
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong102_Part0  @ parts

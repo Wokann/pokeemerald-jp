@@ -2901,8 +2901,8 @@ sSong354_Part7: @ 0x088721BD
 	.byte	W07
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_354
-sSongHeader_354: @ 0x08872344
+	.globl mus_victory_gym_leader
+mus_victory_gym_leader: @ 0x08872344
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08602690  @ tone
+	.4byte voicegroup_victory_gym_leader  @ tone
 	.4byte 0x08871478, 0x088716A1, 0x08871952, 0x08871ABB, 0x08871CE9, 0x08871F2F, 0x0887209D, 0x088721BD  @ parts

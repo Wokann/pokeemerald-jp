@@ -245,8 +245,8 @@ sSong208_Part1: @ 0x0886D514
 	.byte	W05
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86D57B, 0x1
-	.globl sSongHeader_208
-sSongHeader_208: @ 0x0886D57C
+	.globl se_m_barrier
+se_m_barrier: @ 0x0886D57C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886D3EC, 0x0886D514  @ parts

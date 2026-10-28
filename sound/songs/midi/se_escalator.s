@@ -65,8 +65,8 @@ sSong80_Part0: @ 0x088695A8
 	.byte	EOT
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869601, 0x3
-	.globl sSongHeader_80
-sSongHeader_80: @ 0x08869604
+	.globl se_escalator
+se_escalator: @ 0x08869604
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong80_Part0  @ parts

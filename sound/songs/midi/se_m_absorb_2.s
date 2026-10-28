@@ -124,8 +124,8 @@ sSong179_Part1: @ 0x0886C203
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86C24F, 0x1
-	.globl sSongHeader_179
-sSongHeader_179: @ 0x0886C250
+	.globl se_m_absorb_2
+se_m_absorb_2: @ 0x0886C250
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886C1A4, 0x0886C203  @ parts

@@ -2877,8 +2877,8 @@ sSong549_Part8: @ 0x08908439
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x908496, 0x2
-	.globl sSongHeader_549
-sSongHeader_549: @ 0x08908498
+	.globl mus_rg_sevii_67
+mus_rg_sevii_67: @ 0x08908498
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0863B708  @ tone
 	.4byte sSong549_Part0, sSong549_Part1, sSong549_Part2, sSong549_Part3, sSong549_Part4, sSong549_Part5, sSong549_Part6, sSong549_Part7, sSong549_Part8  @ parts

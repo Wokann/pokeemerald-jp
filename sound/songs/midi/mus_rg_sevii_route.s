@@ -2993,8 +2993,8 @@ sSong545_Part9: @ 0x089043BF
 	.byte	W16
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_545
-sSongHeader_545: @ 0x08904430
+	.globl mus_rg_sevii_route
+mus_rg_sevii_route: @ 0x08904430
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0863AB08  @ tone
 	.4byte sSong545_Part0, sSong545_Part1, sSong545_Part2, sSong545_Part3, sSong545_Part4, sSong545_Part5, sSong545_Part6, sSong545_Part7, sSong545_Part8, sSong545_Part9  @ parts

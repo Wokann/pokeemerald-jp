@@ -41,8 +41,8 @@ sSong137_Part1: @ 0x0886AC4C
 	.byte	W14
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86AC66, 0x2
-	.globl sSongHeader_137
-sSongHeader_137: @ 0x0886AC68
+	.globl se_m_icy_wind
+se_m_icy_wind: @ 0x0886AC68
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886AC2C, 0x0886AC4C  @ parts

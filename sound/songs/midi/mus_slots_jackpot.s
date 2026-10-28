@@ -396,8 +396,8 @@ sSong389_Part6: @ 0x088819D2
 	.byte	W48
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x881A3D, 0x3
-	.globl sSongHeader_389
-sSongHeader_389: @ 0x08881A40
+	.globl mus_slots_jackpot
+mus_slots_jackpot: @ 0x08881A40
 	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x08881838, 0x08881896, 0x088818DD, 0x08881927, 0x08881969, 0x088819AB, 0x088819D2  @ parts

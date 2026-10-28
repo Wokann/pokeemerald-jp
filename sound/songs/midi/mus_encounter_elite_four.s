@@ -2305,8 +2305,8 @@ sSong450_Part8: @ 0x088B5620
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8B579F, 0x1
-	.globl sSongHeader_450
-sSongHeader_450: @ 0x088B57A0
+	.globl mus_encounter_elite_four
+mus_encounter_elite_four: @ 0x088B57A0
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0861A99C  @ tone
+	.4byte voicegroup_encounter_elite_four  @ tone
 	.4byte 0x088B4B48, 0x088B4B98, 0x088B4D6E, 0x088B5054, 0x088B5099, 0x088B5224, 0x088B53B2, 0x088B547A, 0x088B5620  @ parts

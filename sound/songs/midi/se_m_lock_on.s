@@ -41,8 +41,8 @@ sSong210_Part0: @ 0x0886D5F8
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86D639, 0x3
-	.globl sSongHeader_210
-sSongHeader_210: @ 0x0886D63C
+	.globl se_m_lock_on
+se_m_lock_on: @ 0x0886D63C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong210_Part0  @ parts

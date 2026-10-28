@@ -1030,8 +1030,8 @@ sSong353_Part6: @ 0x088713B2
 	.byte	W07
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_353
-sSongHeader_353: @ 0x08871454
+	.globl mus_victory_wild
+mus_victory_wild: @ 0x08871454
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08602AD4  @ tone
+	.4byte voicegroup_victory_wild  @ tone
 	.4byte 0x08870F48, 0x0887100B, 0x088710AA, 0x08871245, 0x088712AE, 0x08871348, 0x088713B2  @ parts

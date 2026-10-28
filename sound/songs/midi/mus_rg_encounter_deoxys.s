@@ -1508,8 +1508,8 @@ sSong555_Part6: @ 0x0890D94C
 	.byte	W16
 	.byte	8
 	.byte	FINE
-	.globl sSongHeader_555
-sSongHeader_555: @ 0x0890D9A0
+	.globl mus_rg_encounter_deoxys
+mus_rg_encounter_deoxys: @ 0x0890D9A0
 	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08639B00  @ tone
 	.4byte sSong555_Part0, sSong555_Part1, sSong555_Part2, sSong555_Part3, sSong555_Part4, sSong555_Part5, sSong555_Part6  @ parts

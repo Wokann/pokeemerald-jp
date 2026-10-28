@@ -139,8 +139,8 @@ sSong367_Part4: @ 0x08879E66
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x879E99, 0x3
-	.globl sSongHeader_367
-sSongHeader_367: @ 0x08879E9C
+	.globl mus_level_up
+mus_level_up: @ 0x08879E9C
 	.byte 0x05, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x08879DD4, 0x08879DF3, 0x08879E16, 0x08879E33, 0x08879E66  @ parts

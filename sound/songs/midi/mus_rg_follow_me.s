@@ -1000,8 +1000,8 @@ sSong484_Part7: @ 0x088D354D
 	.byte	W13
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_484
-sSongHeader_484: @ 0x088D3614
+	.globl mus_rg_follow_me
+mus_rg_follow_me: @ 0x088D3614
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08628874  @ tone
 	.4byte sSong484_Part0, sSong484_Part1, sSong484_Part2, sSong484_Part3, sSong484_Part4, sSong484_Part5, sSong484_Part6, sSong484_Part7  @ parts

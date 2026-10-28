@@ -44,8 +44,8 @@ sSong122_Part1: @ 0x0886A6F3
 	.byte	W09
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86A705, 0x3
-	.globl sSongHeader_122
-sSongHeader_122: @ 0x0886A708
+	.globl se_m_vital_throw
+se_m_vital_throw: @ 0x0886A708
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886A6C4, 0x0886A6F3  @ parts

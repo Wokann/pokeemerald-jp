@@ -45,8 +45,8 @@ sSong84_Part0: @ 0x088696C8
 	.byte	7
 	.byte	W03
 	.byte	FINE
-	.globl sSongHeader_84
-sSongHeader_84: @ 0x088696FC
+	.globl se_downpour_stop
+se_downpour_stop: @ 0x088696FC
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong84_Part0  @ parts

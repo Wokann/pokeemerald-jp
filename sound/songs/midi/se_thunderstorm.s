@@ -37,8 +37,8 @@ sSong81_Part0: @ 0x08869610
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86963E, 0x2
-	.globl sSongHeader_81
-sSongHeader_81: @ 0x08869640
+	.globl se_thunderstorm
+se_thunderstorm: @ 0x08869640
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong81_Part0  @ parts

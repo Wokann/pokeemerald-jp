@@ -211,8 +211,8 @@ sSong390_Part6: @ 0x08881B4A
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x881B7D, 0x3
-	.globl sSongHeader_390
-sSongHeader_390: @ 0x08881B80
+	.globl mus_slots_win
+mus_slots_win: @ 0x08881B80
 	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x08881A64, 0x08881A9B, 0x08881AB7, 0x08881ADB, 0x08881B01, 0x08881B31, 0x08881B4A  @ parts

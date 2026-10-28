@@ -637,8 +637,8 @@ sSong388_Part6: @ 0x088817D7
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x881813, 0x1
-	.globl sSongHeader_388
-sSongHeader_388: @ 0x08881814
+	.globl mus_awaken_legend
+mus_awaken_legend: @ 0x08881814
 	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x088814CC, 0x0888153B, 0x088815A8, 0x08881679, 0x088816D5, 0x088817B1, 0x088817D7  @ parts

@@ -372,8 +372,8 @@ sSong530_Part5: @ 0x088FCA08
 	.byte	W06
 	.byte	W06
 	.byte	FINE
-	.globl sSongHeader_530
-sSongHeader_530: @ 0x088FCA50
+	.globl mus_rg_obtain_key_item
+mus_rg_obtain_key_item: @ 0x088FCA50
 	.byte 0x06, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0863806C  @ tone
 	.4byte sSong530_Part0, sSong530_Part1, sSong530_Part2, sSong530_Part3, sSong530_Part4, sSong530_Part5  @ parts

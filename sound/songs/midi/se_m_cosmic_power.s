@@ -177,8 +177,8 @@ sSong243_Part1: @ 0x0886EF9A
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F007, 0x1
-	.globl sSongHeader_243
-sSongHeader_243: @ 0x0886F008
+	.globl se_m_cosmic_power
+se_m_cosmic_power: @ 0x0886F008
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886EEFC, 0x0886EF9A  @ parts

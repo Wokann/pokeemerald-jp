@@ -1728,8 +1728,8 @@ sSong479_Part7: @ 0x088D01DD
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D02BE, 0x2
-	.globl sSongHeader_479
-sSongHeader_479: @ 0x088D02C0
+	.globl mus_vs_regi
+mus_vs_regi: @ 0x088D02C0
 	.byte 0x08, 0x00, 0x01, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08623420  @ tone
 	.4byte sSong479_Part0, sSong479_Part1, sSong479_Part2, sSong479_Part3, sSong479_Part4, sSong479_Part5, sSong479_Part6, sSong479_Part7  @ parts

@@ -57,8 +57,8 @@ sSong376_Part3: @ 0x0887CEDC
 	.byte	W48
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x87CEE9, 0x3
-	.globl sSongHeader_376
-sSongHeader_376: @ 0x0887CEEC
+	.globl mus_evolution_intro
+mus_evolution_intro: @ 0x0887CEEC
 	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08602EC4  @ tone
+	.4byte voicegroup_evolution  @ tone
 	.4byte 0x0887CE9C, 0x0887CEAB, 0x0887CEC3, 0x0887CEDC  @ parts

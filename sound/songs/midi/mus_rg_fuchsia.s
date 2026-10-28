@@ -1789,8 +1789,8 @@ sSong520_Part8: @ 0x088F67CC
 	.byte	W15
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_520
-sSongHeader_520: @ 0x088F6814
+	.globl mus_rg_fuchsia
+mus_rg_fuchsia: @ 0x088F6814
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x086349F4  @ tone
 	.4byte sSong520_Part0, sSong520_Part1, sSong520_Part2, sSong520_Part3, sSong520_Part4, sSong520_Part5, sSong520_Part6, sSong520_Part7, sSong520_Part8  @ parts

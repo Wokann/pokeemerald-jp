@@ -30,8 +30,8 @@ sSong222_Part0: @ 0x0886DF74
 	.byte	W04
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86DF9A, 0x2
-	.globl sSongHeader_222
-sSongHeader_222: @ 0x0886DF9C
+	.globl se_m_encore
+se_m_encore: @ 0x0886DF9C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong222_Part0  @ parts

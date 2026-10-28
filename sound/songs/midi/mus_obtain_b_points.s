@@ -539,8 +539,8 @@ sSong459_Part8: @ 0x088BC834
 	.byte	W24
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8BC8A2, 0x2
-	.globl sSongHeader_459
-sSongHeader_459: @ 0x088BC8A4
+	.globl mus_obtain_b_points
+mus_obtain_b_points: @ 0x088BC8A4
 	.byte 0x09, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861D09C  @ tone
 	.4byte sSong459_Part0, sSong459_Part1, sSong459_Part2, sSong459_Part3, sSong459_Part4, sSong459_Part5, sSong459_Part6, sSong459_Part7, sSong459_Part8  @ parts

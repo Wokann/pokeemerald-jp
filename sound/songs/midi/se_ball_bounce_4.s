@@ -21,8 +21,8 @@ sSong59_Part1: @ 0x088690FF
 	.byte	N09, Fn4, 56
 	.byte	W12
 	.byte	FINE
-	.globl sSongHeader_59
-sSongHeader_59: @ 0x0886910C
+	.globl se_ball_bounce_4
+se_ball_bounce_4: @ 0x0886910C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x088690F0, 0x088690FF  @ parts

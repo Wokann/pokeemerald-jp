@@ -28,8 +28,8 @@ sSong45_Part0: @ 0x08868D1C
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x868D45, 0x3
-	.globl sSongHeader_45
-sSongHeader_45: @ 0x08868D48
+	.globl se_warp_in
+se_warp_in: @ 0x08868D48
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte sSong45_Part0  @ parts

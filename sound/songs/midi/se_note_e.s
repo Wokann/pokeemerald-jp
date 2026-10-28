@@ -28,8 +28,8 @@ sSong64_Part1: @ 0x08869234
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869246, 0x2
-	.globl sSongHeader_64
-sSongHeader_64: @ 0x08869248
+	.globl se_note_e
+se_note_e: @ 0x08869248
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x08869220, 0x08869234  @ parts

@@ -29,8 +29,8 @@ sSong187_Part0: @ 0x0886C63C
 	.byte	W04
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86C665, 0x3
-	.globl sSongHeader_187
-sSongHeader_187: @ 0x0886C668
+	.globl se_m_bonemerang
+se_m_bonemerang: @ 0x0886C668
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong187_Part0  @ parts

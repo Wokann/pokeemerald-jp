@@ -58,8 +58,8 @@ sSong156_Part1: @ 0x0886B56A
 	.byte	W14
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B57A, 0x2
-	.globl sSongHeader_156
-sSongHeader_156: @ 0x0886B57C
+	.globl se_m_vicegrip
+se_m_vicegrip: @ 0x0886B57C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886B520, 0x0886B56A  @ parts

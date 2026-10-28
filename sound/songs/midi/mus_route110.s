@@ -2159,8 +2159,8 @@ sSong360_Part8: @ 0x088754FE
 	.byte	W07
 	.byte	GsM2
 	.byte	FINE
-	.globl sSongHeader_360
-sSongHeader_360: @ 0x08875598
+	.globl mus_route110
+mus_route110: @ 0x08875598
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FEC58  @ tone
+	.4byte voicegroup_route110  @ tone
 	.4byte 0x08874A48, 0x08874C3B, 0x08874DFC, 0x08874F21, 0x088750D2, 0x088752A3, 0x088753CF, 0x088754A0, 0x088754FE  @ parts

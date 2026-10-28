@@ -468,8 +468,8 @@ sSong488_Part3: @ 0x088D6DBE
 	.byte	W36
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8D6E16, 0x2
-	.globl sSongHeader_488
-sSongHeader_488: @ 0x088D6E18
+	.globl mus_rg_jigglypuff
+mus_rg_jigglypuff: @ 0x088D6E18
 	.byte 0x04, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08629EAC  @ tone
 	.4byte sSong488_Part0, sSong488_Part1, sSong488_Part2, sSong488_Part3  @ parts

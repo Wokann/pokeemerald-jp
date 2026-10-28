@@ -49,8 +49,8 @@ sSong16_Part2: @ 0x08868712
 	.byte	W06
 	.byte	W06
 	.byte	FINE
-	.globl sSongHeader_16
-sSongHeader_16: @ 0x08868724
+	.globl se_faint
+se_faint: @ 0x08868724
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08624C14  @ tone
+	.4byte voicegroup_rs_sfx_1  @ tone
 	.4byte 0x088686E4, 0x088686F7, 0x08868712  @ parts

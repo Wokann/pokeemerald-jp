@@ -21,8 +21,8 @@ sSong56_Part1: @ 0x0886907B
 	.byte	N09, Fn4, 100
 	.byte	W12
 	.byte	FINE
-	.globl sSongHeader_56
-sSongHeader_56: @ 0x08869088
+	.globl se_ball_bounce_1
+se_ball_bounce_1: @ 0x08869088
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886906C, 0x0886907B  @ parts

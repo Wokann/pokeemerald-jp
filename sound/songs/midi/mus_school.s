@@ -680,8 +680,8 @@ sSong435_Part3: @ 0x088AC199
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8AC23A, 0x2
-	.globl sSongHeader_435
-sSongHeader_435: @ 0x088AC23C
+	.globl mus_school
+mus_school: @ 0x088AC23C
 	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08615794  @ tone
+	.4byte voicegroup_school  @ tone
 	.4byte 0x088ABF0C, 0x088ABF47, 0x088AC0A9, 0x088AC199  @ parts

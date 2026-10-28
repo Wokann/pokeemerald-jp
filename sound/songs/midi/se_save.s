@@ -46,8 +46,8 @@ sSong55_Part1: @ 0x08869042
 	.byte	W06
 	.byte	W06
 	.byte	FINE
-	.globl sSongHeader_55
-sSongHeader_55: @ 0x0886905C
+	.globl se_save
+se_save: @ 0x0886905C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x08869024, 0x08869042  @ parts

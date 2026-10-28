@@ -1690,8 +1690,8 @@ sSong350_Part8: @ 0x887068E
 .byte	8
 .byte	W48
 .byte	FINE
-	.globl sSongHeader_350
-sSongHeader_350: @ 0x08870718
+	.globl mus_littleroot_test
+mus_littleroot_test: @ 0x08870718
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08605048  @ tone
+	.4byte voicegroup_littleroot_test  @ tone
 	.4byte sSong350_Part0, sSong350_Part1, sSong350_Part2, sSong350_Part3, sSong350_Part4, sSong350_Part5, sSong350_Part6, sSong350_Part7, sSong350_Part8  @ parts

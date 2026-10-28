@@ -761,8 +761,8 @@ sSong351_Part3: @ 0x08870A2F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x870AEE, 0x2
-	.globl sSongHeader_351
-sSongHeader_351: @ 0x08870AF0
+	.globl mus_gsc_route38
+mus_gsc_route38: @ 0x08870AF0
 	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte voicegroup_dummy  @ tone
 	.4byte 0x08870744, 0x0887086D, 0x08870954, 0x08870A2F  @ parts

@@ -174,8 +174,8 @@ sSong202_Part1: @ 0x0886CF49
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86CFAE, 0x2
-	.globl sSongHeader_202
-sSongHeader_202: @ 0x0886CFB0
+	.globl se_m_petal_dance
+se_m_petal_dance: @ 0x0886CFB0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886CEAC, 0x0886CF49  @ parts

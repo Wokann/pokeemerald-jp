@@ -240,8 +240,8 @@ sSong245_Part1: @ 0x0886F1D4
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F219, 0x3
-	.globl sSongHeader_245
-sSongHeader_245: @ 0x0886F21C
+	.globl se_m_stat_decrease
+se_m_stat_decrease: @ 0x0886F21C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886F0BC, 0x0886F1D4  @ parts

@@ -1384,8 +1384,8 @@ sSong528_Part8: @ 0x088FC61B
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8FC64D, 0x3
-	.globl sSongHeader_528
-sSongHeader_528: @ 0x088FC650
+	.globl mus_rg_rival_exit
+mus_rg_rival_exit: @ 0x088FC650
 	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x08637028  @ tone
 	.4byte sSong528_Part0, sSong528_Part1, sSong528_Part2, sSong528_Part3, sSong528_Part4, sSong528_Part5, sSong528_Part6, sSong528_Part7, sSong528_Part8  @ parts

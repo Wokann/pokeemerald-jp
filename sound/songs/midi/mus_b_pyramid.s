@@ -6120,8 +6120,8 @@ sSong461_Part9: @ 0x088BEB5F
 	.byte	GsM2
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x8BEC63, 0x1
-	.globl sSongHeader_461
-sSongHeader_461: @ 0x088BEC64
+	.globl mus_b_pyramid
+mus_b_pyramid: @ 0x088BEC64
 	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte 0x0861DF90  @ tone
 	.4byte sSong461_Part0, sSong461_Part1, sSong461_Part2, sSong461_Part3, sSong461_Part4, sSong461_Part5, sSong461_Part6, sSong461_Part7, sSong461_Part8, sSong461_Part9  @ parts

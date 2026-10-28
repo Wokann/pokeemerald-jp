@@ -175,8 +175,8 @@ sSong240_Part1: @ 0x0886EDED
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86EE1A, 0x2
-	.globl sSongHeader_240
-sSongHeader_240: @ 0x0886EE1C
+	.globl se_m_heat_wave
+se_m_heat_wave: @ 0x0886EE1C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886ED28, 0x0886EDED  @ parts

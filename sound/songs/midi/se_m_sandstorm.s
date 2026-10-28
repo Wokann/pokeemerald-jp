@@ -166,8 +166,8 @@ sSong219_Part1: @ 0x0886DE02
 	.byte	W03
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86DE59, 0x3
-	.globl sSongHeader_219
-sSongHeader_219: @ 0x0886DE5C
+	.globl se_m_sandstorm
+se_m_sandstorm: @ 0x0886DE5C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886DD6C, 0x0886DE02  @ parts

@@ -68,8 +68,8 @@ sSong220_Part1: @ 0x0886DEB2
 	.byte	W10
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86DEC9, 0x3
-	.globl sSongHeader_220
-sSongHeader_220: @ 0x0886DECC
+	.globl se_m_tri_attack
+se_m_tri_attack: @ 0x0886DECC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886DE6C, 0x0886DEB2  @ parts

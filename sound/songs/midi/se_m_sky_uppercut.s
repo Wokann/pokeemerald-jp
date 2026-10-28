@@ -72,8 +72,8 @@ sSong238_Part1: @ 0x0886EB81
 	.byte	W06
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86EB97, 0x1
-	.globl sSongHeader_238
-sSongHeader_238: @ 0x0886EB98
+	.globl se_m_sky_uppercut
+se_m_sky_uppercut: @ 0x0886EB98
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x0886EB34, 0x0886EB81  @ parts

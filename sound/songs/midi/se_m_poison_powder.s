@@ -30,8 +30,8 @@ sSong169_Part0: @ 0x0886BBBC
 	.byte	W12
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86BBE9, 0x3
-	.globl sSongHeader_169
-sSongHeader_169: @ 0x0886BBEC
+	.globl se_m_poison_powder
+se_m_poison_powder: @ 0x0886BBEC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong169_Part0  @ parts

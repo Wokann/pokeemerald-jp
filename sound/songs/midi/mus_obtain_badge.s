@@ -498,8 +498,8 @@ sSong369_Part6: @ 0x0887A1B8
 	.byte	W48
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x87A231, 0x3
-	.globl sSongHeader_369
-sSongHeader_369: @ 0x0887A234
+	.globl mus_obtain_badge
+mus_obtain_badge: @ 0x0887A234
 	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x08879F80, 0x0887A00B, 0x0887A081, 0x0887A0B4, 0x0887A0EC, 0x0887A197, 0x0887A1B8  @ parts

@@ -3325,8 +3325,8 @@ sSong399_Part7: @ 0x0888688E
 	.byte	W96
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x886A6B, 0x1
-	.globl sSongHeader_399
-sSongHeader_399: @ 0x08886A6C
+	.globl mus_rustboro
+mus_rustboro: @ 0x08886A6C
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_086085D0  @ tone
+	.4byte voicegroup_rustboro  @ tone
 	.4byte 0x088857A0, 0x08885ACA, 0x08885E90, 0x08886193, 0x08886351, 0x088864B1, 0x08886757, 0x0888688E  @ parts

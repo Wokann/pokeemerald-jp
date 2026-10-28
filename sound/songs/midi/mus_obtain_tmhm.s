@@ -280,8 +280,8 @@ sSong372_Part6: @ 0x0887A65D
 	.byte	En1, 104
 	.byte	W22
 	.byte	FINE
-	.globl sSongHeader_372
-sSongHeader_372: @ 0x0887A6B0
+	.globl mus_obtain_tmhm
+mus_obtain_tmhm: @ 0x0887A6B0
 	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_085FF648  @ tone
+	.4byte voicegroup_fanfare  @ tone
 	.4byte 0x0887A548, 0x0887A573, 0x0887A59C, 0x0887A5B3, 0x0887A5F7, 0x0887A640, 0x0887A65D  @ parts

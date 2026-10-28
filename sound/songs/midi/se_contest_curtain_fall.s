@@ -64,8 +64,8 @@ sSong98_Part1: @ 0x08869AE8
 	.byte	W02
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x869B1F, 0x1
-	.globl sSongHeader_98
-sSongHeader_98: @ 0x08869B20
+	.globl se_contest_curtain_fall
+se_contest_curtain_fall: @ 0x08869B20
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte 0x08869AC8, 0x08869AE8  @ parts

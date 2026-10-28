@@ -1560,8 +1560,8 @@ sSong416_Part7: @ 0x0889B0FE
 	.byte	8
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x89B24E, 0x2
-	.globl sSongHeader_416
-sSongHeader_416: @ 0x0889B250
+	.globl mus_encounter_intense
+mus_encounter_intense: @ 0x0889B250
 	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_0860E594  @ tone
+	.4byte voicegroup_encounter_intense  @ tone
 	.4byte 0x0889A94C, 0x0889A9BE, 0x0889A9E4, 0x0889AB81, 0x0889ACF6, 0x0889AE6E, 0x0889AFB8, 0x0889B0FE  @ parts

@@ -170,8 +170,8 @@ sSong260_Part2: @ 0x0886F863
 	.byte	W16
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86F8C1, 0x3
-	.globl sSongHeader_260
-sSongHeader_260: @ 0x0886F8C4
+	.globl se_rg_deoxys_move
+se_rg_deoxys_move: @ 0x0886F8C4
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
+	.4byte voicegroup_frlg_sfx  @ tone
 	.4byte 0x0886F7F0, 0x0886F810, 0x0886F863  @ parts

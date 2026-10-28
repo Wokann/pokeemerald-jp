@@ -59,8 +59,8 @@ sSong148_Part0: @ 0x0886B1AC
 	.byte	W08
 	.byte	FINE
 	.incbin "baserom_jp.gba", 0x86B20B, 0x1
-	.globl sSongHeader_148
-sSongHeader_148: @ 0x0886B20C
+	.globl se_m_toxic
+se_m_toxic: @ 0x0886B20C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong148_Part0  @ parts

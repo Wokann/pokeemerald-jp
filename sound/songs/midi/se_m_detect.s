@@ -66,8 +66,8 @@ sSong209_Part0: @ 0x0886D58C
 	.byte	W03
 	.byte	W06
 	.byte	FINE
-	.globl sSongHeader_209
-sSongHeader_209: @ 0x0886D5EC
+	.globl se_m_detect
+se_m_detect: @ 0x0886D5EC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
-	.4byte gToneData_08625214  @ tone
+	.4byte voicegroup_rs_sfx_2  @ tone
 	.4byte sSong209_Part0  @ parts
