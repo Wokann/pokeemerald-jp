@@ -1,4 +1,5 @@
-"""US provenance must survive dirty worktrees, replacement refs and cleanup."""
+"""Committed provenance survives dirty worktrees and reverified cache reuse."""
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 import io
 import json
@@ -7,6 +8,8 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
+import time
 import unittest
 from unittest import mock
 
@@ -62,7 +65,7 @@ class UsReferenceTests(unittest.TestCase):
                 self.assertEqual(proof['mode'], 'git_snapshot')
                 self.assertEqual(set(proof['us_generated_artifacts'].values()), {'not_in_Git_snapshot'})
                 self.assertTrue(snapshot.is_relative_to(jp / '.tmp/agent-work/us-reference'))
-            self.assertFalse(snapshot.exists())
+            self.assertTrue(snapshot.exists())
             self.assertEqual(git(us, 'status', '--porcelain=v1', '-uall'), state)
 
     def test_explicit_historical_commit_does_not_float_to_head(self):
@@ -139,12 +142,16 @@ class UsReferenceTests(unittest.TestCase):
                 self.assertIn('not a committed pret reference', proof['warning'])
             self.assertFalse((jp / '.tmp').exists())
 
-    def test_snapshot_is_removed_even_when_the_report_consumer_raises(self):
+    def test_verified_snapshot_survives_a_consumer_failure_and_is_reused(self):
         with fixture() as (jp, us, revision):
             with self.assertRaisesRegex(RuntimeError, 'consumer failure'):
                 with reference.us_reference(jp, us) as (snapshot, proof):
                     raise RuntimeError('consumer failure')
-            self.assertFalse(snapshot.exists())
+            self.assertTrue(snapshot.exists())
+            with mock.patch.object(reference, 'materialize', side_effect=AssertionError('cache was recopied')):
+                with reference.us_reference(jp, us) as (reused, proof):
+                    self.assertEqual(reused, snapshot)
+                    self.assertEqual((reused / 'src/main.c').read_text(), 'void Original(void) {}\n')
 
     def test_report_wrapper_uses_snapshot_and_keeps_json_stable_without_temporary_paths(self):
         with fixture() as (jp, us, revision):
@@ -213,7 +220,94 @@ class UsReferenceTests(unittest.TestCase):
             with reference.us_reference(worker, us) as (snapshot, proof):
                 self.assertTrue(snapshot.is_relative_to(jp / '.tmp/agent-work/us-reference'))
                 self.assertFalse((worker / '.tmp').exists())
-            self.assertFalse(snapshot.exists())
+            self.assertTrue(snapshot.exists())
+
+    def test_reuse_verifies_the_same_tree_without_materializing_or_changing_provenance(self):
+        with fixture() as (jp, us, revision):
+            with reference.us_reference(jp, us) as (snapshot, first):
+                inode = snapshot.stat().st_ino
+            with mock.patch.object(reference, 'materialize', side_effect=AssertionError('cache was recopied')):
+                with reference.us_reference(jp, us) as (reused, second):
+                    self.assertEqual(reused, snapshot)
+                    self.assertEqual(reused.stat().st_ino, inode)
+                    self.assertEqual(first, second)
+                    self.assertEqual(reused.name, revision)
+
+    def test_modified_and_missing_cached_blobs_fail_closed_without_repair_or_live_fallback(self):
+        for kind in ('modified', 'missing'):
+            with self.subTest(kind=kind), fixture() as (jp, us, revision):
+                with reference.us_reference(jp, us) as (snapshot, proof):
+                    target = snapshot / 'src/main.c'
+                if kind == 'modified':
+                    target.write_text('void Tampered(void) {}\n')
+                else:
+                    target.unlink()
+                with mock.patch.object(reference, 'materialize', side_effect=AssertionError('bad cache was repaired')), \
+                     self.assertRaisesRegex(ValueError, kind + '_US_reference_cache_blob:src/main.c'):
+                    with reference.us_reference(jp, us):
+                        self.fail('unverified cached content was accepted')
+
+    def test_extra_files_empty_directories_and_links_are_rejected(self):
+        cases = (('file', 'unexpected_US_reference_cache_file'),
+                 ('directory', 'unexpected_US_reference_cache_directory'),
+                 ('file_link', 'unsafe_US_reference_cache_file'),
+                 ('directory_link', 'unsafe_US_reference_cache_directory'))
+        for kind, message in cases:
+            with self.subTest(kind=kind), fixture() as (jp, us, revision):
+                with reference.us_reference(jp, us) as (snapshot, proof):
+                    pass
+                outside = jp / 'outside'
+                outside.mkdir()
+                untouched = outside / 'source.c'
+                untouched.write_text('outside stays unchanged\n')
+                if kind == 'file':
+                    (snapshot / 'untracked.c').write_text('extra\n')
+                elif kind == 'directory':
+                    (snapshot / 'untracked').mkdir()
+                elif kind == 'file_link':
+                    (snapshot / 'src/main.c').unlink()
+                    os.symlink(untouched, snapshot / 'src/main.c')
+                else:
+                    (snapshot / 'src').rename(outside / 'src')
+                    os.symlink(outside / 'src', snapshot / 'src')
+                with self.assertRaisesRegex(ValueError, message):
+                    with reference.us_reference(jp, us):
+                        self.fail('unsafe cached entry was accepted')
+                self.assertEqual(untouched.read_text(), 'outside stays unchanged\n')
+
+    def test_materialization_failure_cannot_publish_a_partial_cache(self):
+        with fixture() as (jp, us, revision):
+            def fail(repository, pending, entries):
+                (pending / 'partial').write_text('unfinished\n')
+                raise ValueError('materialization failed')
+            with mock.patch.object(reference, 'materialize', side_effect=fail), \
+                 self.assertRaisesRegex(ValueError, 'materialization failed'):
+                with reference.us_reference(jp, us):
+                    self.fail('partial cache was published')
+            private = jp / '.tmp/agent-work/us-reference'
+            self.assertFalse((private / revision).exists())
+            self.assertFalse(any(path.is_dir() for path in private.iterdir()))
+            with reference.us_reference(jp, us) as (snapshot, proof):
+                self.assertEqual((snapshot / 'src/main.c').read_text(), 'void Original(void) {}\n')
+
+    def test_concurrent_consumers_publish_once_and_read_the_same_verified_tree(self):
+        with fixture() as (jp, us, revision):
+            barrier = threading.Barrier(4)
+            original = reference.materialize
+            def materialize(*args):
+                time.sleep(0.03)
+                return original(*args)
+            def consume(_):
+                barrier.wait(timeout=5)
+                with reference.us_reference(jp, us) as (snapshot, proof):
+                    return snapshot, proof, (snapshot / 'src/main.c').read_text()
+            with mock.patch.object(reference, 'materialize', side_effect=materialize) as create, \
+                 ThreadPoolExecutor(max_workers=4) as executor:
+                results = list(executor.map(consume, range(4)))
+            self.assertEqual(create.call_count, 1)
+            self.assertTrue(all(row == results[0] for row in results))
+            private = jp / '.tmp/agent-work/us-reference'
+            self.assertEqual([path.name for path in private.iterdir() if path.is_dir()], [revision])
 
 
 if __name__ == '__main__':

@@ -1,8 +1,11 @@
-"""Read audit reference inputs from exact Git blobs, never from unrelated WIP."""
+"""Reuse verified committed audit inputs without reading unrelated US WIP."""
 from contextlib import contextmanager
+import fcntl
 import hashlib
+import os
 from pathlib import Path, PurePosixPath
 import re
+import stat
 import subprocess
 import tempfile
 
@@ -89,14 +92,71 @@ def temporary_anchor(jp_root: Path) -> Path:
     return root
 
 
+def verify_snapshot(snapshot: Path, entries: list[tuple[str, str, str]]) -> str:
+    """Check every blob on every use; a directory/manifest alone proves nothing."""
+    if snapshot.is_symlink() or not snapshot.is_dir():
+        raise ValueError('invalid_US_reference_cache_directory')
+    expected = {name: (mode, oid) for name, mode, oid in entries}
+    directories = {'.'}
+    for name in expected:
+        directories.update(str(parent) for parent in PurePosixPath(name).parents)
+    seen = set()
+    for folder, children, files in os.walk(snapshot, followlinks=False):
+        relative = Path(folder).relative_to(snapshot).as_posix()
+        if relative not in directories:
+            raise ValueError('unexpected_US_reference_cache_directory:' + relative)
+        for name in children:
+            path = Path(folder) / name
+            if path.is_symlink():
+                raise ValueError('unsafe_US_reference_cache_directory:' + path.relative_to(snapshot).as_posix())
+        for name in files:
+            path = Path(folder) / name
+            relative = path.relative_to(snapshot).as_posix()
+            if relative not in expected:
+                raise ValueError('unexpected_US_reference_cache_file:' + relative)
+            info = path.lstat()
+            if not stat.S_ISREG(info.st_mode):
+                raise ValueError('unsafe_US_reference_cache_file:' + relative)
+            oid = expected[relative][1]
+            digest = hashlib.new('sha1' if len(oid) == 40 else 'sha256')
+            digest.update(b'blob ' + str(info.st_size).encode('ascii') + b'\0')
+            with path.open('rb') as stream:
+                for block in iter(lambda: stream.read(1024 * 1024), b''):
+                    digest.update(block)
+            if digest.hexdigest() != oid:
+                raise ValueError('modified_US_reference_cache_blob:' + relative)
+            seen.add(relative)
+    missing = set(expected) - seen
+    if missing:
+        raise ValueError('missing_US_reference_cache_blob:' + sorted(missing)[0])
+    manifest = hashlib.sha256()
+    for name, mode, oid in entries:
+        manifest.update((mode + ' ' + oid + '\t' + name + '\0').encode('utf-8'))
+    return manifest.hexdigest()
+
+
+@contextmanager
+def snapshot_lock(path: Path):
+    """Serialize publication/verification without leaving a stale process lock."""
+    if path.is_symlink() or (path.exists() and not path.is_file()):
+        raise ValueError('unsafe_US_reference_cache_lock')
+    descriptor = os.open(path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+    try:
+        fcntl.flock(descriptor, fcntl.LOCK_EX)
+        yield
+    finally:
+        os.close(descriptor)
+
+
 @contextmanager
 def us_reference(jp_root: Path, repository: Path, revision: str | None = 'HEAD'):
-    """Yield an isolated committed tree, or an explicitly unverified live tree.
+    """Yield a reverified committed cache, or an explicitly unverified live tree.
 
-    The generated source copy is confined to the JP private temp directory and
-    removed on every exit. No worktree, branch, checkout or external cache is
-    created. The report records the original repository and resolved commit,
-    not the random temporary materialization path.
+    Exact committed blobs are cached under the primary JP private directory,
+    keyed by the full commit ID. Never trust a cache without checking all blob
+    hashes and rejecting extra files, directories and links. No Git worktree,
+    branch or external cache is created. Provenance identifies the original
+    repository/commit, without exposing cache paths or cache-hit state.
     """
     repository = repository.resolve()
     if not (repository / 'src').is_dir():
@@ -120,15 +180,23 @@ def us_reference(jp_root: Path, repository: Path, revision: str | None = 'HEAD')
     if not private.is_relative_to(anchor):
         raise ValueError('external_US_reference_temporary_directory')
     private.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix=commit[:12] + '-', dir=private) as directory:
-        snapshot = Path(directory)
-        manifest_digest = materialize(repository, snapshot, entries)
-        names = {name for name, mode, oid in entries}
-        yield snapshot, {
-            'mode': 'git_snapshot', 'repository': str(repository), 'requested_revision': revision,
-            'commit': commit, 'tree': tree, 'tracked_blob_count': len(entries),
-            'tree_entry_manifest_sha256': manifest_digest,
-            'source_scope': 'exact_committed_Git_blobs_only; no_worktree_files_or_export_substitution',
-            'us_generated_artifacts': {name: ('tracked_Git_blob' if name in names else 'not_in_Git_snapshot')
-                                       for name in ('pokeemerald.sym', 'pokeemerald.map')},
-        }
+    snapshot = private / commit
+    with snapshot_lock(private / (commit + '.lock')):
+        if snapshot.exists() or snapshot.is_symlink():
+            manifest_digest = verify_snapshot(snapshot, entries)
+        else:
+            with tempfile.TemporaryDirectory(prefix=commit[:12] + '-', dir=private) as directory:
+                pending = Path(directory)
+                manifest_digest = materialize(repository, pending, entries)
+                if verify_snapshot(pending, entries) != manifest_digest:
+                    raise ValueError('inconsistent_US_reference_cache_manifest')
+                pending.rename(snapshot)
+    names = {name for name, mode, oid in entries}
+    yield snapshot, {
+        'mode': 'git_snapshot', 'repository': str(repository), 'requested_revision': revision,
+        'commit': commit, 'tree': tree, 'tracked_blob_count': len(entries),
+        'tree_entry_manifest_sha256': manifest_digest,
+        'source_scope': 'exact_committed_Git_blobs_only; no_worktree_files_or_export_substitution',
+        'us_generated_artifacts': {name: ('tracked_Git_blob' if name in names else 'not_in_Git_snapshot')
+                                   for name in ('pokeemerald.sym', 'pokeemerald.map')},
+    }

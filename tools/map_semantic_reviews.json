@@ -46793,7 +46793,7 @@
         {
           "path": "tools/audit_structure.py",
           "selector": "file",
-          "sha256": "957936fa2d854f37eb3baaf66a7870a8b4530b4025e7e8cc1c421f9f2a3fcc3d"
+          "sha256": "b7642dd18cb5356db8d4b4d7241d0e1ca611c431760330f905dae510b9a3ba7c"
         },
         {
           "path": "tools/jp_generate_layouts.py",

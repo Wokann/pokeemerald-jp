@@ -2581,8 +2581,8 @@ def build_report(root: Path, us_root: Path, *, us_ref: str | None = 'HEAD') -> d
     """Pin US-derived candidates to one committed tree by default."""
     with us_reference(root, us_root, us_ref) as (reference, provenance):
         report = _build_report(root, reference)
-        # Keep JSON deterministic and identify the logical repository, not a
-        # random ephemeral directory that has already been cleaned on return.
+        # Keep JSON deterministic and identify the logical repository, not its
+        # private materialization or reusable cache path.
         report['roots']['us'] = str(us_root.resolve())
         report['us_reference'] = provenance
         if 'functions' in report:
