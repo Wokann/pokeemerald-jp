@@ -45058,7 +45058,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "f3110080afd1d50fae35589973918d0209b8173ec169acf527baab105a56671e"
+            "makefile_sha256": "b7ef41b315d92f5880f69a879d8944b6b6c3a36937ed022be8d805dd76609d24"
           }
         },
         {
@@ -45493,7 +45493,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "f3110080afd1d50fae35589973918d0209b8173ec169acf527baab105a56671e"
+          "sha256": "b7ef41b315d92f5880f69a879d8944b6b6c3a36937ed022be8d805dd76609d24"
         },
         {
           "path": "asm/macros.inc",

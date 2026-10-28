@@ -83,8 +83,7 @@ include/constants/heal_locations.h: src/data/heal_locations.json src/data/heal_l
 
 $(C_BUILDDIR)/heal_location.o: $(JP_GENERATED_HEAL_LOCATION_HEADERS)
 $(C_BUILDDIR)/post_battle_event_funcs.o: include/constants/heal_locations.h
-$(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o \
-$(OBJ_DIR)/data/event_scripts.d $(OBJ_DIR)/data/battle_scripts_1.d: include/constants/heal_locations.h
+$(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/event_scripts.d: include/constants/heal_locations.h
 
 JP_GENERATED_REGION_MAP_HEADERS := src/data/region_map/region_map_entries.h include/constants/region_map_sections.h
 JP_REGION_MAP_ASSETS := graphics/pokenav/region_map/cursor.gbapal \
@@ -117,9 +116,9 @@ $(C_BUILDDIR)/region_map.o: src/region_map.c $(JP_GENERATED_REGION_MAP_HEADERS) 
 graphics/pokenav/region_map/map.8bpp: graphics/pokenav/region_map/map.png | tools
 	$(GFX) $< $@ -num_tiles 233 -Wnum_tiles
 
-$(OBJ_DIR)/data/event_scripts.d $(OBJ_DIR)/data/battle_scripts_1.d: include/constants/region_map_sections.h
+$(OBJ_DIR)/data/event_scripts.d: include/constants/region_map_sections.h
 
-$(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o: include/constants/region_map_sections.h
+$(OBJ_DIR)/data/event_scripts.o: include/constants/region_map_sections.h
 
 JP_DECORATION_ICON_ASSETS := graphics/decorations/heavy_desk.4bpp.lz \
 	graphics/decorations/heavy_desk.gbapal.lz \
