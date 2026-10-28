@@ -31,12 +31,33 @@ static void VCountIntr(void);
 static void SerialIntr(void);
 static void IntrDummy(void);
 
-const char BuildDateTime[] = "2005 02 21 11:10";
+#define MAIN_CORE_DATA __attribute__((section(".rodata.main_core_data")))
 
-// JP const data lives in data.s (0x0829BDBC).
-extern const IntrFunc gIntrTableTemplate[];
+const u8 gGameVersion MAIN_CORE_DATA = GAME_VERSION;
+const u8 gGameLanguage MAIN_CORE_DATA = GAME_LANGUAGE;
+const char BuildDateTime[] MAIN_CORE_DATA ALIGNED(4) = "2004 06 30 18:43";
 
-#define INTR_COUNT 14
+const IntrFunc gIntrTableTemplate[] MAIN_CORE_DATA =
+{
+    VCountIntr,
+    SerialIntr,
+    Timer3Intr,
+    HBlankIntr,
+    VBlankIntr,
+    IntrDummy,
+    IntrDummy,
+    IntrDummy,
+    IntrDummy,
+    IntrDummy,
+    IntrDummy,
+    IntrDummy,
+    IntrDummy,
+    IntrDummy,
+};
+
+#undef MAIN_CORE_DATA
+
+#define INTR_COUNT ((int)(sizeof(gIntrTableTemplate) / sizeof(IntrFunc)))
 
 extern u16 sUnusedVar; // Never read
 

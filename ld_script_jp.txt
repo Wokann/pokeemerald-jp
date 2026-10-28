@@ -626,7 +626,6 @@ sub_080A250C = BlendPalettesGradually;
 sub_081BA3A8 = MultiBootMain;
 sub_081BA808 = MultiBootStartMaster;
 sub_081BA8CC = MultiBootCheckComplete;
-gGameLanguage = gGameVersion + 1;
 RecordedBattle_CanStopPlayback = sub_081861A8;
 RecordedBattle_SetFrontierPassFlagFromHword = sub_08185CE8;
 ShowPartyMenuToShowcaseMultiBattleParty = ShowPartyMenuToShowcaseMultiBattleParty;
@@ -9171,7 +9170,8 @@ SECTIONS {
     .rodata :
     ALIGN(4)
     {
-        data/data.o(.rodata.data_before_bg_data);
+        src/main.o(.rodata.main_core_data);
+        src/malloc.o(.rodata.malloc_assert_data);
         src/bg.o(.rodata.bg_data);
         src/window.o(.rodata.window_data);
         src/text.o(.rodata.text_core_data);

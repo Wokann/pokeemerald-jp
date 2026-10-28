@@ -1,14 +1,14 @@
 #include "global.h"
 #include "malloc.h"
 
-// JP assert strings live in data.s (0x0829BDF4-0x0829BEA0).
-extern const char sMallocAssertFile[];
-extern const char sMallocAssertAlloc[];
-extern const char sMallocAssertPNull[];
-extern const char sMallocAssertMagic[];
-extern const char sMallocAssertFlag[];
-extern const char sMallocAssertNextMagic[];
-extern const char sMallocAssertPrevMagic[];
+// Preserve the original JP diagnostic path and assertion expressions.
+static const char sMallocAssertFile[] __attribute__((section(".rodata.malloc_assert_data"), aligned(4))) = "../gflib/malloc.c";
+static const char sMallocAssertAlloc[] __attribute__((section(".rodata.malloc_assert_data"), aligned(4))) = "0";
+static const char sMallocAssertPNull[] __attribute__((section(".rodata.malloc_assert_data"), aligned(4))) = "p != NULL";
+static const char sMallocAssertMagic[] __attribute__((section(".rodata.malloc_assert_data"), aligned(4))) = "pos->magic_number == MALLOC_SYSTEM_ID";
+static const char sMallocAssertFlag[] __attribute__((section(".rodata.malloc_assert_data"), aligned(4))) = "pos->flag == TRUE";
+static const char sMallocAssertNextMagic[] __attribute__((section(".rodata.malloc_assert_data"), aligned(4))) = "pos->next->magic_number == MALLOC_SYSTEM_ID";
+static const char sMallocAssertPrevMagic[] __attribute__((section(".rodata.malloc_assert_data"), aligned(4))) = "pos->prev->magic_number == MALLOC_SYSTEM_ID";
 
 extern void *sHeapStart;
 extern u32 sHeapSize;
