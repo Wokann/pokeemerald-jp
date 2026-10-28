@@ -1755,10 +1755,10 @@ POKEMON_GRAPHICS_PREFIX const u32 gMonShinyPalette_Celebi[] = INCBIN_U32("graphi
 POKEMON_GRAPHICS_PREFIX const u8 gMonIcon_Celebi[] = INCGFX_U8("graphics/pokemon/celebi/icon.png", ".4bpp");
 POKEMON_GRAPHICS_PREFIX const u8 gMonFootprint_Celebi[] = INCBIN_U8("graphics/pokemon/celebi/footprint.1bpp");
 
-POKEMON_GRAPHICS_PREFIX const u32 gMonStillFrontPic_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/front.4bpp.lz");
-POKEMON_GRAPHICS_PREFIX const u32 gMonPalette_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/normal.gbapal.lz");
-POKEMON_GRAPHICS_PREFIX const u32 gMonBackPic_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/back.4bpp.lz");
-POKEMON_GRAPHICS_PREFIX const u32 gMonShinyPalette_DoubleQuestionMark[] = INCBIN_U32("graphics/pokemon/question_mark/double/shiny.gbapal.lz");
+POKEMON_GRAPHICS_PREFIX const u32 gMonStillFrontPic_DoubleQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/double/front.png", ".4bpp.lz");
+POKEMON_GRAPHICS_PREFIX const u32 gMonPalette_DoubleQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/double/normal.pal", ".gbapal.lz");
+POKEMON_GRAPHICS_PREFIX const u32 gMonBackPic_DoubleQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/double/back.png", ".4bpp.lz");
+POKEMON_GRAPHICS_PREFIX const u32 gMonShinyPalette_DoubleQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/double/shiny.pal", ".gbapal.lz");
 
 POKEMON_GRAPHICS_PREFIX const u32 gMonStillFrontPic_Treecko[] = INCBIN_U32("graphics/pokemon/treecko/front.4bpp.lz");
 POKEMON_GRAPHICS_PREFIX const u32 gMonPalette_Treecko[] = INCBIN_U32("graphics/pokemon/treecko/normal.gbapal.lz");

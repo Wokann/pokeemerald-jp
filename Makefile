@@ -1224,7 +1224,7 @@ $(C_BUILDDIR)/link_rfu_2.o: src/link_rfu_2.c
 include sound/song_order.mk
 SONG_OBJS := $(patsubst sound/songs/midi/%.s,$(OBJ_DIR)/sound/songs/midi/%.o,$(SONG_SRCS))
 
-DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
+DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 # Migrated data files now build from C or no longer contribute data.
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
 DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b2d_mid33.o,$(DATA_OBJS))
@@ -1282,6 +1282,7 @@ clean: clean-tools
 	rm -f $(JP_CRY_SCREEN_ASSETS) $(JP_CRY_SCREEN_INTERMEDIATES)
 	rm -f $(JP_ANIM_MON_FRONT_PIC_ASSETS) $(JP_ANIM_MON_FRONT_PIC_INTERMEDIATES)
 	rm -f $(JP_TRAINER_GRAPHICS_ASSETS) $(JP_TRAINER_GRAPHICS_INTERMEDIATES)
+	rm -f $(JP_QUESTION_MARK_AND_OLD_CHARMAP_ASSETS) $(JP_QUESTION_MARK_AND_OLD_CHARMAP_INTERMEDIATES)
 	rm -f $(JP_BATTLE_TEXTBOX_PALETTE)
 	rm -f $(JP_CONTEST_RESULTS_ASSETS)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
@@ -2970,9 +2971,6 @@ $(OBJ_DIR)/data/data_rest2c.o: data/data_rest2c.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o: data/data_b2d_gfx_pokemon_none.s baserom_jp.gba
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 
 $(OBJ_DIR)/data/multiboot_ereader.o: data/multiboot_ereader.s data/mb_ereader.gba
@@ -6682,3 +6680,29 @@ graphics/trainers/%.pal.gbapal: graphics/trainers/%.pal | tools
 	$(GFX) $< $@
 
 $(C_BUILDDIR)/graphics.o: src/data/graphics/trainers.h $(JP_TRAINER_GRAPHICS_ASSETS)
+
+# Complete question-mark pictures and the adjacent unused character-map resources.
+JP_QUESTION_MARK_AND_OLD_CHARMAP_ASSETS := \
+	graphics/pokemon/question_mark/circled/back.png.4bpp.lz \
+	graphics/pokemon/question_mark/circled/front.png.4bpp.lz \
+	graphics/pokemon/question_mark/circled/normal.pal.gbapal.lz \
+	graphics/pokemon/question_mark/circled/shiny.pal.gbapal.lz \
+	graphics/pokemon/question_mark/double/back.png.4bpp.lz \
+	graphics/pokemon/question_mark/double/front.png.4bpp.lz \
+	graphics/pokemon/question_mark/double/normal.pal.gbapal.lz \
+	graphics/pokemon/question_mark/double/shiny.pal.gbapal.lz \
+	graphics/unused/old_charmap.bin.lz \
+	graphics/unused/old_charmap.png.4bpp.lz \
+	graphics/unused/old_charmap.png.gbapal.lz
+JP_QUESTION_MARK_AND_OLD_CHARMAP_INTERMEDIATES := $(filter %.4bpp %.gbapal,$(patsubst %.lz,%,$(JP_QUESTION_MARK_AND_OLD_CHARMAP_ASSETS)))
+
+graphics/pokemon/question_mark/%.pal.gbapal: graphics/pokemon/question_mark/%.pal | tools
+	$(GFX) $< $@
+
+graphics/unused/old_charmap.png.4bpp: graphics/unused/old_charmap.png | tools
+	$(GFX) $< $@
+
+graphics/unused/old_charmap.png.gbapal: graphics/unused/old_charmap.png | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: src/data/graphics/pokemon.h $(JP_QUESTION_MARK_AND_OLD_CHARMAP_ASSETS)

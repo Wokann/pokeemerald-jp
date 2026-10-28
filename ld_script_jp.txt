@@ -10420,8 +10420,8 @@ SECTIONS {
         . = ALIGN(0x100000);
         FILL(0x00000000);
         src/graphics.o(.rodata.battle_textbox);
-        data/data_b2d_gfx_pokemon_none.o(.rodata);
-        data/data_b2d_gfx_pokemon_none.o(.rodata.data_b2d_gfx_pokemon_none_before_smokescreen_impact);
+        src/graphics.o(.rodata.pokemon_circled_question_mark_graphics);
+        src/graphics.o(.rodata.old_charmap_graphics);
         src/graphics.o(.rodata.smokescreen_impact_graphics);
         src/graphics.o(.rodata.pokeball_graphics);
         src/graphics.o(.rodata.pokeball_open_graphics);

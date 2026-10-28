@@ -5,6 +5,23 @@
 
 #include "data/graphics/trainers.h"
 
+#define CIRCLED_QUESTION_MARK_GRAPHICS __attribute__((section(".rodata.pokemon_circled_question_mark_graphics"), aligned(4)))
+
+CIRCLED_QUESTION_MARK_GRAPHICS const u32 gMonStillFrontPic_CircledQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/circled/front.png", ".4bpp.lz");
+CIRCLED_QUESTION_MARK_GRAPHICS const u32 gMonBackPic_CircledQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/circled/back.png", ".4bpp.lz");
+CIRCLED_QUESTION_MARK_GRAPHICS const u32 gMonPalette_CircledQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/circled/normal.pal", ".gbapal.lz");
+CIRCLED_QUESTION_MARK_GRAPHICS const u32 gMonShinyPalette_CircledQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/circled/shiny.pal", ".gbapal.lz");
+
+#undef CIRCLED_QUESTION_MARK_GRAPHICS
+
+#define OLD_CHARMAP_GRAPHICS __attribute__((section(".rodata.old_charmap_graphics"), aligned(4)))
+
+OLD_CHARMAP_GRAPHICS const u32 gUnusedGfx_OldCharmap[] = INCGFX_U32("graphics/unused/old_charmap.png", ".4bpp.lz"); // japanese table and bunch of stuff
+OLD_CHARMAP_GRAPHICS const u32 gUnusedTimemap_OldCharmap[] = INCGFX_U32("graphics/unused/old_charmap.bin", ".lz");
+OLD_CHARMAP_GRAPHICS const u32 gUnusedPal_OldCharmap[] = INCGFX_U32("graphics/unused/old_charmap.png", ".gbapal.lz");
+
+#undef OLD_CHARMAP_GRAPHICS
+
 #define POKEDEX_AREA_UNKNOWN_GRAPHICS __attribute__((section(".rodata.pokedex_area_unknown_graphics"), aligned(4)))
 
 POKEDEX_AREA_UNKNOWN_GRAPHICS const u16 gPokedexAreaScreenAreaUnknown_Pal[] = INCGFX_U16("graphics/pokedex/area_unknown.png", ".gbapal");

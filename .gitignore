@@ -149,3 +149,14 @@ graphics/trainers/**/*.png.gbapal
 graphics/trainers/**/*.png.gbapal.lz
 graphics/trainers/**/*.pal.gbapal
 graphics/trainers/**/*.pal.gbapal.lz
+
+# Rebuilt question-mark and unused character-map pictures, palettes and tilemap.
+graphics/pokemon/question_mark/**/*.png.4bpp
+graphics/pokemon/question_mark/**/*.png.4bpp.lz
+graphics/pokemon/question_mark/**/*.pal.gbapal
+graphics/pokemon/question_mark/**/*.pal.gbapal.lz
+graphics/unused/old_charmap.png.4bpp
+graphics/unused/old_charmap.png.4bpp.lz
+graphics/unused/old_charmap.png.gbapal
+graphics/unused/old_charmap.png.gbapal.lz
+graphics/unused/old_charmap.bin.lz

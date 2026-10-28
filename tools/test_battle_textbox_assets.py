@@ -47,7 +47,7 @@ class BattleTextboxTests(unittest.TestCase):
         self.assertNotIn('data/battle_textbox.o', linker + make)
         self.assertEqual(linker.count('src/graphics.o(.rodata.battle_textbox)'), 1)
         self.assertLess(linker.index('src/graphics.o(.rodata.battle_textbox)'),
-                        linker.index('data/data_b2d_gfx_pokemon_none.o(.rodata)'))
+                        linker.index('src/graphics.o(.rodata.pokemon_circled_question_mark_graphics)'))
 
     def test_source_tilemap_is_2048_typed_entries_using_only_native_tiles_and_palette_banks(self):
         data = (ROOT / (DIRECTORY + 'textbox_map.bin')).read_bytes()
