@@ -10413,7 +10413,13 @@ SECTIONS {
         src/m4a_tables.o(.rodata);
         data/sound_data.o(.rodata);
         INCLUDE ../../sound/song_order.ld
-        src/agb_flash_rodata.o(.rodata);
+        src/agb_flash_1m.o(.rodata.agb_flash_setup_infos);
+        src/agb_flash_1m.o(.rodata.agb_flash_setup_pointer_copies);
+        src/agb_flash_mx.o(.rodata.agb_flash_mx_data);
+        src/agb_flash_mx.o(.rodata.agb_flash_mx_pointer_copies);
+        src/agb_flash_le.o(.rodata.agb_flash_le_data);
+        src/siirtc.o(.rodata.siirtc_version);
+        src/siirtc.o(.rodata.siirtc_pointer_copies);
         src/librfu_rodata.o(.rodata);
         src/libisagbprn_rodata.o(.rodata);
         asm/libgcc_rodata.o(.rodata);

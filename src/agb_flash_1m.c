@@ -1,7 +1,27 @@
 #include "gba/gba.h"
 #include "gba/flash_internal.h"
 
-extern const struct FlashSetupInfo *const sSetupInfos[];
+static const struct FlashSetupInfo *const sSetupInfos[] __attribute__((section(".rodata.agb_flash_setup_infos"))) =
+{
+    &MX29L010,
+    &LE26FV10N1TS,
+    &DefaultFlash
+};
+
+// Retained JP copies of library state pointers; no runtime references.
+static const void *const sUnusedIdentifyFlashPointers[] __attribute__((section(".rodata.agb_flash_setup_pointer_copies"))) =
+{
+    (const void *)sSetupInfos,
+    (const void *)&ProgramFlashByte,
+    (const void *)&ProgramFlashSector,
+    (const void *)&EraseFlashChip,
+    (const void *)&EraseFlashSector,
+    (const void *)&WaitForFlashWrite,
+    (const void *)&gFlashMaxTime,
+    (const void *)&gFlash,
+    (const void *)&PollFlashStatus,
+    (const void *)&gFlashTimeoutFlag,
+};
 
 u16 IdentifyFlash(void)
 {

@@ -50,7 +50,7 @@ ASFILE := $(wildcard asm/*.s)
 AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # Assembly files that live under src/ like US pokeemerald
 # (crt0.s, libgcnmultiboot.s, m4a_1.s).
-C_ASM_SRCS := $(wildcard src/crt0.s src/libgcnmultiboot.s src/m4a_1.s src/agb_flash_rodata.s src/librfu_rodata.s src/libisagbprn_rodata.s src/libc/libc_rodata.s)
+C_ASM_SRCS := $(wildcard src/crt0.s src/libgcnmultiboot.s src/m4a_1.s src/librfu_rodata.s src/libisagbprn_rodata.s src/libc/libc_rodata.s)
 C_ASM_OBJS := $(patsubst src/%.s,$(OBJ_DIR)/src/%.o,$(C_ASM_SRCS))
 # Modules fully converted and wired into the build.  Add a module here
 # once every function in its asm file has been converted to C (or the

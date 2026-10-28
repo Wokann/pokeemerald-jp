@@ -1,6 +1,70 @@
 #include "gba/gba.h"
 #include "gba/flash_internal.h"
 
+const u16 mxMaxTime[] __attribute__((section(".rodata.agb_flash_mx_data"))) =
+{
+      10, 65469, TIMER_ENABLE | TIMER_INTR_ENABLE | TIMER_256CLK,
+      10, 65469, TIMER_ENABLE | TIMER_INTR_ENABLE | TIMER_256CLK,
+    2000, 65469, TIMER_ENABLE | TIMER_INTR_ENABLE | TIMER_256CLK,
+    2000, 65469, TIMER_ENABLE | TIMER_INTR_ENABLE | TIMER_256CLK,
+};
+
+const struct FlashSetupInfo MX29L010 __attribute__((section(".rodata.agb_flash_mx_data"))) =
+{
+    ProgramFlashByte_MX,
+    ProgramFlashSector_MX,
+    EraseFlashChip_MX,
+    EraseFlashSector_MX,
+    WaitForFlashWrite_Common,
+    mxMaxTime,
+    {
+        131072, // ROM size
+        {
+            4096, // sector size
+              12, // bit shift to multiply by sector size (4096 == 1 << 12)
+              32, // number of sectors
+               0  // appears to be unused
+        },
+        { 3, 1 }, // wait state setup data
+        { { 0xC2, 0x09 } } // ID
+    }
+};
+
+const struct FlashSetupInfo DefaultFlash __attribute__((section(".rodata.agb_flash_mx_data"))) =
+{
+    ProgramFlashByte_MX,
+    ProgramFlashSector_MX,
+    EraseFlashChip_MX,
+    EraseFlashSector_MX,
+    WaitForFlashWrite_Common,
+    mxMaxTime,
+    {
+        131072, // ROM size
+        {
+            4096, // sector size
+              12, // bit shift to multiply by sector size (4096 == 1 << 12)
+              32, // number of sectors
+               0  // appears to be unused
+        },
+        { 3, 1 }, // wait state setup data
+        { { 0x00, 0x00 } } // ID of 0
+    }
+};
+
+// Retained JP copies of library state pointers; no runtime references.
+static const void *const sUnusedFlashMxPointers[] __attribute__((section(".rodata.agb_flash_mx_pointer_copies"))) =
+{
+    (const void *)&gFlash,
+    (const void *)&WaitForFlashWrite,
+    (const void *)&gFlash,
+    (const void *)&WaitForFlashWrite,
+    (const void *)&gFlash,
+    (const void *)&WaitForFlashWrite,
+    (const void *)&WaitForFlashWrite,
+    (const void *)&gFlash,
+    (const void *)&gFlashNumRemainingBytes,
+};
+
 u16 EraseFlashChip_MX(void)
 {
     u16 result;

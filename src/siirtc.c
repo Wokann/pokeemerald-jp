@@ -68,7 +68,23 @@ static u8 ReadData();
 static void EnableGpioPortRead();
 static void DisableGpioPortRead();
 
-static const char AgbLibRtcVersion[] = "SIIRTC_V001";
+static const char AgbLibRtcVersion[] __attribute__((section(".rodata.siirtc_version"))) = "SIIRTC_V001";
+
+// Retained JP copies of library state pointers; no runtime references.
+static const void *const sUnusedRtcPointers[] __attribute__((section(".rodata.siirtc_pointer_copies"))) =
+{
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&sLocked,
+    (const void *)&GPIO_PORT_DIRECTION,
+};
 
 void SiiRtcUnprotect(void)
 {
