@@ -45058,7 +45058,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "b89856b75b2c8e25fca4470601a187951d164ca254825d8aa21c2e6f99a7600e"
+            "makefile_sha256": "d9e71e22f38bfc769cd79ca1dc13ed1e67c48c1edecc810eda2fb15ca7b07d96"
           }
         },
         {
@@ -45493,7 +45493,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "b89856b75b2c8e25fca4470601a187951d164ca254825d8aa21c2e6f99a7600e"
+          "sha256": "d9e71e22f38bfc769cd79ca1dc13ed1e67c48c1edecc810eda2fb15ca7b07d96"
         },
         {
           "path": "asm/macros.inc",
@@ -76412,7 +76412,7 @@
         {
           "path": "src/mirage_tower.c",
           "selector": "file",
-          "sha256": "fb98e0b0e597e56c626f2b4b9ee0bd41df6646061909d287d20a0339134738d9"
+          "sha256": "ded049b488ca06999ed917418f4df2e20e33454308bc336e0a889860a16f01b4"
         },
         {
           "path": "src/script_pokemon_util.c",
@@ -337580,7 +337580,7 @@
         {
           "path": "src/mirage_tower.c",
           "selector": "file",
-          "sha256": "fb98e0b0e597e56c626f2b4b9ee0bd41df6646061909d287d20a0339134738d9"
+          "sha256": "ded049b488ca06999ed917418f4df2e20e33454308bc336e0a889860a16f01b4"
         },
         {
           "path": "src/overworld.c",

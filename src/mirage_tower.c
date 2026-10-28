@@ -75,11 +75,12 @@ static void Task_FossilFallAndSink(u8);
 void SpriteCB_FallingFossil(struct Sprite *);
 void UpdateDisintegrationEffect(u8 *, u16, u8, u8, bool8);
 
-static const ALIGNED(2) u8 sMirageTower_Gfx[] = INCBIN_U8("graphics/mirage_tower/sMirageTower_Gfx.bin");
-static const u16 sMirageTowerTilemap[] = INCBIN_U16("graphics/mirage_tower/sMirageTowerTilemap.bin");
-static const u8 sFossil_Gfx[] = INCBIN_U8("graphics/mirage_tower/sFossil_Gfx.bin");
-static const u8 sMirageTowerCrumbles_Gfx[] = INCBIN_U8("graphics/mirage_tower/sMirageTowerCrumbles_Gfx.bin");
-static const u16 sMirageTowerCrumbles_Palette[] = INCBIN_U16("graphics/mirage_tower/sMirageTowerCrumbles_Palette.bin");
+static const ALIGNED(2) u8 sMirageTower_Gfx[] = INCGFX_U8("graphics/misc/mirage_tower.png", ".4bpp", "-num_tiles 73 -Wnum_tiles");
+static const u16 sMirageTowerTilemap[] = INCBIN_U16("graphics/misc/mirage_tower.bin");
+static const u16 sFossil_Pal[] = INCGFX_U16("graphics/object_events/pics/misc/fossil.png", ".gbapal"); // Unused
+static const u8 sFossil_Gfx[] = INCGFX_U8("graphics/object_events/pics/misc/fossil.png", ".4bpp"); // Duplicate of gObjectEventPic_Fossil
+static const u8 sMirageTowerCrumbles_Gfx[] = INCGFX_U8("graphics/misc/mirage_tower_crumbles.png", ".4bpp");
+static const u16 sMirageTowerCrumbles_Palette[] = INCGFX_U16("graphics/misc/mirage_tower_crumbles.png", ".gbapal");
 
 static const s16 sCeilingCrumblePositions[][3] =
 {

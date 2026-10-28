@@ -1529,9 +1529,15 @@ $(C_BUILDDIR)/braille.o: src/braille.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/braille.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/braille.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/braille.gen.s
-$(C_BUILDDIR)/mirage_tower.o: src/mirage_tower.c
+$(C_BUILDDIR)/mirage_tower.d: src/mirage_tower.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mirage_tower.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/mirage_tower.d
+
+$(C_BUILDDIR)/mirage_tower.o: src/mirage_tower.c Makefile
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mirage_tower.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mirage_tower.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/mirage_tower.gen.s
 $(C_BUILDDIR)/battle_transition_frontier.o: src/battle_transition_frontier.c $(wildcard graphics/battle_transitions/frontier_logo_center.* graphics/battle_transitions/frontier_logo_circles.*)
@@ -2118,7 +2124,13 @@ $(C_BUILDDIR)/diploma.o: src/diploma.c charmap.txt \
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/diploma.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/diploma.gen.s
 
-$(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/object_events/object_event_graphics.h src/data/object_events/object_event_pic_tables.h src/data/object_events/object_event_anims.h src/data/object_events/base_oam.h src/data/object_events/object_event_subsprites.h src/data/object_events/object_event_graphics_info.h charmap.txt \
+$(C_BUILDDIR)/event_object_movement.d: src/event_object_movement.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/event_object_movement.d
+
+$(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c Makefile src/data/object_events/object_event_graphics.h src/data/object_events/object_event_pic_tables.h src/data/object_events/object_event_anims.h src/data/object_events/base_oam.h src/data/object_events/object_event_subsprites.h src/data/object_events/object_event_graphics_info.h charmap.txt \
 	graphics/field_effects/pics/cut_grass.4bpp graphics/field_effects/palettes/cut_grass.gbapal \
 	graphics/field_effects/pics/ripple.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/pics/ash.png_mwidth_2__mheight_2.4bpp \
@@ -2341,11 +2353,11 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/pics/dolls/big_regice_doll.4bpp graphics/object_events/pics/dolls/big_registeel_doll.4bpp \
 	graphics/object_events/pics/misc/cuttable_tree.4bpp graphics/object_events/pics/misc/breakable_rock.4bpp \
 	graphics/object_events/pics/misc/pushable_boulder.4bpp graphics/object_events/pics/misc/mr_brineys_boat.4bpp \
-	graphics/object_events/pics/misc/fossil.4bpp graphics/object_events/pics/misc/submarine_shadow.4bpp \
+	graphics/object_events/pics/misc/submarine_shadow.4bpp \
 	graphics/object_events/palettes/submarine_shadow.gbapal graphics/object_events/pics/misc/truck.4bpp \
 	graphics/object_events/palettes/truck.gbapal
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/event_object_movement.gen.s
 
