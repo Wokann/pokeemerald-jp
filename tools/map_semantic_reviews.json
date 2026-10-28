@@ -134502,7 +134502,7 @@
           "labels": [
             "gText_NicknameThisPokemon"
           ],
-          "sha256": "c2266010c12d90465d96100f3015d78d8573ad525a792122b9f639250d73429b"
+          "sha256": "7e8fd19c738109547a2697be261b03fd41af90c1dad85e63f4a6a3cbc7668b5d"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -134518,7 +134518,7 @@
           "labels": [
             "gText_PkmnTransferredLanettesPC"
           ],
-          "sha256": "c9479cabb71d1d566a4d58bcb45e33ac067b53b2b962e70a80106ce3e94f9f9d"
+          "sha256": "99cfa14aa6e1d579dafe88c7a2bb1246e8b38d17687880b6137aff94873917e3"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -134526,7 +134526,7 @@
           "labels": [
             "gText_PkmnTransferredLanettesPCBoxFull"
           ],
-          "sha256": "11b6f069406cb51609c196ff38316959bdf0f601ee15defa5f8bfa47ddfaba57"
+          "sha256": "1bc21044d5117f35aaefdc47c798d243c615ce54d4559794f7bc0f421f49b9eb"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -134534,7 +134534,7 @@
           "labels": [
             "gText_PkmnTransferredSomeonesPC"
           ],
-          "sha256": "5b7f6d16a2dc1f06d8b9e4723f9193789cfb58232603bcdfe82a109881e02824"
+          "sha256": "57eaea6f87a66d3ad7362486dc6d00123e3f5222f136223e9d146b2863cb4126"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -134542,7 +134542,7 @@
           "labels": [
             "gText_PkmnTransferredSomeonesPCBoxFull"
           ],
-          "sha256": "f3361e0776c0b0b0d6d07b43f26a226e2855b40b79282997cc618e16b8b1976a"
+          "sha256": "841f612b48ae44d64f303a0ae8c14d0ff668dca80d915ba2f9b628cf95a30ddf"
         },
         {
           "path": "data/layouts/LittlerootTown_ProfessorBirchsLab/border.bin",
@@ -224525,7 +224525,7 @@
           "labels": [
             "gText_NicknameThisPokemon"
           ],
-          "sha256": "c2266010c12d90465d96100f3015d78d8573ad525a792122b9f639250d73429b"
+          "sha256": "7e8fd19c738109547a2697be261b03fd41af90c1dad85e63f4a6a3cbc7668b5d"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -224541,7 +224541,7 @@
           "labels": [
             "gText_PkmnTransferredLanettesPC"
           ],
-          "sha256": "c9479cabb71d1d566a4d58bcb45e33ac067b53b2b962e70a80106ce3e94f9f9d"
+          "sha256": "99cfa14aa6e1d579dafe88c7a2bb1246e8b38d17687880b6137aff94873917e3"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -224549,7 +224549,7 @@
           "labels": [
             "gText_PkmnTransferredLanettesPCBoxFull"
           ],
-          "sha256": "11b6f069406cb51609c196ff38316959bdf0f601ee15defa5f8bfa47ddfaba57"
+          "sha256": "1bc21044d5117f35aaefdc47c798d243c615ce54d4559794f7bc0f421f49b9eb"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -224557,7 +224557,7 @@
           "labels": [
             "gText_PkmnTransferredSomeonesPC"
           ],
-          "sha256": "5b7f6d16a2dc1f06d8b9e4723f9193789cfb58232603bcdfe82a109881e02824"
+          "sha256": "57eaea6f87a66d3ad7362486dc6d00123e3f5222f136223e9d146b2863cb4126"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -224565,7 +224565,7 @@
           "labels": [
             "gText_PkmnTransferredSomeonesPCBoxFull"
           ],
-          "sha256": "f3361e0776c0b0b0d6d07b43f26a226e2855b40b79282997cc618e16b8b1976a"
+          "sha256": "841f612b48ae44d64f303a0ae8c14d0ff668dca80d915ba2f9b628cf95a30ddf"
         },
         {
           "path": "data/layouts/RustboroCity_DevonCorp_2F/border.bin",
@@ -249707,7 +249707,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_ExplainContestRanks"
           ],
-          "sha256": "f889009f4ddec44ffb7bcd8a28555da2b56528e78e44d345cad1cbc896f38df4"
+          "sha256": "a3b88ba8ff411a0f9a1315dc399d56512b6b4cffc1cc0110cf6f31389f546074"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249715,7 +249715,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_ExplainContestTypes"
           ],
-          "sha256": "d296870b750cd2b5b874c5b1148903f22ff5cbdc8c918d88a1188978b53ea7a5"
+          "sha256": "47b01efb9afa730621147b35e57885cdbae2e2a60e5f1c560f7103d7a5e4678c"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249723,7 +249723,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_ExplainContests"
           ],
-          "sha256": "a02bd9abbf5fb0e313815bff96cbaea0f76d501ff2656ea9b164ea72e1fdbd2d"
+          "sha256": "b98e2fb5917f3481390e91f542d62e7806164a6959277dc257fbc2e46c159ae9"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249731,7 +249731,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_ExplainEMode"
           ],
-          "sha256": "e59c2a6aff5ad903659ae7e2f4ab0558315ef042ba15a3778fa17512c007aa7b"
+          "sha256": "cbd7aa966a6b2c8b36871f64750ae8cb5d14f955cffb0bf1d23110e2eb1a96ce"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249739,7 +249739,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_ExplainGMode"
           ],
-          "sha256": "06c813d634a1e6c3079667166258d485d84332982044a000d1bd62cbc54d4981"
+          "sha256": "50fa9e440ffecbf47afeb886212cc1a5f5466094aa79363ebc048c821906e3d2"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249747,7 +249747,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_ExplainLinkContest"
           ],
-          "sha256": "dbed558c5cf8f3d505a4feebd77d08dd4d50ad5e3163f8a63f98cbb613201124"
+          "sha256": "c2094901bf303750dd8d43cfb9dcfcaf1f5f7785e4b211ba067c0cd3ad40ba8c"
         },
         {
           "path": "data/text/tv/contest_interview.inc",
@@ -249803,7 +249803,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_NoWirelessAdapterInGMode"
           ],
-          "sha256": "13f126e8aac14e0bd17c71711001e7aee5a1b1a9e61b9b1b536a7a4af48bc353"
+          "sha256": "1e53c57321d3d491a117d6f1ad33c8d90ed41bd364f6fdca9fcb38e30628c1a9"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249827,7 +249827,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_PlayerAt4PCounterUseGMode"
           ],
-          "sha256": "a9a2b0bb25129b143c47060d85acaff45bbcaaeaf9a9b5836e21517a5e535a3b"
+          "sha256": "157b1fa98c981eac1482fc76e3e55f83407106874f7af7a8657cb9ade537a831"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249851,7 +249851,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_PleaseDecideLinkLeader"
           ],
-          "sha256": "fb7fb60a7a4db0d5e53adf264347bbd15f0dedd3b1858e8d404962dc09aa8751"
+          "sha256": "0f7b611f158eb5eb5f94a4d68977a62cbb13dc255d6f03bf33e59fe53c4d65aa"
         },
         {
           "path": "data/text/tv/contest_interview.inc",
@@ -249883,7 +249883,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_ProgressWillBeSaved"
           ],
-          "sha256": "cc8d4e6f0a5e3124147a7ea1f6a37213da2dbb6a5985678d9dd71a1331649f3e"
+          "sha256": "2ab509a8019f113f0ef0c289991ac15adc1371d90b675cda494de37ebbc7117e"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249891,7 +249891,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_ReceptionDontHavePokeblockCase"
           ],
-          "sha256": "1de9e7e4928f418b699a53cb43aa698ff6714a7fe8c84017d39a6147ae2da7fb"
+          "sha256": "10c2ab7ed6f9b26dce5faa6b42af83c9d9019b5d59f8f20ffd95833e07341bc0"
         },
         {
           "path": "data/text/tv/contest_interview.inc",
@@ -249931,7 +249931,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_WhichContestMode"
           ],
-          "sha256": "ad730f3b02f4945474b2e671464e37890510bab5c0a514e29c57c91c281e1434"
+          "sha256": "8837b3d51205c60704d4249e679b885cd7622832484979480c56aa36325b3ea3"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249955,7 +249955,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_YourMonIsEntryNum4"
           ],
-          "sha256": "8f33038682803517ff61815b4f36c7972889d66baf7efd98c4448b2f49d12474"
+          "sha256": "4aa09a1b40aae5c3f2e1433b945d62986229d8369ae915212e6971dd8a23d608"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -249963,7 +249963,7 @@
           "labels": [
             "LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX"
           ],
-          "sha256": "859bcddf3ab1e2dd84f15f30d1611913d5d1714980d99e30b33fbdbd3d691520"
+          "sha256": "398b3d9caa4a1cdaa82217b3e45bafe033b1a7abe6ea6a188cd4b30cb9e7fe3a"
         },
         {
           "path": "data/text/cable_club.inc",
@@ -268165,7 +268165,7 @@
           "labels": [
             "gText_NicknameThisPokemon"
           ],
-          "sha256": "c2266010c12d90465d96100f3015d78d8573ad525a792122b9f639250d73429b"
+          "sha256": "7e8fd19c738109547a2697be261b03fd41af90c1dad85e63f4a6a3cbc7668b5d"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -268181,7 +268181,7 @@
           "labels": [
             "gText_PkmnTransferredLanettesPC"
           ],
-          "sha256": "c9479cabb71d1d566a4d58bcb45e33ac067b53b2b962e70a80106ce3e94f9f9d"
+          "sha256": "99cfa14aa6e1d579dafe88c7a2bb1246e8b38d17687880b6137aff94873917e3"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -268189,7 +268189,7 @@
           "labels": [
             "gText_PkmnTransferredLanettesPCBoxFull"
           ],
-          "sha256": "11b6f069406cb51609c196ff38316959bdf0f601ee15defa5f8bfa47ddfaba57"
+          "sha256": "1bc21044d5117f35aaefdc47c798d243c615ce54d4559794f7bc0f421f49b9eb"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -268197,7 +268197,7 @@
           "labels": [
             "gText_PkmnTransferredSomeonesPC"
           ],
-          "sha256": "5b7f6d16a2dc1f06d8b9e4723f9193789cfb58232603bcdfe82a109881e02824"
+          "sha256": "57eaea6f87a66d3ad7362486dc6d00123e3f5222f136223e9d146b2863cb4126"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -268205,7 +268205,7 @@
           "labels": [
             "gText_PkmnTransferredSomeonesPCBoxFull"
           ],
-          "sha256": "f3361e0776c0b0b0d6d07b43f26a226e2855b40b79282997cc618e16b8b1976a"
+          "sha256": "841f612b48ae44d64f303a0ae8c14d0ff668dca80d915ba2f9b628cf95a30ddf"
         },
         {
           "path": "data/text/obtain_item.inc",
@@ -302485,7 +302485,7 @@
         {
           "path": "data/scripts/contest_hall.inc",
           "selector": "file",
-          "sha256": "d925bc0fc96427de9d337800143a200790c6d3bd1e53da0c0d788dee0648c7fb"
+          "sha256": "ae353e39f61f4d3a59c74e3c497fa3b7b9498f18220bd063fe91328207b02c9a"
         },
         {
           "path": "data/scripts/day_care.inc",
@@ -302645,7 +302645,7 @@
         {
           "path": "data/text/contest_link.inc",
           "selector": "file",
-          "sha256": "ffa54f23c99c45cbc9f1fed44378e373516f8682ef3456b582c9626f57fd9d68"
+          "sha256": "81dd0b8ffb2d0b0998c985507ff28ebe2078767e18866e069b32f09e63341f9c"
         },
         {
           "path": "data/text/contest_painting.inc",
@@ -302695,7 +302695,7 @@
         {
           "path": "data/text/pc_transfer.inc",
           "selector": "file",
-          "sha256": "ab23d10b5e2962a0d646f0e0dc9fcef14468b26485f9acdd70de93d563d01033"
+          "sha256": "0851d1da90c83ab9cfebced49e8f2aea28b7e2bd39c917fe8ee17533541bb283"
         },
         {
           "path": "data/text/pokedex_rating.inc",
@@ -329406,7 +329406,7 @@
         {
           "path": "data/scripts/contest_hall.inc",
           "selector": "file",
-          "sha256": "d925bc0fc96427de9d337800143a200790c6d3bd1e53da0c0d788dee0648c7fb"
+          "sha256": "ae353e39f61f4d3a59c74e3c497fa3b7b9498f18220bd063fe91328207b02c9a"
         },
         {
           "path": "data/scripts/day_care.inc",
@@ -329571,7 +329571,7 @@
         {
           "path": "data/text/contest_link.inc",
           "selector": "file",
-          "sha256": "ffa54f23c99c45cbc9f1fed44378e373516f8682ef3456b582c9626f57fd9d68"
+          "sha256": "81dd0b8ffb2d0b0998c985507ff28ebe2078767e18866e069b32f09e63341f9c"
         },
         {
           "path": "data/text/contest_painting.inc",
@@ -329621,7 +329621,7 @@
         {
           "path": "data/text/pc_transfer.inc",
           "selector": "file",
-          "sha256": "ab23d10b5e2962a0d646f0e0dc9fcef14468b26485f9acdd70de93d563d01033"
+          "sha256": "0851d1da90c83ab9cfebced49e8f2aea28b7e2bd39c917fe8ee17533541bb283"
         },
         {
           "path": "data/text/pokedex_rating.inc",
@@ -340013,7 +340013,7 @@
         {
           "path": "data/scripts/contest_hall.inc",
           "selector": "file",
-          "sha256": "d925bc0fc96427de9d337800143a200790c6d3bd1e53da0c0d788dee0648c7fb"
+          "sha256": "ae353e39f61f4d3a59c74e3c497fa3b7b9498f18220bd063fe91328207b02c9a"
         },
         {
           "path": "data/scripts/day_care.inc",
@@ -340173,7 +340173,7 @@
         {
           "path": "data/text/contest_link.inc",
           "selector": "file",
-          "sha256": "ffa54f23c99c45cbc9f1fed44378e373516f8682ef3456b582c9626f57fd9d68"
+          "sha256": "81dd0b8ffb2d0b0998c985507ff28ebe2078767e18866e069b32f09e63341f9c"
         },
         {
           "path": "data/text/contest_painting.inc",
@@ -340223,7 +340223,7 @@
         {
           "path": "data/text/pc_transfer.inc",
           "selector": "file",
-          "sha256": "ab23d10b5e2962a0d646f0e0dc9fcef14468b26485f9acdd70de93d563d01033"
+          "sha256": "0851d1da90c83ab9cfebced49e8f2aea28b7e2bd39c917fe8ee17533541bb283"
         },
         {
           "path": "data/text/pokedex_rating.inc",
@@ -348658,7 +348658,7 @@
           "labels": [
             "ContestHall_Text_CongratsTrainerXandMon"
           ],
-          "sha256": "13606fa8ade489b0fe6020a709364f1489a4a9629d5d229f1c930da641a14d1d"
+          "sha256": "58255a056e9a0c1e5fed9b008d8d2a1dd778ddfe5181567b9209a1635dbc71cf"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348666,7 +348666,7 @@
           "labels": [
             "ContestHall_Text_EntryXTrainersMon"
           ],
-          "sha256": "2c46244ba7aa880296e5796d22815e525d9099c29de690f02a83c1dce3e99bc1"
+          "sha256": "cca3de68ff85f6f6e2cb1f394241448fad7950ae10cf2660ebb06cd77191b467"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348674,7 +348674,7 @@
           "labels": [
             "ContestHall_Text_GettingStartedParticipantsAsFollows"
           ],
-          "sha256": "05eb06008452e6c1cae90ec1061694d236360cf244a435e9de2b224ea499d1b0"
+          "sha256": "48b270f849d06f1cb3ff656a7ebdf6d7f5d643b6536d8008ae2462d625504dfc"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348682,7 +348682,7 @@
           "labels": [
             "ContestHall_Text_GettingStartedParticipantsAsFollowsLink"
           ],
-          "sha256": "c7c8ebe5cc3effefdcccc4827e747ed17f9f44bc907aa21601269e2caa8db5f7"
+          "sha256": "b89194ddc952caeb6d4ecbdeabd8dd3b49f8abb914baef44941ad5b60201c91a"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348714,7 +348714,7 @@
           "labels": [
             "ContestHall_Text_LetsAppeal"
           ],
-          "sha256": "6bfff67b313db4bf31205ea9113bf0d1f14f671e0bfd00735bed93e2cd0bf126"
+          "sha256": "ea8fea611fd6c02b3d14e7d52ecdec708e62cdb8caed895342c8453c557af5b1"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348722,7 +348722,7 @@
           "labels": [
             "ContestHall_Text_ParticipantsAsFollows"
           ],
-          "sha256": "9bd8e8034ab3d3575cd23527b8ed2a9305c52f3fab57ebb85b2e3aafbabff0d5"
+          "sha256": "628a7f23a76450055037416824325329ee1c90aa7b6093bb28648506c226f53d"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348754,7 +348754,7 @@
           "labels": [
             "ContestHall_Text_SecondStageOfJudging"
           ],
-          "sha256": "9fb3bde523c8d682c6f38e85844cb5061c04d079486529338a2a195a6df96be8"
+          "sha256": "ebdaaa93c19e8c482d74631b643e1d4f61e5e7de05885c6bcadc47c28b43e32c"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348770,7 +348770,7 @@
           "labels": [
             "ContestHall_Text_ThankYouForAppeals"
           ],
-          "sha256": "8dc8c1c3c8d8da08a72ad87bb10d8e7d6beae438373a0eb95513a906eedba27a"
+          "sha256": "db956c659bd638632396a9c832b27737aeeb3271ad55eb0e66434f4053103792"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348778,7 +348778,7 @@
           "labels": [
             "ContestHall_Text_ThatsItForJudging"
           ],
-          "sha256": "022385745e73e71ec23852ebc706d0d1005dacc2883a3236674fe4e499151534"
+          "sha256": "546d0c64d7907f06f62f2acd1c0c5c904852e75014fc9b87e8829f08a825e7e7"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -348794,7 +348794,7 @@
           "labels": [
             "ContestHall_Text_VotingCompleteLetsAppeal"
           ],
-          "sha256": "5748b356f10419d9170c5045370039a6118618f86de34a0fbdfdcb38cd4fd27a"
+          "sha256": "e10cf8c839eb9877b6a89957d2d40bc8d51edb461c126c6ab3c28f14e997d608"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -371333,7 +371333,7 @@
         {
           "path": "data/scripts/contest_hall.inc",
           "selector": "file",
-          "sha256": "d925bc0fc96427de9d337800143a200790c6d3bd1e53da0c0d788dee0648c7fb"
+          "sha256": "ae353e39f61f4d3a59c74e3c497fa3b7b9498f18220bd063fe91328207b02c9a"
         },
         {
           "path": "data/scripts/day_care.inc",
@@ -371493,7 +371493,7 @@
         {
           "path": "data/text/contest_link.inc",
           "selector": "file",
-          "sha256": "ffa54f23c99c45cbc9f1fed44378e373516f8682ef3456b582c9626f57fd9d68"
+          "sha256": "81dd0b8ffb2d0b0998c985507ff28ebe2078767e18866e069b32f09e63341f9c"
         },
         {
           "path": "data/text/contest_painting.inc",
@@ -371543,7 +371543,7 @@
         {
           "path": "data/text/pc_transfer.inc",
           "selector": "file",
-          "sha256": "ab23d10b5e2962a0d646f0e0dc9fcef14468b26485f9acdd70de93d563d01033"
+          "sha256": "0851d1da90c83ab9cfebced49e8f2aea28b7e2bd39c917fe8ee17533541bb283"
         },
         {
           "path": "data/text/pokedex_rating.inc",
@@ -415370,7 +415370,7 @@
         {
           "path": "data/scripts/contest_hall.inc",
           "selector": "file",
-          "sha256": "d925bc0fc96427de9d337800143a200790c6d3bd1e53da0c0d788dee0648c7fb"
+          "sha256": "ae353e39f61f4d3a59c74e3c497fa3b7b9498f18220bd063fe91328207b02c9a"
         },
         {
           "path": "data/scripts/day_care.inc",
@@ -415530,7 +415530,7 @@
         {
           "path": "data/text/contest_link.inc",
           "selector": "file",
-          "sha256": "ffa54f23c99c45cbc9f1fed44378e373516f8682ef3456b582c9626f57fd9d68"
+          "sha256": "81dd0b8ffb2d0b0998c985507ff28ebe2078767e18866e069b32f09e63341f9c"
         },
         {
           "path": "data/text/contest_painting.inc",
@@ -415580,7 +415580,7 @@
         {
           "path": "data/text/pc_transfer.inc",
           "selector": "file",
-          "sha256": "ab23d10b5e2962a0d646f0e0dc9fcef14468b26485f9acdd70de93d563d01033"
+          "sha256": "0851d1da90c83ab9cfebced49e8f2aea28b7e2bd39c917fe8ee17533541bb283"
         },
         {
           "path": "data/text/pokedex_rating.inc",
@@ -416742,7 +416742,7 @@
         {
           "path": "data/scripts/contest_hall.inc",
           "selector": "file",
-          "sha256": "d925bc0fc96427de9d337800143a200790c6d3bd1e53da0c0d788dee0648c7fb"
+          "sha256": "ae353e39f61f4d3a59c74e3c497fa3b7b9498f18220bd063fe91328207b02c9a"
         },
         {
           "path": "data/scripts/day_care.inc",
@@ -416907,7 +416907,7 @@
         {
           "path": "data/text/contest_link.inc",
           "selector": "file",
-          "sha256": "ffa54f23c99c45cbc9f1fed44378e373516f8682ef3456b582c9626f57fd9d68"
+          "sha256": "81dd0b8ffb2d0b0998c985507ff28ebe2078767e18866e069b32f09e63341f9c"
         },
         {
           "path": "data/text/contest_painting.inc",
@@ -416957,7 +416957,7 @@
         {
           "path": "data/text/pc_transfer.inc",
           "selector": "file",
-          "sha256": "ab23d10b5e2962a0d646f0e0dc9fcef14468b26485f9acdd70de93d563d01033"
+          "sha256": "0851d1da90c83ab9cfebced49e8f2aea28b7e2bd39c917fe8ee17533541bb283"
         },
         {
           "path": "data/text/pokedex_rating.inc",
@@ -427145,7 +427145,7 @@
         {
           "path": "data/scripts/contest_hall.inc",
           "selector": "file",
-          "sha256": "d925bc0fc96427de9d337800143a200790c6d3bd1e53da0c0d788dee0648c7fb"
+          "sha256": "ae353e39f61f4d3a59c74e3c497fa3b7b9498f18220bd063fe91328207b02c9a"
         },
         {
           "path": "data/scripts/day_care.inc",
@@ -427305,7 +427305,7 @@
         {
           "path": "data/text/contest_link.inc",
           "selector": "file",
-          "sha256": "ffa54f23c99c45cbc9f1fed44378e373516f8682ef3456b582c9626f57fd9d68"
+          "sha256": "81dd0b8ffb2d0b0998c985507ff28ebe2078767e18866e069b32f09e63341f9c"
         },
         {
           "path": "data/text/contest_painting.inc",
@@ -427355,7 +427355,7 @@
         {
           "path": "data/text/pc_transfer.inc",
           "selector": "file",
-          "sha256": "ab23d10b5e2962a0d646f0e0dc9fcef14468b26485f9acdd70de93d563d01033"
+          "sha256": "0851d1da90c83ab9cfebced49e8f2aea28b7e2bd39c917fe8ee17533541bb283"
         },
         {
           "path": "data/text/pokedex_rating.inc",
@@ -452736,7 +452736,7 @@
           "labels": [
             "gText_NicknameThisPokemon"
           ],
-          "sha256": "c2266010c12d90465d96100f3015d78d8573ad525a792122b9f639250d73429b"
+          "sha256": "7e8fd19c738109547a2697be261b03fd41af90c1dad85e63f4a6a3cbc7668b5d"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -452752,7 +452752,7 @@
           "labels": [
             "gText_PkmnTransferredLanettesPC"
           ],
-          "sha256": "c9479cabb71d1d566a4d58bcb45e33ac067b53b2b962e70a80106ce3e94f9f9d"
+          "sha256": "99cfa14aa6e1d579dafe88c7a2bb1246e8b38d17687880b6137aff94873917e3"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -452760,7 +452760,7 @@
           "labels": [
             "gText_PkmnTransferredLanettesPCBoxFull"
           ],
-          "sha256": "11b6f069406cb51609c196ff38316959bdf0f601ee15defa5f8bfa47ddfaba57"
+          "sha256": "1bc21044d5117f35aaefdc47c798d243c615ce54d4559794f7bc0f421f49b9eb"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -452768,7 +452768,7 @@
           "labels": [
             "gText_PkmnTransferredSomeonesPC"
           ],
-          "sha256": "5b7f6d16a2dc1f06d8b9e4723f9193789cfb58232603bcdfe82a109881e02824"
+          "sha256": "57eaea6f87a66d3ad7362486dc6d00123e3f5222f136223e9d146b2863cb4126"
         },
         {
           "path": "data/text/pc_transfer.inc",
@@ -452776,7 +452776,7 @@
           "labels": [
             "gText_PkmnTransferredSomeonesPCBoxFull"
           ],
-          "sha256": "f3361e0776c0b0b0d6d07b43f26a226e2855b40b79282997cc618e16b8b1976a"
+          "sha256": "841f612b48ae44d64f303a0ae8c14d0ff668dca80d915ba2f9b628cf95a30ddf"
         },
         {
           "path": "data/layouts/Route119_WeatherInstitute_2F/border.bin",
@@ -472185,7 +472185,7 @@
           "labels": [
             "ContestHall_Text_CongratsTrainerXandMon"
           ],
-          "sha256": "13606fa8ade489b0fe6020a709364f1489a4a9629d5d229f1c930da641a14d1d"
+          "sha256": "58255a056e9a0c1e5fed9b008d8d2a1dd778ddfe5181567b9209a1635dbc71cf"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472193,7 +472193,7 @@
           "labels": [
             "ContestHall_Text_EntryXTrainersMon"
           ],
-          "sha256": "2c46244ba7aa880296e5796d22815e525d9099c29de690f02a83c1dce3e99bc1"
+          "sha256": "cca3de68ff85f6f6e2cb1f394241448fad7950ae10cf2660ebb06cd77191b467"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472201,7 +472201,7 @@
           "labels": [
             "ContestHall_Text_GettingStartedParticipantsAsFollows"
           ],
-          "sha256": "05eb06008452e6c1cae90ec1061694d236360cf244a435e9de2b224ea499d1b0"
+          "sha256": "48b270f849d06f1cb3ff656a7ebdf6d7f5d643b6536d8008ae2462d625504dfc"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472209,7 +472209,7 @@
           "labels": [
             "ContestHall_Text_GettingStartedParticipantsAsFollowsLink"
           ],
-          "sha256": "c7c8ebe5cc3effefdcccc4827e747ed17f9f44bc907aa21601269e2caa8db5f7"
+          "sha256": "b89194ddc952caeb6d4ecbdeabd8dd3b49f8abb914baef44941ad5b60201c91a"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472241,7 +472241,7 @@
           "labels": [
             "ContestHall_Text_LetsAppeal"
           ],
-          "sha256": "6bfff67b313db4bf31205ea9113bf0d1f14f671e0bfd00735bed93e2cd0bf126"
+          "sha256": "ea8fea611fd6c02b3d14e7d52ecdec708e62cdb8caed895342c8453c557af5b1"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472249,7 +472249,7 @@
           "labels": [
             "ContestHall_Text_ParticipantsAsFollows"
           ],
-          "sha256": "9bd8e8034ab3d3575cd23527b8ed2a9305c52f3fab57ebb85b2e3aafbabff0d5"
+          "sha256": "628a7f23a76450055037416824325329ee1c90aa7b6093bb28648506c226f53d"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472281,7 +472281,7 @@
           "labels": [
             "ContestHall_Text_SecondStageOfJudging"
           ],
-          "sha256": "9fb3bde523c8d682c6f38e85844cb5061c04d079486529338a2a195a6df96be8"
+          "sha256": "ebdaaa93c19e8c482d74631b643e1d4f61e5e7de05885c6bcadc47c28b43e32c"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472297,7 +472297,7 @@
           "labels": [
             "ContestHall_Text_ThankYouForAppeals"
           ],
-          "sha256": "8dc8c1c3c8d8da08a72ad87bb10d8e7d6beae438373a0eb95513a906eedba27a"
+          "sha256": "db956c659bd638632396a9c832b27737aeeb3271ad55eb0e66434f4053103792"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472305,7 +472305,7 @@
           "labels": [
             "ContestHall_Text_ThatsItForJudging"
           ],
-          "sha256": "022385745e73e71ec23852ebc706d0d1005dacc2883a3236674fe4e499151534"
+          "sha256": "546d0c64d7907f06f62f2acd1c0c5c904852e75014fc9b87e8829f08a825e7e7"
         },
         {
           "path": "data/scripts/contest_hall.inc",
@@ -472321,7 +472321,7 @@
           "labels": [
             "ContestHall_Text_VotingCompleteLetsAppeal"
           ],
-          "sha256": "5748b356f10419d9170c5045370039a6118618f86de34a0fbdfdcb38cd4fd27a"
+          "sha256": "e10cf8c839eb9877b6a89957d2d40bc8d51edb461c126c6ab3c28f14e997d608"
         },
         {
           "path": "data/scripts/contest_hall.inc",
