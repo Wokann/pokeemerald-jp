@@ -1480,19 +1480,6 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/title_screen/press_start.gbapal graphics/title_screen/press_start.4bpp.lz \
 	graphics/title_screen/pokemon_logo.gbapal graphics/title_screen/pokemon_logo.bin.lz graphics/title_screen/pokemon_logo.8bpp.lz \
 	graphics/title_screen/emerald_version.8bpp.lz graphics/title_screen/clouds.bin.lz \
-	graphics/balls/poke.4bpp.lz graphics/balls/poke.gbapal.lz \
-	graphics/balls/great.4bpp.lz graphics/balls/great.gbapal.lz \
-	graphics/balls/safari.4bpp.lz graphics/balls/safari.gbapal.lz \
-	graphics/balls/ultra.4bpp.lz graphics/balls/ultra.gbapal.lz \
-	graphics/balls/master.4bpp.lz graphics/balls/master.gbapal.lz \
-	graphics/balls/net.4bpp.lz graphics/balls/net.gbapal.lz \
-	graphics/balls/dive.4bpp.lz graphics/balls/dive.gbapal.lz \
-	graphics/balls/nest.4bpp.lz graphics/balls/nest.gbapal.lz \
-	graphics/balls/repeat.4bpp.lz graphics/balls/repeat.gbapal.lz \
-	graphics/balls/timer.4bpp.lz graphics/balls/timer.gbapal.lz \
-	graphics/balls/luxury.4bpp.lz graphics/balls/luxury.gbapal.lz \
-	graphics/balls/premier.4bpp.lz graphics/balls/premier.gbapal.lz \
-	graphics/balls/open.4bpp.lz \
 	graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin \
 	graphics/pokedex/start_menu_main.bin.lz graphics/pokedex/start_menu_search_results.bin.lz \
 	graphics/pokedex/list.bin.lz graphics/pokedex/list_underlay.bin.lz \
