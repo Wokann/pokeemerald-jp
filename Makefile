@@ -1170,7 +1170,7 @@ clean: clean-tools
 	rm -f $(JP_STRUCTURED_MAP_EVENTS)
 	rm -f $(JP_GENERATED_HEAL_LOCATION_HEADERS)
 	rm -f $(JP_GENERATED_REGION_MAP_HEADERS) $(JP_REGION_MAP_ASSETS) $(JP_REGION_MAP_INTERMEDIATES)
-	rm -f $(JP_SLOT_MACHINE_ASSETS) $(JP_SLOT_MACHINE_INTERMEDIATES)
+	rm -f $(JP_SLOT_MACHINE_INTERMEDIATES)
 	rm -f $(JP_CONTEST_PAINTING_ASSETS) $(JP_CONTEST_PAINTING_INTERMEDIATES)
 	rm -f $(JP_BATTLE_RECORDS_ASSETS)
 	rm -f $(JP_MON_MARKINGS_ASSETS)
@@ -2727,68 +2727,21 @@ $(C_BUILDDIR)/libc/mprec.o: src/libc/mprec.c
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/libc/mprec_gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/libc/mprec_gen.s
 
-JP_SLOT_MACHINE_ASSETS := graphics/slot_machine/bolt.4bpp \
-    graphics/slot_machine/digital_display.4bpp.lz \
-    graphics/slot_machine/digital_display.gbapal \
-    graphics/slot_machine/duck.4bpp \
-    graphics/slot_machine/flashing_lights_inside.gbapal \
-    graphics/slot_machine/flashing_lights_middle.gbapal \
-    graphics/slot_machine/flashing_lights_outside.gbapal \
-    graphics/slot_machine/large_bolt/0.4bpp \
-    graphics/slot_machine/large_bolt/1.4bpp \
-    graphics/slot_machine/menu.4bpp.lz \
-    graphics/slot_machine/menu.gbapal \
-    graphics/slot_machine/numbers/0.4bpp \
-    graphics/slot_machine/numbers/1.4bpp \
-    graphics/slot_machine/numbers/2.4bpp \
-    graphics/slot_machine/numbers/3.4bpp \
-    graphics/slot_machine/numbers/4.4bpp \
-    graphics/slot_machine/numbers/5.4bpp \
-    graphics/slot_machine/numbers/6.4bpp \
-    graphics/slot_machine/numbers/7.4bpp \
-    graphics/slot_machine/numbers/8.4bpp \
-    graphics/slot_machine/numbers/9.4bpp \
-    graphics/slot_machine/pika_aura.4bpp \
-    graphics/slot_machine/pokeball_shining_0.gbapal \
-    graphics/slot_machine/pokeball_shining_1.gbapal \
-    graphics/slot_machine/pokeball_shining_2.gbapal \
-    graphics/slot_machine/reel_symbols/1.4bpp \
-    graphics/slot_machine/reel_symbols/1.gbapal \
-    graphics/slot_machine/reel_symbols/2.4bpp \
-    graphics/slot_machine/reel_symbols/3.4bpp \
-    graphics/slot_machine/reel_symbols/4.4bpp \
-    graphics/slot_machine/reel_symbols/5.4bpp \
-    graphics/slot_machine/reel_symbols/6.4bpp \
-    graphics/slot_machine/reel_symbols/7.4bpp \
-    graphics/slot_machine/reel_time_explosion/0.4bpp \
-    graphics/slot_machine/reel_time_explosion/0.gbapal \
-    graphics/slot_machine/reel_time_explosion/1.4bpp \
-    graphics/slot_machine/reel_time_gfx.4bpp.lz \
-    graphics/slot_machine/reel_time_machine.gbapal \
-    graphics/slot_machine/reel_time_number_gap.4bpp \
-    graphics/slot_machine/reel_time_numbers/0.4bpp \
-    graphics/slot_machine/reel_time_numbers/1.4bpp \
-    graphics/slot_machine/reel_time_numbers/2.4bpp \
-    graphics/slot_machine/reel_time_numbers/3.4bpp \
-    graphics/slot_machine/reel_time_numbers/4.4bpp \
-    graphics/slot_machine/reel_time_numbers/5.4bpp \
-    graphics/slot_machine/reel_time_pikachu.gbapal \
-    graphics/slot_machine/shadow.4bpp \
-    graphics/slot_machine/shadow.gbapal \
-    graphics/slot_machine/smoke.4bpp \
-    graphics/slot_machine/smoke.gbapal
-JP_SLOT_MACHINE_INTERMEDIATES := graphics/slot_machine/digital_display.4bpp \
-    graphics/slot_machine/menu.4bpp \
-    graphics/slot_machine/reel_time_gfx.4bpp \
+JP_SLOT_MACHINE_INTERMEDIATES := graphics/slot_machine/reel_time_pikachu.4bpp \
     graphics/slot_machine/reel_time_machine.4bpp \
-    graphics/slot_machine/reel_time_pikachu.4bpp
+    graphics/slot_machine/reel_time_gfx.4bpp
 
-$(C_BUILDDIR)/slot_machine.o: src/slot_machine.c $(JP_SLOT_MACHINE_ASSETS) graphics/slot_machine/reel_time_window.bin
+$(C_BUILDDIR)/slot_machine.d: src/slot_machine.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/slot_machine.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/slot_machine.d
+
+$(C_BUILDDIR)/slot_machine.o: src/slot_machine.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/slot_machine.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/slot_machine.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/slot_machine.gen.s
-$(C_BUILDDIR)/graphics.o: src/data/graphics/slot_machine.h $(JP_SLOT_MACHINE_ASSETS)
 
 graphics/slot_machine/reel_time_gfx.4bpp: graphics/slot_machine/reel_time_pikachu.4bpp \
                                           graphics/slot_machine/reel_time_machine.4bpp | tools

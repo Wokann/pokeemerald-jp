@@ -7786,22 +7786,22 @@ static const u16 sNESWDiagLit_Pal[] SLOT_MACHINE_DATA(sNESWDiagLit_Pal) =
 {RGB(31, 21, 18)};
 
 static const u16 sFlashingLightsInside_Pal[] SLOT_MACHINE_DATA(sFlashingLightsInside_Pal) =
-INCBIN_U16("graphics/slot_machine/flashing_lights_inside.gbapal");
+INCGFX_U16("graphics/slot_machine/flashing_lights_inside.pal", ".gbapal");
 
 static const u16 sFlashingLightsMiddle_Pal[] SLOT_MACHINE_DATA(sFlashingLightsMiddle_Pal) =
-INCBIN_U16("graphics/slot_machine/flashing_lights_middle.gbapal");
+INCGFX_U16("graphics/slot_machine/flashing_lights_middle.pal", ".gbapal");
 
 static const u16 sFlashingLightsOutside_Pal[] SLOT_MACHINE_DATA(sFlashingLightsOutside_Pal) =
-INCBIN_U16("graphics/slot_machine/flashing_lights_outside.gbapal");
+INCGFX_U16("graphics/slot_machine/flashing_lights_outside.pal", ".gbapal");
 
 static const u16 sPokeballShining0_Pal[] SLOT_MACHINE_DATA(sPokeballShining0_Pal) =
-INCBIN_U16("graphics/slot_machine/pokeball_shining_0.gbapal");
+INCGFX_U16("graphics/slot_machine/pokeball_shining_0.pal", ".gbapal");
 
 static const u16 sPokeballShining1_Pal[] SLOT_MACHINE_DATA(sPokeballShining1_Pal) =
-INCBIN_U16("graphics/slot_machine/pokeball_shining_1.gbapal");
+INCGFX_U16("graphics/slot_machine/pokeball_shining_1.pal", ".gbapal");
 
 static const u16 sPokeballShining2_Pal[] SLOT_MACHINE_DATA(sPokeballShining2_Pal) =
-INCBIN_U16("graphics/slot_machine/pokeball_shining_2.gbapal");
+INCGFX_U16("graphics/slot_machine/pokeball_shining_2.pal", ".gbapal");
 
 static const u16 *const sPokeballShiningPalTable[] SLOT_MACHINE_DATA(sPokeballShiningPalTable) =
 {
@@ -7834,6 +7834,6 @@ static const struct SpritePalette sSlotMachineSpritePalettes[] SLOT_MACHINE_DATA
 };
 
 static const u32 sReelTimeGfx[] SLOT_MACHINE_DATA(sReelTimeGfx) =
-INCBIN_U32("graphics/slot_machine/reel_time_gfx.4bpp.lz");
+INCGFX_U32("graphics/slot_machine/reel_time_gfx.4bpp", ".lz");
 
 #undef SLOT_MACHINE_DATA

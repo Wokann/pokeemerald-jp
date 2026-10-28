@@ -4584,7 +4584,7 @@
             "-include $(C_BUILDDIR)/pokedex_area_screen.d",
             "$(C_BUILDDIR)/pokedex_area_screen.o:"
           ],
-          "sha256": "b2aca4271d3a43e2aa1680e5131bbbc74cd975e98a76ff4556da128c558959c6"
+          "sha256": "08473a455a1eee9a54fff9190b6c722afbc4699b818876fb94c1f1671b9607c1"
         },
         {
           "path": "ld_script_jp.txt",
@@ -45058,7 +45058,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "d078cbaf44258378545b5daf78c132020f98ba7f5321d9404a901b3e7d71defc"
+            "makefile_sha256": "f57cbcff27176cf9a1edd700a67e28c2f7e3bade9b3b8497168c57e5a00c8c0d"
           }
         },
         {
@@ -45493,7 +45493,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "d078cbaf44258378545b5daf78c132020f98ba7f5321d9404a901b3e7d71defc"
+          "sha256": "f57cbcff27176cf9a1edd700a67e28c2f7e3bade9b3b8497168c57e5a00c8c0d"
         },
         {
           "path": "asm/macros.inc",
@@ -212441,7 +212441,7 @@
         {
           "path": "src/slot_machine.c",
           "selector": "file",
-          "sha256": "4777cd79d9f846387feb1fc524b94f22ea317182359314c2449eeda7303b6692"
+          "sha256": "44d4e8a17ab7043cf2c746e0627820f09d95812f43ef80d243d4efd27adca3d3"
         },
         {
           "path": "src/starter_choose.c",

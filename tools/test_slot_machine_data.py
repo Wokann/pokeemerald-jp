@@ -14,7 +14,7 @@ CODE_START, CODE_END = 0x0812A4EC, 0x0812FDE0
 DATA_START, DATA_END = 0x08582308, 0x085886AC
 CODE_SHA256 = 'c6d47b2b3e75ad924829f809b9e193b41a80b7b6a9adc4010f61ca5b4d90b40a'
 DATA_SHA256 = 'e427ae35f89409f31fa7f5489934ee8fe2cbf22a405375f3505b36713a349137'
-RESOURCE_RE = re.compile(r'^SLOT_MACHINE_GRAPHICS\((\w+)\) const (u8|u16|u32) \w+\[\] = INCBIN_U(?:8|16|32)\("([^"]+)"\);$', re.M)
+RESOURCE_RE = re.compile(r'^SLOT_MACHINE_GRAPHICS\((\w+)\) const (u8|u16|u32) \w+\[\] = INC(?:BIN|GFX)_U(?:8|16|32)\("([^"]+)"(?:, "([^"]+)")?\);$', re.M)
 OTHER_GRAPHICS = {
     'gSlotMachineMenu_Pal': (0x0858544C, 160),
     'gSlotMachineMenu_Gfx': (0x08586F4C, 2976),
@@ -47,7 +47,7 @@ def fresh_object(source, output, name, function_sections=False):
     cpp = run(['cpp', '-iquote', 'include', '-iquote', 'src', '-Wno-trigraphs',
                '-I', 'tools/agbcc/include', '-I', 'tools/agbcc', '-nostdinc',
                '-undef', '-std=gnu89', '-P', '-x', 'c', '-'], input=source, text=True).stdout
-    preprocessed = run(['tools/preproc/preproc', '-i', name, 'charmap.txt'],
+    preprocessed = run(['tools/preproc/preproc', '-i', '-g', 'build/pokeemerald-jp/incgfx/', name, 'charmap.txt'],
                        input=cpp, text=True).stdout
     flags = ['-mthumb-interwork', '-O2', '-fhex-asm']
     if function_sections:
@@ -88,8 +88,13 @@ class SlotMachineDataTests(unittest.TestCase):
         slot_text = strings[strings.index('#define STRINGS_SLOT_MACHINE'):]
         self.assertRegex(slot_text, r'const u8 gText_ReelTimeHelp\[\] = __\(\s*"BDタイム')
         self.assertIn('ビッグボーナスがでると　しゅうりょう$　");', strings)
-        self.assertIn('$(PREPROC) -i $< charmap.txt', make[make.rfind('$(C_BUILDDIR)/slot_machine.o:'):])
-        self.assertIn('rm -f $(JP_SLOT_MACHINE_ASSETS) $(JP_SLOT_MACHINE_INTERMEDIATES)', make)
+        self.assertIn('$(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt',
+                      make[make.rfind('$(C_BUILDDIR)/slot_machine.o:'):])
+        self.assertIn('$(C_BUILDDIR)/slot_machine.d: src/slot_machine.c Makefile | tools', make)
+        self.assertNotIn('JP_SLOT_MACHINE_ASSETS', make)
+        self.assertIn('rm -f $(JP_SLOT_MACHINE_INTERMEDIATES)', make)
+        self.assertEqual(header.count('INCGFX_'), 43)
+        self.assertEqual(header.count('INCBIN_'), 3)
         self.assertIn('graphics/slot_machine/reel_time_gfx.4bpp:', make)
         first = linker.index('src/graphics.o(.rodata.slot_machine_gfx.gSlotMachineReelSymbol1Tiles)')
         last = linker.index('src/strings.o(.rodata.strings_slot_machine)')
@@ -107,25 +112,22 @@ class SlotMachineDataTests(unittest.TestCase):
         specs = RESOURCE_RE.findall((ROOT / HEADER).read_text())
         with tempfile.TemporaryDirectory(prefix='slot-machine-assets-') as directory:
             temporary = Path(directory)
-            def encode(path, name):
+            def encode(path, name, extension=None):
                 path = Path(path)
-                if path.suffix == '.bin':
+                if extension is None:
+                    self.assertEqual(path.suffix, '.bin')
                     return (ROOT / path).read_bytes()
-                compressed = path.suffix == '.lz'
-                raw_path = Path(str(path)[:-3]) if compressed else path
-                native = raw_path.with_suffix('.pal') if raw_path.suffix == '.gbapal' else raw_path.with_suffix('.png')
-                if not (ROOT / native).exists():
-                    native = raw_path.with_suffix('.png')
-                self.assertTrue((ROOT / native).exists(), str(native))
-                output = temporary / (name + raw_path.suffix)
-                run(['tools/gbagfx/gbagfx', ROOT / native, output])
+                compressed = extension.endswith('.lz')
+                raw_extension = extension[:-3] if compressed else extension
+                output = temporary / (name + raw_extension)
+                run(['tools/gbagfx/gbagfx', ROOT / path, output])
                 if compressed:
-                    packed = temporary / (name + '.4bpp.lz')
+                    packed = temporary / (name + extension)
                     run(['tools/gbagfx/gbagfx', output, packed])
                     output = packed
                 return output.read_bytes()
-            for name, kind, path in specs:
-                encoded = encode(path, name)
+            for name, kind, path, extension in specs:
+                encoded = encode(path, name, extension or None)
                 if kind == 'u8':
                     start, size = cursor, len(encoded)
                     cursor += size
@@ -151,7 +153,7 @@ class SlotMachineDataTests(unittest.TestCase):
                                  ('pokeball_shining_0', 0x5855B4),
                                  ('pokeball_shining_1', 0x5855D4),
                                  ('pokeball_shining_2', 0x5855F4)):
-                self.assertEqual(encode('graphics/slot_machine/' + stem + '.gbapal', stem), rom[offset:offset + 32])
+                self.assertEqual(encode('graphics/slot_machine/' + stem + '.pal', stem, '.gbapal'), rom[offset:offset + 32])
             self.assertEqual((ROOT / 'graphics/slot_machine/reel_time_window.bin').read_bytes(), rom[0x587F9C:0x588154])
 
     @unittest.skipUnless((ROOT / 'pokeemerald_jp.elf').exists(), 'linked JP ELF required')
