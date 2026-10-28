@@ -9293,7 +9293,7 @@ SECTIONS {
         src/data/trainers.o(.rodata);
         src/data/text/species_names.o(.rodata);
         src/data/text/move_names.o(.rodata);
-        data/data_b2.o(.rodata);
+        src/battle_bg.o(.rodata.battle_bg_interface_data);
         sBattleEnvironmentTable = .;
         src/battle_bg.o(.rodata.battle_bg_environment_data);
         src/battle_main.o(.rodata.battle_main_init_data);
@@ -9301,7 +9301,6 @@ SECTIONS {
         src/battle_main.o(.rodata.battle_main_oam_data);
         src/battle_main.o(.rodata.battle_main_anim_data);
         src/battle_main.o(.rodata.battle_main_type_data);
-        data/data_b2.o(.rodata.battle_main_static_tail);
         src/data/text/type_names.o(.rodata);
         . = ALIGN(4);
         src/battle_main.o(.rodata.battle_main_trainer_money_data);
@@ -9332,7 +9331,8 @@ SECTIONS {
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sBallCatchBonuses);
         src/battle_script_commands.o(.rodata.battle_script_commands_palace_data);
         src/battle_script_commands.o(.rodata.battle_script_commands_palace_flavor_data);
-        data/data_b2d.o(.rodata.data_b2d_after_battle_palace_likelihood);
+        src/battle_script_commands.o(.rodata.battle_script_commands_unused_turn_text);
+        . = ALIGN(4);
         src/battle_controller_player.o(.rodata.battle_controller_player_commands);
         src/battle_anim_smokescreen.o(.rodata.battle_anim_smokescreen_data);
         src/battle_controller_opponent.o(.rodata.battle_controller_opponent_commands);

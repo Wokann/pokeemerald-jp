@@ -413,6 +413,9 @@ static const u8 sBattlePalaceNatureToFlavorTextId[NUM_NATURES] BATTLE_SCRIPT_COM
     [NATURE_QUIRKY]  = B_MSG_EAGER_FOR_MORE,
 };
 
+// The Japanese ROM retains this unreferenced turn label after the Palace tables.
+static const u8 sUnusedTurnText[] __attribute__((section(".rodata.battle_script_commands_unused_turn_text"), aligned(1))) = _("ターン");
+
 #undef PALACE_STYLE
 #undef BATTLE_SCRIPT_COMMANDS_PALACE_FLAVOR_DATA
 #undef BATTLE_SCRIPT_COMMANDS_PALACE_DATA

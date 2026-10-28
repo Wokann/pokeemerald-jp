@@ -35,12 +35,8 @@ struct BattleBackground
 
 #define TAG_VS_LETTERS 10000
 #define BATTLE_BG_ENVIRONMENT_DATA __attribute__((section(".rodata.battle_bg_environment_data")))
+#define BATTLE_BG_INTERFACE_DATA __attribute__((section(".rodata.battle_bg_interface_data")))
 
-extern const struct BgTemplate gBattleBgTemplates[];
-extern const struct WindowTemplate *const gBattleWindowTemplates[];
-extern const struct SpriteTemplate sVsLetter_V_SpriteTemplate;
-extern const struct SpriteTemplate sVsLetter_S_SpriteTemplate;
-extern const struct CompressedSpriteSheet sVsLettersSpriteSheet;
 extern const u32 gBattleTextboxTiles[];
 extern const u32 gBattleTextboxTilemap[];
 extern const u32 gBattleTextboxPalette[];
@@ -63,6 +59,570 @@ extern const u32 gMultiBattleIntroBg_Player_Tilemap[];
 extern const u8 gText_Win[];
 extern const u8 gText_Loss[];
 extern const u8 gText_Draw[];
+
+void SpriteCallbackDummy_3(struct Sprite *sprite);
+
+static const u16 sUnrefArray[] BATTLE_BG_INTERFACE_DATA = {0x0300, 0x0000};
+
+static const struct OamData sVsLetter_V_OamData BATTLE_BG_INTERFACE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sVsLetter_S_OamData BATTLE_BG_INTERFACE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 64,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AffineAnimCmd sVsLetterAffineAnimCmds0[] BATTLE_BG_INTERFACE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0080, 0x0080, 0x00, 0x00),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sVsLetterAffineAnimCmds1[] BATTLE_BG_INTERFACE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x0080, 0x0080, 0x00, 0x00),
+    AFFINEANIMCMD_FRAME(0x0018, 0x0018, 0x00, 0x80),
+    AFFINEANIMCMD_FRAME(0x0018, 0x0018, 0x00, 0x80),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sVsLetterAffineAnimTable[] BATTLE_BG_INTERFACE_DATA =
+{
+    sVsLetterAffineAnimCmds0,
+    sVsLetterAffineAnimCmds1,
+};
+
+static const struct SpriteTemplate sVsLetter_V_SpriteTemplate BATTLE_BG_INTERFACE_DATA =
+{
+    .tileTag = TAG_VS_LETTERS,
+    .paletteTag = TAG_VS_LETTERS,
+    .oam = &sVsLetter_V_OamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sVsLetterAffineAnimTable,
+    .callback = SpriteCallbackDummy_3
+};
+
+static const struct SpriteTemplate sVsLetter_S_SpriteTemplate BATTLE_BG_INTERFACE_DATA =
+{
+    .tileTag = TAG_VS_LETTERS,
+    .paletteTag = TAG_VS_LETTERS,
+    .oam = &sVsLetter_S_OamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sVsLetterAffineAnimTable,
+    .callback = SpriteCallbackDummy_3
+};
+
+static const struct CompressedSpriteSheet sVsLettersSpriteSheet BATTLE_BG_INTERFACE_DATA =
+{
+    gVsLettersGfx, 0x1000, TAG_VS_LETTERS
+};
+
+const struct BgTemplate gBattleBgTemplates[] BATTLE_BG_INTERFACE_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 24,
+        .screenSize = 2,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 28,
+        .screenSize = 2,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 30,
+        .screenSize = 1,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+   {
+        .bg = 3,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 26,
+        .screenSize = 1,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    },
+};
+
+static const struct WindowTemplate sStandardBattleWindowTemplates[] BATTLE_BG_INTERFACE_DATA =
+{
+    [B_WIN_MSG] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 15,
+        .width = 26,
+        .height = 4,
+        .paletteNum = 0,
+        .baseBlock = 0x0090,
+    },
+    [B_WIN_ACTION_PROMPT] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 35,
+        .width = 15,
+        .height = 4,
+        .paletteNum = 0,
+        .baseBlock = 0x01B8,
+    },
+    [B_WIN_ACTION_MENU] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 35,
+        .width = 10,
+        .height = 4,
+        .paletteNum = 5,
+        .baseBlock = 0x0190,
+    },
+    [B_WIN_MOVE_NAME_1] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 55,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0300,
+    },
+    [B_WIN_MOVE_NAME_2] = {
+        .bg = 0,
+        .tilemapLeft = 10,
+        .tilemapTop = 55,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x030E,
+    },
+    [B_WIN_MOVE_NAME_3] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 57,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x031C,
+    },
+    [B_WIN_MOVE_NAME_4] = {
+        .bg = 0,
+        .tilemapLeft = 10,
+        .tilemapTop = 57,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x032A,
+    },
+    [B_WIN_PP] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 55,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0290,
+    },
+    [B_WIN_DUMMY] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 57,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x029A,
+    },
+    [B_WIN_PP_REMAINING] = {
+        .bg = 0,
+        .tilemapLeft = 24,
+        .tilemapTop = 55,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x02A6,
+    },
+    [B_WIN_MOVE_TYPE] = {
+        .bg = 0,
+        .tilemapLeft = 25,
+        .tilemapTop = 57,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x02B0,
+    },
+    [B_WIN_SWITCH_PROMPT] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 55,
+        .width = 10,
+        .height = 4,
+        .paletteNum = 5,
+        .baseBlock = 0x02B8,
+    },
+    [B_WIN_YESNO] = {
+        .bg = 0,
+        .tilemapLeft = 26,
+        .tilemapTop = 9,
+        .width = 3,
+        .height = 4,
+        .paletteNum = 5,
+        .baseBlock = 0x0100,
+    },
+    [B_WIN_LEVEL_UP_BOX] = {
+        .bg = 1,
+        .tilemapLeft = 19,
+        .tilemapTop = 8,
+        .width = 10,
+        .height = 11,
+        .paletteNum = 5,
+        .baseBlock = 0x0100,
+    },
+    [B_WIN_LEVEL_UP_BANNER] = {
+        .bg = 2,
+        .tilemapLeft = 18,
+        .tilemapTop = 0,
+        .width = 12,
+        .height = 3,
+        .paletteNum = 6,
+        .baseBlock = 0x016E,
+    },
+    [B_WIN_VS_PLAYER] = {
+        .bg = 1,
+        .tilemapLeft = 2,
+        .tilemapTop = 3,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0020,
+    },
+    [B_WIN_VS_OPPONENT] = {
+        .bg = 2,
+        .tilemapLeft = 2,
+        .tilemapTop = 3,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0040,
+    },
+    [B_WIN_VS_MULTI_PLAYER_1] = {
+        .bg = 1,
+        .tilemapLeft = 2,
+        .tilemapTop = 2,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0020,
+    },
+    [B_WIN_VS_MULTI_PLAYER_2] = {
+        .bg = 2,
+        .tilemapLeft = 2,
+        .tilemapTop = 2,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0040,
+    },
+    [B_WIN_VS_MULTI_PLAYER_3] = {
+        .bg = 1,
+        .tilemapLeft = 2,
+        .tilemapTop = 6,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0060,
+    },
+    [B_WIN_VS_MULTI_PLAYER_4] = {
+        .bg = 2,
+        .tilemapLeft = 2,
+        .tilemapTop = 6,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0080,
+    },
+    [B_WIN_VS_OUTCOME_DRAW] = {
+        .bg = 0,
+        .tilemapLeft = 12,
+        .tilemapTop = 2,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 0,
+        .baseBlock = 0x00A0,
+    },
+    [B_WIN_VS_OUTCOME_LEFT] = {
+        .bg = 0,
+        .tilemapLeft = 6,
+        .tilemapTop = 2,
+        .width = 3,
+        .height = 2,
+        .paletteNum = 0,
+        .baseBlock = 0x00A0,
+    },
+    [B_WIN_VS_OUTCOME_RIGHT] = {
+        .bg = 0,
+        .tilemapLeft = 21,
+        .tilemapTop = 2,
+        .width = 3,
+        .height = 2,
+        .paletteNum = 0,
+        .baseBlock = 0x00A8,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const struct WindowTemplate sBattleArenaWindowTemplates[] BATTLE_BG_INTERFACE_DATA =
+{
+    [B_WIN_MSG] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 15,
+        .width = 26,
+        .height = 4,
+        .paletteNum = 0,
+        .baseBlock = 0x0090,
+    },
+    [B_WIN_ACTION_PROMPT] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 35,
+        .width = 15,
+        .height = 4,
+        .paletteNum = 0,
+        .baseBlock = 0x01B8,
+    },
+    [B_WIN_ACTION_MENU] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 35,
+        .width = 10,
+        .height = 4,
+        .paletteNum = 5,
+        .baseBlock = 0x0190,
+    },
+    [B_WIN_MOVE_NAME_1] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 55,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0300,
+    },
+    [B_WIN_MOVE_NAME_2] = {
+        .bg = 0,
+        .tilemapLeft = 10,
+        .tilemapTop = 55,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x030E,
+    },
+    [B_WIN_MOVE_NAME_3] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 57,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x031C,
+    },
+    [B_WIN_MOVE_NAME_4] = {
+        .bg = 0,
+        .tilemapLeft = 10,
+        .tilemapTop = 57,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x032A,
+    },
+    [B_WIN_PP] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 55,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0290,
+    },
+    [B_WIN_DUMMY] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 57,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x029A,
+    },
+    [B_WIN_PP_REMAINING] = {
+        .bg = 0,
+        .tilemapLeft = 24,
+        .tilemapTop = 55,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x02A6,
+    },
+    [B_WIN_MOVE_TYPE] = {
+        .bg = 0,
+        .tilemapLeft = 25,
+        .tilemapTop = 57,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x02B0,
+    },
+    [B_WIN_SWITCH_PROMPT] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 55,
+        .width = 10,
+        .height = 4,
+        .paletteNum = 5,
+        .baseBlock = 0x02B8,
+    },
+    [B_WIN_YESNO] = {
+        .bg = 0,
+        .tilemapLeft = 26,
+        .tilemapTop = 9,
+        .width = 3,
+        .height = 4,
+        .paletteNum = 5,
+        .baseBlock = 0x0100,
+    },
+    [B_WIN_LEVEL_UP_BOX] = {
+        .bg = 1,
+        .tilemapLeft = 19,
+        .tilemapTop = 8,
+        .width = 10,
+        .height = 11,
+        .paletteNum = 5,
+        .baseBlock = 0x0100,
+    },
+    [B_WIN_LEVEL_UP_BANNER] = {
+        .bg = 2,
+        .tilemapLeft = 18,
+        .tilemapTop = 0,
+        .width = 12,
+        .height = 3,
+        .paletteNum = 6,
+        .baseBlock = 0x016E,
+    },
+    [ARENA_WIN_PLAYER_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 8,
+        .tilemapTop = 1,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0100,
+    },
+    [ARENA_WIN_VS] = {
+        .bg = 0,
+        .tilemapLeft = 13,
+        .tilemapTop = 1,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x010A,
+    },
+    [ARENA_WIN_OPPONENT_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 17,
+        .tilemapTop = 1,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0112,
+    },
+    [ARENA_WIN_MIND] = {
+        .bg = 0,
+        .tilemapLeft = 13,
+        .tilemapTop = 4,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x011C,
+    },
+    [ARENA_WIN_SKILL] = {
+        .bg = 0,
+        .tilemapLeft = 13,
+        .tilemapTop = 6,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0124,
+    },
+    [ARENA_WIN_BODY] = {
+        .bg = 0,
+        .tilemapLeft = 13,
+        .tilemapTop = 8,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x012C,
+    },
+    [ARENA_WIN_JUDGMENT_TITLE] = {
+        .bg = 0,
+        .tilemapLeft = 10,
+        .tilemapTop = 11,
+        .width = 10,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0134,
+    },
+    [ARENA_WIN_JUDGMENT_TEXT] = {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 7,
+        .baseBlock = 0x0090,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+const struct WindowTemplate *const gBattleWindowTemplates[] BATTLE_BG_INTERFACE_DATA =
+{
+    [B_WIN_TYPE_NORMAL] = sStandardBattleWindowTemplates,
+    [B_WIN_TYPE_ARENA]  = sBattleArenaWindowTemplates,
+};
 
 static const struct BattleBackground sBattleEnvironmentTable[] BATTLE_BG_ENVIRONMENT_DATA =
 {
