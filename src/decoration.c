@@ -152,7 +152,7 @@ DECORATION_DATA static const struct WindowTemplate sDecorationWindowTemplates[WI
     },
 };
 
-DECORATION_DATA static const u16 sDecorationMenuPalette[] = INCBIN_U16("graphics/decorations/decoration_menu.gbapal");
+DECORATION_DATA static const u16 sDecorationMenuPalette[] = INCGFX_U16("graphics/decorations/decoration_menu.pal", ".gbapal");
 
 DECORATION_DATA static const struct ListMenuTemplate sDecorationItemsListMenuTemplate =
 {
@@ -291,9 +291,9 @@ DECORATION_DATA static const u16 sDecorShapeSizes[] = {
     [DECORSHAPE_3x2] = 32,
 };
 
-DECORATION_DATA static const u16 sBrendanPalette[] = INCBIN_U16("graphics/decorations/brendan.gbapal");
+DECORATION_DATA static const u16 sBrendanPalette[] = INCGFX_U16("graphics/decorations/brendan.pal", ".gbapal");
 
-DECORATION_DATA static const u16 sMayPalette[] = INCBIN_U16("graphics/decorations/may.gbapal");
+DECORATION_DATA static const u16 sMayPalette[] = INCGFX_U16("graphics/decorations/may.pal", ".gbapal");
 
 DECORATION_DATA static const struct YesNoFuncTable sReturnDecorationYesNoFunctions =
 {
@@ -307,7 +307,7 @@ DECORATION_DATA static const struct YesNoFuncTable sStopPuttingAwayDecorationsYe
     .noFunc = sub_08129B24,
 };
 
-DECORATION_DATA static const u8 sDecorationPuttingAwayCursor[] = INCBIN_U8("graphics/decorations/put_away_cursor.4bpp");
+DECORATION_DATA static const u8 sDecorationPuttingAwayCursor[] = INCGFX_U8("graphics/decorations/put_away_cursor.png", ".4bpp");
 
 DECORATION_DATA static const struct SpritePalette sSpritePal_PuttingAwayCursorBrendan =
 {

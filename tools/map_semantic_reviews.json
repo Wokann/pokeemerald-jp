@@ -4584,7 +4584,7 @@
             "-include $(C_BUILDDIR)/pokedex_area_screen.d",
             "$(C_BUILDDIR)/pokedex_area_screen.o:"
           ],
-          "sha256": "909e6082b1035bcaca6f1577c6abd4f9b6b1c95d5bcfb0205e5f8b991443fbd7"
+          "sha256": "b2aca4271d3a43e2aa1680e5131bbbc74cd975e98a76ff4556da128c558959c6"
         },
         {
           "path": "ld_script_jp.txt",
@@ -45058,7 +45058,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "409386c442f3c394dd3b7143a15ae2a82526abb4983011d6a478f9613d5cbbd9"
+            "makefile_sha256": "d078cbaf44258378545b5daf78c132020f98ba7f5321d9404a901b3e7d71defc"
           }
         },
         {
@@ -45493,7 +45493,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "409386c442f3c394dd3b7143a15ae2a82526abb4983011d6a478f9613d5cbbd9"
+          "sha256": "d078cbaf44258378545b5daf78c132020f98ba7f5321d9404a901b3e7d71defc"
         },
         {
           "path": "asm/macros.inc",
@@ -212341,7 +212341,7 @@
         {
           "path": "src/decoration.c",
           "selector": "file",
-          "sha256": "127774c3a53542e20a2fc43478f05262e7ab54d03b0c0caa915c5b63140a5c6e"
+          "sha256": "5300a2ee3d29ba7511b7ee67956f12efd502f1816720ed735fcfb0f44dc6cfae"
         },
         {
           "path": "src/event_object_movement.c",
@@ -234323,7 +234323,7 @@
         {
           "path": "src/decoration.c",
           "selector": "file",
-          "sha256": "127774c3a53542e20a2fc43478f05262e7ab54d03b0c0caa915c5b63140a5c6e"
+          "sha256": "5300a2ee3d29ba7511b7ee67956f12efd502f1816720ed735fcfb0f44dc6cfae"
         },
         {
           "path": "src/decoration_inventory.c",
@@ -246694,7 +246694,7 @@
         {
           "path": "src/decoration.c",
           "selector": "file",
-          "sha256": "127774c3a53542e20a2fc43478f05262e7ab54d03b0c0caa915c5b63140a5c6e"
+          "sha256": "5300a2ee3d29ba7511b7ee67956f12efd502f1816720ed735fcfb0f44dc6cfae"
         },
         {
           "path": "src/decoration_inventory.c",
@@ -462831,7 +462831,7 @@
         {
           "path": "src/decoration.c",
           "selector": "file",
-          "sha256": "127774c3a53542e20a2fc43478f05262e7ab54d03b0c0caa915c5b63140a5c6e"
+          "sha256": "5300a2ee3d29ba7511b7ee67956f12efd502f1816720ed735fcfb0f44dc6cfae"
         },
         {
           "path": "src/event_object_movement.c",
