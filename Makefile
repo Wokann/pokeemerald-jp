@@ -1282,6 +1282,7 @@ clean: clean-tools
 	rm -f $(JP_CRY_SCREEN_ASSETS) $(JP_CRY_SCREEN_INTERMEDIATES)
 	rm -f $(JP_ANIM_MON_FRONT_PIC_ASSETS) $(JP_ANIM_MON_FRONT_PIC_INTERMEDIATES)
 	rm -f $(JP_TRAINER_GRAPHICS_ASSETS) $(JP_TRAINER_GRAPHICS_INTERMEDIATES)
+	rm -f $(JP_DIRECT_SOUND_ASSETS)
 	rm -f $(JP_QUESTION_MARK_AND_OLD_CHARMAP_ASSETS) $(JP_QUESTION_MARK_AND_OLD_CHARMAP_INTERMEDIATES)
 	# Keep cleanup commands within the host shell argument limit.
 	rm -f $(filter %/front.png.4bpp.lz,$(JP_POKEMON_STILL_ASSETS)) $(patsubst %.lz,%,$(filter %/front.png.4bpp.lz,$(JP_POKEMON_STILL_ASSETS)))
@@ -2965,9 +2966,9 @@ $(OBJ_DIR)/data/mystery_gift.o: data/mystery_gift.s
 	@mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
-$(OBJ_DIR)/data/sound_data.o: data/sound_data.s baserom_jp.gba
+$(OBJ_DIR)/data/sound_data.o: data/sound_data.s baserom_jp.gba charmap.txt
 	@mkdir -p $(dir $@)
-	$(AS) $(ASFLAGS) -o $@ $<
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/rom_padding.o: data/rom_padding.s baserom_jp.gba
 	@mkdir -p $(dir $@)
@@ -3157,6 +3158,7 @@ $(C_BUILDDIR)/battle_records.o: src/battle_records.c charmap.txt $(JP_BATTLE_REC
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_records.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/battle_records.gen.s
 
+include audio_rules.mk
 include graphics_file_rules.mk
 
 JP_STORAGE_WALLPAPER_ASSETS := graphics/pokemon_storage/arrow.png.4bpp \

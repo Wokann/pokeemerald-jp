@@ -108,75 +108,75 @@ gVoicegroup_085FDB0C: @ 0x085FDB0C
 	.4byte 0x00000002  @ voice 27 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 27 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0x00  @ voice 28
-	.4byte 0x08641F0C  @ voice 28 wav
+	.4byte DirectSoundWaveData_classical_choir_voice_ahhs  @ voice 28 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 28 a/d/s/r
 	.globl gVoicegroup_085FDC68
 gVoicegroup_085FDC68: @ 0x085FDC68
 	.byte 0x00, 0x3C, 0x00, 0x00  @ voice 0
-	.4byte 0x086435BC  @ voice 0 wav
+	.4byte DirectSoundWaveData_sd90_classical_oboe  @ voice 0 wav
 	.byte 0xFF, 0xA5, 0x9A, 0x7F  @ voice 0 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0x00  @ voice 1
-	.4byte 0x08644900  @ voice 1 wav
+	.4byte DirectSoundWaveData_unused_sd90_oboe  @ voice 1 wav
 	.byte 0xFF, 0xA5, 0x9A, 0x7F  @ voice 1 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0x00  @ voice 2
-	.4byte 0x086453A4  @ voice 2 wav
+	.4byte DirectSoundWaveData_unused_guitar_separates_power_chord  @ voice 2 wav
 	.byte 0xFF, 0xA5, 0xCE, 0x7F  @ voice 2 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0x00  @ voice 3
-	.4byte 0x086466B8  @ voice 3 wav
+	.4byte DirectSoundWaveData_unused_sc88pro_unison_slap  @ voice 3 wav
 	.byte 0xFF, 0xA5, 0xCE, 0x7F  @ voice 3 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0x00  @ voice 4
-	.4byte 0x08649CB4  @ voice 4 wav
+	.4byte DirectSoundWaveData_unknown_snare  @ voice 4 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 4 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0x00  @ voice 5
-	.4byte 0x0864A18C  @ voice 5 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_ohtsuzumi  @ voice 5 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 5 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0x00  @ voice 6
-	.4byte 0x0864BA68  @ voice 6 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_hyoushigi  @ voice 6 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 6 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 7
-	.4byte 0x0864CD90  @ voice 7 wav
+	.4byte DirectSoundWaveData_sc88pro_rnd_kick  @ voice 7 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 7 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 8
 	.4byte 0x00000002  @ voice 8 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 8 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 9
-	.4byte 0x0864D230  @ voice 9 wav
+	.4byte DirectSoundWaveData_sc88pro_rnd_snare  @ voice 9 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 9 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 10
-	.4byte 0x0864D924  @ voice 10 wav
+	.4byte DirectSoundWaveData_sc88pro_tr909_hand_clap  @ voice 10 wav
 	.byte 0xFF, 0xFF, 0xFF, 0x7F  @ voice 10 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 11
-	.4byte 0x0864E1B4  @ voice 11 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_snare  @ voice 11 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 11 a/d/s/r
 	.byte 0x00, 0x30, 0x00, 0xAC  @ voice 12
-	.4byte 0x0864EA2C  @ voice 12 wav
+	.4byte DirectSoundWaveData_unused_sc55_tom  @ voice 12 wav
 	.byte 0xFF, 0xD2, 0x4D, 0xCC  @ voice 12 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xCF  @ voice 13
-	.4byte 0x0864FA6C  @ voice 13 wav
+	.4byte DirectSoundWaveData_unknown_close_hihat  @ voice 13 wav
 	.byte 0xFF, 0x7F, 0x00, 0xBC  @ voice 13 a/d/s/r
 	.byte 0x00, 0x33, 0x00, 0xB6  @ voice 14
-	.4byte 0x0864EA2C  @ voice 14 wav
+	.4byte DirectSoundWaveData_unused_sc55_tom  @ voice 14 wav
 	.byte 0xFF, 0xD8, 0x4D, 0xCC  @ voice 14 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 15
 	.4byte 0x00000002  @ voice 15 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 15 a/d/s/r
 	.byte 0x00, 0x36, 0x00, 0xC0  @ voice 16
-	.4byte 0x0864EA2C  @ voice 16 wav
+	.4byte DirectSoundWaveData_unused_sc55_tom  @ voice 16 wav
 	.byte 0xFF, 0xD8, 0x4D, 0xCC  @ voice 16 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xCF  @ voice 17
-	.4byte 0x0864FE80  @ voice 17 wav
+	.4byte DirectSoundWaveData_unknown_open_hihat  @ voice 17 wav
 	.byte 0xFF, 0xF2, 0x8D, 0x00  @ voice 17 a/d/s/r
 	.byte 0x00, 0x39, 0x00, 0xC5  @ voice 18
-	.4byte 0x0864EA2C  @ voice 18 wav
+	.4byte DirectSoundWaveData_unused_sc55_tom  @ voice 18 wav
 	.byte 0xFF, 0xD2, 0x4D, 0xCC  @ voice 18 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0xCF  @ voice 19
-	.4byte 0x0864EA2C  @ voice 19 wav
+	.4byte DirectSoundWaveData_unused_sc55_tom  @ voice 19 wav
 	.byte 0xFF, 0xCC, 0x4D, 0xCC  @ voice 19 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 20
 	.4byte 0x00000002  @ voice 20 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 20 a/d/s/r
 	.byte 0x00, 0x3E, 0x00, 0xD4  @ voice 21
-	.4byte 0x0864EA2C  @ voice 21 wav
+	.4byte DirectSoundWaveData_unused_sc55_tom  @ voice 21 wav
 	.byte 0xFF, 0xCC, 0x4D, 0xCC  @ voice 21 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 22
 	.4byte 0x00000002  @ voice 22 wav
@@ -185,129 +185,129 @@ gVoicegroup_085FDC68: @ 0x085FDC68
 	.4byte 0x00000002  @ voice 23 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 23 a/d/s/r
 	.byte 0x08, 0x46, 0x00, 0xB1  @ voice 24
-	.4byte 0x08650CB0  @ voice 24 wav
+	.4byte DirectSoundWaveData_unknown_bell  @ voice 24 wav
 	.byte 0xFF, 0xA5, 0x67, 0xE7  @ voice 24 a/d/s/r
 	.byte 0x08, 0x20, 0x00, 0xA2  @ voice 25
-	.4byte 0x08651C44  @ voice 25 wav
+	.4byte DirectSoundWaveData_sc88pro_tambourine  @ voice 25 wav
 	.byte 0xFF, 0x7F, 0x4D, 0xCC  @ voice 25 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0x8E  @ voice 26
-	.4byte 0x086524F8  @ voice 26 wav
+	.4byte DirectSoundWaveData_trinity_cymbal_crash  @ voice 26 wav
 	.byte 0xFF, 0xEB, 0x00, 0xA5  @ voice 26 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 27
 	.4byte 0x00000002  @ voice 27 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 27 a/d/s/r
 	.byte 0x08, 0x1E, 0x00, 0xB6  @ voice 28
-	.4byte 0x08652DDC  @ voice 28 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 28 wav
 	.byte 0xFF, 0xF6, 0x00, 0xD8  @ voice 28 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 29
 	.4byte 0x00000002  @ voice 29 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 29 a/d/s/r
 	.byte 0x08, 0x1E, 0x00, 0xB6  @ voice 30
-	.4byte 0x08652DDC  @ voice 30 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 30 wav
 	.byte 0xFF, 0xF6, 0x00, 0xD8  @ voice 30 a/d/s/r
 	.byte 0x08, 0x1E, 0x00, 0xC0  @ voice 31
-	.4byte 0x08652DDC  @ voice 31 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 31 wav
 	.byte 0x08, 0x00, 0xFF, 0xD8  @ voice 31 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 32
 	.4byte 0x00000002  @ voice 32 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 32 a/d/s/r
 	.byte 0x08, 0x48, 0x00, 0xE8  @ voice 33
-	.4byte 0x08653D08  @ voice 33 wav
+	.4byte DirectSoundWaveData_sc88pro_mute_high_conga  @ voice 33 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 33 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 34
 	.4byte 0x00000002  @ voice 34 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 34 a/d/s/r
 	.byte 0x08, 0x48, 0x00, 0xDE  @ voice 35
-	.4byte 0x08654220  @ voice 35 wav
+	.4byte DirectSoundWaveData_sc88pro_open_low_conga  @ voice 35 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 35 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 36
-	.4byte 0x086547E8  @ voice 36 wav
+	.4byte DirectSoundWaveData_drum_and_percussion_kick  @ voice 36 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 36 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 37
-	.4byte 0x08655700  @ voice 37 wav
+	.4byte DirectSoundWaveData_sd90_solo_snare  @ voice 37 wav
 	.byte 0xFF, 0xB4, 0xAF, 0xE4  @ voice 37 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 38
-	.4byte 0x08655700  @ voice 38 wav
+	.4byte DirectSoundWaveData_sd90_solo_snare  @ voice 38 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 38 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xB6  @ voice 39
-	.4byte 0x0864D924  @ voice 39 wav
+	.4byte DirectSoundWaveData_sc88pro_tr909_hand_clap  @ voice 39 wav
 	.byte 0xFF, 0xFF, 0xFF, 0x7F  @ voice 39 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 40
-	.4byte 0x0864E1B4  @ voice 40 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_snare  @ voice 40 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 40 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0x98  @ voice 41
-	.4byte 0x08657074  @ voice 41 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 41 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 41 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xD0  @ voice 42
-	.4byte 0x0864E1B4  @ voice 42 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_snare  @ voice 42 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 42 a/d/s/r
 	.byte 0x00, 0x44, 0x00, 0xA2  @ voice 43
-	.4byte 0x08657074  @ voice 43 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 43 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 43 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 44
-	.4byte 0x0864D230  @ voice 44 wav
+	.4byte DirectSoundWaveData_sc88pro_rnd_snare  @ voice 44 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 44 a/d/s/r
 	.byte 0x00, 0x48, 0x00, 0xAC  @ voice 45
-	.4byte 0x08657074  @ voice 45 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 45 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 45 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 46
-	.4byte 0x0864D230  @ voice 46 wav
+	.4byte DirectSoundWaveData_sc88pro_rnd_snare  @ voice 46 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 46 a/d/s/r
 	.byte 0x00, 0x4C, 0x00, 0xD4  @ voice 47
-	.4byte 0x08657074  @ voice 47 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 47 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 47 a/d/s/r
 	.byte 0x00, 0x50, 0x00, 0xDE  @ voice 48
-	.4byte 0x08657074  @ voice 48 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 48 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 48 a/d/s/r
 	.byte 0x08, 0x21, 0x00, 0xD9  @ voice 49
-	.4byte 0x08652DDC  @ voice 49 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 49 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 49 a/d/s/r
 	.byte 0x00, 0x54, 0x00, 0xE8  @ voice 50
-	.4byte 0x08657074  @ voice 50 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 50 wav
 	.byte 0xFF, 0x00, 0xFF, 0xEB  @ voice 50 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 51
 	.4byte 0x00000002  @ voice 51 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 51 a/d/s/r
 	.byte 0x00, 0x3F, 0x00, 0xC0  @ voice 52
-	.4byte 0x08652DDC  @ voice 52 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 52 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 52 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x98  @ voice 53
-	.4byte 0x08659150  @ voice 53 wav
+	.4byte DirectSoundWaveData_dance_drums_ride_bell  @ voice 53 wav
 	.byte 0xFF, 0xA5, 0x67, 0xE7  @ voice 53 a/d/s/r
 	.globl gVoicegroup_085FDEF0
 gVoicegroup_085FDEF0: @ 0x085FDEF0
 	.byte 0x08, 0x40, 0x00, 0xA2  @ voice 0
-	.4byte 0x08651C44  @ voice 0 wav
+	.4byte DirectSoundWaveData_sc88pro_tambourine  @ voice 0 wav
 	.byte 0xFF, 0x7F, 0x4D, 0xCC  @ voice 0 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x8E  @ voice 1
-	.4byte 0x086524F8  @ voice 1 wav
+	.4byte DirectSoundWaveData_trinity_cymbal_crash  @ voice 1 wav
 	.byte 0xFF, 0xE7, 0x00, 0xBC  @ voice 1 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xD9  @ voice 2
-	.4byte 0x08660980  @ voice 2 wav
+	.4byte DirectSoundWaveData_sd90_cowbell  @ voice 2 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 2 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x9D  @ voice 3
-	.4byte 0x08652DDC  @ voice 3 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 3 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 3 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 4
 	.4byte 0x00000002  @ voice 4 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 4 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xB6  @ voice 5
-	.4byte 0x08652DDC  @ voice 5 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 5 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 5 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xB6  @ voice 6
-	.4byte 0x08652DDC  @ voice 6 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 6 wav
 	.byte 0x08, 0x00, 0xFF, 0xD8  @ voice 6 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xDE  @ voice 7
-	.4byte 0x08661338  @ voice 7 wav
+	.4byte DirectSoundWaveData_unused_heart_of_asia_indian_drum  @ voice 7 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 7 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xA2  @ voice 8
-	.4byte 0x08653D08  @ voice 8 wav
+	.4byte DirectSoundWaveData_sc88pro_mute_high_conga  @ voice 8 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 8 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xA2  @ voice 9
-	.4byte 0x08654220  @ voice 9 wav
+	.4byte DirectSoundWaveData_sc88pro_open_low_conga  @ voice 9 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 9 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xDA  @ voice 10
-	.4byte 0x08654220  @ voice 10 wav
+	.4byte DirectSoundWaveData_sc88pro_open_low_conga  @ voice 10 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 10 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 11
 	.4byte 0x00000002  @ voice 11 wav
@@ -355,16 +355,16 @@ gVoicegroup_085FDEF0: @ 0x085FDEF0
 	.4byte 0x00000002  @ voice 25 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 25 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xA7  @ voice 26
-	.4byte 0x086621B8  @ voice 26 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 26 wav
 	.byte 0xFF, 0xF2, 0x67, 0xBC  @ voice 26 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xCF  @ voice 27
-	.4byte 0x086621B8  @ voice 27 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 27 wav
 	.byte 0xFF, 0xF2, 0x67, 0xBC  @ voice 27 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xA7  @ voice 28
-	.4byte 0x086621B8  @ voice 28 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 28 wav
 	.byte 0xFF, 0xA5, 0x67, 0xBC  @ voice 28 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x98  @ voice 29
-	.4byte 0x0866302C  @ voice 29 wav
+	.4byte DirectSoundWaveData_sc88pro_jingle_bell  @ voice 29 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 29 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 30
 	.4byte 0x00000002  @ voice 30 wav
@@ -373,105 +373,105 @@ gVoicegroup_085FDEF0: @ 0x085FDEF0
 	.4byte 0x00000002  @ voice 31 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 31 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xE8  @ voice 32
-	.4byte 0x08664840  @ voice 32 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_atarigane  @ voice 32 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 32 a/d/s/r
 	.byte 0x00, 0x3F, 0x00, 0xC0  @ voice 33
-	.4byte 0x08665DE4  @ voice 33 wav
+	.4byte DirectSoundWaveData_sc88pro_taiko  @ voice 33 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 33 a/d/s/r
 	.byte 0x00, 0x32, 0x00, 0xD4  @ voice 34
-	.4byte 0x086673C8  @ voice 34 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_kotsuzumi  @ voice 34 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 34 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xD4  @ voice 35
-	.4byte 0x086673C8  @ voice 35 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_kotsuzumi  @ voice 35 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 35 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 36
-	.4byte 0x08665DE4  @ voice 36 wav
+	.4byte DirectSoundWaveData_sc88pro_taiko  @ voice 36 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 36 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 37
-	.4byte 0x08655700  @ voice 37 wav
+	.4byte DirectSoundWaveData_sd90_solo_snare  @ voice 37 wav
 	.byte 0xFF, 0xB4, 0xAF, 0xE4  @ voice 37 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 38
-	.4byte 0x08655700  @ voice 38 wav
+	.4byte DirectSoundWaveData_sd90_solo_snare  @ voice 38 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 38 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xB6  @ voice 39
-	.4byte 0x0864D924  @ voice 39 wav
+	.4byte DirectSoundWaveData_sc88pro_tr909_hand_clap  @ voice 39 wav
 	.byte 0xFF, 0xFF, 0xFF, 0x7F  @ voice 39 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 40
-	.4byte 0x0864E1B4  @ voice 40 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_snare  @ voice 40 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 40 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0x98  @ voice 41
-	.4byte 0x08657074  @ voice 41 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 41 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 41 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xD0  @ voice 42
-	.4byte 0x0864E1B4  @ voice 42 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_snare  @ voice 42 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 42 a/d/s/r
 	.byte 0x00, 0x44, 0x00, 0xA2  @ voice 43
-	.4byte 0x08657074  @ voice 43 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 43 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 43 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 44
-	.4byte 0x0864D230  @ voice 44 wav
+	.4byte DirectSoundWaveData_sc88pro_rnd_snare  @ voice 44 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 44 a/d/s/r
 	.byte 0x00, 0x48, 0x00, 0xAC  @ voice 45
-	.4byte 0x08657074  @ voice 45 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 45 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 45 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 46
 	.4byte 0x00000002  @ voice 46 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 46 a/d/s/r
 	.byte 0x00, 0x4C, 0x00, 0xD4  @ voice 47
-	.4byte 0x08657074  @ voice 47 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 47 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 47 a/d/s/r
 	.byte 0x00, 0x50, 0x00, 0xDE  @ voice 48
-	.4byte 0x08657074  @ voice 48 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 48 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 48 a/d/s/r
 	.byte 0x08, 0x21, 0x00, 0xD9  @ voice 49
-	.4byte 0x08652DDC  @ voice 49 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 49 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 49 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xE8  @ voice 50
-	.4byte 0x08665DE4  @ voice 50 wav
+	.4byte DirectSoundWaveData_sc88pro_taiko  @ voice 50 wav
 	.byte 0xFF, 0x00, 0xFF, 0xEB  @ voice 50 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 51
 	.4byte 0x00000002  @ voice 51 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 51 a/d/s/r
 	.byte 0x00, 0x3F, 0x00, 0xC0  @ voice 52
-	.4byte 0x08652DDC  @ voice 52 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 52 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 52 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x98  @ voice 53
-	.4byte 0x08659150  @ voice 53 wav
+	.4byte DirectSoundWaveData_dance_drums_ride_bell  @ voice 53 wav
 	.byte 0xFF, 0xA5, 0x67, 0xE7  @ voice 53 a/d/s/r
 	.globl gVoicegroup_085FE178
 gVoicegroup_085FE178: @ 0x085FE178
 	.byte 0x08, 0x42, 0x00, 0xA2  @ voice 0
-	.4byte 0x08651C44  @ voice 0 wav
+	.4byte DirectSoundWaveData_sc88pro_tambourine  @ voice 0 wav
 	.byte 0xFF, 0x7F, 0x4D, 0xCC  @ voice 0 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x8E  @ voice 1
-	.4byte 0x086524F8  @ voice 1 wav
+	.4byte DirectSoundWaveData_trinity_cymbal_crash  @ voice 1 wav
 	.byte 0xFF, 0xE7, 0x00, 0xBC  @ voice 1 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xD9  @ voice 2
-	.4byte 0x08660980  @ voice 2 wav
+	.4byte DirectSoundWaveData_sd90_cowbell  @ voice 2 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 2 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x9D  @ voice 3
-	.4byte 0x08652DDC  @ voice 3 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 3 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 3 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 4
 	.4byte 0x00000002  @ voice 4 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 4 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xB6  @ voice 5
-	.4byte 0x08652DDC  @ voice 5 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 5 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 5 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xB6  @ voice 6
-	.4byte 0x08652DDC  @ voice 6 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 6 wav
 	.byte 0x08, 0x00, 0xFF, 0xD8  @ voice 6 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xDE  @ voice 7
-	.4byte 0x08661338  @ voice 7 wav
+	.4byte DirectSoundWaveData_unused_heart_of_asia_indian_drum  @ voice 7 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 7 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xA2  @ voice 8
-	.4byte 0x08653D08  @ voice 8 wav
+	.4byte DirectSoundWaveData_sc88pro_mute_high_conga  @ voice 8 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 8 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xA2  @ voice 9
-	.4byte 0x08654220  @ voice 9 wav
+	.4byte DirectSoundWaveData_sc88pro_open_low_conga  @ voice 9 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 9 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xDA  @ voice 10
-	.4byte 0x08654220  @ voice 10 wav
+	.4byte DirectSoundWaveData_sc88pro_open_low_conga  @ voice 10 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 10 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 11
 	.4byte 0x00000002  @ voice 11 wav
@@ -504,10 +504,10 @@ gVoicegroup_085FE178: @ 0x085FE178
 	.4byte 0x00000002  @ voice 20 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 20 a/d/s/r
 	.byte 0x08, 0x3D, 0x00, 0xD4  @ voice 21
-	.4byte 0x0864BA68  @ voice 21 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_hyoushigi  @ voice 21 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 21 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 22
-	.4byte 0x0864A18C  @ voice 22 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_ohtsuzumi  @ voice 22 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 22 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 23
 	.4byte 0x00000002  @ voice 23 wav
@@ -519,16 +519,16 @@ gVoicegroup_085FE178: @ 0x085FE178
 	.4byte 0x00000002  @ voice 25 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 25 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xA7  @ voice 26
-	.4byte 0x086621B8  @ voice 26 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 26 wav
 	.byte 0xFF, 0xF2, 0x67, 0xBC  @ voice 26 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xCF  @ voice 27
-	.4byte 0x086621B8  @ voice 27 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 27 wav
 	.byte 0xFF, 0xF2, 0x67, 0xBC  @ voice 27 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xA7  @ voice 28
-	.4byte 0x086621B8  @ voice 28 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 28 wav
 	.byte 0xFF, 0xA5, 0x67, 0xBC  @ voice 28 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x98  @ voice 29
-	.4byte 0x0866302C  @ voice 29 wav
+	.4byte DirectSoundWaveData_sc88pro_jingle_bell  @ voice 29 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 29 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 30
 	.4byte 0x00000002  @ voice 30 wav
@@ -537,103 +537,103 @@ gVoicegroup_085FE178: @ 0x085FE178
 	.4byte 0x00000002  @ voice 31 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 31 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xE8  @ voice 32
-	.4byte 0x08664840  @ voice 32 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_atarigane  @ voice 32 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 32 a/d/s/r
 	.byte 0x00, 0x3F, 0x00, 0xC0  @ voice 33
-	.4byte 0x08665DE4  @ voice 33 wav
+	.4byte DirectSoundWaveData_sc88pro_taiko  @ voice 33 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 33 a/d/s/r
 	.byte 0x00, 0x32, 0x00, 0xD4  @ voice 34
-	.4byte 0x086673C8  @ voice 34 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_kotsuzumi  @ voice 34 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 34 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xD4  @ voice 35
-	.4byte 0x086673C8  @ voice 35 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_kotsuzumi  @ voice 35 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 35 a/d/s/r
 	.byte 0x00, 0x3E, 0x00, 0xC0  @ voice 36
-	.4byte 0x086547E8  @ voice 36 wav
+	.4byte DirectSoundWaveData_drum_and_percussion_kick  @ voice 36 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 36 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 37
-	.4byte 0x08655700  @ voice 37 wav
+	.4byte DirectSoundWaveData_sd90_solo_snare  @ voice 37 wav
 	.byte 0xFF, 0xB4, 0xAF, 0xE4  @ voice 37 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 38
-	.4byte 0x08655700  @ voice 38 wav
+	.4byte DirectSoundWaveData_sd90_solo_snare  @ voice 38 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 38 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xB6  @ voice 39
-	.4byte 0x0864D924  @ voice 39 wav
+	.4byte DirectSoundWaveData_sc88pro_tr909_hand_clap  @ voice 39 wav
 	.byte 0xFF, 0xFF, 0xFF, 0x7F  @ voice 39 a/d/s/r
 	.byte 0x00, 0x41, 0x00, 0xC0  @ voice 40
-	.4byte 0x0864E1B4  @ voice 40 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_snare  @ voice 40 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 40 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0x98  @ voice 41
-	.4byte 0x08657074  @ voice 41 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 41 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 41 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xD0  @ voice 42
-	.4byte 0x0864E1B4  @ voice 42 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_snare  @ voice 42 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 42 a/d/s/r
 	.byte 0x00, 0x44, 0x00, 0xA2  @ voice 43
-	.4byte 0x08657074  @ voice 43 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 43 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 43 a/d/s/r
 	.byte 0x08, 0x3C, 0x00, 0xC0  @ voice 44
-	.4byte 0x0864D230  @ voice 44 wav
+	.4byte DirectSoundWaveData_sc88pro_rnd_snare  @ voice 44 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 44 a/d/s/r
 	.byte 0x00, 0x48, 0x00, 0xAC  @ voice 45
-	.4byte 0x08657074  @ voice 45 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 45 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 45 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 46
 	.4byte 0x00000002  @ voice 46 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 46 a/d/s/r
 	.byte 0x00, 0x4C, 0x00, 0xD4  @ voice 47
-	.4byte 0x08657074  @ voice 47 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 47 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 47 a/d/s/r
 	.byte 0x00, 0x50, 0x00, 0xDE  @ voice 48
-	.4byte 0x08657074  @ voice 48 wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ voice 48 wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ voice 48 a/d/s/r
 	.byte 0x00, 0x38, 0x00, 0xD9  @ voice 49
-	.4byte 0x08652DDC  @ voice 49 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 49 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 49 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xE8  @ voice 50
-	.4byte 0x08665DE4  @ voice 50 wav
+	.4byte DirectSoundWaveData_sc88pro_taiko  @ voice 50 wav
 	.byte 0xFF, 0x00, 0xFF, 0xEB  @ voice 50 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 51
 	.4byte 0x00000002  @ voice 51 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 51 a/d/s/r
 	.byte 0x00, 0x3F, 0x00, 0xC0  @ voice 52
-	.4byte 0x08652DDC  @ voice 52 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 52 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 52 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0x98  @ voice 53
-	.4byte 0x08659150  @ voice 53 wav
+	.4byte DirectSoundWaveData_dance_drums_ride_bell  @ voice 53 wav
 	.byte 0xFF, 0xA5, 0x67, 0xE7  @ voice 53 a/d/s/r
 	.byte 0x08, 0x42, 0x00, 0xA2  @ voice 54
-	.4byte 0x08651C44  @ voice 54 wav
+	.4byte DirectSoundWaveData_sc88pro_tambourine  @ voice 54 wav
 	.byte 0xFF, 0x7F, 0x4D, 0xCC  @ voice 54 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0x8E  @ voice 55
-	.4byte 0x086524F8  @ voice 55 wav
+	.4byte DirectSoundWaveData_trinity_cymbal_crash  @ voice 55 wav
 	.byte 0xFF, 0xE7, 0x00, 0xBC  @ voice 55 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xD9  @ voice 56
-	.4byte 0x08660980  @ voice 56 wav
+	.4byte DirectSoundWaveData_sd90_cowbell  @ voice 56 wav
 	.byte 0xFF, 0x00, 0xFF, 0xF2  @ voice 56 a/d/s/r
 	.byte 0x00, 0x3C, 0x00, 0x9D  @ voice 57
-	.4byte 0x08652DDC  @ voice 57 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 57 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 57 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 58
 	.4byte 0x00000002  @ voice 58 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 58 a/d/s/r
 	.byte 0x00, 0x3A, 0x00, 0xB6  @ voice 59
-	.4byte 0x08652DDC  @ voice 59 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 59 wav
 	.byte 0xFF, 0xEB, 0x00, 0xE7  @ voice 59 a/d/s/r
 	.byte 0x00, 0x3E, 0x00, 0xB6  @ voice 60
-	.4byte 0x08652DDC  @ voice 60 wav
+	.4byte DirectSoundWaveData_sc88pro_orchestra_cymbal_crash  @ voice 60 wav
 	.byte 0x08, 0x00, 0xFF, 0xD8  @ voice 60 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xDE  @ voice 61
-	.4byte 0x08661338  @ voice 61 wav
+	.4byte DirectSoundWaveData_unused_heart_of_asia_indian_drum  @ voice 61 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 61 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xA2  @ voice 62
-	.4byte 0x08653D08  @ voice 62 wav
+	.4byte DirectSoundWaveData_sc88pro_mute_high_conga  @ voice 62 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 62 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xA2  @ voice 63
-	.4byte 0x08654220  @ voice 63 wav
+	.4byte DirectSoundWaveData_sc88pro_open_low_conga  @ voice 63 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 63 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xDA  @ voice 64
-	.4byte 0x08654220  @ voice 64 wav
+	.4byte DirectSoundWaveData_sc88pro_open_low_conga  @ voice 64 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 64 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 65
 	.4byte 0x00000002  @ voice 65 wav
@@ -666,10 +666,10 @@ gVoicegroup_085FE178: @ 0x085FE178
 	.4byte 0x00000002  @ voice 74 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 74 a/d/s/r
 	.byte 0x00, 0x3D, 0x00, 0xD4  @ voice 75
-	.4byte 0x0864BA68  @ voice 75 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_hyoushigi  @ voice 75 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 75 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xC0  @ voice 76
-	.4byte 0x0864A18C  @ voice 76 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_ohtsuzumi  @ voice 76 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 76 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 77
 	.4byte 0x00000002  @ voice 77 wav
@@ -681,16 +681,16 @@ gVoicegroup_085FE178: @ 0x085FE178
 	.4byte 0x00000002  @ voice 79 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 79 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xA7  @ voice 80
-	.4byte 0x086621B8  @ voice 80 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 80 wav
 	.byte 0xFF, 0xF2, 0x67, 0xBC  @ voice 80 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xCF  @ voice 81
-	.4byte 0x086621B8  @ voice 81 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 81 wav
 	.byte 0xFF, 0xF2, 0x67, 0xBC  @ voice 81 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xA7  @ voice 82
-	.4byte 0x086621B8  @ voice 82 wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ voice 82 wav
 	.byte 0xFF, 0xA5, 0x67, 0xBC  @ voice 82 a/d/s/r
 	.byte 0x08, 0x40, 0x00, 0xC0  @ voice 83
-	.4byte 0x0866302C  @ voice 83 wav
+	.4byte DirectSoundWaveData_sc88pro_jingle_bell  @ voice 83 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 83 a/d/s/r
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 84
 	.4byte 0x00000002  @ voice 84 wav
@@ -699,16 +699,16 @@ gVoicegroup_085FE178: @ 0x085FE178
 	.4byte 0x00000002  @ voice 85 wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ voice 85 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xE8  @ voice 86
-	.4byte 0x08664840  @ voice 86 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_atarigane  @ voice 86 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 86 a/d/s/r
 	.byte 0x00, 0x3F, 0x00, 0xC0  @ voice 87
-	.4byte 0x08665DE4  @ voice 87 wav
+	.4byte DirectSoundWaveData_sc88pro_taiko  @ voice 87 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 87 a/d/s/r
 	.byte 0x00, 0x32, 0x00, 0xD4  @ voice 88
-	.4byte 0x086673C8  @ voice 88 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_kotsuzumi  @ voice 88 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 88 a/d/s/r
 	.byte 0x00, 0x40, 0x00, 0xD4  @ voice 89
-	.4byte 0x086673C8  @ voice 89 wav
+	.4byte DirectSoundWaveData_ethnic_flavours_kotsuzumi  @ voice 89 wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ voice 89 a/d/s/r
 	.incbin "baserom_jp.gba", 0x5FE5B0, 0x6A8
 	.globl gToneData_085FEC58
@@ -1404,2402 +1404,2402 @@ gToneData_08624C14: @ 0x08624C14
 	.globl gToneData_08625214
 gToneData_08625214: @ 0x08625214
 	.byte 0x08, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
-	.4byte 0x086AB7F0  @ wav
+	.4byte DirectSoundWaveData_bicycle_bell  @ wav
 	.byte 0xFF, 0xF9, 0x00, 0xA5  @ attack, decay, sustain, release
 	.incbin "sound/tone_data/gToneData_08625214_voice.bin"
 
 	.globl gJP_CryTable_Normal_0
 gJP_CryTable_Normal_0: @ 0x08625814
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  0] type, key, length, pan_sweep
-	.4byte 0x086CDE28  @ [  0] wav
+	.4byte Cry_Bulbasaur  @ [  0] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  0] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  1] type, key, length, pan_sweep
-	.4byte 0x086CEEB4  @ [  1] wav
+	.4byte Cry_Ivysaur  @ [  1] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  1] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  2] type, key, length, pan_sweep
-	.4byte 0x086CFF44  @ [  2] wav
+	.4byte Cry_Venusaur  @ [  2] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  2] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  3] type, key, length, pan_sweep
-	.4byte 0x086D129C  @ [  3] wav
+	.4byte Cry_Charmander  @ [  3] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  3] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  4] type, key, length, pan_sweep
-	.4byte 0x086D210C  @ [  4] wav
+	.4byte Cry_Charmeleon  @ [  4] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  4] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  5] type, key, length, pan_sweep
-	.4byte 0x086D2F8C  @ [  5] wav
+	.4byte Cry_Charizard  @ [  5] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  5] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  6] type, key, length, pan_sweep
-	.4byte 0x086D42D4  @ [  6] wav
+	.4byte Cry_Squirtle  @ [  6] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  6] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  7] type, key, length, pan_sweep
-	.4byte 0x086D5148  @ [  7] wav
+	.4byte Cry_Wartortle  @ [  7] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  7] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  8] type, key, length, pan_sweep
-	.4byte 0x086D6288  @ [  8] wav
+	.4byte Cry_Blastoise  @ [  8] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  8] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  9] type, key, length, pan_sweep
-	.4byte 0x086D75D0  @ [  9] wav
+	.4byte Cry_Caterpie  @ [  9] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  9] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 10] type, key, length, pan_sweep
-	.4byte 0x086D7E28  @ [ 10] wav
+	.4byte Cry_Metapod  @ [ 10] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 10] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 11] type, key, length, pan_sweep
-	.4byte 0x086D9578  @ [ 11] wav
+	.4byte Cry_Butterfree  @ [ 11] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 11] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 12] type, key, length, pan_sweep
-	.4byte 0x086D9F80  @ [ 12] wav
+	.4byte Cry_Weedle  @ [ 12] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 12] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 13] type, key, length, pan_sweep
-	.4byte 0x086DAFC4  @ [ 13] wav
+	.4byte Cry_Kakuna  @ [ 13] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 13] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 14] type, key, length, pan_sweep
-	.4byte 0x086DC200  @ [ 14] wav
+	.4byte Cry_Beedrill  @ [ 14] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 14] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 15] type, key, length, pan_sweep
-	.4byte 0x086DD55C  @ [ 15] wav
+	.4byte Cry_Pidgey  @ [ 15] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 15] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 16] type, key, length, pan_sweep
-	.4byte 0x086DD944  @ [ 16] wav
+	.4byte Cry_Pidgeotto  @ [ 16] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 16] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 17] type, key, length, pan_sweep
-	.4byte 0x086DE84C  @ [ 17] wav
+	.4byte Cry_Pidgeot  @ [ 17] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 17] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 18] type, key, length, pan_sweep
-	.4byte 0x086DF980  @ [ 18] wav
+	.4byte Cry_Rattata  @ [ 18] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 18] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 19] type, key, length, pan_sweep
-	.4byte 0x086E0160  @ [ 19] wav
+	.4byte Cry_Raticate  @ [ 19] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 19] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 20] type, key, length, pan_sweep
-	.4byte 0x086E0AE4  @ [ 20] wav
+	.4byte Cry_Spearow  @ [ 20] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 20] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 21] type, key, length, pan_sweep
-	.4byte 0x086E1C88  @ [ 21] wav
+	.4byte Cry_Fearow  @ [ 21] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 21] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 22] type, key, length, pan_sweep
-	.4byte 0x086E2DC4  @ [ 22] wav
+	.4byte Cry_Ekans  @ [ 22] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 22] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 23] type, key, length, pan_sweep
-	.4byte 0x086E4110  @ [ 23] wav
+	.4byte Cry_Arbok  @ [ 23] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 23] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 24] type, key, length, pan_sweep
-	.4byte 0x086E5468  @ [ 24] wav
+	.4byte Cry_Pikachu  @ [ 24] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 24] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 25] type, key, length, pan_sweep
-	.4byte 0x086E6510  @ [ 25] wav
+	.4byte Cry_Raichu  @ [ 25] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 25] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 26] type, key, length, pan_sweep
-	.4byte 0x086E7CD0  @ [ 26] wav
+	.4byte Cry_Sandshrew  @ [ 26] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 26] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 27] type, key, length, pan_sweep
-	.4byte 0x086E8624  @ [ 27] wav
+	.4byte Cry_Sandslash  @ [ 27] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 27] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 28] type, key, length, pan_sweep
-	.4byte 0x086E93B4  @ [ 28] wav
+	.4byte Cry_NidoranF  @ [ 28] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 28] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 29] type, key, length, pan_sweep
-	.4byte 0x086E9D64  @ [ 29] wav
+	.4byte Cry_Nidorina  @ [ 29] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 29] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 30] type, key, length, pan_sweep
-	.4byte 0x086EAA2C  @ [ 30] wav
+	.4byte Cry_Nidoqueen  @ [ 30] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 30] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 31] type, key, length, pan_sweep
-	.4byte 0x086EBB0C  @ [ 31] wav
+	.4byte Cry_NidoranM  @ [ 31] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 31] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 32] type, key, length, pan_sweep
-	.4byte 0x086EC574  @ [ 32] wav
+	.4byte Cry_Nidorino  @ [ 32] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 32] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 33] type, key, length, pan_sweep
-	.4byte 0x086ED188  @ [ 33] wav
+	.4byte Cry_Nidoking  @ [ 33] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 33] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 34] type, key, length, pan_sweep
-	.4byte 0x086EE9F4  @ [ 34] wav
+	.4byte Cry_Clefairy  @ [ 34] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 34] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 35] type, key, length, pan_sweep
-	.4byte 0x086EF264  @ [ 35] wav
+	.4byte Cry_Clefable  @ [ 35] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 35] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 36] type, key, length, pan_sweep
-	.4byte 0x086EFCF4  @ [ 36] wav
+	.4byte Cry_Vulpix  @ [ 36] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 36] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 37] type, key, length, pan_sweep
-	.4byte 0x086F14C4  @ [ 37] wav
+	.4byte Cry_Ninetales  @ [ 37] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 37] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 38] type, key, length, pan_sweep
-	.4byte 0x086F2D30  @ [ 38] wav
+	.4byte Cry_Jigglypuff  @ [ 38] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 38] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 39] type, key, length, pan_sweep
-	.4byte 0x086F3294  @ [ 39] wav
+	.4byte Cry_Wigglytuff  @ [ 39] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 39] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 40] type, key, length, pan_sweep
-	.4byte 0x086F395C  @ [ 40] wav
+	.4byte Cry_Zubat  @ [ 40] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 40] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 41] type, key, length, pan_sweep
-	.4byte 0x086F4CC8  @ [ 41] wav
+	.4byte Cry_Golbat  @ [ 41] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 41] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 42] type, key, length, pan_sweep
-	.4byte 0x086F602C  @ [ 42] wav
+	.4byte Cry_Oddish  @ [ 42] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 42] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 43] type, key, length, pan_sweep
-	.4byte 0x086F6EC8  @ [ 43] wav
+	.4byte Cry_Gloom  @ [ 43] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 43] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 44] type, key, length, pan_sweep
-	.4byte 0x086F7B44  @ [ 44] wav
+	.4byte Cry_Vileplume  @ [ 44] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 44] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 45] type, key, length, pan_sweep
-	.4byte 0x086F94E0  @ [ 45] wav
+	.4byte Cry_Paras  @ [ 45] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 45] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 46] type, key, length, pan_sweep
-	.4byte 0x086FB0D4  @ [ 46] wav
+	.4byte Cry_Parasect  @ [ 46] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 46] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 47] type, key, length, pan_sweep
-	.4byte 0x086FCF3C  @ [ 47] wav
+	.4byte Cry_Venonat  @ [ 47] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 47] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 48] type, key, length, pan_sweep
-	.4byte 0x086FDEBC  @ [ 48] wav
+	.4byte Cry_Venomoth  @ [ 48] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 48] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 49] type, key, length, pan_sweep
-	.4byte 0x086FEEC0  @ [ 49] wav
+	.4byte Cry_Diglett  @ [ 49] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 49] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 50] type, key, length, pan_sweep
-	.4byte 0x08700230  @ [ 50] wav
+	.4byte Cry_Dugtrio  @ [ 50] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 50] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 51] type, key, length, pan_sweep
-	.4byte 0x0870159C  @ [ 51] wav
+	.4byte Cry_Meowth  @ [ 51] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 51] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 52] type, key, length, pan_sweep
-	.4byte 0x08701F2C  @ [ 52] wav
+	.4byte Cry_Persian  @ [ 52] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 52] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 53] type, key, length, pan_sweep
-	.4byte 0x08703208  @ [ 53] wav
+	.4byte Cry_Psyduck  @ [ 53] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 53] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 54] type, key, length, pan_sweep
-	.4byte 0x08703F30  @ [ 54] wav
+	.4byte Cry_Golduck  @ [ 54] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 54] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 55] type, key, length, pan_sweep
-	.4byte 0x08704A78  @ [ 55] wav
+	.4byte Cry_Mankey  @ [ 55] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 55] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 56] type, key, length, pan_sweep
-	.4byte 0x08705AD8  @ [ 56] wav
+	.4byte Cry_Primeape  @ [ 56] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 56] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 57] type, key, length, pan_sweep
-	.4byte 0x08706B08  @ [ 57] wav
+	.4byte Cry_Growlithe  @ [ 57] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 57] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 58] type, key, length, pan_sweep
-	.4byte 0x0870786C  @ [ 58] wav
+	.4byte Cry_Arcanine  @ [ 58] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 58] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 59] type, key, length, pan_sweep
-	.4byte 0x087089A8  @ [ 59] wav
+	.4byte Cry_Poliwag  @ [ 59] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 59] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 60] type, key, length, pan_sweep
-	.4byte 0x087094C4  @ [ 60] wav
+	.4byte Cry_Poliwhirl  @ [ 60] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 60] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 61] type, key, length, pan_sweep
-	.4byte 0x08709B6C  @ [ 61] wav
+	.4byte Cry_Poliwrath  @ [ 61] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 61] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 62] type, key, length, pan_sweep
-	.4byte 0x0870A690  @ [ 62] wav
+	.4byte Cry_Abra  @ [ 62] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 62] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 63] type, key, length, pan_sweep
-	.4byte 0x0870BDF4  @ [ 63] wav
+	.4byte Cry_Kadabra  @ [ 63] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 63] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 64] type, key, length, pan_sweep
-	.4byte 0x0870D8DC  @ [ 64] wav
+	.4byte Cry_Alakazam  @ [ 64] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 64] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 65] type, key, length, pan_sweep
-	.4byte 0x0870F878  @ [ 65] wav
+	.4byte Cry_Machop  @ [ 65] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 65] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 66] type, key, length, pan_sweep
-	.4byte 0x087105DC  @ [ 66] wav
+	.4byte Cry_Machoke  @ [ 66] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 66] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 67] type, key, length, pan_sweep
-	.4byte 0x0871136C  @ [ 67] wav
+	.4byte Cry_Machamp  @ [ 67] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 67] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 68] type, key, length, pan_sweep
-	.4byte 0x087123F4  @ [ 68] wav
+	.4byte Cry_Bellsprout  @ [ 68] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 68] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 69] type, key, length, pan_sweep
-	.4byte 0x08712B80  @ [ 69] wav
+	.4byte Cry_Weepinbell  @ [ 69] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 69] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 70] type, key, length, pan_sweep
-	.4byte 0x08713A20  @ [ 70] wav
+	.4byte Cry_Victreebel  @ [ 70] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 70] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 71] type, key, length, pan_sweep
-	.4byte 0x08714D6C  @ [ 71] wav
+	.4byte Cry_Tentacool  @ [ 71] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 71] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 72] type, key, length, pan_sweep
-	.4byte 0x08715D5C  @ [ 72] wav
+	.4byte Cry_Tentacruel  @ [ 72] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 72] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 73] type, key, length, pan_sweep
-	.4byte 0x08717458  @ [ 73] wav
+	.4byte Cry_Geodude  @ [ 73] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 73] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 74] type, key, length, pan_sweep
-	.4byte 0x08718C0C  @ [ 74] wav
+	.4byte Cry_Graveler  @ [ 74] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 74] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 75] type, key, length, pan_sweep
-	.4byte 0x0871A7F4  @ [ 75] wav
+	.4byte Cry_Golem  @ [ 75] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 75] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 76] type, key, length, pan_sweep
-	.4byte 0x0871B620  @ [ 76] wav
+	.4byte Cry_Ponyta  @ [ 76] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 76] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 77] type, key, length, pan_sweep
-	.4byte 0x0871C530  @ [ 77] wav
+	.4byte Cry_Rapidash  @ [ 77] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 77] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 78] type, key, length, pan_sweep
-	.4byte 0x0871D7D0  @ [ 78] wav
+	.4byte Cry_Slowpoke  @ [ 78] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 78] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 79] type, key, length, pan_sweep
-	.4byte 0x0871DF38  @ [ 79] wav
+	.4byte Cry_Slowbro  @ [ 79] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 79] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 80] type, key, length, pan_sweep
-	.4byte 0x0871ECA8  @ [ 80] wav
+	.4byte Cry_Magnemite  @ [ 80] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 80] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 81] type, key, length, pan_sweep
-	.4byte 0x0871FFEC  @ [ 81] wav
+	.4byte Cry_Magneton  @ [ 81] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 81] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 82] type, key, length, pan_sweep
-	.4byte 0x087217D4  @ [ 82] wav
+	.4byte Cry_Farfetchd  @ [ 82] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 82] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 83] type, key, length, pan_sweep
-	.4byte 0x08721F50  @ [ 83] wav
+	.4byte Cry_Doduo  @ [ 83] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 83] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 84] type, key, length, pan_sweep
-	.4byte 0x08723294  @ [ 84] wav
+	.4byte Cry_Dodrio  @ [ 84] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 84] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 85] type, key, length, pan_sweep
-	.4byte 0x0872460C  @ [ 85] wav
+	.4byte Cry_Seel  @ [ 85] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 85] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 86] type, key, length, pan_sweep
-	.4byte 0x087257FC  @ [ 86] wav
+	.4byte Cry_Dewgong  @ [ 86] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 86] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 87] type, key, length, pan_sweep
-	.4byte 0x08726D20  @ [ 87] wav
+	.4byte Cry_Grimer  @ [ 87] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 87] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 88] type, key, length, pan_sweep
-	.4byte 0x087277A8  @ [ 88] wav
+	.4byte Cry_Muk  @ [ 88] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 88] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 89] type, key, length, pan_sweep
-	.4byte 0x08728668  @ [ 89] wav
+	.4byte Cry_Shellder  @ [ 89] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 89] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 90] type, key, length, pan_sweep
-	.4byte 0x087295DC  @ [ 90] wav
+	.4byte Cry_Cloyster  @ [ 90] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 90] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 91] type, key, length, pan_sweep
-	.4byte 0x0872AAA0  @ [ 91] wav
+	.4byte Cry_Gastly  @ [ 91] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 91] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 92] type, key, length, pan_sweep
-	.4byte 0x0872C1F0  @ [ 92] wav
+	.4byte Cry_Haunter  @ [ 92] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 92] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 93] type, key, length, pan_sweep
-	.4byte 0x0872D970  @ [ 93] wav
+	.4byte Cry_Gengar  @ [ 93] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 93] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 94] type, key, length, pan_sweep
-	.4byte 0x0872E830  @ [ 94] wav
+	.4byte Cry_Onix  @ [ 94] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 94] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 95] type, key, length, pan_sweep
-	.4byte 0x087300F4  @ [ 95] wav
+	.4byte Cry_Drowzee  @ [ 95] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 95] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 96] type, key, length, pan_sweep
-	.4byte 0x08731E0C  @ [ 96] wav
+	.4byte Cry_Hypno  @ [ 96] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 96] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 97] type, key, length, pan_sweep
-	.4byte 0x08733B10  @ [ 97] wav
+	.4byte Cry_Krabby  @ [ 97] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 97] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 98] type, key, length, pan_sweep
-	.4byte 0x0873535C  @ [ 98] wav
+	.4byte Cry_Kingler  @ [ 98] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 98] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 99] type, key, length, pan_sweep
-	.4byte 0x08736BB4  @ [ 99] wav
+	.4byte Cry_Voltorb  @ [ 99] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 99] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [100] type, key, length, pan_sweep
-	.4byte 0x08738478  @ [100] wav
+	.4byte Cry_Electrode  @ [100] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [100] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [101] type, key, length, pan_sweep
-	.4byte 0x08739DB0  @ [101] wav
+	.4byte Cry_Exeggcute  @ [101] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [101] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [102] type, key, length, pan_sweep
-	.4byte 0x0873B090  @ [102] wav
+	.4byte Cry_Exeggutor  @ [102] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [102] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [103] type, key, length, pan_sweep
-	.4byte 0x0873D074  @ [103] wav
+	.4byte Cry_Cubone  @ [103] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [103] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [104] type, key, length, pan_sweep
-	.4byte 0x0873DF94  @ [104] wav
+	.4byte Cry_Marowak  @ [104] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [104] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [105] type, key, length, pan_sweep
-	.4byte 0x0873EE04  @ [105] wav
+	.4byte Cry_Hitmonlee  @ [105] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [105] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [106] type, key, length, pan_sweep
-	.4byte 0x087400B0  @ [106] wav
+	.4byte Cry_Hitmonchan  @ [106] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [106] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [107] type, key, length, pan_sweep
-	.4byte 0x08741288  @ [107] wav
+	.4byte Cry_Lickitung  @ [107] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [107] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [108] type, key, length, pan_sweep
-	.4byte 0x087421B0  @ [108] wav
+	.4byte Cry_Koffing  @ [108] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [108] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [109] type, key, length, pan_sweep
-	.4byte 0x0874360C  @ [109] wav
+	.4byte Cry_Weezing  @ [109] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [109] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [110] type, key, length, pan_sweep
-	.4byte 0x08744BB8  @ [110] wav
+	.4byte Cry_Rhyhorn  @ [110] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [110] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [111] type, key, length, pan_sweep
-	.4byte 0x08745F24  @ [111] wav
+	.4byte Cry_Rhydon  @ [111] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [111] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [112] type, key, length, pan_sweep
-	.4byte 0x08747390  @ [112] wav
+	.4byte Cry_Chansey  @ [112] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [112] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [113] type, key, length, pan_sweep
-	.4byte 0x0874825C  @ [113] wav
+	.4byte Cry_Tangela  @ [113] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [113] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [114] type, key, length, pan_sweep
-	.4byte 0x08749178  @ [114] wav
+	.4byte Cry_Kangaskhan  @ [114] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [114] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [115] type, key, length, pan_sweep
-	.4byte 0x0874A42C  @ [115] wav
+	.4byte Cry_Horsea  @ [115] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [115] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [116] type, key, length, pan_sweep
-	.4byte 0x0874ADA8  @ [116] wav
+	.4byte Cry_Seadra  @ [116] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [116] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [117] type, key, length, pan_sweep
-	.4byte 0x0874B614  @ [117] wav
+	.4byte Cry_Goldeen  @ [117] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [117] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [118] type, key, length, pan_sweep
-	.4byte 0x0874BFEC  @ [118] wav
+	.4byte Cry_Seaking  @ [118] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [118] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [119] type, key, length, pan_sweep
-	.4byte 0x0874D344  @ [119] wav
+	.4byte Cry_Staryu  @ [119] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [119] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [120] type, key, length, pan_sweep
-	.4byte 0x0874E72C  @ [120] wav
+	.4byte Cry_Starmie  @ [120] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [120] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [121] type, key, length, pan_sweep
-	.4byte 0x0874FC08  @ [121] wav
+	.4byte Cry_MrMime  @ [121] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [121] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [122] type, key, length, pan_sweep
-	.4byte 0x08750EF8  @ [122] wav
+	.4byte Cry_Scyther  @ [122] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [122] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [123] type, key, length, pan_sweep
-	.4byte 0x08751C54  @ [123] wav
+	.4byte Cry_Jynx  @ [123] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [123] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [124] type, key, length, pan_sweep
-	.4byte 0x08754BC8  @ [124] wav
+	.4byte Cry_Electabuzz  @ [124] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [124] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [125] type, key, length, pan_sweep
-	.4byte 0x08756AAC  @ [125] wav
+	.4byte Cry_Magmar  @ [125] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [125] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [126] type, key, length, pan_sweep
-	.4byte 0x08757A28  @ [126] wav
+	.4byte Cry_Pinsir  @ [126] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [126] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [127] type, key, length, pan_sweep
-	.4byte 0x08758684  @ [127] wav
+	.4byte Cry_Tauros  @ [127] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [127] attack, decay, sustain, release
 
 	.globl gJP_CryTable_Normal_1
 gJP_CryTable_Normal_1: @ 0x08625E14
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  0] type, key, length, pan_sweep
-	.4byte 0x087598D8  @ [  0] wav
+	.4byte Cry_Magikarp  @ [  0] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  0] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  1] type, key, length, pan_sweep
-	.4byte 0x0875ABE0  @ [  1] wav
+	.4byte Cry_Gyarados  @ [  1] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  1] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  2] type, key, length, pan_sweep
-	.4byte 0x0875C014  @ [  2] wav
+	.4byte Cry_Lapras  @ [  2] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  2] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  3] type, key, length, pan_sweep
-	.4byte 0x0875CEE8  @ [  3] wav
+	.4byte Cry_Ditto  @ [  3] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  3] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  4] type, key, length, pan_sweep
-	.4byte 0x0875DA04  @ [  4] wav
+	.4byte Cry_Eevee  @ [  4] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  4] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  5] type, key, length, pan_sweep
-	.4byte 0x0875E83C  @ [  5] wav
+	.4byte Cry_Vaporeon  @ [  5] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  5] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  6] type, key, length, pan_sweep
-	.4byte 0x0875FE54  @ [  6] wav
+	.4byte Cry_Jolteon  @ [  6] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  6] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  7] type, key, length, pan_sweep
-	.4byte 0x08760E28  @ [  7] wav
+	.4byte Cry_Flareon  @ [  7] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  7] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  8] type, key, length, pan_sweep
-	.4byte 0x08761DAC  @ [  8] wav
+	.4byte Cry_Porygon  @ [  8] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  8] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  9] type, key, length, pan_sweep
-	.4byte 0x087631B8  @ [  9] wav
+	.4byte Cry_Omanyte  @ [  9] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  9] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 10] type, key, length, pan_sweep
-	.4byte 0x08763F10  @ [ 10] wav
+	.4byte Cry_Omastar  @ [ 10] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 10] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 11] type, key, length, pan_sweep
-	.4byte 0x08764C64  @ [ 11] wav
+	.4byte Cry_Kabuto  @ [ 11] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 11] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 12] type, key, length, pan_sweep
-	.4byte 0x087658B8  @ [ 12] wav
+	.4byte Cry_Kabutops  @ [ 12] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 12] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 13] type, key, length, pan_sweep
-	.4byte 0x08766674  @ [ 13] wav
+	.4byte Cry_Aerodactyl  @ [ 13] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 13] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 14] type, key, length, pan_sweep
-	.4byte 0x08767ED0  @ [ 14] wav
+	.4byte Cry_Snorlax  @ [ 14] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 14] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 15] type, key, length, pan_sweep
-	.4byte 0x0876840C  @ [ 15] wav
+	.4byte Cry_Articuno  @ [ 15] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 15] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 16] type, key, length, pan_sweep
-	.4byte 0x08769BB4  @ [ 16] wav
+	.4byte Cry_Zapdos  @ [ 16] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 16] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 17] type, key, length, pan_sweep
-	.4byte 0x0876AB2C  @ [ 17] wav
+	.4byte Cry_Moltres  @ [ 17] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 17] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 18] type, key, length, pan_sweep
-	.4byte 0x0876C2D8  @ [ 18] wav
+	.4byte Cry_Dratini  @ [ 18] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 18] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 19] type, key, length, pan_sweep
-	.4byte 0x0876CE74  @ [ 19] wav
+	.4byte Cry_Dragonair  @ [ 19] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 19] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 20] type, key, length, pan_sweep
-	.4byte 0x0876DF1C  @ [ 20] wav
+	.4byte Cry_Dragonite  @ [ 20] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 20] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 21] type, key, length, pan_sweep
-	.4byte 0x0876F228  @ [ 21] wav
+	.4byte Cry_Mewtwo  @ [ 21] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 21] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 22] type, key, length, pan_sweep
-	.4byte 0x08771090  @ [ 22] wav
+	.4byte Cry_Mew  @ [ 22] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 22] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 23] type, key, length, pan_sweep
-	.4byte 0x08772EF8  @ [ 23] wav
+	.4byte Cry_Chikorita  @ [ 23] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 23] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 24] type, key, length, pan_sweep
-	.4byte 0x08773438  @ [ 24] wav
+	.4byte Cry_Bayleef  @ [ 24] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 24] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 25] type, key, length, pan_sweep
-	.4byte 0x08773D04  @ [ 25] wav
+	.4byte Cry_Meganium  @ [ 25] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 25] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 26] type, key, length, pan_sweep
-	.4byte 0x08774D3C  @ [ 26] wav
+	.4byte Cry_Cyndaquil  @ [ 26] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 26] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 27] type, key, length, pan_sweep
-	.4byte 0x08775440  @ [ 27] wav
+	.4byte Cry_Quilava  @ [ 27] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 27] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 28] type, key, length, pan_sweep
-	.4byte 0x08776028  @ [ 28] wav
+	.4byte Cry_Typhlosion  @ [ 28] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 28] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 29] type, key, length, pan_sweep
-	.4byte 0x08778638  @ [ 29] wav
+	.4byte Cry_Totodile  @ [ 29] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 29] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 30] type, key, length, pan_sweep
-	.4byte 0x08779890  @ [ 30] wav
+	.4byte Cry_Croconaw  @ [ 30] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 30] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 31] type, key, length, pan_sweep
-	.4byte 0x0877ACCC  @ [ 31] wav
+	.4byte Cry_Feraligatr  @ [ 31] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 31] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 32] type, key, length, pan_sweep
-	.4byte 0x0877C650  @ [ 32] wav
+	.4byte Cry_Sentret  @ [ 32] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 32] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 33] type, key, length, pan_sweep
-	.4byte 0x0877CA78  @ [ 33] wav
+	.4byte Cry_Furret  @ [ 33] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 33] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 34] type, key, length, pan_sweep
-	.4byte 0x0877D0C0  @ [ 34] wav
+	.4byte Cry_Hoothoot  @ [ 34] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 34] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 35] type, key, length, pan_sweep
-	.4byte 0x0877DBA4  @ [ 35] wav
+	.4byte Cry_Noctowl  @ [ 35] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 35] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 36] type, key, length, pan_sweep
-	.4byte 0x0877F0D4  @ [ 36] wav
+	.4byte Cry_Ledyba  @ [ 36] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 36] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 37] type, key, length, pan_sweep
-	.4byte 0x0877F7CC  @ [ 37] wav
+	.4byte Cry_Ledian  @ [ 37] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 37] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 38] type, key, length, pan_sweep
-	.4byte 0x08780030  @ [ 38] wav
+	.4byte Cry_Spinarak  @ [ 38] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 38] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 39] type, key, length, pan_sweep
-	.4byte 0x08780D94  @ [ 39] wav
+	.4byte Cry_Ariados  @ [ 39] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 39] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 40] type, key, length, pan_sweep
-	.4byte 0x087819E8  @ [ 40] wav
+	.4byte Cry_Crobat  @ [ 40] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 40] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 41] type, key, length, pan_sweep
-	.4byte 0x08783118  @ [ 41] wav
+	.4byte Cry_Chinchou  @ [ 41] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 41] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 42] type, key, length, pan_sweep
-	.4byte 0x08783DC8  @ [ 42] wav
+	.4byte Cry_Lanturn  @ [ 42] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 42] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 43] type, key, length, pan_sweep
-	.4byte 0x08784854  @ [ 43] wav
+	.4byte Cry_Pichu  @ [ 43] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 43] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 44] type, key, length, pan_sweep
-	.4byte 0x08784FA8  @ [ 44] wav
+	.4byte Cry_Cleffa  @ [ 44] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 44] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 45] type, key, length, pan_sweep
-	.4byte 0x08785598  @ [ 45] wav
+	.4byte Cry_Igglybuff  @ [ 45] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 45] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 46] type, key, length, pan_sweep
-	.4byte 0x08785C94  @ [ 46] wav
+	.4byte Cry_Togepi  @ [ 46] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 46] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 47] type, key, length, pan_sweep
-	.4byte 0x0878677C  @ [ 47] wav
+	.4byte Cry_Togetic  @ [ 47] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 47] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 48] type, key, length, pan_sweep
-	.4byte 0x08786E7C  @ [ 48] wav
+	.4byte Cry_Natu  @ [ 48] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 48] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 49] type, key, length, pan_sweep
-	.4byte 0x0878790C  @ [ 49] wav
+	.4byte Cry_Xatu  @ [ 49] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 49] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 50] type, key, length, pan_sweep
-	.4byte 0x087887D8  @ [ 50] wav
+	.4byte Cry_Mareep  @ [ 50] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 50] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 51] type, key, length, pan_sweep
-	.4byte 0x08788F30  @ [ 51] wav
+	.4byte Cry_Flaaffy  @ [ 51] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 51] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 52] type, key, length, pan_sweep
-	.4byte 0x08789CE4  @ [ 52] wav
+	.4byte Cry_Ampharos  @ [ 52] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 52] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 53] type, key, length, pan_sweep
-	.4byte 0x0878AD64  @ [ 53] wav
+	.4byte Cry_Bellossom  @ [ 53] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 53] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 54] type, key, length, pan_sweep
-	.4byte 0x0878BB7C  @ [ 54] wav
+	.4byte Cry_Marill  @ [ 54] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 54] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 55] type, key, length, pan_sweep
-	.4byte 0x0878C890  @ [ 55] wav
+	.4byte Cry_Azumarill  @ [ 55] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 55] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 56] type, key, length, pan_sweep
-	.4byte 0x0878D97C  @ [ 56] wav
+	.4byte Cry_Sudowoodo  @ [ 56] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 56] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 57] type, key, length, pan_sweep
-	.4byte 0x0878E9AC  @ [ 57] wav
+	.4byte Cry_Politoed  @ [ 57] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 57] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 58] type, key, length, pan_sweep
-	.4byte 0x0878FBF0  @ [ 58] wav
+	.4byte Cry_Hoppip  @ [ 58] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 58] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 59] type, key, length, pan_sweep
-	.4byte 0x0879045C  @ [ 59] wav
+	.4byte Cry_Skiploom  @ [ 59] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 59] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 60] type, key, length, pan_sweep
-	.4byte 0x08791164  @ [ 60] wav
+	.4byte Cry_Jumpluff  @ [ 60] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 60] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 61] type, key, length, pan_sweep
-	.4byte 0x087921A0  @ [ 61] wav
+	.4byte Cry_Aipom  @ [ 61] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 61] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 62] type, key, length, pan_sweep
-	.4byte 0x08792FC0  @ [ 62] wav
+	.4byte Cry_Sunkern  @ [ 62] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 62] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 63] type, key, length, pan_sweep
-	.4byte 0x087937D4  @ [ 63] wav
+	.4byte Cry_Sunflora  @ [ 63] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 63] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 64] type, key, length, pan_sweep
-	.4byte 0x087947B4  @ [ 64] wav
+	.4byte Cry_Yanma  @ [ 64] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 64] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 65] type, key, length, pan_sweep
-	.4byte 0x087958BC  @ [ 65] wav
+	.4byte Cry_Wooper  @ [ 65] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 65] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 66] type, key, length, pan_sweep
-	.4byte 0x0879601C  @ [ 66] wav
+	.4byte Cry_Quagsire  @ [ 66] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 66] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 67] type, key, length, pan_sweep
-	.4byte 0x08796D7C  @ [ 67] wav
+	.4byte Cry_Espeon  @ [ 67] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 67] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 68] type, key, length, pan_sweep
-	.4byte 0x08798130  @ [ 68] wav
+	.4byte Cry_Umbreon  @ [ 68] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 68] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 69] type, key, length, pan_sweep
-	.4byte 0x087990B0  @ [ 69] wav
+	.4byte Cry_Murkrow  @ [ 69] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 69] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 70] type, key, length, pan_sweep
-	.4byte 0x0879A174  @ [ 70] wav
+	.4byte Cry_Slowking  @ [ 70] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 70] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 71] type, key, length, pan_sweep
-	.4byte 0x0879B958  @ [ 71] wav
+	.4byte Cry_Misdreavus  @ [ 71] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 71] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 72] type, key, length, pan_sweep
-	.4byte 0x0879C4F8  @ [ 72] wav
+	.4byte Cry_Unown  @ [ 72] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 72] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 73] type, key, length, pan_sweep
-	.4byte 0x0879D220  @ [ 73] wav
+	.4byte Cry_Wobbuffet  @ [ 73] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 73] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 74] type, key, length, pan_sweep
-	.4byte 0x0879E6BC  @ [ 74] wav
+	.4byte Cry_Girafarig  @ [ 74] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 74] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 75] type, key, length, pan_sweep
-	.4byte 0x0879F570  @ [ 75] wav
+	.4byte Cry_Pineco  @ [ 75] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 75] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 76] type, key, length, pan_sweep
-	.4byte 0x087A02D0  @ [ 76] wav
+	.4byte Cry_Forretress  @ [ 76] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 76] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 77] type, key, length, pan_sweep
-	.4byte 0x087A16D8  @ [ 77] wav
+	.4byte Cry_Dunsparce  @ [ 77] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 77] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 78] type, key, length, pan_sweep
-	.4byte 0x087A26B8  @ [ 78] wav
+	.4byte Cry_Gligar  @ [ 78] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 78] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 79] type, key, length, pan_sweep
-	.4byte 0x087A32D8  @ [ 79] wav
+	.4byte Cry_Steelix  @ [ 79] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 79] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 80] type, key, length, pan_sweep
-	.4byte 0x087A5900  @ [ 80] wav
+	.4byte Cry_Snubbull  @ [ 80] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 80] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 81] type, key, length, pan_sweep
-	.4byte 0x087A6774  @ [ 81] wav
+	.4byte Cry_Granbull  @ [ 81] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 81] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 82] type, key, length, pan_sweep
-	.4byte 0x087A7F18  @ [ 82] wav
+	.4byte Cry_Qwilfish  @ [ 82] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 82] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 83] type, key, length, pan_sweep
-	.4byte 0x087A8AB4  @ [ 83] wav
+	.4byte Cry_Scizor  @ [ 83] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 83] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 84] type, key, length, pan_sweep
-	.4byte 0x087AA1B0  @ [ 84] wav
+	.4byte Cry_Shuckle  @ [ 84] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 84] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 85] type, key, length, pan_sweep
-	.4byte 0x087AABE4  @ [ 85] wav
+	.4byte Cry_Heracross  @ [ 85] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 85] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 86] type, key, length, pan_sweep
-	.4byte 0x087ABE38  @ [ 86] wav
+	.4byte Cry_Sneasel  @ [ 86] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 86] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 87] type, key, length, pan_sweep
-	.4byte 0x087AC75C  @ [ 87] wav
+	.4byte Cry_Teddiursa  @ [ 87] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 87] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 88] type, key, length, pan_sweep
-	.4byte 0x087AD7E8  @ [ 88] wav
+	.4byte Cry_Ursaring  @ [ 88] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 88] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 89] type, key, length, pan_sweep
-	.4byte 0x087AF5C0  @ [ 89] wav
+	.4byte Cry_Slugma  @ [ 89] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 89] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 90] type, key, length, pan_sweep
-	.4byte 0x087B06D8  @ [ 90] wav
+	.4byte Cry_Magcargo  @ [ 90] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 90] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 91] type, key, length, pan_sweep
-	.4byte 0x087B1BE0  @ [ 91] wav
+	.4byte Cry_Swinub  @ [ 91] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 91] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 92] type, key, length, pan_sweep
-	.4byte 0x087B2888  @ [ 92] wav
+	.4byte Cry_Piloswine  @ [ 92] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 92] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 93] type, key, length, pan_sweep
-	.4byte 0x087B357C  @ [ 93] wav
+	.4byte Cry_Corsola  @ [ 93] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 93] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 94] type, key, length, pan_sweep
-	.4byte 0x087B425C  @ [ 94] wav
+	.4byte Cry_Remoraid  @ [ 94] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 94] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 95] type, key, length, pan_sweep
-	.4byte 0x087B4CEC  @ [ 95] wav
+	.4byte Cry_Octillery  @ [ 95] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 95] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 96] type, key, length, pan_sweep
-	.4byte 0x087B6730  @ [ 96] wav
+	.4byte Cry_Delibird  @ [ 96] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 96] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 97] type, key, length, pan_sweep
-	.4byte 0x087B7764  @ [ 97] wav
+	.4byte Cry_Mantine  @ [ 97] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 97] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 98] type, key, length, pan_sweep
-	.4byte 0x087B872C  @ [ 98] wav
+	.4byte Cry_Skarmory  @ [ 98] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 98] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 99] type, key, length, pan_sweep
-	.4byte 0x087B9F34  @ [ 99] wav
+	.4byte Cry_Houndour  @ [ 99] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 99] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [100] type, key, length, pan_sweep
-	.4byte 0x087BABDC  @ [100] wav
+	.4byte Cry_Houndoom  @ [100] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [100] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [101] type, key, length, pan_sweep
-	.4byte 0x087BBF8C  @ [101] wav
+	.4byte Cry_Kingdra  @ [101] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [101] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [102] type, key, length, pan_sweep
-	.4byte 0x087BCD64  @ [102] wav
+	.4byte Cry_Phanpy  @ [102] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [102] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [103] type, key, length, pan_sweep
-	.4byte 0x087BD8B4  @ [103] wav
+	.4byte Cry_Donphan  @ [103] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [103] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [104] type, key, length, pan_sweep
-	.4byte 0x087BE9D8  @ [104] wav
+	.4byte Cry_Porygon2  @ [104] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [104] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [105] type, key, length, pan_sweep
-	.4byte 0x087BF990  @ [105] wav
+	.4byte Cry_Stantler  @ [105] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [105] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [106] type, key, length, pan_sweep
-	.4byte 0x087C100C  @ [106] wav
+	.4byte Cry_Smeargle  @ [106] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [106] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [107] type, key, length, pan_sweep
-	.4byte 0x087C1A40  @ [107] wav
+	.4byte Cry_Tyrogue  @ [107] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [107] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [108] type, key, length, pan_sweep
-	.4byte 0x087C2A68  @ [108] wav
+	.4byte Cry_Hitmontop  @ [108] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [108] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [109] type, key, length, pan_sweep
-	.4byte 0x087C3848  @ [109] wav
+	.4byte Cry_Smoochum  @ [109] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [109] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [110] type, key, length, pan_sweep
-	.4byte 0x087C43FC  @ [110] wav
+	.4byte Cry_Elekid  @ [110] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [110] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [111] type, key, length, pan_sweep
-	.4byte 0x087C4E88  @ [111] wav
+	.4byte Cry_Magby  @ [111] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [111] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [112] type, key, length, pan_sweep
-	.4byte 0x087C5CF8  @ [112] wav
+	.4byte Cry_Miltank  @ [112] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [112] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [113] type, key, length, pan_sweep
-	.4byte 0x087C6BD4  @ [113] wav
+	.4byte Cry_Blissey  @ [113] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [113] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [114] type, key, length, pan_sweep
-	.4byte 0x087C7C68  @ [114] wav
+	.4byte Cry_Raikou  @ [114] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [114] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [115] type, key, length, pan_sweep
-	.4byte 0x087C8DD8  @ [115] wav
+	.4byte Cry_Entei  @ [115] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [115] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [116] type, key, length, pan_sweep
-	.4byte 0x087CA24C  @ [116] wav
+	.4byte Cry_Suicune  @ [116] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [116] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [117] type, key, length, pan_sweep
-	.4byte 0x087CB494  @ [117] wav
+	.4byte Cry_Larvitar  @ [117] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [117] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [118] type, key, length, pan_sweep
-	.4byte 0x087CC144  @ [118] wav
+	.4byte Cry_Pupitar  @ [118] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [118] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [119] type, key, length, pan_sweep
-	.4byte 0x087CC9B4  @ [119] wav
+	.4byte Cry_Tyranitar  @ [119] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [119] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [120] type, key, length, pan_sweep
-	.4byte 0x087CE114  @ [120] wav
+	.4byte Cry_Lugia  @ [120] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [120] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [121] type, key, length, pan_sweep
-	.4byte 0x087D070C  @ [121] wav
+	.4byte Cry_HoOh  @ [121] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [121] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [122] type, key, length, pan_sweep
-	.4byte 0x087D1DA0  @ [122] wav
+	.4byte Cry_Celebi  @ [122] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [122] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [123] type, key, length, pan_sweep
-	.4byte 0x087D2C18  @ [123] wav
+	.4byte Cry_Kecleon  @ [123] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [123] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [124] type, key, length, pan_sweep
-	.4byte 0x087D3478  @ [124] wav
+	.4byte Cry_Roselia  @ [124] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [124] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [125] type, key, length, pan_sweep
-	.4byte 0x087D3F38  @ [125] wav
+	.4byte Cry_Torkoal  @ [125] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [125] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [126] type, key, length, pan_sweep
-	.4byte 0x087D4884  @ [126] wav
+	.4byte Cry_Electrike  @ [126] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [126] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [127] type, key, length, pan_sweep
-	.4byte 0x087D54E0  @ [127] wav
+	.4byte Cry_Manectric  @ [127] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [127] attack, decay, sustain, release
 
 	.globl gJP_CryTable_Normal_2
 gJP_CryTable_Normal_2: @ 0x08626414
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  0] type, key, length, pan_sweep
-	.4byte 0x087D69E8  @ [  0] wav
+	.4byte Cry_Duskull  @ [  0] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  0] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  1] type, key, length, pan_sweep
-	.4byte 0x087D7480  @ [  1] wav
+	.4byte Cry_Latias  @ [  1] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  1] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  2] type, key, length, pan_sweep
-	.4byte 0x087D80B0  @ [  2] wav
+	.4byte Cry_Wynaut  @ [  2] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  2] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  3] type, key, length, pan_sweep
-	.4byte 0x087D8E90  @ [  3] wav
+	.4byte Cry_Seviper  @ [  3] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  3] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  4] type, key, length, pan_sweep
-	.4byte 0x087D9A30  @ [  4] wav
+	.4byte Cry_Sharpedo  @ [  4] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  4] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  5] type, key, length, pan_sweep
-	.4byte 0x087DB13C  @ [  5] wav
+	.4byte Cry_Zangoose  @ [  5] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  5] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  6] type, key, length, pan_sweep
-	.4byte 0x087DBACC  @ [  6] wav
+	.4byte Cry_Azurill  @ [  6] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  6] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  7] type, key, length, pan_sweep
-	.4byte 0x087DC534  @ [  7] wav
+	.4byte Cry_Swablu  @ [  7] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  7] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  8] type, key, length, pan_sweep
-	.4byte 0x087DCACC  @ [  8] wav
+	.4byte Cry_Altaria  @ [  8] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  8] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  9] type, key, length, pan_sweep
-	.4byte 0x087DD5E8  @ [  9] wav
+	.4byte Cry_Unused265  @ [  9] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  9] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 10] type, key, length, pan_sweep
-	.4byte 0x087DDF3C  @ [ 10] wav
+	.4byte Cry_Taillow  @ [ 10] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 10] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 11] type, key, length, pan_sweep
-	.4byte 0x087DE53C  @ [ 11] wav
+	.4byte Cry_Swellow  @ [ 11] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 11] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 12] type, key, length, pan_sweep
-	.4byte 0x087DEE40  @ [ 12] wav
+	.4byte Cry_Unused268  @ [ 12] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 12] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 13] type, key, length, pan_sweep
-	.4byte 0x087DFFF0  @ [ 13] wav
+	.4byte Cry_Spinda  @ [ 13] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 13] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 14] type, key, length, pan_sweep
-	.4byte 0x087E0C5C  @ [ 14] wav
+	.4byte Cry_Torchic  @ [ 14] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 14] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 15] type, key, length, pan_sweep
-	.4byte 0x087E1604  @ [ 15] wav
+	.4byte Cry_Combusken  @ [ 15] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 15] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 16] type, key, length, pan_sweep
-	.4byte 0x087E32D8  @ [ 16] wav
+	.4byte Cry_Blaziken  @ [ 16] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 16] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 17] type, key, length, pan_sweep
-	.4byte 0x087E5258  @ [ 17] wav
+	.4byte Cry_Treecko  @ [ 17] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 17] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 18] type, key, length, pan_sweep
-	.4byte 0x087E5E00  @ [ 18] wav
+	.4byte Cry_Grovyle  @ [ 18] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 18] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 19] type, key, length, pan_sweep
-	.4byte 0x087E7274  @ [ 19] wav
+	.4byte Cry_Sceptile  @ [ 19] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 19] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 20] type, key, length, pan_sweep
-	.4byte 0x087E8C90  @ [ 20] wav
+	.4byte Cry_Mudkip  @ [ 20] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 20] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 21] type, key, length, pan_sweep
-	.4byte 0x087E9414  @ [ 21] wav
+	.4byte Cry_Marshtomp  @ [ 21] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 21] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 22] type, key, length, pan_sweep
-	.4byte 0x087EA518  @ [ 22] wav
+	.4byte Cry_Swampert  @ [ 22] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 22] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 23] type, key, length, pan_sweep
-	.4byte 0x087EBB98  @ [ 23] wav
+	.4byte Cry_Pelipper  @ [ 23] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 23] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 24] type, key, length, pan_sweep
-	.4byte 0x087EC760  @ [ 24] wav
+	.4byte Cry_Wingull  @ [ 24] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 24] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 25] type, key, length, pan_sweep
-	.4byte 0x087ED3A0  @ [ 25] wav
+	.4byte Cry_Banette  @ [ 25] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 25] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 26] type, key, length, pan_sweep
-	.4byte 0x087EE048  @ [ 26] wav
+	.4byte Cry_Shuppet  @ [ 26] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 26] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 27] type, key, length, pan_sweep
-	.4byte 0x087EE888  @ [ 27] wav
+	.4byte Cry_Lotad  @ [ 27] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 27] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 28] type, key, length, pan_sweep
-	.4byte 0x087EECF0  @ [ 28] wav
+	.4byte Cry_Lombre  @ [ 28] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 28] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 29] type, key, length, pan_sweep
-	.4byte 0x087EFB84  @ [ 29] wav
+	.4byte Cry_Ludicolo  @ [ 29] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 29] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 30] type, key, length, pan_sweep
-	.4byte 0x087F0C54  @ [ 30] wav
+	.4byte Cry_Seedot  @ [ 30] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 30] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 31] type, key, length, pan_sweep
-	.4byte 0x087F1480  @ [ 31] wav
+	.4byte Cry_Nuzleaf  @ [ 31] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 31] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 32] type, key, length, pan_sweep
-	.4byte 0x087F1FE8  @ [ 32] wav
+	.4byte Cry_Shiftry  @ [ 32] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 32] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 33] type, key, length, pan_sweep
-	.4byte 0x087F33AC  @ [ 33] wav
+	.4byte Cry_Carvanha  @ [ 33] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 33] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 34] type, key, length, pan_sweep
-	.4byte 0x087F3DC0  @ [ 34] wav
+	.4byte Cry_Wurmple  @ [ 34] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 34] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 35] type, key, length, pan_sweep
-	.4byte 0x087F468C  @ [ 35] wav
+	.4byte Cry_Silcoon  @ [ 35] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 35] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 36] type, key, length, pan_sweep
-	.4byte 0x087F56B8  @ [ 36] wav
+	.4byte Cry_Beautifly  @ [ 36] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 36] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 37] type, key, length, pan_sweep
-	.4byte 0x087F5EF0  @ [ 37] wav
+	.4byte Cry_Cascoon  @ [ 37] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 37] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 38] type, key, length, pan_sweep
-	.4byte 0x087F6F34  @ [ 38] wav
+	.4byte Cry_Dustox  @ [ 38] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 38] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 39] type, key, length, pan_sweep
-	.4byte 0x087F7BE0  @ [ 39] wav
+	.4byte Cry_Ralts  @ [ 39] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 39] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 40] type, key, length, pan_sweep
-	.4byte 0x087F85FC  @ [ 40] wav
+	.4byte Cry_Kirlia  @ [ 40] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 40] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 41] type, key, length, pan_sweep
-	.4byte 0x087F922C  @ [ 41] wav
+	.4byte Cry_Gardevoir  @ [ 41] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 41] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 42] type, key, length, pan_sweep
-	.4byte 0x087FAA90  @ [ 42] wav
+	.4byte Cry_Slakoth  @ [ 42] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 42] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 43] type, key, length, pan_sweep
-	.4byte 0x087FB314  @ [ 43] wav
+	.4byte Cry_Vigoroth  @ [ 43] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 43] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 44] type, key, length, pan_sweep
-	.4byte 0x087FC16C  @ [ 44] wav
+	.4byte Cry_Slaking  @ [ 44] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 44] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 45] type, key, length, pan_sweep
-	.4byte 0x087FCB58  @ [ 45] wav
+	.4byte Cry_Nincada  @ [ 45] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 45] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 46] type, key, length, pan_sweep
-	.4byte 0x087FD1C8  @ [ 46] wav
+	.4byte Cry_Ninjask  @ [ 46] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 46] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 47] type, key, length, pan_sweep
-	.4byte 0x087FDDF0  @ [ 47] wav
+	.4byte Cry_Shedinja  @ [ 47] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 47] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 48] type, key, length, pan_sweep
-	.4byte 0x087FE5A8  @ [ 48] wav
+	.4byte Cry_Makuhita  @ [ 48] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 48] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 49] type, key, length, pan_sweep
-	.4byte 0x087FED04  @ [ 49] wav
+	.4byte Cry_Hariyama  @ [ 49] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 49] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 50] type, key, length, pan_sweep
-	.4byte 0x087FFDBC  @ [ 50] wav
+	.4byte Cry_Nosepass  @ [ 50] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 50] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 51] type, key, length, pan_sweep
-	.4byte 0x08800B20  @ [ 51] wav
+	.4byte Cry_Glalie  @ [ 51] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 51] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 52] type, key, length, pan_sweep
-	.4byte 0x08802004  @ [ 52] wav
+	.4byte Cry_Plusle  @ [ 52] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 52] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 53] type, key, length, pan_sweep
-	.4byte 0x08802900  @ [ 53] wav
+	.4byte Cry_Minun  @ [ 53] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 53] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 54] type, key, length, pan_sweep
-	.4byte 0x08803908  @ [ 54] wav
+	.4byte Cry_Surskit  @ [ 54] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 54] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 55] type, key, length, pan_sweep
-	.4byte 0x08804388  @ [ 55] wav
+	.4byte Cry_Masquerain  @ [ 55] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 55] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 56] type, key, length, pan_sweep
-	.4byte 0x0880573C  @ [ 56] wav
+	.4byte Cry_Skitty  @ [ 56] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 56] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 57] type, key, length, pan_sweep
-	.4byte 0x08805E50  @ [ 57] wav
+	.4byte Cry_Delcatty  @ [ 57] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 57] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 58] type, key, length, pan_sweep
-	.4byte 0x08807368  @ [ 58] wav
+	.4byte Cry_Gulpin  @ [ 58] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 58] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 59] type, key, length, pan_sweep
-	.4byte 0x08807B6C  @ [ 59] wav
+	.4byte Cry_Swalot  @ [ 59] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 59] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 60] type, key, length, pan_sweep
-	.4byte 0x08808CCC  @ [ 60] wav
+	.4byte Cry_Numel  @ [ 60] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 60] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 61] type, key, length, pan_sweep
-	.4byte 0x08809618  @ [ 61] wav
+	.4byte Cry_Camerupt  @ [ 61] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 61] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 62] type, key, length, pan_sweep
-	.4byte 0x0880AD38  @ [ 62] wav
+	.4byte Cry_Barboach  @ [ 62] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 62] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 63] type, key, length, pan_sweep
-	.4byte 0x0880B674  @ [ 63] wav
+	.4byte Cry_Whiscash  @ [ 63] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 63] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 64] type, key, length, pan_sweep
-	.4byte 0x0880C770  @ [ 64] wav
+	.4byte Cry_Corphish  @ [ 64] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 64] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 65] type, key, length, pan_sweep
-	.4byte 0x0880D374  @ [ 65] wav
+	.4byte Cry_Crawdaunt  @ [ 65] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 65] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 66] type, key, length, pan_sweep
-	.4byte 0x0880EC2C  @ [ 66] wav
+	.4byte Cry_Spoink  @ [ 66] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 66] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 67] type, key, length, pan_sweep
-	.4byte 0x0880F36C  @ [ 67] wav
+	.4byte Cry_Grumpig  @ [ 67] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 67] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 68] type, key, length, pan_sweep
-	.4byte 0x0881000C  @ [ 68] wav
+	.4byte Cry_Trapinch  @ [ 68] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 68] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 69] type, key, length, pan_sweep
-	.4byte 0x08810A30  @ [ 69] wav
+	.4byte Cry_Vibrava  @ [ 69] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 69] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 70] type, key, length, pan_sweep
-	.4byte 0x08811834  @ [ 70] wav
+	.4byte Cry_Flygon  @ [ 70] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 70] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 71] type, key, length, pan_sweep
-	.4byte 0x0881323C  @ [ 71] wav
+	.4byte Cry_Cacnea  @ [ 71] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 71] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 72] type, key, length, pan_sweep
-	.4byte 0x08813B2C  @ [ 72] wav
+	.4byte Cry_Cacturne  @ [ 72] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 72] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 73] type, key, length, pan_sweep
-	.4byte 0x088151DC  @ [ 73] wav
+	.4byte Cry_Baltoy  @ [ 73] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 73] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 74] type, key, length, pan_sweep
-	.4byte 0x08815E60  @ [ 74] wav
+	.4byte Cry_Claydol  @ [ 74] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 74] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 75] type, key, length, pan_sweep
-	.4byte 0x088171C0  @ [ 75] wav
+	.4byte Cry_Lunatone  @ [ 75] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 75] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 76] type, key, length, pan_sweep
-	.4byte 0x088189BC  @ [ 76] wav
+	.4byte Cry_Solrock  @ [ 76] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 76] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 77] type, key, length, pan_sweep
-	.4byte 0x088199E8  @ [ 77] wav
+	.4byte Cry_Feebas  @ [ 77] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 77] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 78] type, key, length, pan_sweep
-	.4byte 0x0881A1BC  @ [ 78] wav
+	.4byte Cry_Milotic  @ [ 78] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 78] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 79] type, key, length, pan_sweep
-	.4byte 0x0881C900  @ [ 79] wav
+	.4byte Cry_Absol  @ [ 79] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 79] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 80] type, key, length, pan_sweep
-	.4byte 0x0881D37C  @ [ 80] wav
+	.4byte Cry_Meditite  @ [ 80] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 80] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 81] type, key, length, pan_sweep
-	.4byte 0x0881DB9C  @ [ 81] wav
+	.4byte Cry_Medicham  @ [ 81] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 81] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 82] type, key, length, pan_sweep
-	.4byte 0x0881EC20  @ [ 82] wav
+	.4byte Cry_Spheal  @ [ 82] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 82] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 83] type, key, length, pan_sweep
-	.4byte 0x0881F1D4  @ [ 83] wav
+	.4byte Cry_Sealeo  @ [ 83] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 83] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 84] type, key, length, pan_sweep
-	.4byte 0x0881FDAC  @ [ 84] wav
+	.4byte Cry_Walrein  @ [ 84] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 84] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 85] type, key, length, pan_sweep
-	.4byte 0x088221F8  @ [ 85] wav
+	.4byte Cry_Clamperl  @ [ 85] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 85] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 86] type, key, length, pan_sweep
-	.4byte 0x08823448  @ [ 86] wav
+	.4byte Cry_Huntail  @ [ 86] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 86] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 87] type, key, length, pan_sweep
-	.4byte 0x08824430  @ [ 87] wav
+	.4byte Cry_Gorebyss  @ [ 87] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 87] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 88] type, key, length, pan_sweep
-	.4byte 0x08825A9C  @ [ 88] wav
+	.4byte Cry_Lileep  @ [ 88] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 88] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 89] type, key, length, pan_sweep
-	.4byte 0x08826444  @ [ 89] wav
+	.4byte Cry_Cradily  @ [ 89] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 89] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 90] type, key, length, pan_sweep
-	.4byte 0x08828174  @ [ 90] wav
+	.4byte Cry_Anorith  @ [ 90] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 90] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 91] type, key, length, pan_sweep
-	.4byte 0x08828D2C  @ [ 91] wav
+	.4byte Cry_Armaldo  @ [ 91] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 91] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 92] type, key, length, pan_sweep
-	.4byte 0x0882A400  @ [ 92] wav
+	.4byte Cry_Beldum  @ [ 92] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 92] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 93] type, key, length, pan_sweep
-	.4byte 0x0882ADA0  @ [ 93] wav
+	.4byte Cry_Metang  @ [ 93] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 93] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 94] type, key, length, pan_sweep
-	.4byte 0x0882C074  @ [ 94] wav
+	.4byte Cry_Metagross  @ [ 94] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 94] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 95] type, key, length, pan_sweep
-	.4byte 0x0882E7EC  @ [ 95] wav
+	.4byte Cry_Bagon  @ [ 95] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 95] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 96] type, key, length, pan_sweep
-	.4byte 0x0882EFC0  @ [ 96] wav
+	.4byte Cry_Shelgon  @ [ 96] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 96] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 97] type, key, length, pan_sweep
-	.4byte 0x088303C8  @ [ 97] wav
+	.4byte Cry_Regirock  @ [ 97] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 97] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 98] type, key, length, pan_sweep
-	.4byte 0x088323A4  @ [ 98] wav
+	.4byte Cry_Regice  @ [ 98] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 98] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [ 99] type, key, length, pan_sweep
-	.4byte 0x088343A4  @ [ 99] wav
+	.4byte Cry_Registeel  @ [ 99] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 99] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [100] type, key, length, pan_sweep
-	.4byte 0x08835AA8  @ [100] wav
+	.4byte Cry_Castform  @ [100] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [100] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [101] type, key, length, pan_sweep
-	.4byte 0x08836740  @ [101] wav
+	.4byte Cry_Volbeat  @ [101] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [101] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [102] type, key, length, pan_sweep
-	.4byte 0x088372C8  @ [102] wav
+	.4byte Cry_Illumise  @ [102] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [102] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [103] type, key, length, pan_sweep
-	.4byte 0x088383E0  @ [103] wav
+	.4byte Cry_Poochyena  @ [103] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [103] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [104] type, key, length, pan_sweep
-	.4byte 0x08838D28  @ [104] wav
+	.4byte Cry_Mightyena  @ [104] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [104] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [105] type, key, length, pan_sweep
-	.4byte 0x0883A0B4  @ [105] wav
+	.4byte Cry_Dusclops  @ [105] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [105] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [106] type, key, length, pan_sweep
-	.4byte 0x0883AE6C  @ [106] wav
+	.4byte Cry_Sableye  @ [106] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [106] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [107] type, key, length, pan_sweep
-	.4byte 0x0883BA10  @ [107] wav
+	.4byte Cry_Mawile  @ [107] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [107] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [108] type, key, length, pan_sweep
-	.4byte 0x0883C590  @ [108] wav
+	.4byte Cry_Aron  @ [108] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [108] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [109] type, key, length, pan_sweep
-	.4byte 0x0883CEBC  @ [109] wav
+	.4byte Cry_Lairon  @ [109] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [109] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [110] type, key, length, pan_sweep
-	.4byte 0x0883E394  @ [110] wav
+	.4byte Cry_Aggron  @ [110] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [110] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [111] type, key, length, pan_sweep
-	.4byte 0x0883FD38  @ [111] wav
+	.4byte Cry_Relicanth  @ [111] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [111] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [112] type, key, length, pan_sweep
-	.4byte 0x08841168  @ [112] wav
+	.4byte Cry_Luvdisc  @ [112] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [112] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [113] type, key, length, pan_sweep
-	.4byte 0x08841644  @ [113] wav
+	.4byte Cry_Groudon  @ [113] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [113] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [114] type, key, length, pan_sweep
-	.4byte 0x08843B50  @ [114] wav
+	.4byte Cry_Kyogre  @ [114] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [114] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [115] type, key, length, pan_sweep
-	.4byte 0x08845F08  @ [115] wav
+	.4byte Cry_Rayquaza  @ [115] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [115] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [116] type, key, length, pan_sweep
-	.4byte 0x08847C34  @ [116] wav
+	.4byte Cry_Salamence  @ [116] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [116] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [117] type, key, length, pan_sweep
-	.4byte 0x08849550  @ [117] wav
+	.4byte Cry_Breloom  @ [117] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [117] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [118] type, key, length, pan_sweep
-	.4byte 0x0884A210  @ [118] wav
+	.4byte Cry_Shroomish  @ [118] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [118] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [119] type, key, length, pan_sweep
-	.4byte 0x0884AAE8  @ [119] wav
+	.4byte Cry_Linoone  @ [119] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [119] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [120] type, key, length, pan_sweep
-	.4byte 0x0884C984  @ [120] wav
+	.4byte Cry_Tropius  @ [120] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [120] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [121] type, key, length, pan_sweep
-	.4byte 0x0884EA48  @ [121] wav
+	.4byte Cry_Wailmer  @ [121] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [121] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [122] type, key, length, pan_sweep
-	.4byte 0x088506A8  @ [122] wav
+	.4byte Cry_Zigzagoon  @ [122] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [122] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [123] type, key, length, pan_sweep
-	.4byte 0x08851238  @ [123] wav
+	.4byte Cry_Exploud  @ [123] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [123] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [124] type, key, length, pan_sweep
-	.4byte 0x08852E80  @ [124] wav
+	.4byte Cry_Loudred  @ [124] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [124] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [125] type, key, length, pan_sweep
-	.4byte 0x08853BA8  @ [125] wav
+	.4byte Cry_Wailord  @ [125] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [125] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [126] type, key, length, pan_sweep
-	.4byte 0x088565B8  @ [126] wav
+	.4byte Cry_Whismur  @ [126] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [126] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [127] type, key, length, pan_sweep
-	.4byte 0x08856DDC  @ [127] wav
+	.4byte Cry_Snorunt  @ [127] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [127] attack, decay, sustain, release
 
 	.globl gJP_CryTable_Normal_3
 gJP_CryTable_Normal_3: @ 0x08626A14
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  0] type, key, length, pan_sweep
-	.4byte 0x08857EE4  @ [  0] wav
+	.4byte Cry_Latios  @ [  0] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  0] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  1] type, key, length, pan_sweep
-	.4byte 0x088594DC  @ [  1] wav
+	.4byte Cry_Jirachi  @ [  1] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  1] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  2] type, key, length, pan_sweep
-	.4byte 0x0885A260  @ [  2] wav
+	.4byte Cry_Deoxys  @ [  2] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  2] attack, decay, sustain, release
 	.byte 0x20, 0x3C, 0x00, 0x00  @ [  3] type, key, length, pan_sweep
-	.4byte 0x0885B734  @ [  3] wav
+	.4byte Cry_Chimecho  @ [  3] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  3] attack, decay, sustain, release
 
 	.globl gJP_CryTable_Reverse_0
 gJP_CryTable_Reverse_0: @ 0x08626A44
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  0] type, key, length, pan_sweep
-	.4byte 0x086CDE28  @ [  0] wav
+	.4byte Cry_Bulbasaur  @ [  0] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  0] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  1] type, key, length, pan_sweep
-	.4byte 0x086CEEB4  @ [  1] wav
+	.4byte Cry_Ivysaur  @ [  1] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  1] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  2] type, key, length, pan_sweep
-	.4byte 0x086CFF44  @ [  2] wav
+	.4byte Cry_Venusaur  @ [  2] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  2] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  3] type, key, length, pan_sweep
-	.4byte 0x086D129C  @ [  3] wav
+	.4byte Cry_Charmander  @ [  3] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  3] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  4] type, key, length, pan_sweep
-	.4byte 0x086D210C  @ [  4] wav
+	.4byte Cry_Charmeleon  @ [  4] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  4] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  5] type, key, length, pan_sweep
-	.4byte 0x086D2F8C  @ [  5] wav
+	.4byte Cry_Charizard  @ [  5] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  5] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  6] type, key, length, pan_sweep
-	.4byte 0x086D42D4  @ [  6] wav
+	.4byte Cry_Squirtle  @ [  6] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  6] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  7] type, key, length, pan_sweep
-	.4byte 0x086D5148  @ [  7] wav
+	.4byte Cry_Wartortle  @ [  7] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  7] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  8] type, key, length, pan_sweep
-	.4byte 0x086D6288  @ [  8] wav
+	.4byte Cry_Blastoise  @ [  8] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  8] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  9] type, key, length, pan_sweep
-	.4byte 0x086D75D0  @ [  9] wav
+	.4byte Cry_Caterpie  @ [  9] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  9] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 10] type, key, length, pan_sweep
-	.4byte 0x086D7E28  @ [ 10] wav
+	.4byte Cry_Metapod  @ [ 10] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 10] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 11] type, key, length, pan_sweep
-	.4byte 0x086D9578  @ [ 11] wav
+	.4byte Cry_Butterfree  @ [ 11] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 11] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 12] type, key, length, pan_sweep
-	.4byte 0x086D9F80  @ [ 12] wav
+	.4byte Cry_Weedle  @ [ 12] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 12] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 13] type, key, length, pan_sweep
-	.4byte 0x086DAFC4  @ [ 13] wav
+	.4byte Cry_Kakuna  @ [ 13] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 13] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 14] type, key, length, pan_sweep
-	.4byte 0x086DC200  @ [ 14] wav
+	.4byte Cry_Beedrill  @ [ 14] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 14] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 15] type, key, length, pan_sweep
-	.4byte 0x086DD55C  @ [ 15] wav
+	.4byte Cry_Pidgey  @ [ 15] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 15] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 16] type, key, length, pan_sweep
-	.4byte 0x086DD944  @ [ 16] wav
+	.4byte Cry_Pidgeotto  @ [ 16] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 16] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 17] type, key, length, pan_sweep
-	.4byte 0x086DE84C  @ [ 17] wav
+	.4byte Cry_Pidgeot  @ [ 17] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 17] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 18] type, key, length, pan_sweep
-	.4byte 0x086DF980  @ [ 18] wav
+	.4byte Cry_Rattata  @ [ 18] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 18] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 19] type, key, length, pan_sweep
-	.4byte 0x086E0160  @ [ 19] wav
+	.4byte Cry_Raticate  @ [ 19] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 19] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 20] type, key, length, pan_sweep
-	.4byte 0x086E0AE4  @ [ 20] wav
+	.4byte Cry_Spearow  @ [ 20] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 20] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 21] type, key, length, pan_sweep
-	.4byte 0x086E1C88  @ [ 21] wav
+	.4byte Cry_Fearow  @ [ 21] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 21] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 22] type, key, length, pan_sweep
-	.4byte 0x086E2DC4  @ [ 22] wav
+	.4byte Cry_Ekans  @ [ 22] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 22] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 23] type, key, length, pan_sweep
-	.4byte 0x086E4110  @ [ 23] wav
+	.4byte Cry_Arbok  @ [ 23] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 23] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 24] type, key, length, pan_sweep
-	.4byte 0x086E5468  @ [ 24] wav
+	.4byte Cry_Pikachu  @ [ 24] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 24] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 25] type, key, length, pan_sweep
-	.4byte 0x086E6510  @ [ 25] wav
+	.4byte Cry_Raichu  @ [ 25] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 25] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 26] type, key, length, pan_sweep
-	.4byte 0x086E7CD0  @ [ 26] wav
+	.4byte Cry_Sandshrew  @ [ 26] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 26] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 27] type, key, length, pan_sweep
-	.4byte 0x086E8624  @ [ 27] wav
+	.4byte Cry_Sandslash  @ [ 27] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 27] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 28] type, key, length, pan_sweep
-	.4byte 0x086E93B4  @ [ 28] wav
+	.4byte Cry_NidoranF  @ [ 28] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 28] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 29] type, key, length, pan_sweep
-	.4byte 0x086E9D64  @ [ 29] wav
+	.4byte Cry_Nidorina  @ [ 29] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 29] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 30] type, key, length, pan_sweep
-	.4byte 0x086EAA2C  @ [ 30] wav
+	.4byte Cry_Nidoqueen  @ [ 30] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 30] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 31] type, key, length, pan_sweep
-	.4byte 0x086EBB0C  @ [ 31] wav
+	.4byte Cry_NidoranM  @ [ 31] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 31] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 32] type, key, length, pan_sweep
-	.4byte 0x086EC574  @ [ 32] wav
+	.4byte Cry_Nidorino  @ [ 32] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 32] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 33] type, key, length, pan_sweep
-	.4byte 0x086ED188  @ [ 33] wav
+	.4byte Cry_Nidoking  @ [ 33] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 33] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 34] type, key, length, pan_sweep
-	.4byte 0x086EE9F4  @ [ 34] wav
+	.4byte Cry_Clefairy  @ [ 34] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 34] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 35] type, key, length, pan_sweep
-	.4byte 0x086EF264  @ [ 35] wav
+	.4byte Cry_Clefable  @ [ 35] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 35] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 36] type, key, length, pan_sweep
-	.4byte 0x086EFCF4  @ [ 36] wav
+	.4byte Cry_Vulpix  @ [ 36] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 36] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 37] type, key, length, pan_sweep
-	.4byte 0x086F14C4  @ [ 37] wav
+	.4byte Cry_Ninetales  @ [ 37] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 37] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 38] type, key, length, pan_sweep
-	.4byte 0x086F2D30  @ [ 38] wav
+	.4byte Cry_Jigglypuff  @ [ 38] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 38] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 39] type, key, length, pan_sweep
-	.4byte 0x086F3294  @ [ 39] wav
+	.4byte Cry_Wigglytuff  @ [ 39] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 39] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 40] type, key, length, pan_sweep
-	.4byte 0x086F395C  @ [ 40] wav
+	.4byte Cry_Zubat  @ [ 40] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 40] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 41] type, key, length, pan_sweep
-	.4byte 0x086F4CC8  @ [ 41] wav
+	.4byte Cry_Golbat  @ [ 41] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 41] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 42] type, key, length, pan_sweep
-	.4byte 0x086F602C  @ [ 42] wav
+	.4byte Cry_Oddish  @ [ 42] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 42] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 43] type, key, length, pan_sweep
-	.4byte 0x086F6EC8  @ [ 43] wav
+	.4byte Cry_Gloom  @ [ 43] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 43] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 44] type, key, length, pan_sweep
-	.4byte 0x086F7B44  @ [ 44] wav
+	.4byte Cry_Vileplume  @ [ 44] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 44] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 45] type, key, length, pan_sweep
-	.4byte 0x086F94E0  @ [ 45] wav
+	.4byte Cry_Paras  @ [ 45] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 45] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 46] type, key, length, pan_sweep
-	.4byte 0x086FB0D4  @ [ 46] wav
+	.4byte Cry_Parasect  @ [ 46] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 46] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 47] type, key, length, pan_sweep
-	.4byte 0x086FCF3C  @ [ 47] wav
+	.4byte Cry_Venonat  @ [ 47] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 47] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 48] type, key, length, pan_sweep
-	.4byte 0x086FDEBC  @ [ 48] wav
+	.4byte Cry_Venomoth  @ [ 48] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 48] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 49] type, key, length, pan_sweep
-	.4byte 0x086FEEC0  @ [ 49] wav
+	.4byte Cry_Diglett  @ [ 49] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 49] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 50] type, key, length, pan_sweep
-	.4byte 0x08700230  @ [ 50] wav
+	.4byte Cry_Dugtrio  @ [ 50] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 50] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 51] type, key, length, pan_sweep
-	.4byte 0x0870159C  @ [ 51] wav
+	.4byte Cry_Meowth  @ [ 51] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 51] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 52] type, key, length, pan_sweep
-	.4byte 0x08701F2C  @ [ 52] wav
+	.4byte Cry_Persian  @ [ 52] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 52] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 53] type, key, length, pan_sweep
-	.4byte 0x08703208  @ [ 53] wav
+	.4byte Cry_Psyduck  @ [ 53] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 53] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 54] type, key, length, pan_sweep
-	.4byte 0x08703F30  @ [ 54] wav
+	.4byte Cry_Golduck  @ [ 54] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 54] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 55] type, key, length, pan_sweep
-	.4byte 0x08704A78  @ [ 55] wav
+	.4byte Cry_Mankey  @ [ 55] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 55] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 56] type, key, length, pan_sweep
-	.4byte 0x08705AD8  @ [ 56] wav
+	.4byte Cry_Primeape  @ [ 56] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 56] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 57] type, key, length, pan_sweep
-	.4byte 0x08706B08  @ [ 57] wav
+	.4byte Cry_Growlithe  @ [ 57] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 57] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 58] type, key, length, pan_sweep
-	.4byte 0x0870786C  @ [ 58] wav
+	.4byte Cry_Arcanine  @ [ 58] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 58] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 59] type, key, length, pan_sweep
-	.4byte 0x087089A8  @ [ 59] wav
+	.4byte Cry_Poliwag  @ [ 59] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 59] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 60] type, key, length, pan_sweep
-	.4byte 0x087094C4  @ [ 60] wav
+	.4byte Cry_Poliwhirl  @ [ 60] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 60] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 61] type, key, length, pan_sweep
-	.4byte 0x08709B6C  @ [ 61] wav
+	.4byte Cry_Poliwrath  @ [ 61] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 61] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 62] type, key, length, pan_sweep
-	.4byte 0x0870A690  @ [ 62] wav
+	.4byte Cry_Abra  @ [ 62] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 62] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 63] type, key, length, pan_sweep
-	.4byte 0x0870BDF4  @ [ 63] wav
+	.4byte Cry_Kadabra  @ [ 63] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 63] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 64] type, key, length, pan_sweep
-	.4byte 0x0870D8DC  @ [ 64] wav
+	.4byte Cry_Alakazam  @ [ 64] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 64] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 65] type, key, length, pan_sweep
-	.4byte 0x0870F878  @ [ 65] wav
+	.4byte Cry_Machop  @ [ 65] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 65] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 66] type, key, length, pan_sweep
-	.4byte 0x087105DC  @ [ 66] wav
+	.4byte Cry_Machoke  @ [ 66] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 66] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 67] type, key, length, pan_sweep
-	.4byte 0x0871136C  @ [ 67] wav
+	.4byte Cry_Machamp  @ [ 67] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 67] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 68] type, key, length, pan_sweep
-	.4byte 0x087123F4  @ [ 68] wav
+	.4byte Cry_Bellsprout  @ [ 68] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 68] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 69] type, key, length, pan_sweep
-	.4byte 0x08712B80  @ [ 69] wav
+	.4byte Cry_Weepinbell  @ [ 69] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 69] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 70] type, key, length, pan_sweep
-	.4byte 0x08713A20  @ [ 70] wav
+	.4byte Cry_Victreebel  @ [ 70] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 70] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 71] type, key, length, pan_sweep
-	.4byte 0x08714D6C  @ [ 71] wav
+	.4byte Cry_Tentacool  @ [ 71] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 71] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 72] type, key, length, pan_sweep
-	.4byte 0x08715D5C  @ [ 72] wav
+	.4byte Cry_Tentacruel  @ [ 72] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 72] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 73] type, key, length, pan_sweep
-	.4byte 0x08717458  @ [ 73] wav
+	.4byte Cry_Geodude  @ [ 73] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 73] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 74] type, key, length, pan_sweep
-	.4byte 0x08718C0C  @ [ 74] wav
+	.4byte Cry_Graveler  @ [ 74] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 74] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 75] type, key, length, pan_sweep
-	.4byte 0x0871A7F4  @ [ 75] wav
+	.4byte Cry_Golem  @ [ 75] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 75] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 76] type, key, length, pan_sweep
-	.4byte 0x0871B620  @ [ 76] wav
+	.4byte Cry_Ponyta  @ [ 76] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 76] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 77] type, key, length, pan_sweep
-	.4byte 0x0871C530  @ [ 77] wav
+	.4byte Cry_Rapidash  @ [ 77] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 77] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 78] type, key, length, pan_sweep
-	.4byte 0x0871D7D0  @ [ 78] wav
+	.4byte Cry_Slowpoke  @ [ 78] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 78] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 79] type, key, length, pan_sweep
-	.4byte 0x0871DF38  @ [ 79] wav
+	.4byte Cry_Slowbro  @ [ 79] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 79] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 80] type, key, length, pan_sweep
-	.4byte 0x0871ECA8  @ [ 80] wav
+	.4byte Cry_Magnemite  @ [ 80] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 80] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 81] type, key, length, pan_sweep
-	.4byte 0x0871FFEC  @ [ 81] wav
+	.4byte Cry_Magneton  @ [ 81] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 81] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 82] type, key, length, pan_sweep
-	.4byte 0x087217D4  @ [ 82] wav
+	.4byte Cry_Farfetchd  @ [ 82] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 82] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 83] type, key, length, pan_sweep
-	.4byte 0x08721F50  @ [ 83] wav
+	.4byte Cry_Doduo  @ [ 83] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 83] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 84] type, key, length, pan_sweep
-	.4byte 0x08723294  @ [ 84] wav
+	.4byte Cry_Dodrio  @ [ 84] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 84] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 85] type, key, length, pan_sweep
-	.4byte 0x0872460C  @ [ 85] wav
+	.4byte Cry_Seel  @ [ 85] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 85] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 86] type, key, length, pan_sweep
-	.4byte 0x087257FC  @ [ 86] wav
+	.4byte Cry_Dewgong  @ [ 86] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 86] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 87] type, key, length, pan_sweep
-	.4byte 0x08726D20  @ [ 87] wav
+	.4byte Cry_Grimer  @ [ 87] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 87] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 88] type, key, length, pan_sweep
-	.4byte 0x087277A8  @ [ 88] wav
+	.4byte Cry_Muk  @ [ 88] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 88] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 89] type, key, length, pan_sweep
-	.4byte 0x08728668  @ [ 89] wav
+	.4byte Cry_Shellder  @ [ 89] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 89] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 90] type, key, length, pan_sweep
-	.4byte 0x087295DC  @ [ 90] wav
+	.4byte Cry_Cloyster  @ [ 90] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 90] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 91] type, key, length, pan_sweep
-	.4byte 0x0872AAA0  @ [ 91] wav
+	.4byte Cry_Gastly  @ [ 91] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 91] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 92] type, key, length, pan_sweep
-	.4byte 0x0872C1F0  @ [ 92] wav
+	.4byte Cry_Haunter  @ [ 92] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 92] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 93] type, key, length, pan_sweep
-	.4byte 0x0872D970  @ [ 93] wav
+	.4byte Cry_Gengar  @ [ 93] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 93] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 94] type, key, length, pan_sweep
-	.4byte 0x0872E830  @ [ 94] wav
+	.4byte Cry_Onix  @ [ 94] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 94] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 95] type, key, length, pan_sweep
-	.4byte 0x087300F4  @ [ 95] wav
+	.4byte Cry_Drowzee  @ [ 95] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 95] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 96] type, key, length, pan_sweep
-	.4byte 0x08731E0C  @ [ 96] wav
+	.4byte Cry_Hypno  @ [ 96] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 96] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 97] type, key, length, pan_sweep
-	.4byte 0x08733B10  @ [ 97] wav
+	.4byte Cry_Krabby  @ [ 97] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 97] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 98] type, key, length, pan_sweep
-	.4byte 0x0873535C  @ [ 98] wav
+	.4byte Cry_Kingler  @ [ 98] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 98] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 99] type, key, length, pan_sweep
-	.4byte 0x08736BB4  @ [ 99] wav
+	.4byte Cry_Voltorb  @ [ 99] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 99] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [100] type, key, length, pan_sweep
-	.4byte 0x08738478  @ [100] wav
+	.4byte Cry_Electrode  @ [100] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [100] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [101] type, key, length, pan_sweep
-	.4byte 0x08739DB0  @ [101] wav
+	.4byte Cry_Exeggcute  @ [101] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [101] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [102] type, key, length, pan_sweep
-	.4byte 0x0873B090  @ [102] wav
+	.4byte Cry_Exeggutor  @ [102] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [102] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [103] type, key, length, pan_sweep
-	.4byte 0x0873D074  @ [103] wav
+	.4byte Cry_Cubone  @ [103] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [103] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [104] type, key, length, pan_sweep
-	.4byte 0x0873DF94  @ [104] wav
+	.4byte Cry_Marowak  @ [104] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [104] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [105] type, key, length, pan_sweep
-	.4byte 0x0873EE04  @ [105] wav
+	.4byte Cry_Hitmonlee  @ [105] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [105] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [106] type, key, length, pan_sweep
-	.4byte 0x087400B0  @ [106] wav
+	.4byte Cry_Hitmonchan  @ [106] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [106] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [107] type, key, length, pan_sweep
-	.4byte 0x08741288  @ [107] wav
+	.4byte Cry_Lickitung  @ [107] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [107] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [108] type, key, length, pan_sweep
-	.4byte 0x087421B0  @ [108] wav
+	.4byte Cry_Koffing  @ [108] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [108] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [109] type, key, length, pan_sweep
-	.4byte 0x0874360C  @ [109] wav
+	.4byte Cry_Weezing  @ [109] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [109] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [110] type, key, length, pan_sweep
-	.4byte 0x08744BB8  @ [110] wav
+	.4byte Cry_Rhyhorn  @ [110] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [110] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [111] type, key, length, pan_sweep
-	.4byte 0x08745F24  @ [111] wav
+	.4byte Cry_Rhydon  @ [111] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [111] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [112] type, key, length, pan_sweep
-	.4byte 0x08747390  @ [112] wav
+	.4byte Cry_Chansey  @ [112] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [112] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [113] type, key, length, pan_sweep
-	.4byte 0x0874825C  @ [113] wav
+	.4byte Cry_Tangela  @ [113] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [113] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [114] type, key, length, pan_sweep
-	.4byte 0x08749178  @ [114] wav
+	.4byte Cry_Kangaskhan  @ [114] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [114] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [115] type, key, length, pan_sweep
-	.4byte 0x0874A42C  @ [115] wav
+	.4byte Cry_Horsea  @ [115] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [115] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [116] type, key, length, pan_sweep
-	.4byte 0x0874ADA8  @ [116] wav
+	.4byte Cry_Seadra  @ [116] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [116] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [117] type, key, length, pan_sweep
-	.4byte 0x0874B614  @ [117] wav
+	.4byte Cry_Goldeen  @ [117] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [117] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [118] type, key, length, pan_sweep
-	.4byte 0x0874BFEC  @ [118] wav
+	.4byte Cry_Seaking  @ [118] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [118] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [119] type, key, length, pan_sweep
-	.4byte 0x0874D344  @ [119] wav
+	.4byte Cry_Staryu  @ [119] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [119] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [120] type, key, length, pan_sweep
-	.4byte 0x0874E72C  @ [120] wav
+	.4byte Cry_Starmie  @ [120] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [120] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [121] type, key, length, pan_sweep
-	.4byte 0x0874FC08  @ [121] wav
+	.4byte Cry_MrMime  @ [121] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [121] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [122] type, key, length, pan_sweep
-	.4byte 0x08750EF8  @ [122] wav
+	.4byte Cry_Scyther  @ [122] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [122] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [123] type, key, length, pan_sweep
-	.4byte 0x08751C54  @ [123] wav
+	.4byte Cry_Jynx  @ [123] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [123] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [124] type, key, length, pan_sweep
-	.4byte 0x08754BC8  @ [124] wav
+	.4byte Cry_Electabuzz  @ [124] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [124] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [125] type, key, length, pan_sweep
-	.4byte 0x08756AAC  @ [125] wav
+	.4byte Cry_Magmar  @ [125] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [125] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [126] type, key, length, pan_sweep
-	.4byte 0x08757A28  @ [126] wav
+	.4byte Cry_Pinsir  @ [126] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [126] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [127] type, key, length, pan_sweep
-	.4byte 0x08758684  @ [127] wav
+	.4byte Cry_Tauros  @ [127] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [127] attack, decay, sustain, release
 
 	.globl gJP_CryTable_Reverse_1
 gJP_CryTable_Reverse_1: @ 0x08627044
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  0] type, key, length, pan_sweep
-	.4byte 0x087598D8  @ [  0] wav
+	.4byte Cry_Magikarp  @ [  0] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  0] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  1] type, key, length, pan_sweep
-	.4byte 0x0875ABE0  @ [  1] wav
+	.4byte Cry_Gyarados  @ [  1] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  1] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  2] type, key, length, pan_sweep
-	.4byte 0x0875C014  @ [  2] wav
+	.4byte Cry_Lapras  @ [  2] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  2] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  3] type, key, length, pan_sweep
-	.4byte 0x0875CEE8  @ [  3] wav
+	.4byte Cry_Ditto  @ [  3] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  3] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  4] type, key, length, pan_sweep
-	.4byte 0x0875DA04  @ [  4] wav
+	.4byte Cry_Eevee  @ [  4] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  4] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  5] type, key, length, pan_sweep
-	.4byte 0x0875E83C  @ [  5] wav
+	.4byte Cry_Vaporeon  @ [  5] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  5] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  6] type, key, length, pan_sweep
-	.4byte 0x0875FE54  @ [  6] wav
+	.4byte Cry_Jolteon  @ [  6] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  6] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  7] type, key, length, pan_sweep
-	.4byte 0x08760E28  @ [  7] wav
+	.4byte Cry_Flareon  @ [  7] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  7] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  8] type, key, length, pan_sweep
-	.4byte 0x08761DAC  @ [  8] wav
+	.4byte Cry_Porygon  @ [  8] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  8] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  9] type, key, length, pan_sweep
-	.4byte 0x087631B8  @ [  9] wav
+	.4byte Cry_Omanyte  @ [  9] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  9] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 10] type, key, length, pan_sweep
-	.4byte 0x08763F10  @ [ 10] wav
+	.4byte Cry_Omastar  @ [ 10] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 10] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 11] type, key, length, pan_sweep
-	.4byte 0x08764C64  @ [ 11] wav
+	.4byte Cry_Kabuto  @ [ 11] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 11] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 12] type, key, length, pan_sweep
-	.4byte 0x087658B8  @ [ 12] wav
+	.4byte Cry_Kabutops  @ [ 12] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 12] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 13] type, key, length, pan_sweep
-	.4byte 0x08766674  @ [ 13] wav
+	.4byte Cry_Aerodactyl  @ [ 13] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 13] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 14] type, key, length, pan_sweep
-	.4byte 0x08767ED0  @ [ 14] wav
+	.4byte Cry_Snorlax  @ [ 14] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 14] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 15] type, key, length, pan_sweep
-	.4byte 0x0876840C  @ [ 15] wav
+	.4byte Cry_Articuno  @ [ 15] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 15] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 16] type, key, length, pan_sweep
-	.4byte 0x08769BB4  @ [ 16] wav
+	.4byte Cry_Zapdos  @ [ 16] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 16] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 17] type, key, length, pan_sweep
-	.4byte 0x0876AB2C  @ [ 17] wav
+	.4byte Cry_Moltres  @ [ 17] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 17] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 18] type, key, length, pan_sweep
-	.4byte 0x0876C2D8  @ [ 18] wav
+	.4byte Cry_Dratini  @ [ 18] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 18] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 19] type, key, length, pan_sweep
-	.4byte 0x0876CE74  @ [ 19] wav
+	.4byte Cry_Dragonair  @ [ 19] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 19] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 20] type, key, length, pan_sweep
-	.4byte 0x0876DF1C  @ [ 20] wav
+	.4byte Cry_Dragonite  @ [ 20] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 20] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 21] type, key, length, pan_sweep
-	.4byte 0x0876F228  @ [ 21] wav
+	.4byte Cry_Mewtwo  @ [ 21] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 21] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 22] type, key, length, pan_sweep
-	.4byte 0x08771090  @ [ 22] wav
+	.4byte Cry_Mew  @ [ 22] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 22] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 23] type, key, length, pan_sweep
-	.4byte 0x08772EF8  @ [ 23] wav
+	.4byte Cry_Chikorita  @ [ 23] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 23] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 24] type, key, length, pan_sweep
-	.4byte 0x08773438  @ [ 24] wav
+	.4byte Cry_Bayleef  @ [ 24] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 24] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 25] type, key, length, pan_sweep
-	.4byte 0x08773D04  @ [ 25] wav
+	.4byte Cry_Meganium  @ [ 25] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 25] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 26] type, key, length, pan_sweep
-	.4byte 0x08774D3C  @ [ 26] wav
+	.4byte Cry_Cyndaquil  @ [ 26] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 26] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 27] type, key, length, pan_sweep
-	.4byte 0x08775440  @ [ 27] wav
+	.4byte Cry_Quilava  @ [ 27] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 27] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 28] type, key, length, pan_sweep
-	.4byte 0x08776028  @ [ 28] wav
+	.4byte Cry_Typhlosion  @ [ 28] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 28] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 29] type, key, length, pan_sweep
-	.4byte 0x08778638  @ [ 29] wav
+	.4byte Cry_Totodile  @ [ 29] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 29] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 30] type, key, length, pan_sweep
-	.4byte 0x08779890  @ [ 30] wav
+	.4byte Cry_Croconaw  @ [ 30] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 30] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 31] type, key, length, pan_sweep
-	.4byte 0x0877ACCC  @ [ 31] wav
+	.4byte Cry_Feraligatr  @ [ 31] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 31] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 32] type, key, length, pan_sweep
-	.4byte 0x0877C650  @ [ 32] wav
+	.4byte Cry_Sentret  @ [ 32] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 32] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 33] type, key, length, pan_sweep
-	.4byte 0x0877CA78  @ [ 33] wav
+	.4byte Cry_Furret  @ [ 33] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 33] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 34] type, key, length, pan_sweep
-	.4byte 0x0877D0C0  @ [ 34] wav
+	.4byte Cry_Hoothoot  @ [ 34] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 34] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 35] type, key, length, pan_sweep
-	.4byte 0x0877DBA4  @ [ 35] wav
+	.4byte Cry_Noctowl  @ [ 35] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 35] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 36] type, key, length, pan_sweep
-	.4byte 0x0877F0D4  @ [ 36] wav
+	.4byte Cry_Ledyba  @ [ 36] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 36] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 37] type, key, length, pan_sweep
-	.4byte 0x0877F7CC  @ [ 37] wav
+	.4byte Cry_Ledian  @ [ 37] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 37] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 38] type, key, length, pan_sweep
-	.4byte 0x08780030  @ [ 38] wav
+	.4byte Cry_Spinarak  @ [ 38] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 38] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 39] type, key, length, pan_sweep
-	.4byte 0x08780D94  @ [ 39] wav
+	.4byte Cry_Ariados  @ [ 39] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 39] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 40] type, key, length, pan_sweep
-	.4byte 0x087819E8  @ [ 40] wav
+	.4byte Cry_Crobat  @ [ 40] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 40] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 41] type, key, length, pan_sweep
-	.4byte 0x08783118  @ [ 41] wav
+	.4byte Cry_Chinchou  @ [ 41] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 41] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 42] type, key, length, pan_sweep
-	.4byte 0x08783DC8  @ [ 42] wav
+	.4byte Cry_Lanturn  @ [ 42] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 42] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 43] type, key, length, pan_sweep
-	.4byte 0x08784854  @ [ 43] wav
+	.4byte Cry_Pichu  @ [ 43] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 43] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 44] type, key, length, pan_sweep
-	.4byte 0x08784FA8  @ [ 44] wav
+	.4byte Cry_Cleffa  @ [ 44] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 44] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 45] type, key, length, pan_sweep
-	.4byte 0x08785598  @ [ 45] wav
+	.4byte Cry_Igglybuff  @ [ 45] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 45] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 46] type, key, length, pan_sweep
-	.4byte 0x08785C94  @ [ 46] wav
+	.4byte Cry_Togepi  @ [ 46] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 46] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 47] type, key, length, pan_sweep
-	.4byte 0x0878677C  @ [ 47] wav
+	.4byte Cry_Togetic  @ [ 47] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 47] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 48] type, key, length, pan_sweep
-	.4byte 0x08786E7C  @ [ 48] wav
+	.4byte Cry_Natu  @ [ 48] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 48] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 49] type, key, length, pan_sweep
-	.4byte 0x0878790C  @ [ 49] wav
+	.4byte Cry_Xatu  @ [ 49] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 49] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 50] type, key, length, pan_sweep
-	.4byte 0x087887D8  @ [ 50] wav
+	.4byte Cry_Mareep  @ [ 50] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 50] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 51] type, key, length, pan_sweep
-	.4byte 0x08788F30  @ [ 51] wav
+	.4byte Cry_Flaaffy  @ [ 51] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 51] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 52] type, key, length, pan_sweep
-	.4byte 0x08789CE4  @ [ 52] wav
+	.4byte Cry_Ampharos  @ [ 52] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 52] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 53] type, key, length, pan_sweep
-	.4byte 0x0878AD64  @ [ 53] wav
+	.4byte Cry_Bellossom  @ [ 53] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 53] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 54] type, key, length, pan_sweep
-	.4byte 0x0878BB7C  @ [ 54] wav
+	.4byte Cry_Marill  @ [ 54] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 54] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 55] type, key, length, pan_sweep
-	.4byte 0x0878C890  @ [ 55] wav
+	.4byte Cry_Azumarill  @ [ 55] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 55] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 56] type, key, length, pan_sweep
-	.4byte 0x0878D97C  @ [ 56] wav
+	.4byte Cry_Sudowoodo  @ [ 56] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 56] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 57] type, key, length, pan_sweep
-	.4byte 0x0878E9AC  @ [ 57] wav
+	.4byte Cry_Politoed  @ [ 57] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 57] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 58] type, key, length, pan_sweep
-	.4byte 0x0878FBF0  @ [ 58] wav
+	.4byte Cry_Hoppip  @ [ 58] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 58] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 59] type, key, length, pan_sweep
-	.4byte 0x0879045C  @ [ 59] wav
+	.4byte Cry_Skiploom  @ [ 59] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 59] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 60] type, key, length, pan_sweep
-	.4byte 0x08791164  @ [ 60] wav
+	.4byte Cry_Jumpluff  @ [ 60] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 60] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 61] type, key, length, pan_sweep
-	.4byte 0x087921A0  @ [ 61] wav
+	.4byte Cry_Aipom  @ [ 61] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 61] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 62] type, key, length, pan_sweep
-	.4byte 0x08792FC0  @ [ 62] wav
+	.4byte Cry_Sunkern  @ [ 62] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 62] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 63] type, key, length, pan_sweep
-	.4byte 0x087937D4  @ [ 63] wav
+	.4byte Cry_Sunflora  @ [ 63] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 63] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 64] type, key, length, pan_sweep
-	.4byte 0x087947B4  @ [ 64] wav
+	.4byte Cry_Yanma  @ [ 64] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 64] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 65] type, key, length, pan_sweep
-	.4byte 0x087958BC  @ [ 65] wav
+	.4byte Cry_Wooper  @ [ 65] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 65] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 66] type, key, length, pan_sweep
-	.4byte 0x0879601C  @ [ 66] wav
+	.4byte Cry_Quagsire  @ [ 66] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 66] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 67] type, key, length, pan_sweep
-	.4byte 0x08796D7C  @ [ 67] wav
+	.4byte Cry_Espeon  @ [ 67] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 67] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 68] type, key, length, pan_sweep
-	.4byte 0x08798130  @ [ 68] wav
+	.4byte Cry_Umbreon  @ [ 68] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 68] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 69] type, key, length, pan_sweep
-	.4byte 0x087990B0  @ [ 69] wav
+	.4byte Cry_Murkrow  @ [ 69] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 69] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 70] type, key, length, pan_sweep
-	.4byte 0x0879A174  @ [ 70] wav
+	.4byte Cry_Slowking  @ [ 70] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 70] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 71] type, key, length, pan_sweep
-	.4byte 0x0879B958  @ [ 71] wav
+	.4byte Cry_Misdreavus  @ [ 71] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 71] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 72] type, key, length, pan_sweep
-	.4byte 0x0879C4F8  @ [ 72] wav
+	.4byte Cry_Unown  @ [ 72] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 72] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 73] type, key, length, pan_sweep
-	.4byte 0x0879D220  @ [ 73] wav
+	.4byte Cry_Wobbuffet  @ [ 73] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 73] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 74] type, key, length, pan_sweep
-	.4byte 0x0879E6BC  @ [ 74] wav
+	.4byte Cry_Girafarig  @ [ 74] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 74] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 75] type, key, length, pan_sweep
-	.4byte 0x0879F570  @ [ 75] wav
+	.4byte Cry_Pineco  @ [ 75] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 75] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 76] type, key, length, pan_sweep
-	.4byte 0x087A02D0  @ [ 76] wav
+	.4byte Cry_Forretress  @ [ 76] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 76] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 77] type, key, length, pan_sweep
-	.4byte 0x087A16D8  @ [ 77] wav
+	.4byte Cry_Dunsparce  @ [ 77] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 77] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 78] type, key, length, pan_sweep
-	.4byte 0x087A26B8  @ [ 78] wav
+	.4byte Cry_Gligar  @ [ 78] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 78] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 79] type, key, length, pan_sweep
-	.4byte 0x087A32D8  @ [ 79] wav
+	.4byte Cry_Steelix  @ [ 79] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 79] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 80] type, key, length, pan_sweep
-	.4byte 0x087A5900  @ [ 80] wav
+	.4byte Cry_Snubbull  @ [ 80] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 80] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 81] type, key, length, pan_sweep
-	.4byte 0x087A6774  @ [ 81] wav
+	.4byte Cry_Granbull  @ [ 81] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 81] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 82] type, key, length, pan_sweep
-	.4byte 0x087A7F18  @ [ 82] wav
+	.4byte Cry_Qwilfish  @ [ 82] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 82] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 83] type, key, length, pan_sweep
-	.4byte 0x087A8AB4  @ [ 83] wav
+	.4byte Cry_Scizor  @ [ 83] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 83] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 84] type, key, length, pan_sweep
-	.4byte 0x087AA1B0  @ [ 84] wav
+	.4byte Cry_Shuckle  @ [ 84] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 84] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 85] type, key, length, pan_sweep
-	.4byte 0x087AABE4  @ [ 85] wav
+	.4byte Cry_Heracross  @ [ 85] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 85] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 86] type, key, length, pan_sweep
-	.4byte 0x087ABE38  @ [ 86] wav
+	.4byte Cry_Sneasel  @ [ 86] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 86] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 87] type, key, length, pan_sweep
-	.4byte 0x087AC75C  @ [ 87] wav
+	.4byte Cry_Teddiursa  @ [ 87] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 87] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 88] type, key, length, pan_sweep
-	.4byte 0x087AD7E8  @ [ 88] wav
+	.4byte Cry_Ursaring  @ [ 88] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 88] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 89] type, key, length, pan_sweep
-	.4byte 0x087AF5C0  @ [ 89] wav
+	.4byte Cry_Slugma  @ [ 89] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 89] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 90] type, key, length, pan_sweep
-	.4byte 0x087B06D8  @ [ 90] wav
+	.4byte Cry_Magcargo  @ [ 90] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 90] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 91] type, key, length, pan_sweep
-	.4byte 0x087B1BE0  @ [ 91] wav
+	.4byte Cry_Swinub  @ [ 91] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 91] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 92] type, key, length, pan_sweep
-	.4byte 0x087B2888  @ [ 92] wav
+	.4byte Cry_Piloswine  @ [ 92] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 92] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 93] type, key, length, pan_sweep
-	.4byte 0x087B357C  @ [ 93] wav
+	.4byte Cry_Corsola  @ [ 93] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 93] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 94] type, key, length, pan_sweep
-	.4byte 0x087B425C  @ [ 94] wav
+	.4byte Cry_Remoraid  @ [ 94] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 94] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 95] type, key, length, pan_sweep
-	.4byte 0x087B4CEC  @ [ 95] wav
+	.4byte Cry_Octillery  @ [ 95] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 95] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 96] type, key, length, pan_sweep
-	.4byte 0x087B6730  @ [ 96] wav
+	.4byte Cry_Delibird  @ [ 96] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 96] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 97] type, key, length, pan_sweep
-	.4byte 0x087B7764  @ [ 97] wav
+	.4byte Cry_Mantine  @ [ 97] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 97] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 98] type, key, length, pan_sweep
-	.4byte 0x087B872C  @ [ 98] wav
+	.4byte Cry_Skarmory  @ [ 98] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 98] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 99] type, key, length, pan_sweep
-	.4byte 0x087B9F34  @ [ 99] wav
+	.4byte Cry_Houndour  @ [ 99] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 99] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [100] type, key, length, pan_sweep
-	.4byte 0x087BABDC  @ [100] wav
+	.4byte Cry_Houndoom  @ [100] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [100] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [101] type, key, length, pan_sweep
-	.4byte 0x087BBF8C  @ [101] wav
+	.4byte Cry_Kingdra  @ [101] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [101] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [102] type, key, length, pan_sweep
-	.4byte 0x087BCD64  @ [102] wav
+	.4byte Cry_Phanpy  @ [102] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [102] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [103] type, key, length, pan_sweep
-	.4byte 0x087BD8B4  @ [103] wav
+	.4byte Cry_Donphan  @ [103] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [103] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [104] type, key, length, pan_sweep
-	.4byte 0x087BE9D8  @ [104] wav
+	.4byte Cry_Porygon2  @ [104] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [104] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [105] type, key, length, pan_sweep
-	.4byte 0x087BF990  @ [105] wav
+	.4byte Cry_Stantler  @ [105] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [105] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [106] type, key, length, pan_sweep
-	.4byte 0x087C100C  @ [106] wav
+	.4byte Cry_Smeargle  @ [106] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [106] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [107] type, key, length, pan_sweep
-	.4byte 0x087C1A40  @ [107] wav
+	.4byte Cry_Tyrogue  @ [107] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [107] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [108] type, key, length, pan_sweep
-	.4byte 0x087C2A68  @ [108] wav
+	.4byte Cry_Hitmontop  @ [108] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [108] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [109] type, key, length, pan_sweep
-	.4byte 0x087C3848  @ [109] wav
+	.4byte Cry_Smoochum  @ [109] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [109] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [110] type, key, length, pan_sweep
-	.4byte 0x087C43FC  @ [110] wav
+	.4byte Cry_Elekid  @ [110] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [110] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [111] type, key, length, pan_sweep
-	.4byte 0x087C4E88  @ [111] wav
+	.4byte Cry_Magby  @ [111] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [111] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [112] type, key, length, pan_sweep
-	.4byte 0x087C5CF8  @ [112] wav
+	.4byte Cry_Miltank  @ [112] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [112] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [113] type, key, length, pan_sweep
-	.4byte 0x087C6BD4  @ [113] wav
+	.4byte Cry_Blissey  @ [113] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [113] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [114] type, key, length, pan_sweep
-	.4byte 0x087C7C68  @ [114] wav
+	.4byte Cry_Raikou  @ [114] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [114] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [115] type, key, length, pan_sweep
-	.4byte 0x087C8DD8  @ [115] wav
+	.4byte Cry_Entei  @ [115] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [115] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [116] type, key, length, pan_sweep
-	.4byte 0x087CA24C  @ [116] wav
+	.4byte Cry_Suicune  @ [116] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [116] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [117] type, key, length, pan_sweep
-	.4byte 0x087CB494  @ [117] wav
+	.4byte Cry_Larvitar  @ [117] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [117] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [118] type, key, length, pan_sweep
-	.4byte 0x087CC144  @ [118] wav
+	.4byte Cry_Pupitar  @ [118] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [118] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [119] type, key, length, pan_sweep
-	.4byte 0x087CC9B4  @ [119] wav
+	.4byte Cry_Tyranitar  @ [119] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [119] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [120] type, key, length, pan_sweep
-	.4byte 0x087CE114  @ [120] wav
+	.4byte Cry_Lugia  @ [120] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [120] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [121] type, key, length, pan_sweep
-	.4byte 0x087D070C  @ [121] wav
+	.4byte Cry_HoOh  @ [121] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [121] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [122] type, key, length, pan_sweep
-	.4byte 0x087D1DA0  @ [122] wav
+	.4byte Cry_Celebi  @ [122] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [122] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [123] type, key, length, pan_sweep
-	.4byte 0x087D2C18  @ [123] wav
+	.4byte Cry_Kecleon  @ [123] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [123] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [124] type, key, length, pan_sweep
-	.4byte 0x087D3478  @ [124] wav
+	.4byte Cry_Roselia  @ [124] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [124] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [125] type, key, length, pan_sweep
-	.4byte 0x087D3F38  @ [125] wav
+	.4byte Cry_Torkoal  @ [125] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [125] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [126] type, key, length, pan_sweep
-	.4byte 0x087D4884  @ [126] wav
+	.4byte Cry_Electrike  @ [126] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [126] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [127] type, key, length, pan_sweep
-	.4byte 0x087D54E0  @ [127] wav
+	.4byte Cry_Manectric  @ [127] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [127] attack, decay, sustain, release
 
 	.globl gJP_CryTable_Reverse_2
 gJP_CryTable_Reverse_2: @ 0x08627644
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  0] type, key, length, pan_sweep
-	.4byte 0x087D69E8  @ [  0] wav
+	.4byte Cry_Duskull  @ [  0] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  0] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  1] type, key, length, pan_sweep
-	.4byte 0x087D7480  @ [  1] wav
+	.4byte Cry_Latias  @ [  1] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  1] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  2] type, key, length, pan_sweep
-	.4byte 0x087D80B0  @ [  2] wav
+	.4byte Cry_Wynaut  @ [  2] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  2] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  3] type, key, length, pan_sweep
-	.4byte 0x087D8E90  @ [  3] wav
+	.4byte Cry_Seviper  @ [  3] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  3] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  4] type, key, length, pan_sweep
-	.4byte 0x087D9A30  @ [  4] wav
+	.4byte Cry_Sharpedo  @ [  4] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  4] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  5] type, key, length, pan_sweep
-	.4byte 0x087DB13C  @ [  5] wav
+	.4byte Cry_Zangoose  @ [  5] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  5] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  6] type, key, length, pan_sweep
-	.4byte 0x087DBACC  @ [  6] wav
+	.4byte Cry_Azurill  @ [  6] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  6] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  7] type, key, length, pan_sweep
-	.4byte 0x087DC534  @ [  7] wav
+	.4byte Cry_Swablu  @ [  7] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  7] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  8] type, key, length, pan_sweep
-	.4byte 0x087DCACC  @ [  8] wav
+	.4byte Cry_Altaria  @ [  8] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  8] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  9] type, key, length, pan_sweep
-	.4byte 0x087DD5E8  @ [  9] wav
+	.4byte Cry_Unused265  @ [  9] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  9] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 10] type, key, length, pan_sweep
-	.4byte 0x087DDF3C  @ [ 10] wav
+	.4byte Cry_Taillow  @ [ 10] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 10] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 11] type, key, length, pan_sweep
-	.4byte 0x087DE53C  @ [ 11] wav
+	.4byte Cry_Swellow  @ [ 11] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 11] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 12] type, key, length, pan_sweep
-	.4byte 0x087DEE40  @ [ 12] wav
+	.4byte Cry_Unused268  @ [ 12] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 12] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 13] type, key, length, pan_sweep
-	.4byte 0x087DFFF0  @ [ 13] wav
+	.4byte Cry_Spinda  @ [ 13] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 13] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 14] type, key, length, pan_sweep
-	.4byte 0x087E0C5C  @ [ 14] wav
+	.4byte Cry_Torchic  @ [ 14] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 14] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 15] type, key, length, pan_sweep
-	.4byte 0x087E1604  @ [ 15] wav
+	.4byte Cry_Combusken  @ [ 15] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 15] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 16] type, key, length, pan_sweep
-	.4byte 0x087E32D8  @ [ 16] wav
+	.4byte Cry_Blaziken  @ [ 16] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 16] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 17] type, key, length, pan_sweep
-	.4byte 0x087E5258  @ [ 17] wav
+	.4byte Cry_Treecko  @ [ 17] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 17] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 18] type, key, length, pan_sweep
-	.4byte 0x087E5E00  @ [ 18] wav
+	.4byte Cry_Grovyle  @ [ 18] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 18] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 19] type, key, length, pan_sweep
-	.4byte 0x087E7274  @ [ 19] wav
+	.4byte Cry_Sceptile  @ [ 19] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 19] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 20] type, key, length, pan_sweep
-	.4byte 0x087E8C90  @ [ 20] wav
+	.4byte Cry_Mudkip  @ [ 20] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 20] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 21] type, key, length, pan_sweep
-	.4byte 0x087E9414  @ [ 21] wav
+	.4byte Cry_Marshtomp  @ [ 21] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 21] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 22] type, key, length, pan_sweep
-	.4byte 0x087EA518  @ [ 22] wav
+	.4byte Cry_Swampert  @ [ 22] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 22] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 23] type, key, length, pan_sweep
-	.4byte 0x087EBB98  @ [ 23] wav
+	.4byte Cry_Pelipper  @ [ 23] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 23] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 24] type, key, length, pan_sweep
-	.4byte 0x087EC760  @ [ 24] wav
+	.4byte Cry_Wingull  @ [ 24] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 24] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 25] type, key, length, pan_sweep
-	.4byte 0x087ED3A0  @ [ 25] wav
+	.4byte Cry_Banette  @ [ 25] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 25] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 26] type, key, length, pan_sweep
-	.4byte 0x087EE048  @ [ 26] wav
+	.4byte Cry_Shuppet  @ [ 26] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 26] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 27] type, key, length, pan_sweep
-	.4byte 0x087EE888  @ [ 27] wav
+	.4byte Cry_Lotad  @ [ 27] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 27] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 28] type, key, length, pan_sweep
-	.4byte 0x087EECF0  @ [ 28] wav
+	.4byte Cry_Lombre  @ [ 28] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 28] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 29] type, key, length, pan_sweep
-	.4byte 0x087EFB84  @ [ 29] wav
+	.4byte Cry_Ludicolo  @ [ 29] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 29] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 30] type, key, length, pan_sweep
-	.4byte 0x087F0C54  @ [ 30] wav
+	.4byte Cry_Seedot  @ [ 30] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 30] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 31] type, key, length, pan_sweep
-	.4byte 0x087F1480  @ [ 31] wav
+	.4byte Cry_Nuzleaf  @ [ 31] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 31] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 32] type, key, length, pan_sweep
-	.4byte 0x087F1FE8  @ [ 32] wav
+	.4byte Cry_Shiftry  @ [ 32] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 32] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 33] type, key, length, pan_sweep
-	.4byte 0x087F33AC  @ [ 33] wav
+	.4byte Cry_Carvanha  @ [ 33] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 33] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 34] type, key, length, pan_sweep
-	.4byte 0x087F3DC0  @ [ 34] wav
+	.4byte Cry_Wurmple  @ [ 34] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 34] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 35] type, key, length, pan_sweep
-	.4byte 0x087F468C  @ [ 35] wav
+	.4byte Cry_Silcoon  @ [ 35] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 35] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 36] type, key, length, pan_sweep
-	.4byte 0x087F56B8  @ [ 36] wav
+	.4byte Cry_Beautifly  @ [ 36] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 36] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 37] type, key, length, pan_sweep
-	.4byte 0x087F5EF0  @ [ 37] wav
+	.4byte Cry_Cascoon  @ [ 37] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 37] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 38] type, key, length, pan_sweep
-	.4byte 0x087F6F34  @ [ 38] wav
+	.4byte Cry_Dustox  @ [ 38] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 38] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 39] type, key, length, pan_sweep
-	.4byte 0x087F7BE0  @ [ 39] wav
+	.4byte Cry_Ralts  @ [ 39] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 39] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 40] type, key, length, pan_sweep
-	.4byte 0x087F85FC  @ [ 40] wav
+	.4byte Cry_Kirlia  @ [ 40] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 40] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 41] type, key, length, pan_sweep
-	.4byte 0x087F922C  @ [ 41] wav
+	.4byte Cry_Gardevoir  @ [ 41] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 41] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 42] type, key, length, pan_sweep
-	.4byte 0x087FAA90  @ [ 42] wav
+	.4byte Cry_Slakoth  @ [ 42] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 42] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 43] type, key, length, pan_sweep
-	.4byte 0x087FB314  @ [ 43] wav
+	.4byte Cry_Vigoroth  @ [ 43] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 43] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 44] type, key, length, pan_sweep
-	.4byte 0x087FC16C  @ [ 44] wav
+	.4byte Cry_Slaking  @ [ 44] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 44] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 45] type, key, length, pan_sweep
-	.4byte 0x087FCB58  @ [ 45] wav
+	.4byte Cry_Nincada  @ [ 45] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 45] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 46] type, key, length, pan_sweep
-	.4byte 0x087FD1C8  @ [ 46] wav
+	.4byte Cry_Ninjask  @ [ 46] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 46] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 47] type, key, length, pan_sweep
-	.4byte 0x087FDDF0  @ [ 47] wav
+	.4byte Cry_Shedinja  @ [ 47] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 47] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 48] type, key, length, pan_sweep
-	.4byte 0x087FE5A8  @ [ 48] wav
+	.4byte Cry_Makuhita  @ [ 48] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 48] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 49] type, key, length, pan_sweep
-	.4byte 0x087FED04  @ [ 49] wav
+	.4byte Cry_Hariyama  @ [ 49] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 49] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 50] type, key, length, pan_sweep
-	.4byte 0x087FFDBC  @ [ 50] wav
+	.4byte Cry_Nosepass  @ [ 50] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 50] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 51] type, key, length, pan_sweep
-	.4byte 0x08800B20  @ [ 51] wav
+	.4byte Cry_Glalie  @ [ 51] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 51] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 52] type, key, length, pan_sweep
-	.4byte 0x08802004  @ [ 52] wav
+	.4byte Cry_Plusle  @ [ 52] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 52] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 53] type, key, length, pan_sweep
-	.4byte 0x08802900  @ [ 53] wav
+	.4byte Cry_Minun  @ [ 53] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 53] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 54] type, key, length, pan_sweep
-	.4byte 0x08803908  @ [ 54] wav
+	.4byte Cry_Surskit  @ [ 54] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 54] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 55] type, key, length, pan_sweep
-	.4byte 0x08804388  @ [ 55] wav
+	.4byte Cry_Masquerain  @ [ 55] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 55] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 56] type, key, length, pan_sweep
-	.4byte 0x0880573C  @ [ 56] wav
+	.4byte Cry_Skitty  @ [ 56] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 56] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 57] type, key, length, pan_sweep
-	.4byte 0x08805E50  @ [ 57] wav
+	.4byte Cry_Delcatty  @ [ 57] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 57] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 58] type, key, length, pan_sweep
-	.4byte 0x08807368  @ [ 58] wav
+	.4byte Cry_Gulpin  @ [ 58] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 58] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 59] type, key, length, pan_sweep
-	.4byte 0x08807B6C  @ [ 59] wav
+	.4byte Cry_Swalot  @ [ 59] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 59] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 60] type, key, length, pan_sweep
-	.4byte 0x08808CCC  @ [ 60] wav
+	.4byte Cry_Numel  @ [ 60] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 60] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 61] type, key, length, pan_sweep
-	.4byte 0x08809618  @ [ 61] wav
+	.4byte Cry_Camerupt  @ [ 61] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 61] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 62] type, key, length, pan_sweep
-	.4byte 0x0880AD38  @ [ 62] wav
+	.4byte Cry_Barboach  @ [ 62] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 62] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 63] type, key, length, pan_sweep
-	.4byte 0x0880B674  @ [ 63] wav
+	.4byte Cry_Whiscash  @ [ 63] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 63] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 64] type, key, length, pan_sweep
-	.4byte 0x0880C770  @ [ 64] wav
+	.4byte Cry_Corphish  @ [ 64] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 64] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 65] type, key, length, pan_sweep
-	.4byte 0x0880D374  @ [ 65] wav
+	.4byte Cry_Crawdaunt  @ [ 65] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 65] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 66] type, key, length, pan_sweep
-	.4byte 0x0880EC2C  @ [ 66] wav
+	.4byte Cry_Spoink  @ [ 66] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 66] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 67] type, key, length, pan_sweep
-	.4byte 0x0880F36C  @ [ 67] wav
+	.4byte Cry_Grumpig  @ [ 67] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 67] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 68] type, key, length, pan_sweep
-	.4byte 0x0881000C  @ [ 68] wav
+	.4byte Cry_Trapinch  @ [ 68] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 68] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 69] type, key, length, pan_sweep
-	.4byte 0x08810A30  @ [ 69] wav
+	.4byte Cry_Vibrava  @ [ 69] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 69] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 70] type, key, length, pan_sweep
-	.4byte 0x08811834  @ [ 70] wav
+	.4byte Cry_Flygon  @ [ 70] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 70] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 71] type, key, length, pan_sweep
-	.4byte 0x0881323C  @ [ 71] wav
+	.4byte Cry_Cacnea  @ [ 71] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 71] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 72] type, key, length, pan_sweep
-	.4byte 0x08813B2C  @ [ 72] wav
+	.4byte Cry_Cacturne  @ [ 72] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 72] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 73] type, key, length, pan_sweep
-	.4byte 0x088151DC  @ [ 73] wav
+	.4byte Cry_Baltoy  @ [ 73] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 73] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 74] type, key, length, pan_sweep
-	.4byte 0x08815E60  @ [ 74] wav
+	.4byte Cry_Claydol  @ [ 74] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 74] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 75] type, key, length, pan_sweep
-	.4byte 0x088171C0  @ [ 75] wav
+	.4byte Cry_Lunatone  @ [ 75] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 75] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 76] type, key, length, pan_sweep
-	.4byte 0x088189BC  @ [ 76] wav
+	.4byte Cry_Solrock  @ [ 76] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 76] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 77] type, key, length, pan_sweep
-	.4byte 0x088199E8  @ [ 77] wav
+	.4byte Cry_Feebas  @ [ 77] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 77] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 78] type, key, length, pan_sweep
-	.4byte 0x0881A1BC  @ [ 78] wav
+	.4byte Cry_Milotic  @ [ 78] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 78] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 79] type, key, length, pan_sweep
-	.4byte 0x0881C900  @ [ 79] wav
+	.4byte Cry_Absol  @ [ 79] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 79] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 80] type, key, length, pan_sweep
-	.4byte 0x0881D37C  @ [ 80] wav
+	.4byte Cry_Meditite  @ [ 80] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 80] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 81] type, key, length, pan_sweep
-	.4byte 0x0881DB9C  @ [ 81] wav
+	.4byte Cry_Medicham  @ [ 81] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 81] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 82] type, key, length, pan_sweep
-	.4byte 0x0881EC20  @ [ 82] wav
+	.4byte Cry_Spheal  @ [ 82] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 82] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 83] type, key, length, pan_sweep
-	.4byte 0x0881F1D4  @ [ 83] wav
+	.4byte Cry_Sealeo  @ [ 83] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 83] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 84] type, key, length, pan_sweep
-	.4byte 0x0881FDAC  @ [ 84] wav
+	.4byte Cry_Walrein  @ [ 84] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 84] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 85] type, key, length, pan_sweep
-	.4byte 0x088221F8  @ [ 85] wav
+	.4byte Cry_Clamperl  @ [ 85] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 85] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 86] type, key, length, pan_sweep
-	.4byte 0x08823448  @ [ 86] wav
+	.4byte Cry_Huntail  @ [ 86] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 86] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 87] type, key, length, pan_sweep
-	.4byte 0x08824430  @ [ 87] wav
+	.4byte Cry_Gorebyss  @ [ 87] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 87] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 88] type, key, length, pan_sweep
-	.4byte 0x08825A9C  @ [ 88] wav
+	.4byte Cry_Lileep  @ [ 88] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 88] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 89] type, key, length, pan_sweep
-	.4byte 0x08826444  @ [ 89] wav
+	.4byte Cry_Cradily  @ [ 89] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 89] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 90] type, key, length, pan_sweep
-	.4byte 0x08828174  @ [ 90] wav
+	.4byte Cry_Anorith  @ [ 90] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 90] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 91] type, key, length, pan_sweep
-	.4byte 0x08828D2C  @ [ 91] wav
+	.4byte Cry_Armaldo  @ [ 91] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 91] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 92] type, key, length, pan_sweep
-	.4byte 0x0882A400  @ [ 92] wav
+	.4byte Cry_Beldum  @ [ 92] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 92] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 93] type, key, length, pan_sweep
-	.4byte 0x0882ADA0  @ [ 93] wav
+	.4byte Cry_Metang  @ [ 93] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 93] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 94] type, key, length, pan_sweep
-	.4byte 0x0882C074  @ [ 94] wav
+	.4byte Cry_Metagross  @ [ 94] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 94] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 95] type, key, length, pan_sweep
-	.4byte 0x0882E7EC  @ [ 95] wav
+	.4byte Cry_Bagon  @ [ 95] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 95] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 96] type, key, length, pan_sweep
-	.4byte 0x0882EFC0  @ [ 96] wav
+	.4byte Cry_Shelgon  @ [ 96] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 96] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 97] type, key, length, pan_sweep
-	.4byte 0x088303C8  @ [ 97] wav
+	.4byte Cry_Regirock  @ [ 97] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 97] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 98] type, key, length, pan_sweep
-	.4byte 0x088323A4  @ [ 98] wav
+	.4byte Cry_Regice  @ [ 98] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 98] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [ 99] type, key, length, pan_sweep
-	.4byte 0x088343A4  @ [ 99] wav
+	.4byte Cry_Registeel  @ [ 99] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [ 99] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [100] type, key, length, pan_sweep
-	.4byte 0x08835AA8  @ [100] wav
+	.4byte Cry_Castform  @ [100] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [100] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [101] type, key, length, pan_sweep
-	.4byte 0x08836740  @ [101] wav
+	.4byte Cry_Volbeat  @ [101] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [101] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [102] type, key, length, pan_sweep
-	.4byte 0x088372C8  @ [102] wav
+	.4byte Cry_Illumise  @ [102] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [102] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [103] type, key, length, pan_sweep
-	.4byte 0x088383E0  @ [103] wav
+	.4byte Cry_Poochyena  @ [103] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [103] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [104] type, key, length, pan_sweep
-	.4byte 0x08838D28  @ [104] wav
+	.4byte Cry_Mightyena  @ [104] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [104] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [105] type, key, length, pan_sweep
-	.4byte 0x0883A0B4  @ [105] wav
+	.4byte Cry_Dusclops  @ [105] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [105] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [106] type, key, length, pan_sweep
-	.4byte 0x0883AE6C  @ [106] wav
+	.4byte Cry_Sableye  @ [106] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [106] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [107] type, key, length, pan_sweep
-	.4byte 0x0883BA10  @ [107] wav
+	.4byte Cry_Mawile  @ [107] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [107] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [108] type, key, length, pan_sweep
-	.4byte 0x0883C590  @ [108] wav
+	.4byte Cry_Aron  @ [108] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [108] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [109] type, key, length, pan_sweep
-	.4byte 0x0883CEBC  @ [109] wav
+	.4byte Cry_Lairon  @ [109] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [109] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [110] type, key, length, pan_sweep
-	.4byte 0x0883E394  @ [110] wav
+	.4byte Cry_Aggron  @ [110] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [110] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [111] type, key, length, pan_sweep
-	.4byte 0x0883FD38  @ [111] wav
+	.4byte Cry_Relicanth  @ [111] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [111] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [112] type, key, length, pan_sweep
-	.4byte 0x08841168  @ [112] wav
+	.4byte Cry_Luvdisc  @ [112] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [112] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [113] type, key, length, pan_sweep
-	.4byte 0x08841644  @ [113] wav
+	.4byte Cry_Groudon  @ [113] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [113] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [114] type, key, length, pan_sweep
-	.4byte 0x08843B50  @ [114] wav
+	.4byte Cry_Kyogre  @ [114] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [114] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [115] type, key, length, pan_sweep
-	.4byte 0x08845F08  @ [115] wav
+	.4byte Cry_Rayquaza  @ [115] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [115] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [116] type, key, length, pan_sweep
-	.4byte 0x08847C34  @ [116] wav
+	.4byte Cry_Salamence  @ [116] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [116] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [117] type, key, length, pan_sweep
-	.4byte 0x08849550  @ [117] wav
+	.4byte Cry_Breloom  @ [117] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [117] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [118] type, key, length, pan_sweep
-	.4byte 0x0884A210  @ [118] wav
+	.4byte Cry_Shroomish  @ [118] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [118] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [119] type, key, length, pan_sweep
-	.4byte 0x0884AAE8  @ [119] wav
+	.4byte Cry_Linoone  @ [119] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [119] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [120] type, key, length, pan_sweep
-	.4byte 0x0884C984  @ [120] wav
+	.4byte Cry_Tropius  @ [120] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [120] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [121] type, key, length, pan_sweep
-	.4byte 0x0884EA48  @ [121] wav
+	.4byte Cry_Wailmer  @ [121] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [121] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [122] type, key, length, pan_sweep
-	.4byte 0x088506A8  @ [122] wav
+	.4byte Cry_Zigzagoon  @ [122] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [122] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [123] type, key, length, pan_sweep
-	.4byte 0x08851238  @ [123] wav
+	.4byte Cry_Exploud  @ [123] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [123] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [124] type, key, length, pan_sweep
-	.4byte 0x08852E80  @ [124] wav
+	.4byte Cry_Loudred  @ [124] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [124] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [125] type, key, length, pan_sweep
-	.4byte 0x08853BA8  @ [125] wav
+	.4byte Cry_Wailord  @ [125] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [125] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [126] type, key, length, pan_sweep
-	.4byte 0x088565B8  @ [126] wav
+	.4byte Cry_Whismur  @ [126] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [126] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [127] type, key, length, pan_sweep
-	.4byte 0x08856DDC  @ [127] wav
+	.4byte Cry_Snorunt  @ [127] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [127] attack, decay, sustain, release
 
 	.globl gJP_CryTable_Reverse_3
 gJP_CryTable_Reverse_3: @ 0x08627C44
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  0] type, key, length, pan_sweep
-	.4byte 0x08857EE4  @ [  0] wav
+	.4byte Cry_Latios  @ [  0] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  0] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  1] type, key, length, pan_sweep
-	.4byte 0x088594DC  @ [  1] wav
+	.4byte Cry_Jirachi  @ [  1] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  1] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  2] type, key, length, pan_sweep
-	.4byte 0x0885A260  @ [  2] wav
+	.4byte Cry_Deoxys  @ [  2] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  2] attack, decay, sustain, release
 	.byte 0x30, 0x3C, 0x00, 0x00  @ [  3] type, key, length, pan_sweep
-	.4byte 0x0885B734  @ [  3] wav
+	.4byte Cry_Chimecho  @ [  3] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  3] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [  4] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [  4] wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ [  4] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [  5] type, key, length, pan_sweep
-	.4byte 0x08653D08  @ [  5] wav
+	.4byte DirectSoundWaveData_sc88pro_mute_high_conga  @ [  5] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  5] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [  6] type, key, length, pan_sweep
-	.4byte 0x08654220  @ [  6] wav
+	.4byte DirectSoundWaveData_sc88pro_open_low_conga  @ [  6] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [  6] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [  7] type, key, length, pan_sweep
-	.4byte 0x0864D924  @ [  7] wav
+	.4byte DirectSoundWaveData_sc88pro_tr909_hand_clap  @ [  7] wav
 	.byte 0xFF, 0xE2, 0x19, 0x00  @ [  7] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [  8] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [  8] wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ [  8] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [  9] type, key, length, pan_sweep
-	.4byte 0x086AD150  @ [  9] wav
+	.4byte DirectSoundWaveData_unknown_1  @ [  9] wav
 	.byte 0xFF, 0x00, 0xFF, 0xA5  @ [  9] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 10] type, key, length, pan_sweep
-	.4byte 0x08659150  @ [ 10] wav
+	.4byte DirectSoundWaveData_dance_drums_ride_bell  @ [ 10] wav
 	.byte 0xFF, 0xA5, 0x67, 0xE7  @ [ 10] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 11] type, key, length, pan_sweep
-	.4byte 0x086621B8  @ [ 11] wav
+	.4byte DirectSoundWaveData_sd90_open_triangle  @ [ 11] wav
 	.byte 0xFF, 0xCC, 0x80, 0xF9  @ [ 11] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 12] type, key, length, pan_sweep
-	.4byte 0x0885C144  @ [ 12] wav
+	.4byte DirectSoundWaveData_register_noise  @ [ 12] wav
 	.byte 0xFF, 0x00, 0xFF, 0x4C  @ [ 12] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 13] type, key, length, pan_sweep
-	.4byte 0x0885E0A4  @ [ 13] wav
+	.4byte DirectSoundWaveData_unknown_18  @ [ 13] wav
 	.byte 0xFF, 0x00, 0xCE, 0xCC  @ [ 13] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 14] type, key, length, pan_sweep
-	.4byte 0x0864A18C  @ [ 14] wav
+	.4byte DirectSoundWaveData_ethnic_flavours_ohtsuzumi  @ [ 14] wav
 	.byte 0xFF, 0x00, 0xCE, 0x26  @ [ 14] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 15] type, key, length, pan_sweep
-	.4byte 0x0864BA68  @ [ 15] wav
+	.4byte DirectSoundWaveData_ethnic_flavours_hyoushigi  @ [ 15] wav
 	.byte 0xFF, 0x00, 0xCE, 0x00  @ [ 15] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [ 16] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [ 16] wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ [ 16] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 17] type, key, length, pan_sweep
-	.4byte 0x086C59C8  @ [ 17] wav
+	.4byte DirectSoundWaveData_sc88pro_xylophone  @ [ 17] wav
 	.byte 0xFF, 0xEB, 0x00, 0xD8  @ [ 17] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [ 18] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [ 18] wav
@@ -3832,7 +3832,7 @@ gJP_CryTable_Reverse_3: @ 0x08627C44
 	.4byte 0x00000002  @ [ 27] wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ [ 27] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 28] type, key, length, pan_sweep
-	.4byte 0x0885FB44  @ [ 28] wav
+	.4byte DirectSoundWaveData_sc88pro_nylon_str_guitar  @ [ 28] wav
 	.byte 0xFF, 0xA5, 0x80, 0xCC  @ [ 28] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [ 29] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [ 29] wav
@@ -3853,7 +3853,7 @@ gJP_CryTable_Reverse_3: @ 0x08627C44
 	.4byte 0x00000002  @ [ 34] wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ [ 34] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 35] type, key, length, pan_sweep
-	.4byte 0x08861AB4  @ [ 35] wav
+	.4byte DirectSoundWaveData_sd90_special_scream_drive  @ [ 35] wav
 	.byte 0xFF, 0x00, 0xFF, 0xA5  @ [ 35] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [ 36] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [ 36] wav
@@ -3874,7 +3874,7 @@ gJP_CryTable_Reverse_3: @ 0x08627C44
 	.4byte 0x00000002  @ [ 41] wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ [ 41] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 42] type, key, length, pan_sweep
-	.4byte 0x0863FDC8  @ [ 42] wav
+	.4byte DirectSoundWaveData_sc88pro_synth_bass  @ [ 42] wav
 	.byte 0xFF, 0xFC, 0x00, 0x73  @ [ 42] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [ 43] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [ 43] wav
@@ -3898,13 +3898,13 @@ gJP_CryTable_Reverse_3: @ 0x08627C44
 	.4byte 0x00000002  @ [ 49] wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ [ 49] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 50] type, key, length, pan_sweep
-	.4byte 0x086C4F98  @ [ 50] wav
+	.4byte DirectSoundWaveData_sc88pro_harp  @ [ 50] wav
 	.byte 0xFF, 0xFC, 0x00, 0xCC  @ [ 50] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 51] type, key, length, pan_sweep
-	.4byte 0x086C8804  @ [ 51] wav
+	.4byte DirectSoundWaveData_sc88pro_accordion_duplicate  @ [ 51] wav
 	.byte 0xFF, 0x00, 0xFF, 0xA5  @ [ 51] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [ 52] type, key, length, pan_sweep
-	.4byte 0x086A9BDC  @ [ 52] wav
+	.4byte DirectSoundWaveData_sc88pro_square_wave  @ [ 52] wav
 	.byte 0xFF, 0xCC, 0x00, 0x7F  @ [ 52] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [ 53] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [ 53] wav
@@ -4108,10 +4108,10 @@ gJP_CryTable_Reverse_3: @ 0x08627C44
 	.4byte 0x00000002  @ [119] wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ [119] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [120] type, key, length, pan_sweep
-	.4byte 0x08665DE4  @ [120] wav
+	.4byte DirectSoundWaveData_sc88pro_taiko  @ [120] wav
 	.byte 0xFF, 0x00, 0xFF, 0x00  @ [120] attack, decay, sustain, release
 	.byte 0x00, 0x3C, 0x00, 0x00  @ [121] type, key, length, pan_sweep
-	.4byte 0x08657074  @ [121] wav
+	.4byte DirectSoundWaveData_sd90_ambient_tom  @ [121] wav
 	.byte 0xFF, 0x00, 0xFF, 0xE2  @ [121] attack, decay, sustain, release
 	.byte 0x01, 0x3C, 0x00, 0x00  @ [122] type, key, length, pan_sweep
 	.4byte 0x00000002  @ [122] wav
@@ -5608,308 +5608,4 @@ gUnknown_863D424: @ 0x0863D424
 	.globl sSongHeader_270
 sSongHeader_270: @ 0x0863D424
 	.byte 0x00, 0x00, 0x00, 0x00  @ trackCount, blockCount, priority, reverb
-	.4byte 0x40000000  @ tone
-	.globl DirectSoundWaveData_sc88pro_glockenspiel
-	.set DirectSoundWaveData_sc88pro_glockenspiel, sSongHeader_270 + 4  @ 0x0863D428
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_glockenspiel.bin"
-	.incbin "baserom_jp.gba", 0x63DACA, 0x2
-	.globl DirectSoundWaveData_sc88pro_organ2
-DirectSoundWaveData_sc88pro_organ2: @ 0x0863DACC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_organ2.bin"
-	.incbin "baserom_jp.gba", 0x63E2C3, 0x1
-	.globl DirectSoundWaveData_sc88pro_fretless_bass
-DirectSoundWaveData_sc88pro_fretless_bass: @ 0x0863E2C4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_fretless_bass.bin"
-	.incbin "baserom_jp.gba", 0x63EE8C, 0x4
-	.globl DirectSoundWaveData_sc88pro_slap_bass
-DirectSoundWaveData_sc88pro_slap_bass: @ 0x0863EE90
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_slap_bass.bin"
-	.incbin "baserom_jp.gba", 0x63FDC6, 0x2
-	.globl DirectSoundWaveData_sc88pro_synth_bass
-DirectSoundWaveData_sc88pro_synth_bass: @ 0x0863FDC8
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_synth_bass.bin"
-	.incbin "baserom_jp.gba", 0x640A39, 0x3
-	.globl DirectSoundWaveData_sc88pro_timpani_with_snare
-DirectSoundWaveData_sc88pro_timpani_with_snare: @ 0x08640A3C
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_timpani_with_snare.bin"
-	.incbin "baserom_jp.gba", 0x641F09, 0x3
-	.globl DirectSoundWaveData_classical_choir_voice_ahhs
-DirectSoundWaveData_classical_choir_voice_ahhs: @ 0x08641F0C
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_classical_choir_voice_ahhs.bin"
-	.incbin "baserom_jp.gba", 0x6435B8, 0x4
-	.globl DirectSoundWaveData_sd90_classical_oboe
-DirectSoundWaveData_sd90_classical_oboe: @ 0x086435BC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_oboe.bin"
-	.incbin "baserom_jp.gba", 0x6448FC, 0x4
-	.globl DirectSoundWaveData_unused_sd90_oboe
-DirectSoundWaveData_unused_sd90_oboe: @ 0x08644900
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_sd90_oboe.bin"
-	.incbin "baserom_jp.gba", 0x6453A3, 0x1
-	.globl DirectSoundWaveData_unused_guitar_separates_power_chord
-DirectSoundWaveData_unused_guitar_separates_power_chord: @ 0x086453A4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_guitar_separates_power_chord.bin"
-	.incbin "baserom_jp.gba", 0x6466B6, 0x2
-	.globl DirectSoundWaveData_unused_sc88pro_unison_slap
-DirectSoundWaveData_unused_sc88pro_unison_slap: @ 0x086466B8
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_sc88pro_unison_slap.bin"
-	.incbin "baserom_jp.gba", 0x649CB0, 0x4D7C
-	.globl DirectSoundWaveData_unused_sc55_tom
-DirectSoundWaveData_unused_sc55_tom: @ 0x0864EA2C
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_sc55_tom.bin"
-	.incbin "baserom_jp.gba", 0x64FA69, 0x417
-	.globl DirectSoundWaveData_unknown_open_hihat
-DirectSoundWaveData_unknown_open_hihat: @ 0x0864FE80
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_open_hihat.bin"
-	.incbin "baserom_jp.gba", 0x650CAD, 0x3
-	.globl DirectSoundWaveData_unknown_bell
-DirectSoundWaveData_unknown_bell: @ 0x08650CB0
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_bell.bin"
-	.incbin "baserom_jp.gba", 0x651C43, 0x8B5
-	.globl DirectSoundWaveData_trinity_cymbal_crash
-DirectSoundWaveData_trinity_cymbal_crash: @ 0x086524F8
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_trinity_cymbal_crash.bin"
-	.incbin "baserom_jp.gba", 0x652DD9, 0x3
-	.globl DirectSoundWaveData_sc88pro_orchestra_cymbal_crash
-DirectSoundWaveData_sc88pro_orchestra_cymbal_crash: @ 0x08652DDC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_orchestra_cymbal_crash.bin"
-	.incbin "baserom_jp.gba", 0x653D04, 0x147B8
-	.globl DirectSoundWaveData_sc88pro_piano1_48
-DirectSoundWaveData_sc88pro_piano1_48: @ 0x086684BC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_piano1_48.bin"
-	.incbin "baserom_jp.gba", 0x669418, 0x4
-	.globl DirectSoundWaveData_sc88pro_piano1_60
-DirectSoundWaveData_sc88pro_piano1_60: @ 0x0866941C
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_piano1_60.bin"
-	.incbin "baserom_jp.gba", 0x66AA79, 0x3
-	.globl DirectSoundWaveData_sc88pro_piano1_72
-DirectSoundWaveData_sc88pro_piano1_72: @ 0x0866AA7C
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_piano1_72.bin"
-	.incbin "baserom_jp.gba", 0x66BFD5, 0x3
-	.globl DirectSoundWaveData_sc88pro_piano1_84
-DirectSoundWaveData_sc88pro_piano1_84: @ 0x0866BFD8
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_piano1_84.bin"
-	.incbin "baserom_jp.gba", 0x66CB61, 0x3
-	.globl DirectSoundWaveData_sc88pro_string_ensemble_60
-DirectSoundWaveData_sc88pro_string_ensemble_60: @ 0x0866CB64
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_string_ensemble_60.bin"
-	.incbin "baserom_jp.gba", 0x670107, 0x1
-	.globl DirectSoundWaveData_sc88pro_string_ensemble_72
-DirectSoundWaveData_sc88pro_string_ensemble_72: @ 0x08670108
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_string_ensemble_72.bin"
-	.incbin "baserom_jp.gba", 0x672422, 0x2
-	.globl DirectSoundWaveData_sc88pro_string_ensemble_84
-DirectSoundWaveData_sc88pro_string_ensemble_84: @ 0x08672424
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_string_ensemble_84.bin"
-	.incbin "baserom_jp.gba", 0x675AEC, 0x4
-	.globl DirectSoundWaveData_sc88pro_trumpet_60
-DirectSoundWaveData_sc88pro_trumpet_60: @ 0x08675AF0
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_trumpet_60.bin"
-	.incbin "baserom_jp.gba", 0x676E3D, 0x3
-	.globl DirectSoundWaveData_sc88pro_trumpet_72
-DirectSoundWaveData_sc88pro_trumpet_72: @ 0x08676E40
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_trumpet_72.bin"
-	.incbin "baserom_jp.gba", 0x67834E, 0x2
-	.globl DirectSoundWaveData_sc88pro_trumpet_84
-DirectSoundWaveData_sc88pro_trumpet_84: @ 0x08678350
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_trumpet_84.bin"
-	.incbin "baserom_jp.gba", 0x67976C, 0x10A0
-	.globl DirectSoundWaveData_sc88pro_tuba_51
-DirectSoundWaveData_sc88pro_tuba_51: @ 0x0867A80C
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_tuba_51.bin"
-	.incbin "baserom_jp.gba", 0x67B864, 0x4
-	.globl DirectSoundWaveData_sc88pro_french_horn_60
-DirectSoundWaveData_sc88pro_french_horn_60: @ 0x0867B868
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_french_horn_60.bin"
-	.incbin "baserom_jp.gba", 0x6827FB, 0x1
-	.globl DirectSoundWaveData_sc88pro_french_horn_72
-DirectSoundWaveData_sc88pro_french_horn_72: @ 0x086827FC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_french_horn_72.bin"
-	.incbin "baserom_jp.gba", 0x686D7D, 0x3
-	.globl DirectSoundWaveData_sc88pro_flute
-DirectSoundWaveData_sc88pro_flute: @ 0x08686D80
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_flute.bin"
-	.incbin "baserom_jp.gba", 0x6874E2, 0x2
-	.globl DirectSoundWaveData_sc88pro_fingered_bass
-DirectSoundWaveData_sc88pro_fingered_bass: @ 0x086874E4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_fingered_bass.bin"
-	.incbin "baserom_jp.gba", 0x689131, 0x3
-	.globl DirectSoundWaveData_unknown_koto_high
-DirectSoundWaveData_unknown_koto_high: @ 0x08689134
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_koto_high.bin"
-	.incbin "baserom_jp.gba", 0x68A937, 0x1
-	.globl DirectSoundWaveData_sd90_classical_shakuhachi
-DirectSoundWaveData_sd90_classical_shakuhachi: @ 0x0868A938
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_shakuhachi.bin"
-	.incbin "baserom_jp.gba", 0x68E4EC, 0x4
-	.globl DirectSoundWaveData_unknown_koto_low
-DirectSoundWaveData_unknown_koto_low: @ 0x0868E4F0
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_koto_low.bin"
-	.incbin "baserom_jp.gba", 0x690725, 0x3
-	.globl DirectSoundWaveData_sd90_classical_overdrive_guitar
-DirectSoundWaveData_sd90_classical_overdrive_guitar: @ 0x08690728
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_overdrive_guitar.bin"
-	.incbin "baserom_jp.gba", 0x692594, 0x4
-	.globl DirectSoundWaveData_sd90_classical_distortion_guitar_high
-DirectSoundWaveData_sd90_classical_distortion_guitar_high: @ 0x08692598
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_distortion_guitar_high.bin"
-	.incbin "baserom_jp.gba", 0x695587, 0x1
-	.globl DirectSoundWaveData_sd90_classical_distortion_guitar_low
-DirectSoundWaveData_sd90_classical_distortion_guitar_low: @ 0x08695588
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_distortion_guitar_low.bin"
-	.incbin "baserom_jp.gba", 0x6981D8, 0x4
-	.globl DirectSoundWaveData_heart_of_asia_gamelan
-DirectSoundWaveData_heart_of_asia_gamelan: @ 0x086981DC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_heart_of_asia_gamelan.bin"
-	.incbin "baserom_jp.gba", 0x69C75B, 0x1
-	.globl DirectSoundWaveData_sc88pro_church_organ3_low
-DirectSoundWaveData_sc88pro_church_organ3_low: @ 0x0869C75C
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_church_organ3_low.bin"
-	.incbin "baserom_jp.gba", 0x69F0A0, 0x4
-	.globl DirectSoundWaveData_sc88pro_church_organ3_high
-DirectSoundWaveData_sc88pro_church_organ3_high: @ 0x0869F0A4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_church_organ3_high.bin"
-	.incbin "baserom_jp.gba", 0x6A0801, 0x3
-	.globl DirectSoundWaveData_unknown_female_voice
-DirectSoundWaveData_unknown_female_voice: @ 0x086A0804
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_female_voice.bin"
-	.incbin "baserom_jp.gba", 0x6A1E46, 0x2
-	.globl DirectSoundWaveData_unused_unknown_male_voice
-DirectSoundWaveData_unused_unknown_male_voice: @ 0x086A1E48
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_unknown_male_voice.bin"
-	.incbin "baserom_jp.gba", 0x6A42EC, 0x4
-	.globl DirectSoundWaveData_sd90_classical_detuned_ep1_low
-DirectSoundWaveData_sd90_classical_detuned_ep1_low: @ 0x086A42F0
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_detuned_ep1_low.bin"
-	.incbin "baserom_jp.gba", 0x6A6956, 0x2
-	.globl DirectSoundWaveData_sd90_classical_detuned_ep1_high
-DirectSoundWaveData_sd90_classical_detuned_ep1_high: @ 0x086A6958
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_detuned_ep1_high.bin"
-	.incbin "baserom_jp.gba", 0x6A7CFF, 0x14D1
-	.globl DirectSoundWaveData_unknown_synth_snare
-DirectSoundWaveData_unknown_synth_snare: @ 0x086A91D0
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_synth_snare.bin"
-	.incbin "baserom_jp.gba", 0x6A9BDA, 0x2
-	.globl DirectSoundWaveData_sc88pro_square_wave
-DirectSoundWaveData_sc88pro_square_wave: @ 0x086A9BDC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_square_wave.bin"
-	.incbin "baserom_jp.gba", 0x6AB7EF, 0x2E25
-	.globl DirectSoundWaveData_sc88pro_pizzicato_strings
-DirectSoundWaveData_sc88pro_pizzicato_strings: @ 0x086AE614
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_pizzicato_strings.bin"
-	.incbin "baserom_jp.gba", 0x6AED4C, 0x4
-	.globl DirectSoundWaveData_unknown_2
-DirectSoundWaveData_unknown_2: @ 0x086AED50
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_2.bin"
-	.incbin "baserom_jp.gba", 0x6B093F, 0x1
-	.globl DirectSoundWaveData_unknown_3
-DirectSoundWaveData_unknown_3: @ 0x086B0940
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_3.bin"
-	.incbin "baserom_jp.gba", 0x6B1CF2, 0x2
-	.globl DirectSoundWaveData_unknown_4
-DirectSoundWaveData_unknown_4: @ 0x086B1CF4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_4.bin"
-	.incbin "baserom_jp.gba", 0x6B4374, 0x4
-	.globl DirectSoundWaveData_sc88pro_wind
-DirectSoundWaveData_sc88pro_wind: @ 0x086B4378
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_wind.bin"
-	.incbin "baserom_jp.gba", 0x6B55B9, 0x1013
-	.globl DirectSoundWaveData_unknown_5
-DirectSoundWaveData_unknown_5: @ 0x086B65CC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_5.bin"
-	.incbin "baserom_jp.gba", 0x6B78D0, 0x4
-	.globl DirectSoundWaveData_unknown_6
-DirectSoundWaveData_unknown_6: @ 0x086B78D4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_6.bin"
-	.incbin "baserom_jp.gba", 0x6B99DC, 0x4
-	.globl DirectSoundWaveData_trinity_30303_mega_bass
-DirectSoundWaveData_trinity_30303_mega_bass: @ 0x086B99E0
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_trinity_30303_mega_bass.bin"
-	.incbin "baserom_jp.gba", 0x6BB9BA, 0x2
-	.globl DirectSoundWaveData_unknown_7
-DirectSoundWaveData_unknown_7: @ 0x086BB9BC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_7.bin"
-	.incbin "baserom_jp.gba", 0x6BDBCB, 0x1
-	.globl DirectSoundWaveData_unknown_8
-DirectSoundWaveData_unknown_8: @ 0x086BDBCC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_8.bin"
-	.incbin "baserom_jp.gba", 0x6BE396, 0x2
-	.globl DirectSoundWaveData_sc88pro_tubular_bell
-DirectSoundWaveData_sc88pro_tubular_bell: @ 0x086BE398
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_tubular_bell.bin"
-	.incbin "baserom_jp.gba", 0x6BFD07, 0x1
-	.globl DirectSoundWaveData_unknown_9
-DirectSoundWaveData_unknown_9: @ 0x086BFD08
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_9.bin"
-	.incbin "baserom_jp.gba", 0x6C1CB4, 0x4
-	.globl DirectSoundWaveData_trinity_big_boned
-DirectSoundWaveData_trinity_big_boned: @ 0x086C1CB8
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_trinity_big_boned.bin"
-	.incbin "baserom_jp.gba", 0x6C4F96, 0x2
-	.globl DirectSoundWaveData_sc88pro_harp
-DirectSoundWaveData_sc88pro_harp: @ 0x086C4F98
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_harp.bin"
-	.incbin "baserom_jp.gba", 0x6C59C7, 0x1
-	.globl DirectSoundWaveData_sc88pro_xylophone
-DirectSoundWaveData_sc88pro_xylophone: @ 0x086C59C8
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_xylophone.bin"
-	.incbin "baserom_jp.gba", 0x6C63FA, 0x2
-	.globl DirectSoundWaveData_unknown_10
-DirectSoundWaveData_unknown_10: @ 0x086C63FC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_10.bin"
-	.incbin "baserom_jp.gba", 0x6C7F38, 0x4
-	.globl DirectSoundWaveData_unknown_11
-DirectSoundWaveData_unknown_11: @ 0x086C7F3C
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_11.bin"
-	.incbin "baserom_jp.gba", 0x6C8803, 0x1
-	.globl DirectSoundWaveData_sc88pro_accordion_duplicate
-DirectSoundWaveData_sc88pro_accordion_duplicate: @ 0x086C8804
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_accordion_duplicate.bin"
-	.incbin "baserom_jp.gba", 0x6C9BD2, 0x2
-	.globl DirectSoundWaveData_unknown_12
-DirectSoundWaveData_unknown_12: @ 0x086C9BD4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_12.bin"
-	.incbin "baserom_jp.gba", 0x6CA7E3, 0x1
-	.globl DirectSoundWaveData_unknown_13
-DirectSoundWaveData_unknown_13: @ 0x086CA7E4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_13.bin"
-	.incbin "baserom_jp.gba", 0x6CB372, 0x2
-	.globl DirectSoundWaveData_unknown_14
-DirectSoundWaveData_unknown_14: @ 0x086CB374
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_14.bin"
-	.incbin "baserom_jp.gba", 0x6CBE0F, 0x1
-	.globl DirectSoundWaveData_unknown_15
-DirectSoundWaveData_unknown_15: @ 0x086CBE10
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_15.bin"
-	.incbin "baserom_jp.gba", 0x6CC757, 0x1
-	.globl DirectSoundWaveData_unknown_16
-DirectSoundWaveData_unknown_16: @ 0x086CC758
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_16.bin"
-	.incbin "baserom_jp.gba", 0x6CD19E, 0x2
-	.globl DirectSoundWaveData_unknown_17
-DirectSoundWaveData_unknown_17: @ 0x086CD1A0
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_17.bin"
-	.incbin "baserom_jp.gba", 0x6CDE26, 0x19027E
-	.globl DirectSoundWaveData_unknown_18
-DirectSoundWaveData_unknown_18: @ 0x0885E0A4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_18.bin"
-	.incbin "baserom_jp.gba", 0x85FB42, 0x2
-	.globl DirectSoundWaveData_sc88pro_nylon_str_guitar
-DirectSoundWaveData_sc88pro_nylon_str_guitar: @ 0x0885FB44
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_nylon_str_guitar.bin"
-	.incbin "baserom_jp.gba", 0x861AB1, 0x3
-	.globl DirectSoundWaveData_sd90_special_scream_drive
-DirectSoundWaveData_sd90_special_scream_drive: @ 0x08861AB4
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_special_scream_drive.bin"
-	.incbin "baserom_jp.gba", 0x8632EB, 0x13D1
-	.globl DirectSoundWaveData_steinway_b_piano
-DirectSoundWaveData_steinway_b_piano: @ 0x088646BC
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_steinway_b_piano.bin"
-	.incbin "baserom_jp.gba", 0x86587C, 0x4
-	.globl DirectSoundWaveData_sd90_classical_whistle
-DirectSoundWaveData_sd90_classical_whistle: @ 0x08865880
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_whistle.bin"
-	.incbin "baserom_jp.gba", 0x8662DC, 0x4
-	.globl DirectSoundWaveData_sd90_enhanced_delay_shaku
-DirectSoundWaveData_sd90_enhanced_delay_shaku: @ 0x088662E0
-	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_enhanced_delay_shaku.bin"
-	.incbin "baserom_jp.gba", 0x8683DE, 0x2
+	.include "sound/direct_sound_data.inc"
