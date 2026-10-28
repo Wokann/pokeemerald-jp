@@ -1040,41 +1040,23 @@ POKEBLOCK_GRAPHICS const u32 gPokeblockFeedBg_Tilemap[] = INCBIN_U32("graphics/p
 
 #define BAG_GRAPHICS __attribute__((section(".rodata.bag_graphics")))
 
-BAG_GRAPHICS const u32 gBagMaleTiles[] = INCBIN_U32("graphics/bag/bag_male.4bpp.lz");
-BAG_GRAPHICS const u32 gBagFemaleTiles[] = INCBIN_U32("graphics/bag/bag_female.4bpp.lz");
-BAG_GRAPHICS const u32 gBagPalette[] = INCBIN_U32("graphics/bag/bag.pal.gbapal.lz");
+BAG_GRAPHICS const u32 gBagMaleTiles[] = INCGFX_U32("graphics/bag/bag_male.png", ".4bpp.lz");
+BAG_GRAPHICS const u32 gBagFemaleTiles[] = INCGFX_U32("graphics/bag/bag_female.png", ".4bpp.lz");
+BAG_GRAPHICS const u32 gBagPalette[] = INCGFX_U32("graphics/bag/bag.pal", ".gbapal.lz");
 
 #undef BAG_GRAPHICS
 
 #define BAG_MENU_RESOURCES __attribute__((section(".rodata.bag_menu_resources"), aligned(1)))
 
 // Retain the JP Bag Menu streams and their original alignment padding.
-BAG_MENU_RESOURCES const u32 gBagScreenMale_Pal[] = INCBIN_U32("graphics/bag/menu_male.pal.gbapal.lz");
-BAG_MENU_RESOURCES const u32 gBagScreenFemale_Pal[] = INCBIN_U32("graphics/bag/menu_female.pal.gbapal.lz");
-BAG_MENU_RESOURCES const u32 gBagScreen_Gfx[] = INCBIN_U32("graphics/bag/menu.4bpp.lz");
-BAG_MENU_RESOURCES const u32 gBagScreen_GfxTileMap[] = INCBIN_U32("graphics/bag/menu.bin.lz");
-BAG_MENU_RESOURCES const u32 gBattlePyramidBag_Gfx[] = INCBIN_U32("graphics/bag/bag_pyramid.4bpp.lz");
-BAG_MENU_RESOURCES const u32 gBattlePyramidBag_Pal[] = INCBIN_U32("graphics/bag/bag_pyramid.pal.gbapal.lz");
-BAG_MENU_RESOURCES const u32 gBattlePyramidBagTilemap[] = INCBIN_U32("graphics/bag/menu_pyramid.bin.lz");
-BAG_MENU_RESOURCES const u32 gBattlePyramidBagInterface_Pal[] = INCBIN_U32("graphics/bag/menu_pyramid.pal.gbapal.lz");
-
-// Keep the ROM-locked Bag menu loaders on their original address symbols.
-__asm__(
-    ".global gUnknown_8D9A734\n"
-    ".set gUnknown_8D9A734, gBagScreenMale_Pal\n"
-    ".global gUnknown_8D9A780\n"
-    ".set gUnknown_8D9A780, gBagScreenFemale_Pal\n"
-    ".global gUnknown_8D9A7CC\n"
-    ".set gUnknown_8D9A7CC, gBagScreen_Gfx\n"
-    ".global gUnknown_8D9AA84\n"
-    ".set gUnknown_8D9AA84, gBagScreen_GfxTileMap\n"
-    ".global gUnknown_8D9AFC8\n"
-    ".set gUnknown_8D9AFC8, gBattlePyramidBag_Pal\n"
-    ".global gUnknown_8D9AFFC\n"
-    ".set gUnknown_8D9AFFC, gBattlePyramidBagTilemap\n"
-    ".global gUnknown_8D9B13C\n"
-    ".set gUnknown_8D9B13C, gBattlePyramidBagInterface_Pal\n"
-);
+BAG_MENU_RESOURCES const u32 gBagScreenMale_Pal[] = INCGFX_U32("graphics/bag/menu_male.pal", ".gbapal.lz");
+BAG_MENU_RESOURCES const u32 gBagScreenFemale_Pal[] = INCGFX_U32("graphics/bag/menu_female.pal", ".gbapal.lz");
+BAG_MENU_RESOURCES const u32 gBagScreen_Gfx[] = INCGFX_U32("graphics/bag/menu.png", ".4bpp.lz", "-num_tiles 53 -Wnum_tiles");
+BAG_MENU_RESOURCES const u32 gBagScreen_GfxTileMap[] = INCGFX_U32("graphics/bag/menu.bin", ".lz");
+BAG_MENU_RESOURCES const u32 gBattlePyramidBag_Gfx[] = INCGFX_U32("graphics/bag/bag_pyramid.png", ".4bpp.lz");
+BAG_MENU_RESOURCES const u32 gBattlePyramidBag_Pal[] = INCGFX_U32("graphics/bag/bag_pyramid.pal", ".gbapal.lz");
+BAG_MENU_RESOURCES const u32 gBattlePyramidBagTilemap[] = INCGFX_U32("graphics/bag/menu_pyramid.bin", ".lz");
+BAG_MENU_RESOURCES const u32 gBattlePyramidBagInterface_Pal[] = INCGFX_U32("graphics/bag/menu_pyramid.pal", ".gbapal.lz");
 
 #undef BAG_MENU_RESOURCES
 

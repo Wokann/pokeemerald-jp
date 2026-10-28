@@ -1836,9 +1836,15 @@ $(C_BUILDDIR)/map_name_popup.o: src/map_name_popup.c $(wildcard graphics/map_pop
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/map_name_popup.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/map_name_popup.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/map_name_popup.gen.s
-$(C_BUILDDIR)/item_menu_icons.o: src/item_menu_icons.c $(wildcard graphics/bag/rotating_ball.* graphics/unused/cherry.*)
+$(C_BUILDDIR)/item_menu_icons.d: src/item_menu_icons.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/item_menu_icons.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/item_menu_icons.d
+
+$(C_BUILDDIR)/item_menu_icons.o: src/item_menu_icons.c $(wildcard graphics/bag/rotating_ball.* graphics/unused/cherry.*) Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/item_menu_icons.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/item_menu_icons.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/item_menu_icons.gen.s
 $(C_BUILDDIR)/pokenav_menu_handler_gfx.o: src/pokenav_menu_handler_gfx.c $(wildcard graphics/pokenav/*.lz graphics/pokenav/*.gbapal)

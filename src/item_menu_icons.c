@@ -38,10 +38,10 @@ static void LoadBerryGfx(u8 berryId);
 
 #define ITEM_MENU_ICONS_DATA __attribute__((section(".rodata.item_menu_icons_mid57a")))
 
-ITEM_MENU_ICONS_DATA static const u16 sRotatingBall_Pal[16] = INCBIN_U16("graphics/bag/rotating_ball.gbapal");
-ITEM_MENU_ICONS_DATA static const u8 sRotatingBall_Gfx[0x80] = INCBIN_U8("graphics/bag/rotating_ball.4bpp");
-ITEM_MENU_ICONS_DATA static const u8 sCherryUnused[0x480] = INCBIN_U8("graphics/unused/cherry.4bpp");
-ITEM_MENU_ICONS_DATA static const u16 sCherryUnused_Pal[16] = INCBIN_U16("graphics/unused/cherry.gbapal");
+ITEM_MENU_ICONS_DATA static const u16 sRotatingBall_Pal[16] = INCGFX_U16("graphics/bag/rotating_ball.png", ".gbapal");
+ITEM_MENU_ICONS_DATA static const u8 sRotatingBall_Gfx[0x80] = INCGFX_U8("graphics/bag/rotating_ball.png", ".4bpp");
+ITEM_MENU_ICONS_DATA static const u8 sCherryUnused[0x480] = INCGFX_U8("graphics/unused/cherry.png", ".4bpp");
+ITEM_MENU_ICONS_DATA static const u16 sCherryUnused_Pal[16] = INCGFX_U16("graphics/unused/cherry.png", ".gbapal");
 
 ITEM_MENU_ICONS_DATA static const struct OamData sBagOamData =
 {
