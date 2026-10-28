@@ -10,25 +10,11 @@
 	.include "constants/ribbon_constants.inc"
 
 
-gUnknown_82EC5FE: @ 0x82EC5FE
-	.incbin "baserom_jp.gba", 0x2ec5fe, 0x2
 
 
 	.section .rodata.data_b2d_after_battle_palace_likelihood
 
 	.incbin "baserom_jp.gba", 0x2ece95, 0x7
-
-	.section .rodata.data_b2d_after_tmhm_learnsets
-
-	.section .rodata.data_b2d_after_trainer_class_lookups
-
-
-	.section .rodata.data_b2d_after_cry_ids
-	.incbin "baserom_jp.gba", 0x2f00b2, 0x2
-
-
-	.section .rodata.data_b2d_after_experience_tables
-
 
 	.section .rodata.mid97_prefix
 
