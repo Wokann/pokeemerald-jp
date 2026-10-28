@@ -153,7 +153,7 @@ extern const struct OamData gObjectEventBaseOam_32x8;
 extern const struct OamData gObjectEventBaseOam_64x32;
 extern const struct OamData gObjectEventBaseOam_16x32;
 extern const struct OamData gObjectEventBaseOam_32x32;
-extern const u8 gObjectEventPic_Rayquaza[];
+extern const u32 gObjectEventPic_Rayquaza[];
 
 #define EVENT_OBJECT_MOVEMENT_CORE_DATA __attribute__((section(".rodata.event_object_movement_core_data"), aligned(1)))
 

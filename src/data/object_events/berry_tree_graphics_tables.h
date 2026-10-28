@@ -1,7 +1,7 @@
 // The JP tree graphics remain in their existing raw resource region.  These
 // semantic linker anchors let the table use the US data layout without
 // embedding ROM addresses in C.
-extern const u8 gObjectEventPic_BerryTreeDirtPile[];
+extern const u32 gObjectEventPic_BerryTreeDirtPile[];
 extern const u8 gObjectEventPic_BerryTreeSprout[];
 extern const u8 gObjectEventPic_PechaBerryTree[];
 extern const u8 gObjectEventPic_KelpsyBerryTree[];

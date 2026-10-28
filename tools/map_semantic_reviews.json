@@ -1470,7 +1470,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -23335,7 +23335,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -25759,7 +25759,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -28693,7 +28693,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -31730,7 +31730,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -34613,7 +34613,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -36855,7 +36855,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -39013,7 +39013,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -41339,7 +41339,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -43891,7 +43891,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -45058,7 +45058,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "d9e71e22f38bfc769cd79ca1dc13ed1e67c48c1edecc810eda2fb15ca7b07d96"
+            "makefile_sha256": "409386c442f3c394dd3b7143a15ae2a82526abb4983011d6a478f9613d5cbbd9"
           }
         },
         {
@@ -45493,7 +45493,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "d9e71e22f38bfc769cd79ca1dc13ed1e67c48c1edecc810eda2fb15ca7b07d96"
+          "sha256": "409386c442f3c394dd3b7143a15ae2a82526abb4983011d6a478f9613d5cbbd9"
         },
         {
           "path": "asm/macros.inc",
@@ -46728,7 +46728,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -49102,7 +49102,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -53523,7 +53523,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -61518,7 +61518,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -74136,7 +74136,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -89645,7 +89645,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -104739,7 +104739,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -116532,7 +116532,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -124661,7 +124661,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -132054,7 +132054,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -139622,7 +139622,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -146887,7 +146887,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -152041,7 +152041,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -161658,7 +161658,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -171444,7 +171444,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -181032,7 +181032,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -190060,7 +190060,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -200336,7 +200336,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -212346,7 +212346,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -223461,7 +223461,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -234333,7 +234333,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -246704,7 +246704,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -264629,7 +264629,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -275850,7 +275850,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -286082,7 +286082,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -294809,7 +294809,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -301053,7 +301053,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -307416,7 +307416,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -313198,7 +313198,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -319550,7 +319550,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -325437,7 +325437,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -330911,7 +330911,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -337530,7 +337530,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -345754,7 +345754,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -352806,7 +352806,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -356983,7 +356983,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -360792,7 +360792,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -365346,7 +365346,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -370161,7 +370161,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -373875,7 +373875,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -377885,7 +377885,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -381638,7 +381638,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -385170,7 +385170,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -388815,7 +388815,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -392707,7 +392707,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -396148,7 +396148,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -399726,7 +399726,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -405540,7 +405540,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -413921,7 +413921,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/faraway_island.c",
@@ -418287,7 +418287,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -421821,7 +421821,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -425776,7 +425776,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -431205,7 +431205,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -433212,7 +433212,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -435939,7 +435939,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -439347,7 +439347,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -444228,7 +444228,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -446536,7 +446536,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -449147,7 +449147,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -451961,7 +451961,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -454605,7 +454605,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -456764,7 +456764,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -462836,7 +462836,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_control_avatar.c",
@@ -470607,7 +470607,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
@@ -476819,7 +476819,7 @@
         {
           "path": "src/event_object_movement.c",
           "selector": "file",
-          "sha256": "955d1ddebfde62413a1af1be76e97e295bd0091bce0507d135e66918d06cae06"
+          "sha256": "610f46f6145264f76535dd2c00174a1bc31ad09ca1344f303202d3c1d73ec3bc"
         },
         {
           "path": "src/field_camera.c",
