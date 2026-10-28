@@ -160,3 +160,18 @@ graphics/unused/old_charmap.png.4bpp.lz
 graphics/unused/old_charmap.png.gbapal
 graphics/unused/old_charmap.png.gbapal.lz
 graphics/unused/old_charmap.bin.lz
+
+# Rebuilt Pokemon still pictures, palettes, footprints and Castform aggregates.
+graphics/pokemon/**/*.png.4bpp
+graphics/pokemon/**/*.png.4bpp.lz
+graphics/pokemon/**/*.png.1bpp
+graphics/pokemon/**/*.pal.gbapal
+graphics/pokemon/**/*.pal.gbapal.lz
+graphics/pokemon/castform/**/front.4bpp
+graphics/pokemon/castform/**/back.4bpp
+graphics/pokemon/castform/**/normal.gbapal
+graphics/pokemon/castform/**/shiny.gbapal
+graphics/pokemon/castform/front.4bpp.lz
+graphics/pokemon/castform/back.4bpp.lz
+graphics/pokemon/castform/normal.gbapal.lz
+graphics/pokemon/castform/shiny.gbapal.lz

@@ -4584,7 +4584,7 @@
             "-include $(C_BUILDDIR)/pokedex_area_screen.d",
             "$(C_BUILDDIR)/pokedex_area_screen.o:"
           ],
-          "sha256": "f65d8d04e1ad834a9238820ba3b65c7eed39e43f20c5bbe95299c600f9720f78"
+          "sha256": "909e6082b1035bcaca6f1577c6abd4f9b6b1c95d5bcfb0205e5f8b991443fbd7"
         },
         {
           "path": "ld_script_jp.txt",
@@ -45058,7 +45058,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "e18f251a1ac9c16d903f53f5f450eb7bad6767fb9a6850ecdb0c39183188b22d"
+            "makefile_sha256": "b9b5cca287c14092b5ca7a9b653a08687d5dc06b644006c27f4368bbb44c2fbc"
           }
         },
         {
@@ -45493,7 +45493,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "e18f251a1ac9c16d903f53f5f450eb7bad6767fb9a6850ecdb0c39183188b22d"
+          "sha256": "b9b5cca287c14092b5ca7a9b653a08687d5dc06b644006c27f4368bbb44c2fbc"
         },
         {
           "path": "asm/macros.inc",

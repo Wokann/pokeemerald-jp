@@ -1283,6 +1283,12 @@ clean: clean-tools
 	rm -f $(JP_ANIM_MON_FRONT_PIC_ASSETS) $(JP_ANIM_MON_FRONT_PIC_INTERMEDIATES)
 	rm -f $(JP_TRAINER_GRAPHICS_ASSETS) $(JP_TRAINER_GRAPHICS_INTERMEDIATES)
 	rm -f $(JP_QUESTION_MARK_AND_OLD_CHARMAP_ASSETS) $(JP_QUESTION_MARK_AND_OLD_CHARMAP_INTERMEDIATES)
+	# Keep cleanup commands within the host shell argument limit.
+	rm -f $(filter %/front.png.4bpp.lz,$(JP_POKEMON_STILL_ASSETS)) $(patsubst %.lz,%,$(filter %/front.png.4bpp.lz,$(JP_POKEMON_STILL_ASSETS)))
+	rm -f $(filter %/back.png.4bpp.lz,$(JP_POKEMON_STILL_ASSETS)) $(patsubst %.lz,%,$(filter %/back.png.4bpp.lz,$(JP_POKEMON_STILL_ASSETS)))
+	rm -f $(filter %/normal.pal.gbapal.lz,$(JP_POKEMON_STILL_ASSETS)) $(patsubst %.lz,%,$(filter %/normal.pal.gbapal.lz,$(JP_POKEMON_STILL_ASSETS)))
+	rm -f $(filter %/shiny.pal.gbapal.lz,$(JP_POKEMON_STILL_ASSETS)) $(patsubst %.lz,%,$(filter %/shiny.pal.gbapal.lz,$(JP_POKEMON_STILL_ASSETS)))
+	rm -f $(filter %.1bpp graphics/pokemon/castform/%,$(JP_POKEMON_STILL_ASSETS)) $(filter graphics/pokemon/castform/%,$(JP_POKEMON_STILL_INTERMEDIATES))
 	rm -f $(JP_BATTLE_TEXTBOX_PALETTE)
 	rm -f $(JP_CONTEST_RESULTS_ASSETS)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
@@ -6706,3 +6712,23 @@ graphics/unused/old_charmap.png.gbapal: graphics/unused/old_charmap.png | tools
 	$(GFX) $< $@
 
 $(C_BUILDDIR)/graphics.o: src/data/graphics/pokemon.h $(JP_QUESTION_MARK_AND_OLD_CHARMAP_ASSETS)
+
+# Still pictures, palettes and footprints use the same editable inputs as pokeemerald.
+JP_POKEMON_STILL_PNGS := $(wildcard graphics/pokemon/*/front.png graphics/pokemon/*/back.png graphics/pokemon/*/*/front.png graphics/pokemon/*/*/back.png)
+JP_POKEMON_PALETTE_INPUTS := $(wildcard graphics/pokemon/*/normal.pal graphics/pokemon/*/shiny.pal graphics/pokemon/*/*/normal.pal graphics/pokemon/*/*/shiny.pal)
+JP_POKEMON_FOOTPRINT_PNGS := $(filter-out graphics/pokemon/question_mark/footprint.png,$(wildcard graphics/pokemon/*/footprint.png))
+JP_POKEMON_STILL_ASSETS := $(addsuffix .4bpp.lz,$(filter-out graphics/pokemon/castform/% graphics/pokemon/question_mark/%,$(JP_POKEMON_STILL_PNGS))) \
+	$(addsuffix .gbapal.lz,$(filter-out graphics/pokemon/castform/% graphics/pokemon/question_mark/%,$(JP_POKEMON_PALETTE_INPUTS))) \
+	$(addsuffix .1bpp,$(JP_POKEMON_FOOTPRINT_PNGS)) \
+	graphics/pokemon/castform/front.4bpp.lz graphics/pokemon/castform/back.4bpp.lz \
+	graphics/pokemon/castform/normal.gbapal.lz graphics/pokemon/castform/shiny.gbapal.lz
+JP_CASTFORM_STILL_COMPONENTS := $(foreach form,normal sunny rainy snowy,$(addprefix graphics/pokemon/castform/$(form)/,front.4bpp back.4bpp normal.gbapal shiny.gbapal))
+JP_POKEMON_STILL_INTERMEDIATES := $(patsubst %.lz,%,$(filter %.lz,$(JP_POKEMON_STILL_ASSETS))) $(JP_CASTFORM_STILL_COMPONENTS)
+
+graphics/pokemon/%.pal.gbapal: graphics/pokemon/%.pal | tools
+	$(GFX) $< $@
+
+graphics/pokemon/%.png.1bpp: graphics/pokemon/%.png | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/graphics.o: $(JP_POKEMON_STILL_ASSETS) graphics_file_rules.mk
