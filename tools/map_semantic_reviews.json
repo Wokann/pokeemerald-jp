@@ -76412,7 +76412,7 @@
         {
           "path": "src/mirage_tower.c",
           "selector": "file",
-          "sha256": "0ce63e15af7583febb54c039e31bb06ca97081876ee1cb4ab83d3cacb471bb0e"
+          "sha256": "fb98e0b0e597e56c626f2b4b9ee0bd41df6646061909d287d20a0339134738d9"
         },
         {
           "path": "src/script_pokemon_util.c",
@@ -337580,7 +337580,7 @@
         {
           "path": "src/mirage_tower.c",
           "selector": "file",
-          "sha256": "0ce63e15af7583febb54c039e31bb06ca97081876ee1cb4ab83d3cacb471bb0e"
+          "sha256": "fb98e0b0e597e56c626f2b4b9ee0bd41df6646061909d287d20a0339134738d9"
         },
         {
           "path": "src/overworld.c",

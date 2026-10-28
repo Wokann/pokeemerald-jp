@@ -33,53 +33,61 @@ Build tooling: `sh setup.sh` handles everything; it requires a system
 
 ## Data structure
 
-The script-data region (0x1DABAC-0x28D2F8) is being converted from raw
-`.incbin` chunks into structured sources, following pokeemerald's layout:
+The JP script-data span `[0x081DABAC, 0x0828D2F8)` uses the same eight
+assembly owners and linker order as pokeemerald:
 
-* `data/script_cmd_table.inc` - `gScriptCmdTable` (225 script commands
-  plus the `gScriptCmdTableEnd` sentinel)
-* `data/specials.inc` - `gSpecials` (524 special commands)
-* `data/mystery_event_script_cmd_table.s` - `gMysteryEventScriptCmdTable`
-  (17 commands)
-* `data/event_scripts.s` - remaining data.  Pointer tables are symbolic
-  `.4byte` lists; raw chunks are split at every address referenced by a
-  pointer table and labelled (`gUnknown_XXXXXXXX`), making the boundaries
-  of the referenced scripts/data visible.
+* `data/event_scripts.s`
+* `data/battle_anim_scripts.s`
+* `data/battle_scripts_1.s`
+* `data/field_effect_scripts.s`
+* `data/battle_scripts_2.s`
+* `data/battle_ai_scripts.s`
+* `data/contest_ai_scripts.s`
+* `data/mystery_event_script_cmd_table.s`
 
-Text chunks in `data/data.s` are converted from `.incbin` to readable
-`.string` lines.  The build routes `data/data.s` through
-`tools/preproc` with `charmap.txt`, which encodes the text back to game
-bytes (byte-exact, verified by `make compare`).  Kana/Latin text is
-readable; text that contains byte sequences not covered by the charmap
-(JP-specific formatting/control codes) stays as `.incbin` until proper
-charmap entries are added.
+`data/script_cmd_table.inc` and `data/specials.inc` define the JP script
+command and Special tables. The build allocates each table once; the
+same definitions provide command constants to the script macros.
+These are reviewed source tables, not outputs to regenerate during a
+normal build.
 
-Event scripts in `data/event_scripts.s` are decoded into
-`data/scripts/*.inc` via `tools/decompile_scripts.py` and assembled back
-through pokeemerald's script macros (`asm/macros/event.inc`) with the JP
-command table.  Commands whose macros are simple decode to named
-invocations; everything else (JP-specific command layouts, e.g.
-`givemon`, and raw data) stays as `.byte` until proper JP macros are
-written.
+Map scripts and local text live in `data/maps/<Map>/scripts.inc`.
+Shared scripts and text use `data/scripts/` and `data/text/`. The
+explicit includes preserve JP physical order even when it differs
+from US. Map JSON is the source for generated event, header and
+connection includes; the build regenerates these in their canonical
+map directories. Layout data is collected in `data/layouts/layouts.inc`.
 
-Conversion principle: raw ROM data is only converted to readable sources
-when its semantics are confirmed.  Pure-byte data, images (`.bpp`), and
-structured tables (C structs) are handled per pokeemerald's patterns
-rather than force-fitted into strings.  `tools/text_tool.py audit` flags
-converted chunks whose content is mostly control codes and may not be
-text.
+Assembly text uses `tools/preproc` and `charmap.txt` to reproduce the
+original game encoding. C text uses `_` or `__` according to the
+object's actual terminator and padding bytes. Preserve JP control
+sequences and line/page breaks; use the corresponding US text and
+callers to select semantic names, never to replace JP bytes blindly.
+Editable graphics use PNG/palette/tilemap inputs and the existing
+`gbagfx`/`INCGFX` build chain.
 
-Generator/analysis tools under `tools/`:
+Conversion requires both confirmed ownership and byte equality.
+Unproven ranges stay explicit; do not turn arbitrary binary data
+into strings merely because it can round-trip. The old monolithic
+data source and its one-shot mutation tools have been retired.
+See [DECOMP_PROGRESS.md](DECOMP_PROGRESS.md) for current coverage and
+remaining raw ranges; an existing file does not prove semantic review.
 
-* `generate_script_cmd_table.py`, `generate_specials.py`,
-  `generate_mystery_event_cmd_table.py` - regenerate the tables above
-* `analyze_chunks.py` - classify every chunk in `data/event_scripts.s`
-* `split_script_region.py` - split raw chunks at pointer-table targets and
-  convert the pointer tables to symbolic references
-* `text_tool.py` - decode/encode JP text via `charmap.txt` and convert
-  text chunks to `.string`
-* `decompile_scripts.py` - decode event-script bytes to `.inc` text using
-  the JP command table and event.inc macro formats
+Current JP verification tools under `tools/` include:
+
+* `jp_script_text.py` - decode JP text and verify it through the real
+  preprocessor; unknown controls fail instead of being guessed.
+  `python3 tools/jp_script_text.py selftest` exercises the codec.
+* `audit_script_text_sources.py` - audit explicit text objects throughout
+  the recursive EventScript include chain against linked symbols and
+  the JP ROM.
+* `audit_special_table.py` - check Special-table ownership, names and
+  remaining migration evidence.
+* `map_semantic_review.py` - validate recorded map-review evidence.
+* `audit_structure.py` - report source structure, linker owners,
+  references and conversion progress.
+* `decompile_scripts.py` - decode event-script bytes using the JP command
+  table and event macros; review generated results before integration.
 
 Set up the build environment and see the skip-already-installed flow in
 [INSTALL.md](INSTALL.md).  If you are contributing decompilation work,

@@ -56,7 +56,7 @@ struct FallAnim_Fossil
 
 #define TAG_CEILING_CRUMBLE 4000
 
-// JP sMirageTower_Gfx is 0x920 bytes (73 tiles); the tables are in data/data.s
+// JP sMirageTower_Gfx is 0x920 bytes (73 tiles).
 // so their sizes cannot be taken with sizeof.
 #define MIRAGE_TOWER_GFX_LENGTH 2336
 #define FOSSIL_GFX_LENGTH 0x80
