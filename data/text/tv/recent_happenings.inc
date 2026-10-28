@@ -47,35 +47,35 @@ gTVRecentHappeningsText00::
 	.string "その　ものがたりを　すこしでも\l"
 	.string "しょうかい　できたら　うれしいですね\p"
 	.string "さて　きょうは　トレーナーの\n"
-	.string "{B_COPY_VAR_1}さんの　おはなしです\p"
-	.string "{B_COPY_VAR_1}さん　さいきん\n"
+	.string "{STR_VAR_1}さんの　おはなしです\p"
+	.string "{STR_VAR_1}さん　さいきん\n"
 	.string "どんなことが　あったんで　しょうか？\l"
 	.string "さっそく　みてみることに　しましょう\p"
 	.string "えーと⋯⋯$"
 
 gTVRecentHappeningsText01::
-	.string "なるほど　{B_COPY_VAR_1}さんの\n"
+	.string "なるほど　{STR_VAR_1}さんの\n"
 	.string "まわりで　さいきん　おきている　ことが\l"
 	.string "てに　とるように　わかりますね$"
 
 gTVRecentHappeningsText02::
-	.string "‘{B_COPY_VAR_3}'という　ことばが\n"
+	.string "‘{STR_VAR_3}'という　ことばが\n"
 	.string "おはなしに　ストーリーを　かんじさせますね$"
 
 gTVRecentHappeningsText03::
-	.string "‘{B_COPY_VAR_3}'という　ことばの\n"
+	.string "‘{STR_VAR_3}'という　ことばの\n"
 	.string "おかげで　まるで　じょうけいが\l"
 	.string "うかんで　くるようですね$"
 
 gTVRecentHappeningsText04::
-	.string "このおはなしは　‘{B_COPY_VAR_3}'という\n"
+	.string "このおはなしは　‘{STR_VAR_3}'という\n"
 	.string "ぶぶんが　とても　いんしょうてき　ですね$"
 
 gTVRecentHappeningsText05::
-	.string "{B_COPY_VAR_1}さんは　とても　いい\n"
+	.string "{STR_VAR_1}さんは　とても　いい\n"
 	.string "おはなしを　きかせて　くれましたね\p"
 	.string "これで　あなたの　こころにも\n"
-	.string "{B_COPY_VAR_1}さん　という　ストーリーが\l"
+	.string "{STR_VAR_1}さん　という　ストーリーが\l"
 	.string "きざみ　こまれましたよ\p"
 	.string "それでは　また　じかいの\n"
 	.string "ほうそうで　おあいしましょう$"

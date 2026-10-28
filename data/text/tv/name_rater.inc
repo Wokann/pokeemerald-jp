@@ -6,8 +6,8 @@ gTVNameRaterText00::
 	.string "うらなって　さしあげます\p"
 	.string "すこしでも　アドバイスに\n"
 	.string "なれば　よいと　おもいますな\p"
-	.string "きょうは　{B_COPY_VAR_1}さんの　ポケモン\n"
-	.string "{B_COPY_VAR_2}の　‘{B_COPY_VAR_3}'の\l"
+	.string "きょうは　{STR_VAR_1}さんの　ポケモン\n"
+	.string "{STR_VAR_2}の　‘{STR_VAR_3}'の\l"
 	.string "ニックネームを　うらなって　みますかな\p"
 	.string "ふむふむ⋯⋯\p"
 	.string "うーむ\n"
@@ -20,7 +20,7 @@ gTVNameRaterText01::
 	.string "チャレンジ　すると　よいと　おもいますよ$"
 
 gTVNameRaterText02::
-	.string "{B_COPY_VAR_1}さん　との　あいしょうが\n"
+	.string "{STR_VAR_1}さん　との　あいしょうが\n"
 	.string "とても　よい　ニックネーム　ですなぁ！\p"
 	.string "いきの　ぴったり　あった\n"
 	.string "よい　コンビに　なると　おもいますよ$"
@@ -62,59 +62,59 @@ gTVNameRaterText08::
 	.string "とても　かつやく　できると　おもいますよ$"
 
 gTVNameRaterText09::
-	.string "この　‘{B_COPY_VAR_1}'という　ニックネームは\n"
-	.string "‘{B_COPY_VAR_3}'の　もじを　ちゅうしん　として\l"
-	.string "これに　‘{B_COPY_VAR_2}'が　つくことで\p"
+	.string "この　‘{STR_VAR_1}'という　ニックネームは\n"
+	.string "‘{STR_VAR_3}'の　もじを　ちゅうしん　として\l"
+	.string "これに　‘{STR_VAR_2}'が　つくことで\p"
 	.string "どっしり　とした\n"
 	.string "よい　ニックネームに　なっていますな$"
 
 gTVNameRaterText10::
-	.string "この　‘{B_COPY_VAR_1}'という　ニックネームは\n"
+	.string "この　‘{STR_VAR_1}'という　ニックネームは\n"
 	.string "とても　かたちの　よい\l"
 	.string "ニックネーム　ですなぁ\p"
-	.string "ニックネームに　‘{B_COPY_VAR_2}'と　‘{B_COPY_VAR_3}'が\n"
+	.string "ニックネームに　‘{STR_VAR_2}'と　‘{STR_VAR_3}'が\n"
 	.string "はいって　いるのが　とても　よい！$"
 
 gTVNameRaterText11::
-	.string "この　‘{B_COPY_VAR_1}'という　ニックネームは\n"
+	.string "この　‘{STR_VAR_1}'という　ニックネームは\n"
 	.string "とても　ながれの　よい\l"
 	.string "ニックネーム　ですなぁ\p"
-	.string "‘{B_COPY_VAR_2}'の　もじの　あとに\n"
-	.string "‘{B_COPY_VAR_3}'がくる　ながれが　とても　よい！$"
+	.string "‘{STR_VAR_2}'の　もじの　あとに\n"
+	.string "‘{STR_VAR_3}'がくる　ながれが　とても　よい！$"
 
 gTVNameRaterText12::
 	.string "⋯⋯さて　そのほかに\n"
 	.string "よい　ニックネームの　れい　として$"
 
 gTVNameRaterText13::
-	.string "トレーナーの　{B_COPY_VAR_1}さんの\n"
+	.string "トレーナーの　{STR_VAR_1}さんの\n"
 	.string "なまえを　もってきて\p"
-	.string "‘{B_COPY_VAR_2}{B_COPY_VAR_3}'と　いうのも\n"
+	.string "‘{STR_VAR_2}{STR_VAR_3}'と　いうのも\n"
 	.string "とても　よい　ニックネーム　ですなぁ$"
 
 gTVNameRaterText14::
-	.string "もしくは　‘{B_COPY_VAR_2}{B_COPY_VAR_3}'と\n"
+	.string "もしくは　‘{STR_VAR_2}{STR_VAR_3}'と\n"
 	.string "いうのも　よい　ニックネーム　ですな$"
 
 gTVNameRaterText15::
 	.string "もとの　ポケモンの　なまえ\n"
-	.string "{B_COPY_VAR_2}から　すこし　もらって\p"
-	.string "‘{B_COPY_VAR_1}{B_COPY_VAR_3}'や$"
+	.string "{STR_VAR_2}から　すこし　もらって\p"
+	.string "‘{STR_VAR_1}{STR_VAR_3}'や$"
 
 gTVNameRaterText16::
-	.string "‘{B_COPY_VAR_1}{B_COPY_VAR_3}'と　いうのも\n"
+	.string "‘{STR_VAR_1}{STR_VAR_3}'と　いうのも\n"
 	.string "よい　ニックネーム　ですなぁ$"
 
 gTVNameRaterText17::
 	.string "まちがっても　ほかの　ポケモンの　なまえ\n"
-	.string "たとえば　{B_COPY_VAR_2}の　なまえを　つけて\p"
-	.string "‘{B_COPY_VAR_1}{B_COPY_VAR_3}'の　ような\n"
+	.string "たとえば　{STR_VAR_2}の　なまえを　つけて\p"
+	.string "‘{STR_VAR_1}{STR_VAR_3}'の　ような\n"
 	.string "ニックネームに　しては　いけませんな$"
 
 gTVNameRaterText18::
-	.string "うむ　それにしても　‘{B_COPY_VAR_1}'は\n"
+	.string "うむ　それにしても　‘{STR_VAR_1}'は\n"
 	.string "なかなか　よい　ニックネーム　ですな\p"
-	.string "これからも　‘{B_COPY_VAR_1}'の　ことを\n"
+	.string "これからも　‘{STR_VAR_1}'の　ことを\n"
 	.string "たいせつに　して　ほしい　ものですなぁ\p"
 	.string "それでは　また\n"
 	.string "ごえんが　あれば$"

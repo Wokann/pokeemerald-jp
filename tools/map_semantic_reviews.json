@@ -405,7 +405,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -3908,7 +3908,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -12971,7 +12971,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -16144,7 +16144,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -19027,7 +19027,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -22235,7 +22235,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -24774,7 +24774,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -27533,7 +27533,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -30675,7 +30675,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -33533,7 +33533,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -35935,7 +35935,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -37963,7 +37963,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -40394,7 +40394,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -42851,7 +42851,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -45663,7 +45663,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -48092,7 +48092,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -52433,7 +52433,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -60373,7 +60373,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -72996,7 +72996,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -88495,7 +88495,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -103554,7 +103554,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -115387,7 +115387,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -123541,7 +123541,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -130909,7 +130909,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -138477,7 +138477,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -145737,7 +145737,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -150901,7 +150901,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -160443,7 +160443,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -170219,7 +170219,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -179757,7 +179757,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -188830,7 +188830,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -199071,7 +199071,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -211116,7 +211116,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -222226,7 +222226,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -233078,7 +233078,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -244356,47 +244356,47 @@
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial",
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer",
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer2",
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_Text_HowStrongRateTrainer",
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo",
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_Text_ThatsWhatYouThink",
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer",
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer2",
           "kind": "string"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "entry": "LilycoveCity_PokemonTrainerFanClub_Text_YouShouldMeetTrainer",
           "kind": "string"
         },
@@ -245534,7 +245534,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -246924,7 +246924,7 @@
         {
           "path": "tools/test_map_review_lilycove_interiors.py",
           "selector": "file",
-          "sha256": "16b151e4552b88e0e282c7d927b6abe482aeedc751e4bfadb9d096fa48409016"
+          "sha256": "885afadf2b20f4aab490c91e5576f9c03fc86d28763e96851188746670937e18"
         },
         {
           "path": "tools/test_map_review_script_profile.py",
@@ -252931,7 +252931,7 @@
           "sha256": "9aeaa9670d464cddc55bc471ce43e4047e0e0e73ecb793b4bff492a94e42d641"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial"
@@ -252939,7 +252939,7 @@
           "sha256": "751b51004ca7b5e011e0f48354760d9f3a708192211e77381c7ace9c889df45d"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer"
@@ -252947,7 +252947,7 @@
           "sha256": "95d0cc0aa4df7f06f2901dfa7a10b0562c988214a8dec9dfb0ac7c079400c76d"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer2"
@@ -252955,7 +252955,7 @@
           "sha256": "b92134f46489c48638bb4af73754fe690e576ed9560ee7b89a86657f31336fae"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_Text_HowStrongRateTrainer"
@@ -252963,7 +252963,7 @@
           "sha256": "01af673ab944b0cd54c419c55bdc9faddb8a47adf4b878a6d47e3ad2b8246aa3"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo"
@@ -252971,7 +252971,7 @@
           "sha256": "43a6b1e7a603e91b30087665e69594ad47c1ad11d0fd93595e82e44e7c043595"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_Text_ThatsWhatYouThink"
@@ -252979,7 +252979,7 @@
           "sha256": "86be3493775bed70d6fed7c5002a30e316c1db798b957f58af839e34b5e07966"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer"
@@ -252987,7 +252987,7 @@
           "sha256": "a749b8c3cb767a426f6b0b7bb6d361b2ba312b3b3fdcb1a41bf6ba2daa5e2b73"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer2"
@@ -252995,7 +252995,7 @@
           "sha256": "a6b8e0912a1c42b16d5105e3874c731e9582f3307ca2553607ff61c9778e477f"
         },
         {
-          "path": "data/text/tv/trainer_fan_club.inc",
+          "path": "data/text/tv/trainer_fan_club_special.inc",
           "selector": "asm_labels",
           "labels": [
             "LilycoveCity_PokemonTrainerFanClub_Text_YouShouldMeetTrainer"
@@ -263384,7 +263384,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -274650,7 +274650,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -284892,7 +284892,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -293609,7 +293609,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -299188,7 +299188,7 @@
             "data/text/tv/recent_happenings.inc",
             "data/text/tv/mass_outbreak.inc",
             "data/text/tv/three_cheers_for_pokeblocks.inc",
-            "data/text/tv/trainer_fan_club.inc",
+            "data/text/tv/trainer_fan_club_special.inc",
             "data/text/tv/name_rater.inc",
             "data/text/tv/pokemon_angler.inc",
             "data/text/tv/pokemon_today.inc",
@@ -299202,7 +299202,7 @@
             "data/text/tv/secret_base_visit.inc",
             "data/text/tv/pokemon_lottery.inc",
             "data/text/tv/pokemon_battle_seminar.inc",
-            "data/text/tv/trainer_fan_club_special.inc",
+            "data/text/tv/trainer_fan_club.inc",
             "data/text/tv/spot_the_cuties.inc",
             "data/text/tv/battle_frontier_news.inc",
             "data/text/tv/whats_no1_in_hoenn_today.inc",
@@ -299888,7 +299888,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -302735,7 +302735,7 @@
         {
           "path": "data/text/tv/battle_tower_broadcast.inc",
           "selector": "file",
-          "sha256": "5811b25d5612a4d9389771c7f4f861a43fb195053100321d85c9bfbe466c6c30"
+          "sha256": "47340ed50d4bb700ae7c812beffe98e2889d88fbe5b599c703177fd1a1722673"
         },
         {
           "path": "data/text/tv/breaking_news.inc",
@@ -302745,7 +302745,7 @@
         {
           "path": "data/text/tv/contest_interview.inc",
           "selector": "file",
-          "sha256": "ed2cfdbbb049e84f492f8426121356d305de2d71008532df3ca1c1bdcecd8f8f"
+          "sha256": "7845a72471177127c39307135eabfd453ed69f415e5ca4a4593877e7c5ad92e3"
         },
         {
           "path": "data/text/tv/contest_lady_show.inc",
@@ -302780,17 +302780,17 @@
         {
           "path": "data/text/tv/mass_outbreak.inc",
           "selector": "file",
-          "sha256": "03cdadb8e2f95f5b1447159f7f968fe781ff7f1b5cbbf7f5c2c566c272de0845"
+          "sha256": "4e0bb9d54826df6a919b337e420bd241de9a54b814631de2943280646d88feaa"
         },
         {
           "path": "data/text/tv/name_rater.inc",
           "selector": "file",
-          "sha256": "660dfb469da521502aad5906a49a20c5447996acb6a12963352979796df0eb11"
+          "sha256": "f2db2379e5125d351d80681a41ef4516a59ea01747bba32a8ef62a52b2152068"
         },
         {
           "path": "data/text/tv/pokemon_angler.inc",
           "selector": "file",
-          "sha256": "507bd5ce4ee0b8897d2e08992948ed427fe19c2f9a8dfc04f7f5f1f97daefa58"
+          "sha256": "69aefc1bce0d9e4ee49a8338da7d41a6d7d4ed204811e5f7ae95d3c6904d4767"
         },
         {
           "path": "data/text/tv/pokemon_battle_seminar.inc",
@@ -302805,7 +302805,7 @@
         {
           "path": "data/text/tv/pokemon_fan_club.inc",
           "selector": "file",
-          "sha256": "b7f1b24bdad295f454a4229298b703e66cf65a89a297babb6b1e342fcc7f8a14"
+          "sha256": "dfbd2b0acd6a0cc9d765deb225fcf39a2ea5ae7c4182628ae1ca0b47b5541fe8"
         },
         {
           "path": "data/text/tv/pokemon_lottery.inc",
@@ -302820,12 +302820,12 @@
         {
           "path": "data/text/tv/pokemon_today.inc",
           "selector": "file",
-          "sha256": "6c51e0b0326b0a70f95d36dbecec097751609570163bce22f77ca260f0620c52"
+          "sha256": "8d188ee16dacf8f62736205f7b57abc6934d123f93951d8f08ce73abe1b80798"
         },
         {
           "path": "data/text/tv/recent_happenings.inc",
           "selector": "file",
-          "sha256": "b2d343e13ae03e62455f8bf0aea82a4877be7cea84617ee80a860557c462cd98"
+          "sha256": "4d81309145f7f9ee82b39eaf95613bd77cef720411e97b99719520909fcc50fb"
         },
         {
           "path": "data/text/tv/safari_fan_club.inc",
@@ -302845,7 +302845,7 @@
         {
           "path": "data/text/tv/smart_shopper.inc",
           "selector": "file",
-          "sha256": "c7becfac648bf6a978afe06f24ed759c85e2b22a52322da2136c8b0f9a31b129"
+          "sha256": "72ac3d443ab3ea74fbe42ff486e556d323afbd8fdaf59daff3d23e24f385c610"
         },
         {
           "path": "data/text/tv/spot_the_cuties.inc",
@@ -302855,20 +302855,20 @@
         {
           "path": "data/text/tv/three_cheers_for_pokeblocks.inc",
           "selector": "file",
-          "sha256": "718da767eff376c2e11fed4e7660420ee4295f9f785a41337f4a025cf28a9fd2"
+          "sha256": "877559493e54cea97fd5f3ac5989667b199683a91024720079a47bc9bac4b9df"
         },
         {
           "path": "data/text/tv/todays_rival_trainer.inc",
           "selector": "file",
-          "sha256": "be3ca19844764bc7682e48cd85aca55bf150784125e70e15341eba6824e75c57"
-        },
-        {
-          "path": "data/text/tv/trainer_fan_club.inc",
-          "selector": "file",
-          "sha256": "d8df082577b7f50d5e1f7922902f22981c1d1bbe6462939b5399b1cf1f06c7a5"
+          "sha256": "9153cda3ed7f10429e716c1382b5f5eae91f048e3a68949205763eb1617eb14e"
         },
         {
           "path": "data/text/tv/trainer_fan_club_special.inc",
+          "selector": "file",
+          "sha256": "655e852ebb626daf5e1c632408ae47339cfb3e6387500eecfe7c72bcd9a9fe74"
+        },
+        {
+          "path": "data/text/tv/trainer_fan_club.inc",
           "selector": "file",
           "sha256": "d8545d2a857b1568cba92d2665c70fc94fc1261c28b1e306b53ff4d834b04eca"
         },
@@ -302885,7 +302885,7 @@
         {
           "path": "data/text/tv/world_of_masters.inc",
           "selector": "file",
-          "sha256": "69938e7995545285a40685bc8825fc6ba4da32327c1298972efa5d636800cddc"
+          "sha256": "9f82cd94f862733404aab481e2f8b80a091a98c35b0c55f2f10a61eb59793f8d"
         },
         {
           "path": "data/event_scripts.s",
@@ -302893,7 +302893,7 @@
           "labels": [
             "Common_EventScript_LegendaryFlewAway"
           ],
-          "sha256": "7eab5cb8a6399566983fd8471da0b28822be477be1ff4fe0191109f2b9a39e9f"
+          "sha256": "f459549acd2c79540f6c243439d85fb1823600fc390b8b256506517e9de386aa"
         },
         {
           "path": "data/event_scripts.s",
@@ -306221,7 +306221,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -312033,7 +312033,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -318355,7 +318355,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -324272,7 +324272,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -328553,7 +328553,7 @@
             "data/text/tv/recent_happenings.inc",
             "data/text/tv/mass_outbreak.inc",
             "data/text/tv/three_cheers_for_pokeblocks.inc",
-            "data/text/tv/trainer_fan_club.inc",
+            "data/text/tv/trainer_fan_club_special.inc",
             "data/text/tv/name_rater.inc",
             "data/text/tv/pokemon_angler.inc",
             "data/text/tv/pokemon_today.inc",
@@ -328567,7 +328567,7 @@
             "data/text/tv/secret_base_visit.inc",
             "data/text/tv/pokemon_lottery.inc",
             "data/text/tv/pokemon_battle_seminar.inc",
-            "data/text/tv/trainer_fan_club_special.inc",
+            "data/text/tv/trainer_fan_club.inc",
             "data/text/tv/spot_the_cuties.inc",
             "data/text/tv/battle_frontier_news.inc",
             "data/text/tv/whats_no1_in_hoenn_today.inc",
@@ -329286,7 +329286,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -329661,7 +329661,7 @@
         {
           "path": "data/text/tv/battle_tower_broadcast.inc",
           "selector": "file",
-          "sha256": "5811b25d5612a4d9389771c7f4f861a43fb195053100321d85c9bfbe466c6c30"
+          "sha256": "47340ed50d4bb700ae7c812beffe98e2889d88fbe5b599c703177fd1a1722673"
         },
         {
           "path": "data/text/tv/breaking_news.inc",
@@ -329671,7 +329671,7 @@
         {
           "path": "data/text/tv/contest_interview.inc",
           "selector": "file",
-          "sha256": "ed2cfdbbb049e84f492f8426121356d305de2d71008532df3ca1c1bdcecd8f8f"
+          "sha256": "7845a72471177127c39307135eabfd453ed69f415e5ca4a4593877e7c5ad92e3"
         },
         {
           "path": "data/text/tv/contest_lady_show.inc",
@@ -329706,17 +329706,17 @@
         {
           "path": "data/text/tv/mass_outbreak.inc",
           "selector": "file",
-          "sha256": "03cdadb8e2f95f5b1447159f7f968fe781ff7f1b5cbbf7f5c2c566c272de0845"
+          "sha256": "4e0bb9d54826df6a919b337e420bd241de9a54b814631de2943280646d88feaa"
         },
         {
           "path": "data/text/tv/name_rater.inc",
           "selector": "file",
-          "sha256": "660dfb469da521502aad5906a49a20c5447996acb6a12963352979796df0eb11"
+          "sha256": "f2db2379e5125d351d80681a41ef4516a59ea01747bba32a8ef62a52b2152068"
         },
         {
           "path": "data/text/tv/pokemon_angler.inc",
           "selector": "file",
-          "sha256": "507bd5ce4ee0b8897d2e08992948ed427fe19c2f9a8dfc04f7f5f1f97daefa58"
+          "sha256": "69aefc1bce0d9e4ee49a8338da7d41a6d7d4ed204811e5f7ae95d3c6904d4767"
         },
         {
           "path": "data/text/tv/pokemon_battle_seminar.inc",
@@ -329731,7 +329731,7 @@
         {
           "path": "data/text/tv/pokemon_fan_club.inc",
           "selector": "file",
-          "sha256": "b7f1b24bdad295f454a4229298b703e66cf65a89a297babb6b1e342fcc7f8a14"
+          "sha256": "dfbd2b0acd6a0cc9d765deb225fcf39a2ea5ae7c4182628ae1ca0b47b5541fe8"
         },
         {
           "path": "data/text/tv/pokemon_lottery.inc",
@@ -329746,12 +329746,12 @@
         {
           "path": "data/text/tv/pokemon_today.inc",
           "selector": "file",
-          "sha256": "6c51e0b0326b0a70f95d36dbecec097751609570163bce22f77ca260f0620c52"
+          "sha256": "8d188ee16dacf8f62736205f7b57abc6934d123f93951d8f08ce73abe1b80798"
         },
         {
           "path": "data/text/tv/recent_happenings.inc",
           "selector": "file",
-          "sha256": "b2d343e13ae03e62455f8bf0aea82a4877be7cea84617ee80a860557c462cd98"
+          "sha256": "4d81309145f7f9ee82b39eaf95613bd77cef720411e97b99719520909fcc50fb"
         },
         {
           "path": "data/text/tv/safari_fan_club.inc",
@@ -329771,7 +329771,7 @@
         {
           "path": "data/text/tv/smart_shopper.inc",
           "selector": "file",
-          "sha256": "c7becfac648bf6a978afe06f24ed759c85e2b22a52322da2136c8b0f9a31b129"
+          "sha256": "72ac3d443ab3ea74fbe42ff486e556d323afbd8fdaf59daff3d23e24f385c610"
         },
         {
           "path": "data/text/tv/spot_the_cuties.inc",
@@ -329781,20 +329781,20 @@
         {
           "path": "data/text/tv/three_cheers_for_pokeblocks.inc",
           "selector": "file",
-          "sha256": "718da767eff376c2e11fed4e7660420ee4295f9f785a41337f4a025cf28a9fd2"
+          "sha256": "877559493e54cea97fd5f3ac5989667b199683a91024720079a47bc9bac4b9df"
         },
         {
           "path": "data/text/tv/todays_rival_trainer.inc",
           "selector": "file",
-          "sha256": "be3ca19844764bc7682e48cd85aca55bf150784125e70e15341eba6824e75c57"
-        },
-        {
-          "path": "data/text/tv/trainer_fan_club.inc",
-          "selector": "file",
-          "sha256": "d8df082577b7f50d5e1f7922902f22981c1d1bbe6462939b5399b1cf1f06c7a5"
+          "sha256": "9153cda3ed7f10429e716c1382b5f5eae91f048e3a68949205763eb1617eb14e"
         },
         {
           "path": "data/text/tv/trainer_fan_club_special.inc",
+          "selector": "file",
+          "sha256": "655e852ebb626daf5e1c632408ae47339cfb3e6387500eecfe7c72bcd9a9fe74"
+        },
+        {
+          "path": "data/text/tv/trainer_fan_club.inc",
           "selector": "file",
           "sha256": "d8545d2a857b1568cba92d2665c70fc94fc1261c28b1e306b53ff4d834b04eca"
         },
@@ -329811,7 +329811,7 @@
         {
           "path": "data/text/tv/world_of_masters.inc",
           "selector": "file",
-          "sha256": "69938e7995545285a40685bc8825fc6ba4da32327c1298972efa5d636800cddc"
+          "sha256": "9f82cd94f862733404aab481e2f8b80a091a98c35b0c55f2f10a61eb59793f8d"
         },
         {
           "path": "include/AgbRfu_LinkManager.h",
@@ -331169,7 +331169,7 @@
           "labels": [
             "Common_EventScript_LegendaryFlewAway"
           ],
-          "sha256": "7eab5cb8a6399566983fd8471da0b28822be477be1ff4fe0191109f2b9a39e9f"
+          "sha256": "f459549acd2c79540f6c243439d85fb1823600fc390b8b256506517e9de386aa"
         },
         {
           "path": "data/event_scripts.s",
@@ -335650,7 +335650,7 @@
             "data/text/tv/recent_happenings.inc",
             "data/text/tv/mass_outbreak.inc",
             "data/text/tv/three_cheers_for_pokeblocks.inc",
-            "data/text/tv/trainer_fan_club.inc",
+            "data/text/tv/trainer_fan_club_special.inc",
             "data/text/tv/name_rater.inc",
             "data/text/tv/pokemon_angler.inc",
             "data/text/tv/pokemon_today.inc",
@@ -335664,7 +335664,7 @@
             "data/text/tv/secret_base_visit.inc",
             "data/text/tv/pokemon_lottery.inc",
             "data/text/tv/pokemon_battle_seminar.inc",
-            "data/text/tv/trainer_fan_club_special.inc",
+            "data/text/tv/trainer_fan_club.inc",
             "data/text/tv/spot_the_cuties.inc",
             "data/text/tv/battle_frontier_news.inc",
             "data/text/tv/whats_no1_in_hoenn_today.inc",
@@ -336345,7 +336345,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -340263,7 +340263,7 @@
         {
           "path": "data/text/tv/battle_tower_broadcast.inc",
           "selector": "file",
-          "sha256": "5811b25d5612a4d9389771c7f4f861a43fb195053100321d85c9bfbe466c6c30"
+          "sha256": "47340ed50d4bb700ae7c812beffe98e2889d88fbe5b599c703177fd1a1722673"
         },
         {
           "path": "data/text/tv/breaking_news.inc",
@@ -340273,7 +340273,7 @@
         {
           "path": "data/text/tv/contest_interview.inc",
           "selector": "file",
-          "sha256": "ed2cfdbbb049e84f492f8426121356d305de2d71008532df3ca1c1bdcecd8f8f"
+          "sha256": "7845a72471177127c39307135eabfd453ed69f415e5ca4a4593877e7c5ad92e3"
         },
         {
           "path": "data/text/tv/contest_lady_show.inc",
@@ -340308,17 +340308,17 @@
         {
           "path": "data/text/tv/mass_outbreak.inc",
           "selector": "file",
-          "sha256": "03cdadb8e2f95f5b1447159f7f968fe781ff7f1b5cbbf7f5c2c566c272de0845"
+          "sha256": "4e0bb9d54826df6a919b337e420bd241de9a54b814631de2943280646d88feaa"
         },
         {
           "path": "data/text/tv/name_rater.inc",
           "selector": "file",
-          "sha256": "660dfb469da521502aad5906a49a20c5447996acb6a12963352979796df0eb11"
+          "sha256": "f2db2379e5125d351d80681a41ef4516a59ea01747bba32a8ef62a52b2152068"
         },
         {
           "path": "data/text/tv/pokemon_angler.inc",
           "selector": "file",
-          "sha256": "507bd5ce4ee0b8897d2e08992948ed427fe19c2f9a8dfc04f7f5f1f97daefa58"
+          "sha256": "69aefc1bce0d9e4ee49a8338da7d41a6d7d4ed204811e5f7ae95d3c6904d4767"
         },
         {
           "path": "data/text/tv/pokemon_battle_seminar.inc",
@@ -340333,7 +340333,7 @@
         {
           "path": "data/text/tv/pokemon_fan_club.inc",
           "selector": "file",
-          "sha256": "b7f1b24bdad295f454a4229298b703e66cf65a89a297babb6b1e342fcc7f8a14"
+          "sha256": "dfbd2b0acd6a0cc9d765deb225fcf39a2ea5ae7c4182628ae1ca0b47b5541fe8"
         },
         {
           "path": "data/text/tv/pokemon_lottery.inc",
@@ -340348,12 +340348,12 @@
         {
           "path": "data/text/tv/pokemon_today.inc",
           "selector": "file",
-          "sha256": "6c51e0b0326b0a70f95d36dbecec097751609570163bce22f77ca260f0620c52"
+          "sha256": "8d188ee16dacf8f62736205f7b57abc6934d123f93951d8f08ce73abe1b80798"
         },
         {
           "path": "data/text/tv/recent_happenings.inc",
           "selector": "file",
-          "sha256": "b2d343e13ae03e62455f8bf0aea82a4877be7cea84617ee80a860557c462cd98"
+          "sha256": "4d81309145f7f9ee82b39eaf95613bd77cef720411e97b99719520909fcc50fb"
         },
         {
           "path": "data/text/tv/safari_fan_club.inc",
@@ -340373,7 +340373,7 @@
         {
           "path": "data/text/tv/smart_shopper.inc",
           "selector": "file",
-          "sha256": "c7becfac648bf6a978afe06f24ed759c85e2b22a52322da2136c8b0f9a31b129"
+          "sha256": "72ac3d443ab3ea74fbe42ff486e556d323afbd8fdaf59daff3d23e24f385c610"
         },
         {
           "path": "data/text/tv/spot_the_cuties.inc",
@@ -340383,20 +340383,20 @@
         {
           "path": "data/text/tv/three_cheers_for_pokeblocks.inc",
           "selector": "file",
-          "sha256": "718da767eff376c2e11fed4e7660420ee4295f9f785a41337f4a025cf28a9fd2"
+          "sha256": "877559493e54cea97fd5f3ac5989667b199683a91024720079a47bc9bac4b9df"
         },
         {
           "path": "data/text/tv/todays_rival_trainer.inc",
           "selector": "file",
-          "sha256": "be3ca19844764bc7682e48cd85aca55bf150784125e70e15341eba6824e75c57"
-        },
-        {
-          "path": "data/text/tv/trainer_fan_club.inc",
-          "selector": "file",
-          "sha256": "d8df082577b7f50d5e1f7922902f22981c1d1bbe6462939b5399b1cf1f06c7a5"
+          "sha256": "9153cda3ed7f10429e716c1382b5f5eae91f048e3a68949205763eb1617eb14e"
         },
         {
           "path": "data/text/tv/trainer_fan_club_special.inc",
+          "selector": "file",
+          "sha256": "655e852ebb626daf5e1c632408ae47339cfb3e6387500eecfe7c72bcd9a9fe74"
+        },
+        {
+          "path": "data/text/tv/trainer_fan_club.inc",
           "selector": "file",
           "sha256": "d8545d2a857b1568cba92d2665c70fc94fc1261c28b1e306b53ff4d834b04eca"
         },
@@ -340413,7 +340413,7 @@
         {
           "path": "data/text/tv/world_of_masters.inc",
           "selector": "file",
-          "sha256": "69938e7995545285a40685bc8825fc6ba4da32327c1298972efa5d636800cddc"
+          "sha256": "9f82cd94f862733404aab481e2f8b80a091a98c35b0c55f2f10a61eb59793f8d"
         },
         {
           "path": "data/event_scripts.s",
@@ -340421,7 +340421,7 @@
           "labels": [
             "Common_EventScript_LegendaryFlewAway"
           ],
-          "sha256": "7eab5cb8a6399566983fd8471da0b28822be477be1ff4fe0191109f2b9a39e9f"
+          "sha256": "f459549acd2c79540f6c243439d85fb1823600fc390b8b256506517e9de386aa"
         },
         {
           "path": "data/event_scripts.s",
@@ -344499,7 +344499,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -351626,7 +351626,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -355738,7 +355738,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -359597,7 +359597,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -364116,7 +364116,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -368610,7 +368610,7 @@
             "data/text/tv/recent_happenings.inc",
             "data/text/tv/mass_outbreak.inc",
             "data/text/tv/three_cheers_for_pokeblocks.inc",
-            "data/text/tv/trainer_fan_club.inc",
+            "data/text/tv/trainer_fan_club_special.inc",
             "data/text/tv/name_rater.inc",
             "data/text/tv/pokemon_angler.inc",
             "data/text/tv/pokemon_today.inc",
@@ -368624,7 +368624,7 @@
             "data/text/tv/secret_base_visit.inc",
             "data/text/tv/pokemon_lottery.inc",
             "data/text/tv/pokemon_battle_seminar.inc",
-            "data/text/tv/trainer_fan_club_special.inc",
+            "data/text/tv/trainer_fan_club.inc",
             "data/text/tv/spot_the_cuties.inc",
             "data/text/tv/battle_frontier_news.inc",
             "data/text/tv/whats_no1_in_hoenn_today.inc",
@@ -368971,7 +368971,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -371583,7 +371583,7 @@
         {
           "path": "data/text/tv/battle_tower_broadcast.inc",
           "selector": "file",
-          "sha256": "5811b25d5612a4d9389771c7f4f861a43fb195053100321d85c9bfbe466c6c30"
+          "sha256": "47340ed50d4bb700ae7c812beffe98e2889d88fbe5b599c703177fd1a1722673"
         },
         {
           "path": "data/text/tv/breaking_news.inc",
@@ -371593,7 +371593,7 @@
         {
           "path": "data/text/tv/contest_interview.inc",
           "selector": "file",
-          "sha256": "ed2cfdbbb049e84f492f8426121356d305de2d71008532df3ca1c1bdcecd8f8f"
+          "sha256": "7845a72471177127c39307135eabfd453ed69f415e5ca4a4593877e7c5ad92e3"
         },
         {
           "path": "data/text/tv/contest_lady_show.inc",
@@ -371628,17 +371628,17 @@
         {
           "path": "data/text/tv/mass_outbreak.inc",
           "selector": "file",
-          "sha256": "03cdadb8e2f95f5b1447159f7f968fe781ff7f1b5cbbf7f5c2c566c272de0845"
+          "sha256": "4e0bb9d54826df6a919b337e420bd241de9a54b814631de2943280646d88feaa"
         },
         {
           "path": "data/text/tv/name_rater.inc",
           "selector": "file",
-          "sha256": "660dfb469da521502aad5906a49a20c5447996acb6a12963352979796df0eb11"
+          "sha256": "f2db2379e5125d351d80681a41ef4516a59ea01747bba32a8ef62a52b2152068"
         },
         {
           "path": "data/text/tv/pokemon_angler.inc",
           "selector": "file",
-          "sha256": "507bd5ce4ee0b8897d2e08992948ed427fe19c2f9a8dfc04f7f5f1f97daefa58"
+          "sha256": "69aefc1bce0d9e4ee49a8338da7d41a6d7d4ed204811e5f7ae95d3c6904d4767"
         },
         {
           "path": "data/text/tv/pokemon_battle_seminar.inc",
@@ -371653,7 +371653,7 @@
         {
           "path": "data/text/tv/pokemon_fan_club.inc",
           "selector": "file",
-          "sha256": "b7f1b24bdad295f454a4229298b703e66cf65a89a297babb6b1e342fcc7f8a14"
+          "sha256": "dfbd2b0acd6a0cc9d765deb225fcf39a2ea5ae7c4182628ae1ca0b47b5541fe8"
         },
         {
           "path": "data/text/tv/pokemon_lottery.inc",
@@ -371668,12 +371668,12 @@
         {
           "path": "data/text/tv/pokemon_today.inc",
           "selector": "file",
-          "sha256": "6c51e0b0326b0a70f95d36dbecec097751609570163bce22f77ca260f0620c52"
+          "sha256": "8d188ee16dacf8f62736205f7b57abc6934d123f93951d8f08ce73abe1b80798"
         },
         {
           "path": "data/text/tv/recent_happenings.inc",
           "selector": "file",
-          "sha256": "b2d343e13ae03e62455f8bf0aea82a4877be7cea84617ee80a860557c462cd98"
+          "sha256": "4d81309145f7f9ee82b39eaf95613bd77cef720411e97b99719520909fcc50fb"
         },
         {
           "path": "data/text/tv/safari_fan_club.inc",
@@ -371693,7 +371693,7 @@
         {
           "path": "data/text/tv/smart_shopper.inc",
           "selector": "file",
-          "sha256": "c7becfac648bf6a978afe06f24ed759c85e2b22a52322da2136c8b0f9a31b129"
+          "sha256": "72ac3d443ab3ea74fbe42ff486e556d323afbd8fdaf59daff3d23e24f385c610"
         },
         {
           "path": "data/text/tv/spot_the_cuties.inc",
@@ -371703,20 +371703,20 @@
         {
           "path": "data/text/tv/three_cheers_for_pokeblocks.inc",
           "selector": "file",
-          "sha256": "718da767eff376c2e11fed4e7660420ee4295f9f785a41337f4a025cf28a9fd2"
+          "sha256": "877559493e54cea97fd5f3ac5989667b199683a91024720079a47bc9bac4b9df"
         },
         {
           "path": "data/text/tv/todays_rival_trainer.inc",
           "selector": "file",
-          "sha256": "be3ca19844764bc7682e48cd85aca55bf150784125e70e15341eba6824e75c57"
-        },
-        {
-          "path": "data/text/tv/trainer_fan_club.inc",
-          "selector": "file",
-          "sha256": "d8df082577b7f50d5e1f7922902f22981c1d1bbe6462939b5399b1cf1f06c7a5"
+          "sha256": "9153cda3ed7f10429e716c1382b5f5eae91f048e3a68949205763eb1617eb14e"
         },
         {
           "path": "data/text/tv/trainer_fan_club_special.inc",
+          "selector": "file",
+          "sha256": "655e852ebb626daf5e1c632408ae47339cfb3e6387500eecfe7c72bcd9a9fe74"
+        },
+        {
+          "path": "data/text/tv/trainer_fan_club.inc",
           "selector": "file",
           "sha256": "d8545d2a857b1568cba92d2665c70fc94fc1261c28b1e306b53ff4d834b04eca"
         },
@@ -371733,7 +371733,7 @@
         {
           "path": "data/text/tv/world_of_masters.inc",
           "selector": "file",
-          "sha256": "69938e7995545285a40685bc8825fc6ba4da32327c1298972efa5d636800cddc"
+          "sha256": "9f82cd94f862733404aab481e2f8b80a091a98c35b0c55f2f10a61eb59793f8d"
         },
         {
           "path": "data/event_scripts.s",
@@ -371741,7 +371741,7 @@
           "labels": [
             "Common_EventScript_LegendaryFlewAway"
           ],
-          "sha256": "7eab5cb8a6399566983fd8471da0b28822be477be1ff4fe0191109f2b9a39e9f"
+          "sha256": "f459549acd2c79540f6c243439d85fb1823600fc390b8b256506517e9de386aa"
         },
         {
           "path": "data/event_scripts.s",
@@ -372695,7 +372695,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -376660,7 +376660,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -380373,7 +380373,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -383915,7 +383915,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -387555,7 +387555,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -391437,7 +391437,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -394868,7 +394868,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -398466,7 +398466,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -404265,7 +404265,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -412311,7 +412311,7 @@
             "data/text/tv/recent_happenings.inc",
             "data/text/tv/mass_outbreak.inc",
             "data/text/tv/three_cheers_for_pokeblocks.inc",
-            "data/text/tv/trainer_fan_club.inc",
+            "data/text/tv/trainer_fan_club_special.inc",
             "data/text/tv/name_rater.inc",
             "data/text/tv/pokemon_angler.inc",
             "data/text/tv/pokemon_today.inc",
@@ -412325,7 +412325,7 @@
             "data/text/tv/secret_base_visit.inc",
             "data/text/tv/pokemon_lottery.inc",
             "data/text/tv/pokemon_battle_seminar.inc",
-            "data/text/tv/trainer_fan_club_special.inc",
+            "data/text/tv/trainer_fan_club.inc",
             "data/text/tv/spot_the_cuties.inc",
             "data/text/tv/battle_frontier_news.inc",
             "data/text/tv/whats_no1_in_hoenn_today.inc",
@@ -412686,7 +412686,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -415620,7 +415620,7 @@
         {
           "path": "data/text/tv/battle_tower_broadcast.inc",
           "selector": "file",
-          "sha256": "5811b25d5612a4d9389771c7f4f861a43fb195053100321d85c9bfbe466c6c30"
+          "sha256": "47340ed50d4bb700ae7c812beffe98e2889d88fbe5b599c703177fd1a1722673"
         },
         {
           "path": "data/text/tv/breaking_news.inc",
@@ -415630,7 +415630,7 @@
         {
           "path": "data/text/tv/contest_interview.inc",
           "selector": "file",
-          "sha256": "ed2cfdbbb049e84f492f8426121356d305de2d71008532df3ca1c1bdcecd8f8f"
+          "sha256": "7845a72471177127c39307135eabfd453ed69f415e5ca4a4593877e7c5ad92e3"
         },
         {
           "path": "data/text/tv/contest_lady_show.inc",
@@ -415665,17 +415665,17 @@
         {
           "path": "data/text/tv/mass_outbreak.inc",
           "selector": "file",
-          "sha256": "03cdadb8e2f95f5b1447159f7f968fe781ff7f1b5cbbf7f5c2c566c272de0845"
+          "sha256": "4e0bb9d54826df6a919b337e420bd241de9a54b814631de2943280646d88feaa"
         },
         {
           "path": "data/text/tv/name_rater.inc",
           "selector": "file",
-          "sha256": "660dfb469da521502aad5906a49a20c5447996acb6a12963352979796df0eb11"
+          "sha256": "f2db2379e5125d351d80681a41ef4516a59ea01747bba32a8ef62a52b2152068"
         },
         {
           "path": "data/text/tv/pokemon_angler.inc",
           "selector": "file",
-          "sha256": "507bd5ce4ee0b8897d2e08992948ed427fe19c2f9a8dfc04f7f5f1f97daefa58"
+          "sha256": "69aefc1bce0d9e4ee49a8338da7d41a6d7d4ed204811e5f7ae95d3c6904d4767"
         },
         {
           "path": "data/text/tv/pokemon_battle_seminar.inc",
@@ -415690,7 +415690,7 @@
         {
           "path": "data/text/tv/pokemon_fan_club.inc",
           "selector": "file",
-          "sha256": "b7f1b24bdad295f454a4229298b703e66cf65a89a297babb6b1e342fcc7f8a14"
+          "sha256": "dfbd2b0acd6a0cc9d765deb225fcf39a2ea5ae7c4182628ae1ca0b47b5541fe8"
         },
         {
           "path": "data/text/tv/pokemon_lottery.inc",
@@ -415705,12 +415705,12 @@
         {
           "path": "data/text/tv/pokemon_today.inc",
           "selector": "file",
-          "sha256": "6c51e0b0326b0a70f95d36dbecec097751609570163bce22f77ca260f0620c52"
+          "sha256": "8d188ee16dacf8f62736205f7b57abc6934d123f93951d8f08ce73abe1b80798"
         },
         {
           "path": "data/text/tv/recent_happenings.inc",
           "selector": "file",
-          "sha256": "b2d343e13ae03e62455f8bf0aea82a4877be7cea84617ee80a860557c462cd98"
+          "sha256": "4d81309145f7f9ee82b39eaf95613bd77cef720411e97b99719520909fcc50fb"
         },
         {
           "path": "data/text/tv/safari_fan_club.inc",
@@ -415730,7 +415730,7 @@
         {
           "path": "data/text/tv/smart_shopper.inc",
           "selector": "file",
-          "sha256": "c7becfac648bf6a978afe06f24ed759c85e2b22a52322da2136c8b0f9a31b129"
+          "sha256": "72ac3d443ab3ea74fbe42ff486e556d323afbd8fdaf59daff3d23e24f385c610"
         },
         {
           "path": "data/text/tv/spot_the_cuties.inc",
@@ -415740,20 +415740,20 @@
         {
           "path": "data/text/tv/three_cheers_for_pokeblocks.inc",
           "selector": "file",
-          "sha256": "718da767eff376c2e11fed4e7660420ee4295f9f785a41337f4a025cf28a9fd2"
+          "sha256": "877559493e54cea97fd5f3ac5989667b199683a91024720079a47bc9bac4b9df"
         },
         {
           "path": "data/text/tv/todays_rival_trainer.inc",
           "selector": "file",
-          "sha256": "be3ca19844764bc7682e48cd85aca55bf150784125e70e15341eba6824e75c57"
-        },
-        {
-          "path": "data/text/tv/trainer_fan_club.inc",
-          "selector": "file",
-          "sha256": "d8df082577b7f50d5e1f7922902f22981c1d1bbe6462939b5399b1cf1f06c7a5"
+          "sha256": "9153cda3ed7f10429e716c1382b5f5eae91f048e3a68949205763eb1617eb14e"
         },
         {
           "path": "data/text/tv/trainer_fan_club_special.inc",
+          "selector": "file",
+          "sha256": "655e852ebb626daf5e1c632408ae47339cfb3e6387500eecfe7c72bcd9a9fe74"
+        },
+        {
+          "path": "data/text/tv/trainer_fan_club.inc",
           "selector": "file",
           "sha256": "d8545d2a857b1568cba92d2665c70fc94fc1261c28b1e306b53ff4d834b04eca"
         },
@@ -415770,7 +415770,7 @@
         {
           "path": "data/text/tv/world_of_masters.inc",
           "selector": "file",
-          "sha256": "69938e7995545285a40685bc8825fc6ba4da32327c1298972efa5d636800cddc"
+          "sha256": "9f82cd94f862733404aab481e2f8b80a091a98c35b0c55f2f10a61eb59793f8d"
         },
         {
           "path": "data/event_scripts.s",
@@ -415778,7 +415778,7 @@
           "labels": [
             "Common_EventScript_LegendaryFlewAway"
           ],
-          "sha256": "7eab5cb8a6399566983fd8471da0b28822be477be1ff4fe0191109f2b9a39e9f"
+          "sha256": "f459549acd2c79540f6c243439d85fb1823600fc390b8b256506517e9de386aa"
         },
         {
           "path": "data/event_scripts.s",
@@ -416201,7 +416201,7 @@
             "data/text/tv/recent_happenings.inc",
             "data/text/tv/mass_outbreak.inc",
             "data/text/tv/three_cheers_for_pokeblocks.inc",
-            "data/text/tv/trainer_fan_club.inc",
+            "data/text/tv/trainer_fan_club_special.inc",
             "data/text/tv/name_rater.inc",
             "data/text/tv/pokemon_angler.inc",
             "data/text/tv/pokemon_today.inc",
@@ -416215,7 +416215,7 @@
             "data/text/tv/secret_base_visit.inc",
             "data/text/tv/pokemon_lottery.inc",
             "data/text/tv/pokemon_battle_seminar.inc",
-            "data/text/tv/trainer_fan_club_special.inc",
+            "data/text/tv/trainer_fan_club.inc",
             "data/text/tv/spot_the_cuties.inc",
             "data/text/tv/battle_frontier_news.inc",
             "data/text/tv/whats_no1_in_hoenn_today.inc",
@@ -416622,7 +416622,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/field_effect_scripts.s",
@@ -416997,7 +416997,7 @@
         {
           "path": "data/text/tv/battle_tower_broadcast.inc",
           "selector": "file",
-          "sha256": "5811b25d5612a4d9389771c7f4f861a43fb195053100321d85c9bfbe466c6c30"
+          "sha256": "47340ed50d4bb700ae7c812beffe98e2889d88fbe5b599c703177fd1a1722673"
         },
         {
           "path": "data/text/tv/breaking_news.inc",
@@ -417007,7 +417007,7 @@
         {
           "path": "data/text/tv/contest_interview.inc",
           "selector": "file",
-          "sha256": "ed2cfdbbb049e84f492f8426121356d305de2d71008532df3ca1c1bdcecd8f8f"
+          "sha256": "7845a72471177127c39307135eabfd453ed69f415e5ca4a4593877e7c5ad92e3"
         },
         {
           "path": "data/text/tv/contest_lady_show.inc",
@@ -417042,17 +417042,17 @@
         {
           "path": "data/text/tv/mass_outbreak.inc",
           "selector": "file",
-          "sha256": "03cdadb8e2f95f5b1447159f7f968fe781ff7f1b5cbbf7f5c2c566c272de0845"
+          "sha256": "4e0bb9d54826df6a919b337e420bd241de9a54b814631de2943280646d88feaa"
         },
         {
           "path": "data/text/tv/name_rater.inc",
           "selector": "file",
-          "sha256": "660dfb469da521502aad5906a49a20c5447996acb6a12963352979796df0eb11"
+          "sha256": "f2db2379e5125d351d80681a41ef4516a59ea01747bba32a8ef62a52b2152068"
         },
         {
           "path": "data/text/tv/pokemon_angler.inc",
           "selector": "file",
-          "sha256": "507bd5ce4ee0b8897d2e08992948ed427fe19c2f9a8dfc04f7f5f1f97daefa58"
+          "sha256": "69aefc1bce0d9e4ee49a8338da7d41a6d7d4ed204811e5f7ae95d3c6904d4767"
         },
         {
           "path": "data/text/tv/pokemon_battle_seminar.inc",
@@ -417067,7 +417067,7 @@
         {
           "path": "data/text/tv/pokemon_fan_club.inc",
           "selector": "file",
-          "sha256": "b7f1b24bdad295f454a4229298b703e66cf65a89a297babb6b1e342fcc7f8a14"
+          "sha256": "dfbd2b0acd6a0cc9d765deb225fcf39a2ea5ae7c4182628ae1ca0b47b5541fe8"
         },
         {
           "path": "data/text/tv/pokemon_lottery.inc",
@@ -417082,12 +417082,12 @@
         {
           "path": "data/text/tv/pokemon_today.inc",
           "selector": "file",
-          "sha256": "6c51e0b0326b0a70f95d36dbecec097751609570163bce22f77ca260f0620c52"
+          "sha256": "8d188ee16dacf8f62736205f7b57abc6934d123f93951d8f08ce73abe1b80798"
         },
         {
           "path": "data/text/tv/recent_happenings.inc",
           "selector": "file",
-          "sha256": "b2d343e13ae03e62455f8bf0aea82a4877be7cea84617ee80a860557c462cd98"
+          "sha256": "4d81309145f7f9ee82b39eaf95613bd77cef720411e97b99719520909fcc50fb"
         },
         {
           "path": "data/text/tv/safari_fan_club.inc",
@@ -417107,7 +417107,7 @@
         {
           "path": "data/text/tv/smart_shopper.inc",
           "selector": "file",
-          "sha256": "c7becfac648bf6a978afe06f24ed759c85e2b22a52322da2136c8b0f9a31b129"
+          "sha256": "72ac3d443ab3ea74fbe42ff486e556d323afbd8fdaf59daff3d23e24f385c610"
         },
         {
           "path": "data/text/tv/spot_the_cuties.inc",
@@ -417117,20 +417117,20 @@
         {
           "path": "data/text/tv/three_cheers_for_pokeblocks.inc",
           "selector": "file",
-          "sha256": "718da767eff376c2e11fed4e7660420ee4295f9f785a41337f4a025cf28a9fd2"
+          "sha256": "877559493e54cea97fd5f3ac5989667b199683a91024720079a47bc9bac4b9df"
         },
         {
           "path": "data/text/tv/todays_rival_trainer.inc",
           "selector": "file",
-          "sha256": "be3ca19844764bc7682e48cd85aca55bf150784125e70e15341eba6824e75c57"
-        },
-        {
-          "path": "data/text/tv/trainer_fan_club.inc",
-          "selector": "file",
-          "sha256": "d8df082577b7f50d5e1f7922902f22981c1d1bbe6462939b5399b1cf1f06c7a5"
+          "sha256": "9153cda3ed7f10429e716c1382b5f5eae91f048e3a68949205763eb1617eb14e"
         },
         {
           "path": "data/text/tv/trainer_fan_club_special.inc",
+          "selector": "file",
+          "sha256": "655e852ebb626daf5e1c632408ae47339cfb3e6387500eecfe7c72bcd9a9fe74"
+        },
+        {
+          "path": "data/text/tv/trainer_fan_club.inc",
           "selector": "file",
           "sha256": "d8545d2a857b1568cba92d2665c70fc94fc1261c28b1e306b53ff4d834b04eca"
         },
@@ -417147,7 +417147,7 @@
         {
           "path": "data/text/tv/world_of_masters.inc",
           "selector": "file",
-          "sha256": "69938e7995545285a40685bc8825fc6ba4da32327c1298972efa5d636800cddc"
+          "sha256": "9f82cd94f862733404aab481e2f8b80a091a98c35b0c55f2f10a61eb59793f8d"
         },
         {
           "path": "include/AgbRfu_LinkManager.h",
@@ -418540,7 +418540,7 @@
           "labels": [
             "Common_EventScript_LegendaryFlewAway"
           ],
-          "sha256": "7eab5cb8a6399566983fd8471da0b28822be477be1ff4fe0191109f2b9a39e9f"
+          "sha256": "f459549acd2c79540f6c243439d85fb1823600fc390b8b256506517e9de386aa"
         },
         {
           "path": "data/event_scripts.s",
@@ -420586,7 +420586,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -424156,7 +424156,7 @@
             "data/text/tv/recent_happenings.inc",
             "data/text/tv/mass_outbreak.inc",
             "data/text/tv/three_cheers_for_pokeblocks.inc",
-            "data/text/tv/trainer_fan_club.inc",
+            "data/text/tv/trainer_fan_club_special.inc",
             "data/text/tv/name_rater.inc",
             "data/text/tv/pokemon_angler.inc",
             "data/text/tv/pokemon_today.inc",
@@ -424170,7 +424170,7 @@
             "data/text/tv/secret_base_visit.inc",
             "data/text/tv/pokemon_lottery.inc",
             "data/text/tv/pokemon_battle_seminar.inc",
-            "data/text/tv/trainer_fan_club_special.inc",
+            "data/text/tv/trainer_fan_club.inc",
             "data/text/tv/spot_the_cuties.inc",
             "data/text/tv/battle_frontier_news.inc",
             "data/text/tv/whats_no1_in_hoenn_today.inc",
@@ -424621,7 +424621,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -427395,7 +427395,7 @@
         {
           "path": "data/text/tv/battle_tower_broadcast.inc",
           "selector": "file",
-          "sha256": "5811b25d5612a4d9389771c7f4f861a43fb195053100321d85c9bfbe466c6c30"
+          "sha256": "47340ed50d4bb700ae7c812beffe98e2889d88fbe5b599c703177fd1a1722673"
         },
         {
           "path": "data/text/tv/breaking_news.inc",
@@ -427405,7 +427405,7 @@
         {
           "path": "data/text/tv/contest_interview.inc",
           "selector": "file",
-          "sha256": "ed2cfdbbb049e84f492f8426121356d305de2d71008532df3ca1c1bdcecd8f8f"
+          "sha256": "7845a72471177127c39307135eabfd453ed69f415e5ca4a4593877e7c5ad92e3"
         },
         {
           "path": "data/text/tv/contest_lady_show.inc",
@@ -427440,17 +427440,17 @@
         {
           "path": "data/text/tv/mass_outbreak.inc",
           "selector": "file",
-          "sha256": "03cdadb8e2f95f5b1447159f7f968fe781ff7f1b5cbbf7f5c2c566c272de0845"
+          "sha256": "4e0bb9d54826df6a919b337e420bd241de9a54b814631de2943280646d88feaa"
         },
         {
           "path": "data/text/tv/name_rater.inc",
           "selector": "file",
-          "sha256": "660dfb469da521502aad5906a49a20c5447996acb6a12963352979796df0eb11"
+          "sha256": "f2db2379e5125d351d80681a41ef4516a59ea01747bba32a8ef62a52b2152068"
         },
         {
           "path": "data/text/tv/pokemon_angler.inc",
           "selector": "file",
-          "sha256": "507bd5ce4ee0b8897d2e08992948ed427fe19c2f9a8dfc04f7f5f1f97daefa58"
+          "sha256": "69aefc1bce0d9e4ee49a8338da7d41a6d7d4ed204811e5f7ae95d3c6904d4767"
         },
         {
           "path": "data/text/tv/pokemon_battle_seminar.inc",
@@ -427465,7 +427465,7 @@
         {
           "path": "data/text/tv/pokemon_fan_club.inc",
           "selector": "file",
-          "sha256": "b7f1b24bdad295f454a4229298b703e66cf65a89a297babb6b1e342fcc7f8a14"
+          "sha256": "dfbd2b0acd6a0cc9d765deb225fcf39a2ea5ae7c4182628ae1ca0b47b5541fe8"
         },
         {
           "path": "data/text/tv/pokemon_lottery.inc",
@@ -427480,12 +427480,12 @@
         {
           "path": "data/text/tv/pokemon_today.inc",
           "selector": "file",
-          "sha256": "6c51e0b0326b0a70f95d36dbecec097751609570163bce22f77ca260f0620c52"
+          "sha256": "8d188ee16dacf8f62736205f7b57abc6934d123f93951d8f08ce73abe1b80798"
         },
         {
           "path": "data/text/tv/recent_happenings.inc",
           "selector": "file",
-          "sha256": "b2d343e13ae03e62455f8bf0aea82a4877be7cea84617ee80a860557c462cd98"
+          "sha256": "4d81309145f7f9ee82b39eaf95613bd77cef720411e97b99719520909fcc50fb"
         },
         {
           "path": "data/text/tv/safari_fan_club.inc",
@@ -427505,7 +427505,7 @@
         {
           "path": "data/text/tv/smart_shopper.inc",
           "selector": "file",
-          "sha256": "c7becfac648bf6a978afe06f24ed759c85e2b22a52322da2136c8b0f9a31b129"
+          "sha256": "72ac3d443ab3ea74fbe42ff486e556d323afbd8fdaf59daff3d23e24f385c610"
         },
         {
           "path": "data/text/tv/spot_the_cuties.inc",
@@ -427515,20 +427515,20 @@
         {
           "path": "data/text/tv/three_cheers_for_pokeblocks.inc",
           "selector": "file",
-          "sha256": "718da767eff376c2e11fed4e7660420ee4295f9f785a41337f4a025cf28a9fd2"
+          "sha256": "877559493e54cea97fd5f3ac5989667b199683a91024720079a47bc9bac4b9df"
         },
         {
           "path": "data/text/tv/todays_rival_trainer.inc",
           "selector": "file",
-          "sha256": "be3ca19844764bc7682e48cd85aca55bf150784125e70e15341eba6824e75c57"
-        },
-        {
-          "path": "data/text/tv/trainer_fan_club.inc",
-          "selector": "file",
-          "sha256": "d8df082577b7f50d5e1f7922902f22981c1d1bbe6462939b5399b1cf1f06c7a5"
+          "sha256": "9153cda3ed7f10429e716c1382b5f5eae91f048e3a68949205763eb1617eb14e"
         },
         {
           "path": "data/text/tv/trainer_fan_club_special.inc",
+          "selector": "file",
+          "sha256": "655e852ebb626daf5e1c632408ae47339cfb3e6387500eecfe7c72bcd9a9fe74"
+        },
+        {
+          "path": "data/text/tv/trainer_fan_club.inc",
           "selector": "file",
           "sha256": "d8545d2a857b1568cba92d2665c70fc94fc1261c28b1e306b53ff4d834b04eca"
         },
@@ -427545,7 +427545,7 @@
         {
           "path": "data/text/tv/world_of_masters.inc",
           "selector": "file",
-          "sha256": "69938e7995545285a40685bc8825fc6ba4da32327c1298972efa5d636800cddc"
+          "sha256": "9f82cd94f862733404aab481e2f8b80a091a98c35b0c55f2f10a61eb59793f8d"
         },
         {
           "path": "src/tv.c",
@@ -427558,7 +427558,7 @@
           "labels": [
             "Common_EventScript_LegendaryFlewAway"
           ],
-          "sha256": "7eab5cb8a6399566983fd8471da0b28822be477be1ff4fe0191109f2b9a39e9f"
+          "sha256": "f459549acd2c79540f6c243439d85fb1823600fc390b8b256506517e9de386aa"
         },
         {
           "path": "data/event_scripts.s",
@@ -430035,7 +430035,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -432042,7 +432042,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -434769,7 +434769,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -438177,7 +438177,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -443043,7 +443043,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -445351,7 +445351,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -447962,7 +447962,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -450776,7 +450776,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -453420,7 +453420,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -455579,7 +455579,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -461241,7 +461241,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -469172,7 +469172,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",
@@ -475269,7 +475269,7 @@
         {
           "path": "data/event_scripts.s",
           "selector": "file",
-          "sha256": "04153e5971b4e3881dadd25c964444d8856924182b6bfab7422e79c0e61b23c1"
+          "sha256": "40a01308560b51c777656b547a39d3a75cf183cf1fbb1d1e5e2a92fad6ccd3d3"
         },
         {
           "path": "data/layouts/layouts.json",

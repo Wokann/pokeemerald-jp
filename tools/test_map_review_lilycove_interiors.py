@@ -384,7 +384,7 @@ class LilycoveNativeTests(unittest.TestCase):
     def test_reviewed_interview_placeholder_names_change_no_bytes(self):
         count,uses = 0,0
         for path,prefix,slot in [('data/text/tv/contest_interview.inc','LilycoveCity_ContestLobby_',2),
-                                 ('data/text/tv/trainer_fan_club.inc','LilycoveCity_PokemonTrainerFanClub_',1)]:
+                                 ('data/text/tv/trainer_fan_club_special.inc','LilycoveCity_PokemonTrainerFanClub_',1)]:
             for label,block in blocks(path).items():
                 if not label.startswith(prefix) or '{STR_VAR_'+str(slot)+'}' not in block:
                     continue
