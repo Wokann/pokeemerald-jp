@@ -46,6 +46,24 @@ BUILD_NAME ?= pokeemerald-jp
 OBJ_DIR := build/$(BUILD_NAME)
 JP_GRAPHICS_GFX_ROOT := $(OBJ_DIR)/incgfx/
 
+JP_BERRY_BLENDER_CACHE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/center.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/unused.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/center.png.8bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/center.png.8bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer.png.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer_map.bin.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/misc.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/arrow.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/arrow_old.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/score_symbols.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/particles.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/countdown_numbers.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/start.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/arrow.png.4bpp
+$(foreach target,$(JP_BERRY_BLENDER_CACHE_TARGETS),$(eval $(target) := defined))
+
 JP_EVOLUTION_SCENE_ASSETS := $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_1.pal.gbapal \
     $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg.png.4bpp.lz \
     $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_inner.bin.lz \
@@ -1684,7 +1702,7 @@ $(C_BUILDDIR)/sound_check.o: src/sound_check.c src/data/sound_check.h charmap.tx
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/sound_check.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/sound_check.gen.s
 
-$(C_BUILDDIR)/berry_blender.o: src/berry_blender.c charmap.txt
+$(C_BUILDDIR)/berry_blender.o: src/berry_blender.c charmap.txt Makefile
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry_blender.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/berry_blender.gen.s | $(AS) $(ASFLAGS) -o $@ -
@@ -1805,11 +1823,6 @@ $(C_BUILDDIR)/trade.o: src/trade.c src/data/trade.h Makefile charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/trade.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/trade.gen.s
 
-$(C_BUILDDIR)/data/berry_blender.o: src/data/berry_blender.c src/data/berry_blender.h $(wildcard graphics/berry_blender/jp/*)
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/berry_blender.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/berry_blender.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/berry_blender.gen.s
 
 $(C_BUILDDIR)/start_menu.o: src/start_menu.c src/data/start_menu.h $(wildcard data/start_menu/jp/*)
 	@mkdir -p $(dir $@)
@@ -7353,5 +7366,71 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.4bpp: graphics/misc/evo_spa
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.4bpp | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+# Generate the complete Berry Blender source family in the build cache.
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/center.png.gbapal: graphics/berry_blender/center.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer.png.gbapal: graphics/berry_blender/outer.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/unused.pal.gbapal: graphics/berry_blender/unused.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/center.png.8bpp: graphics/berry_blender/center.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/center.png.8bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/center.png.8bpp | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer.png.4bpp: graphics/berry_blender/outer.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer.png.4bpp | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/outer_map.bin.lz: graphics/berry_blender/outer_map.bin | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/misc.pal.gbapal: graphics/berry_blender/misc.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/arrow.png.gbapal: graphics/berry_blender/arrow.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/arrow_old.png.4bpp: graphics/berry_blender/arrow_old.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/score_symbols.png.4bpp: graphics/berry_blender/score_symbols.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/particles.png.4bpp: graphics/berry_blender/particles.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/countdown_numbers.png.4bpp: graphics/berry_blender/countdown_numbers.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/start.png.4bpp: graphics/berry_blender/start.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/berry_blender/arrow.png.4bpp: graphics/berry_blender/arrow.png | tools
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@

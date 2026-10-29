@@ -1058,13 +1058,11 @@ ENEMY_SHADOW_GRAPHICS const u32 gEnemyMonShadow_Gfx[] = INCGFX_U32("graphics/bat
 
 #undef ENEMY_SHADOW_GRAPHICS
 
-#define BERRY_BLENDER_BACKGROUND_GRAPHICS __attribute__((section(".rodata.berry_blender_background_graphics"), aligned(1)))
 
-BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderCenter_Gfx[] = INCGFX_U32("graphics/berry_blender/center.png", ".8bpp.lz");
-BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderOuter_Gfx[] = INCGFX_U32("graphics/berry_blender/outer.png", ".4bpp.lz");
-BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderOuter_Tilemap[] = INCGFX_U32("graphics/berry_blender/outer_map.bin", ".lz");
 
-#undef BERRY_BLENDER_BACKGROUND_GRAPHICS
+
+
+
 
 // The JP ROM interleaves these Easy Chat cursor assets with data that remains
 // unclassified. Dedicated linker sections retain that physical order.
@@ -1979,3 +1977,20 @@ const u16 gTradeGba_Pal[] TRADE_DATA(gTradeGba_Pal) = INCGFX_U16("graphics/trade
 const u16 gTradeGba2_Pal[] TRADE_DATA(gTradeGba2_Pal) = INCGFX_U16("graphics/trade/gba_pal2.pal", ".gbapal");
 const u8 gTradeGba_Gfx[] TRADE_DATA(gTradeGba_Gfx) = INCGFX_U8("graphics/trade/gba.png", ".4bpp");
 static const u16 sEmptyPal[16] TRADE_DATA(sEmptyPal) = {0};
+
+#define BB_DATA(name) __attribute__((section(".rodata.blender." #name), aligned(1)))
+const u16 gBerryBlenderMiscPalette[] BB_DATA(gBerryBlenderMiscPalette) = INCGFX_U16("graphics/berry_blender/misc.pal", ".gbapal");
+const u16 gBerryBlenderArrowPalette[] BB_DATA(gBerryBlenderArrowPalette) = INCGFX_U16("graphics/berry_blender/arrow.png", ".gbapal");
+const u8 gBerryBlenderBetaArrow_Gfx[] BB_DATA(gBerryBlenderBetaArrow_Gfx) = INCGFX_U8("graphics/berry_blender/arrow_old.png", ".4bpp");
+const u8 gBerryBlenderScoreSymbols_Gfx[] BB_DATA(gBerryBlenderScoreSymbols_Gfx) = INCGFX_U8("graphics/berry_blender/score_symbols.png", ".4bpp");
+const u8 gBerryBlenderParticles_Gfx[] BB_DATA(gBerryBlenderParticles_Gfx) = INCGFX_U8("graphics/berry_blender/particles.png", ".4bpp");
+static const u8 sEmpty0[0x120] BB_DATA(sEmpty0) = {0};
+const u8 gBerryBlenderCountdownNumbers_Gfx[] BB_DATA(gBerryBlenderCountdownNumbers_Gfx) = INCGFX_U8("graphics/berry_blender/countdown_numbers.png", ".4bpp");
+const u8 gBerryBlenderStart_Gfx[] BB_DATA(gBerryBlenderStart_Gfx) = INCGFX_U8("graphics/berry_blender/start.png", ".4bpp");
+// JP retains a nonzero prefix in this unused data slot.
+static const u8 sUnusedBlenderData[0x200] BB_DATA(sUnusedBlenderData) = {0xDD, 0xCD, 0x0F, 0, 0xFF, 0xFF, 0x0F, 0, 0xEF};
+const u8 gBerryBlenderPlayerArrow_Gfx[] BB_DATA(gBerryBlenderPlayerArrow_Gfx) = INCGFX_U8("graphics/berry_blender/arrow.png", ".4bpp");
+static const u8 sEmpty2[0x2c0] BB_DATA(sEmpty2) = {0};
+const u32 gBerryBlenderCenter_Gfx[] BB_DATA(gBerryBlenderCenter_Gfx) = INCGFX_U32("graphics/berry_blender/center.png", ".8bpp.lz");
+const u32 gBerryBlenderOuter_Gfx[] BB_DATA(gBerryBlenderOuter_Gfx) = INCGFX_U32("graphics/berry_blender/outer.png", ".4bpp.lz");
+const u32 gBerryBlenderOuter_Tilemap[] BB_DATA(gBerryBlenderOuter_Tilemap) = INCGFX_U32("graphics/berry_blender/outer_map.bin", ".lz");

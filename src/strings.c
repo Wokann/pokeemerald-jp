@@ -2595,3 +2595,7 @@ STRINGS_LINK_COMM_ERROR const u8 gText_ABtnTitleScreen[] = _("Aボタンで　�
 
 #define TRADE_DATA(name) __attribute__((section(".rodata.trade." #name), aligned(1)))
 const u8 gText_TakeGoodCareOfX[] TRADE_DATA(gText_TakeGoodCareOfX) = _("{STR_VAR_3}を　かわいがって　あげてね！");
+
+#define BB_DATA(name) __attribute__((section(".rodata.blender." #name), aligned(1)))
+const u8 gText_BlenderMaxSpeedRecord[] BB_DATA(gText_BlenderMaxSpeedRecord) = _("きのみブレンダー\nさいこうそくど　ランキング！");
+const u8 gText_234Players[] BB_DATA(gText_234Players) = _("ふたり\nさんにん\nよにん");

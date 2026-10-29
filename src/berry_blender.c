@@ -1,112 +1,263 @@
 #include "global.h"
+#include "link.h"
+#include "bg.h"
+#include "sprite.h"
+#include "task.h"
+#include "graphics.h"
+#include "strings.h"
+#include "constants/items.h"
+
+enum {
+    SCORE_BEST,
+    SCORE_GOOD,
+    SCORE_MISS,
+    NUM_SCORE_TYPES,
+};
+enum {
+    PROXIMITY_MISS,
+    PROXIMITY_GOOD,
+    PROXIMITY_BEST,
+};
+enum {
+    SCOREANIM_GOOD,
+    SCOREANIM_MISS,
+    SCOREANIM_BEST_FLASH,
+    SCOREANIM_BEST_STATIC,
+};
+enum {
+    PLAY_AGAIN_YES,
+    PLAY_AGAIN_NO,
+    CANT_PLAY_NO_BERRIES,
+    CANT_PLAY_NO_PKBLCK_SPACE
+};
+enum {
+    BLENDER_MISTER,
+    BLENDER_LADDIE,
+    BLENDER_LASSIE,
+    BLENDER_MASTER,
+    BLENDER_DUDE,
+    BLENDER_MISS
+};
+#define BLENDER_MAX_PLAYERS MAX_LINK_PLAYERS
+#define NO_PLAYER 0xFF
+#define MAX_PROGRESS_BAR 1000
+#define MAX_ARROW_POS 0x10000 // By virtue of being u16
+#define MIN_ARROW_SPEED 0x80
+#define ARROW_FALL_ROTATION 0x5800 // The amount the arrow spins as it falls in at the start
+#define PROGRESS_BAR_FILLED_TOP    0x80E9
+#define PROGRESS_BAR_FILLED_BOTTOM 0x80F9
+#define PROGRESS_BAR_EMPTY_TOP     0x80E1
+#define PROGRESS_BAR_EMPTY_BOTTOM  0x80F1
+#define RPM_DIGIT 0x8072
+#define GFXTAG_COUNTDOWN_NUMBERS 12345
+#define GFXTAG_START             12346
+#define GFXTAG_PARTICLES         23456
+#define GFXTAG_PLAYER_ARROW      46545
+#define GFXTAG_SCORE_SYMBOLS     48888
+#define PALTAG_PLAYER_ARROW      12312
+#define PALTAG_MISC              46546
+#define NUM_NPC_BERRIES ITEM_TO_BERRY(ITEM_ASPEAR_BERRY)
+enum {
+    // Windows 0-3 are used implicitly in several loops over BLENDER_MAX_PLAYERS
+    // i.e. window 0 is for player 1, window 1 for player 2, etc.
+    WIN_MSG = BLENDER_MAX_PLAYERS,
+    WIN_RESULTS,
+};
+
+static const u16 sBlenderCenter_Pal[];
+static const u8 sBlenderCenter_Tilemap[];
+static const u16 sBlenderOuter_Pal[];
+static const u16 sUnused_Pal[];
+static const u16 sEmpty_Pal[16 * 14];
+static const u8 sUnusedText_YesNo[];
+static const u8 sUnusedText_2[];
+static const u8 sUnusedText_Space[];
+static const u8 sUnusedText_Terminating[];
+static const u8 sUnusedText_LinkPartnerNotFound[];
+static const u8 sText_BerryBlenderStart[];
+static const u8 sJPText_Cool[];
+static const u8 sJPText_Cute[];
+static const u8 sJPText_Beautiful[];
+static const u8 sJPText_Smart[];
+static const u8 sJPText_Tough[];
+static const u8 sText_NewParagraph[];
+static const u8 sText_WasMade[];
+static const u8 sJPText_LegacyName1[10];
+static const u8 sJPText_LegacyName2[10];
+static const u8 sJPText_LegacyName3[10];
+static const u8 sJPText_LegacyName4[10];
+static const u8 sJPText_PokLabel2[6];
+static const u8 sJPText_PokLabel3[6];
+static const u8 sJPText_PokLabel4[6];
+static const u8 sJPText_PlayerLabel1[4];
+static const u8 sJPText_PlayerLabel2[4];
+static const u8 sJPText_PlayerLabel3[4];
+static const u8 sJPText_PlayerLabel4[4];
+static const u8 sText_Mister[];
+static const u8 sText_Laddie[];
+static const u8 sText_Lassie[];
+static const u8 sText_Master[6];
+static const u8 sText_Dude[];
+static const u8 sText_Miss[];
+static const u8 sText_PressAToStart[];
+static const u8 sText_PleaseWaitAWhile[];
+static const u8 sText_CommunicationStandby[];
+static const u8 sText_WouldLikeToBlendAnotherBerry[];
+static const u8 sText_RunOutOfBerriesForBlending[];
+static const u8 sText_YourPokeblockCaseIsFull[];
+static const u8 sText_HasNoBerriesToPut[];
+static const u8 sText_ApostropheSPokeblockCaseIsFull[];
+static const u8 sText_BlendingResults[];
+static const u8 sText_BerryUsed[];
+static const u8 sText_SpaceBerry[];
+static const u8 sText_Time[];
+static const u8 sText_Min[];
+static const u8 sText_Sec[];
+static const u8 sText_MaximumSpeed[];
+static const u8 sText_RPM[];
+static const u8 sText_Dot[];
+static const u8 sText_NewLine[];
+static const u8 sText_Space[];
+static const u8 sText_Ranking[];
+static const u8 sText_TheLevelIs[];
+static const u8 sText_TheFeelIs[];
+static const u8 sText_Dot2[4];
+static const struct BgTemplate sBgTemplates[3];
+static const struct WindowTemplate sWindowTemplates[];
+static const struct WindowTemplate sYesNoWindowTemplate_ContinuePlaying;
+static const s8 sPlayerArrowQuadrant[BLENDER_MAX_PLAYERS][2];
+static const u8 sPlayerArrowPos[BLENDER_MAX_PLAYERS][2];
+static const u8 sPlayerIdMap[BLENDER_MAX_PLAYERS - 1][BLENDER_MAX_PLAYERS];
+static const u16 sArrowStartPos[];
+static const u8 sArrowStartPosIds[BLENDER_MAX_PLAYERS - 1];
+static const u8 sArrowHitRangeStart[BLENDER_MAX_PLAYERS];
+static const TaskFunc sLocalOpponentTasks[];
+static const struct OamData sOam_PlayerArrow;
+static const union AnimCmd sAnim_PlayerArrow_TopLeft[];
+static const union AnimCmd sAnim_PlayerArrow_TopRight[];
+static const union AnimCmd sAnim_PlayerArrow_BottomLeft[];
+static const union AnimCmd sAnim_PlayerArrow_BottomRight[];
+static const union AnimCmd sAnim_PlayerArrow_TopLeft_Flash[];
+static const union AnimCmd sAnim_PlayerArrow_TopRight_Flash[];
+static const union AnimCmd sAnim_PlayerArrow_BottomLeft_Flash[];
+static const union AnimCmd sAnim_PlayerArrow_BottomRight_Flash[];
+static const union AnimCmd sAnim_PlayerArrow_TopLeft_Off[];
+static const union AnimCmd sAnim_PlayerArrow_TopRight_Off[];
+static const union AnimCmd sAnim_PlayerArrow_BottomLeft_Off[];
+static const union AnimCmd sAnim_PlayerArrow_BottomRight_Off[];
+static const union AnimCmd *const sAnims_PlayerArrow[];
+static const struct SpriteSheet sSpriteSheet_PlayerArrow;
+static const struct SpritePalette sSpritePal_BlenderMisc;
+static const struct SpritePalette sSpritePal_PlayerArrow;
+static const struct SpriteTemplate sSpriteTemplate_PlayerArrow;
+static const struct OamData sOam_ScoreSymbols;
+static const union AnimCmd sAnim_ScoreSymbols_Good[];
+static const union AnimCmd sAnim_ScoreSymbols_Miss[];
+static const union AnimCmd sAnim_ScoreSymbols_BestFlash[];
+static const union AnimCmd sAnim_ScoreSymbols_BestStatic[];
+static const union AnimCmd *const sAnims_ScoreSymbols[];
+static const struct SpriteSheet sSpriteSheet_ScoreSymbols;
+static const struct SpriteTemplate sSpriteTemplate_ScoreSymbols;
+static const struct OamData sOam_Particles;
+static const union AnimCmd sAnim_SparkleCrossToX[];
+static const union AnimCmd sAnim_SparkleXToCross[];
+static const union AnimCmd sAnim_SparkleFull[];
+static const union AnimCmd sAnim_GreenArrow[];
+static const union AnimCmd sAnim_GreenDot[];
+static const union AnimCmd *const sAnims_Particles[];
+static const struct SpriteSheet sSpriteSheet_Particles;
+static const struct SpriteTemplate sSpriteTemplate_Particles;
+static const struct OamData sOam_CountdownNumbers;
+static const union AnimCmd sAnim_CountdownNumbers_3[];
+static const union AnimCmd sAnim_CountdownNumbers_2[];
+static const union AnimCmd sAnim_CountdownNumbers_1[];
+static const union AnimCmd *const sAnims_CountdownNumbers[];
+static const struct SpriteSheet sSpriteSheet_CountdownNumbers;
+static const struct SpriteTemplate sSpriteTemplate_CountdownNumbers;
+static const struct OamData sOam_Start;
+static const union AnimCmd sAnim_Start[];
+static const union AnimCmd *const sAnims_Start[];
+static const struct SpriteSheet sSpriteSheet_Start;
+static const struct SpriteTemplate sSpriteTemplate_Start;
+static const s16 sBerrySpriteData[][5];
+static const u8 sOpponentBerrySets[NUM_NPC_BERRIES * 2][3];
+static const u8 sBerryMasterBerries[];
+static const u8 sNumPlayersToSpeedDivisor[];
+static const u8 sBlackPokeblockFlavorFlags[];
+static const u8 sJPBlackPokeblockFlavorExtraData[];
+static const u8 sJPText_SavingDontTurnOffPower[];
+static const u8 sJPText_GoodTvReady[];
+static const u8 sJPText_BadTvReady[];
+static const u8 sJPText_Flavors[][5];
+static const u8 sUnused[];
+static const struct WindowTemplate sBlenderRecordWindowTemplate;
 #include "berry_blender.h"
 #include "constants/berry.h"
 #include "window.h"
 
-#define BERRY_BLENDER_BACKGROUND_DATA __attribute__((section(".rodata.berry_blender_background_data"), aligned(1)))
-
-static const u16 sBlenderCenter_Pal[] BERRY_BLENDER_BACKGROUND_DATA = INCGFX_U16("graphics/berry_blender/center.png", ".gbapal");
-static const u8 sBlenderCenter_Tilemap[] BERRY_BLENDER_BACKGROUND_DATA = INCBIN_U8("graphics/berry_blender/center_map.bin");
-static const u16 sBlenderOuter_Pal[] BERRY_BLENDER_BACKGROUND_DATA = INCGFX_U16("graphics/berry_blender/outer.png", ".gbapal");
-
-#undef BERRY_BLENDER_BACKGROUND_DATA
 
 
-#define BERRY_BLENDER_DATA __attribute__((section(".rodata.berry_blender_data")))
-#define BERRY_BLENDER_RECORD_WINDOW_DATA __attribute__((section(".rodata.berry_blender_record_window_data"), aligned(1)))
 
-#define BERRY_BLENDER_TEXT __attribute__((section(".rodata.berry_blender_text"), aligned(1), used))
-#define BERRY_BLENDER_AUXILIARY_DATA __attribute__((section(".rodata.berry_blender_auxiliary_data"), aligned(1), used))
 
-BERRY_BLENDER_TEXT static const u8 sText_BerryBlenderStart[] = _(
-    "きのみブレンダーを　きどうします\p"
-    "バッグから　きのみブレンダーに　いれる\n"
-    "きのみを　えらんでください\p");
-BERRY_BLENDER_TEXT static const u8 sJPText_Cool[] = _("カッコイ");
-BERRY_BLENDER_TEXT static const u8 sJPText_Cute[] = _("カワイイ");
-BERRY_BLENDER_TEXT static const u8 sJPText_Beautiful[] = _("ウツクシ");
-BERRY_BLENDER_TEXT static const u8 sJPText_Smart[] = _("カシコイ");
-BERRY_BLENDER_TEXT static const u8 sJPText_Tough[] = _("タクマシ");
-BERRY_BLENDER_TEXT static const u8 sText_NewParagraph[] = _("\p");
-BERRY_BLENDER_TEXT static const u8 sText_WasMade[] = _("　ができた！");
-BERRY_BLENDER_TEXT static const u8 sJPText_LegacyName1[10] = _("てつじ");
-BERRY_BLENDER_TEXT static const u8 sJPText_LegacyName2[10] = _("あきと");
-BERRY_BLENDER_TEXT static const u8 sJPText_LegacyName3[10] = _("シゲル");
-BERRY_BLENDER_TEXT static const u8 sJPText_LegacyName4[10] = _("ヨシノリ");
-BERRY_BLENDER_TEXT static const u8 sJPText_PokLabel2[6] = _("2Pok");
-BERRY_BLENDER_TEXT static const u8 sJPText_PokLabel3[6] = _("3Pok");
-BERRY_BLENDER_TEXT static const u8 sJPText_PokLabel4[6] = _("4Pok");
-BERRY_BLENDER_TEXT static const u8 sJPText_PlayerLabel1[4] = _("1P");
-BERRY_BLENDER_TEXT static const u8 sJPText_PlayerLabel2[4] = _("2P");
-BERRY_BLENDER_TEXT static const u8 sJPText_PlayerLabel3[4] = _("3P");
-BERRY_BLENDER_TEXT static const u8 sJPText_PlayerLabel4[4] = _("4P");
-BERRY_BLENDER_TEXT static const u8 sText_Mister[] = _("おじさん");
-BERRY_BLENDER_TEXT static const u8 sText_Laddie[] = _("　おとこのこ");
-BERRY_BLENDER_TEXT static const u8 sText_Lassie[] = _("おんなのこ");
-BERRY_BLENDER_TEXT static const u8 sText_Master[6] = _("めいじん");
-BERRY_BLENDER_TEXT static const u8 sText_Dude[] = _("おにいさん");
-BERRY_BLENDER_TEXT static const u8 sText_Miss[] = _("おばさん");
-BERRY_BLENDER_TEXT static const u8 sText_PressAToStart[] = _("　Aボタンで　スタートします");
-BERRY_BLENDER_TEXT static const u8 sText_PleaseWaitAWhile[] = _("しょうしょうおまちください");
-BERRY_BLENDER_TEXT static const u8 sText_CommunicationStandby[] = _("つうしんたいきちゅうです");
-BERRY_BLENDER_TEXT static const u8 sText_WouldLikeToBlendAnotherBerry[] = _(
-    "もういちど　きのみを　まぜますか？\n"
-    "　　　　");
-BERRY_BLENDER_TEXT static const u8 sText_RunOutOfBerriesForBlending[] = _(
-    "きのみブレンダーに　いれる　きのみが\n"
-    "ないので　これいじょう　できません\p");
-BERRY_BLENDER_TEXT static const u8 sText_YourPokeblockCaseIsFull[] = _("ポロックケースが　いっぱいの　ようです\p");
-BERRY_BLENDER_TEXT static const u8 sText_HasNoBerriesToPut[] = _(
-    "は　きのみブレンダーに\n"
-    "いれる　きのみがないようです");
-BERRY_BLENDER_TEXT static const u8 sText_ApostropheSPokeblockCaseIsFull[] = _(
-    "は　ポロックケースが\n"
-    "いっぱいの　ようです\p");
-BERRY_BLENDER_TEXT static const u8 sText_BlendingResults[] = _("まぜたけっか");
-BERRY_BLENDER_TEXT static const u8 sText_BerryUsed[] = _("いれた　たね");
-BERRY_BLENDER_TEXT static const u8 sText_SpaceBerry[] = _("のみ");
-BERRY_BLENDER_TEXT static const u8 sText_Time[] = _("じかん");
-BERRY_BLENDER_TEXT static const u8 sText_Min[] = _("ふん");
-BERRY_BLENDER_TEXT static const u8 sText_Sec[] = _("びょう");
-BERRY_BLENDER_TEXT static const u8 sText_MaximumSpeed[] = _("さいこうそくど");
-BERRY_BLENDER_TEXT static const u8 sText_RPM[] = _("rpm");
-BERRY_BLENDER_TEXT static const u8 sText_Dot[] = _(",");
-BERRY_BLENDER_TEXT static const u8 sText_NewLine[] = _("\n");
-BERRY_BLENDER_TEXT static const u8 sText_Space[] = _("　");
-BERRY_BLENDER_TEXT static const u8 sText_Ranking[] = _("ランキング");
-BERRY_BLENDER_TEXT static const u8 sText_TheLevelIs[] = _("レベル");
-BERRY_BLENDER_TEXT static const u8 sText_TheFeelIs[] = _("で　なめらかさは");
-BERRY_BLENDER_AUXILIARY_DATA static const u8 sBlackPokeblockFlavorFlags[] =
-{
-    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET),
-    (1 << FLAVOR_SOUR) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY),
-    (1 << FLAVOR_SOUR) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
-    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_DRY),
-    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_SPICY),
-    (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY),
-    (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_SPICY),
-    (1 << FLAVOR_BITTER) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
-    (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
-    (1 << FLAVOR_SOUR) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_SPICY),
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // JP-only bytes after the ten masks; not consumed by the native modulo-10 reader.
-BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPBlackPokeblockFlavorExtraData[] = {11, 10, 3, 15, 8, 255};
-BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPText_SavingDontTurnOffPower[] = _(
-    "ポケモンレポートに　かきこんでいます　　　　\n"
-    "でんげんを　きらないで　ください　　　　　　");
-BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPText_GoodTvReady[] = _(
-    "\n"
-    "いいTVができました　");
-BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPText_BadTvReady[] = _(
-    "\n"
-    "ダメTVができました　");
-BERRY_BLENDER_AUXILIARY_DATA static const u8 sJPText_Flavors[][5] = {
-    _("からい"),
-    _("しぶい"),
-    _("あまい"),
-    _("にがい"),
-    _("すっぱい"),
-};
+
+
+
+
+
 
 __attribute__((naked)) void Blender_ControlHitPitch(void)
 {
@@ -372,9 +523,9 @@ __attribute__((naked)) void LoadBerryBlenderGfx(void)
         "	strb r0, [r1, #1]\n\t"
         "	b _0807F400\n\t"
         "	.align 2, 0\n\t"
-        "_0807F3A8: .4byte gUnknown_830F9B0\n\t"
-        "_0807F3AC: .4byte gUnknown_830FAC8\n\t"
-        "_0807F3B0: .4byte gUnknown_830FA28\n\t"
+        "_0807F3A8: .4byte sSpriteSheet_PlayerArrow\n\t"
+        "_0807F3AC: .4byte sSpriteSheet_Particles\n\t"
+        "_0807F3B0: .4byte sSpriteSheet_ScoreSymbols\n\t"
         "_0807F3B4: .4byte gUnknown_2031F44\n\t"
         "_0807F3B8:\n\t"
         "	ldr r0, _0807F3E8\n\t"
@@ -397,10 +548,10 @@ __attribute__((naked)) void LoadBerryBlenderGfx(void)
         "	movs r0, #1\n\t"
         "	b _0807F402\n\t"
         "	.align 2, 0\n\t"
-        "_0807F3E8: .4byte gUnknown_830FB14\n\t"
-        "_0807F3EC: .4byte gUnknown_830FB48\n\t"
-        "_0807F3F0: .4byte gUnknown_830F9C0\n\t"
-        "_0807F3F4: .4byte gUnknown_830F9B8\n\t"
+        "_0807F3E8: .4byte sSpriteSheet_CountdownNumbers\n\t"
+        "_0807F3EC: .4byte sSpriteSheet_Start\n\t"
+        "_0807F3F0: .4byte sSpritePal_PlayerArrow\n\t"
+        "_0807F3F4: .4byte sSpritePal_BlenderMisc\n\t"
         "_0807F3F8: .4byte gUnknown_2031F44\n\t"
         "_0807F3FC: .4byte 0x000011B8\n\t"
         "_0807F400:\n\t"
@@ -500,7 +651,7 @@ __attribute__((naked)) void InitBerryBlenderWindows(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0807F4B4: .4byte gUnknown_830F870\n\t"
+        "_0807F4B4: .4byte sWindowTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -640,7 +791,7 @@ __attribute__((naked)) void sub_0807F500(void)
         "	bl sub_08082744\n\t"
         "	b _0807F71A\n\t"
         "	.align 2, 0\n\t"
-        "_0807F5D8: .4byte gUnknown_830F864\n\t"
+        "_0807F5D8: .4byte sBgTemplates\n\t"
         "_0807F5DC: .4byte gUnknown_2031F44\n\t"
         "_0807F5E0: .4byte 0x000009B4\n\t"
         "_0807F5E4:\n\t"
@@ -698,9 +849,9 @@ __attribute__((naked)) void sub_0807F500(void)
         "	bl SetVBlankCallback\n\t"
         "	b _0807F6D8\n\t"
         "	.align 2, 0\n\t"
-        "_0807F654: .4byte gUnknown_830F8B8\n\t"
+        "_0807F654: .4byte sPlayerArrowPos\n\t"
         "_0807F658: .4byte gUnknown_2031F44\n\t"
-        "_0807F65C: .4byte gUnknown_830F9C8\n\t"
+        "_0807F65C: .4byte sSpriteTemplate_PlayerArrow\n\t"
         "_0807F660: .4byte gSprites\n\t"
         "_0807F664: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_0807F668: .4byte gWirelessCommType\n\t"
@@ -951,7 +1102,7 @@ __attribute__((naked)) void sub_0807F7C8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0807F844: .4byte gSprites\n\t"
-        "_0807F848: .4byte gUnknown_830FB68\n\t"
+        "_0807F848: .4byte sBerrySpriteData\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1356,9 +1507,9 @@ __attribute__((naked)) void sub_0807FA20(void)
         "	bl CreateWirelessStatusIndicatorSprite\n\t"
         "	b _0807FF00\n\t"
         "	.align 2, 0\n\t"
-        "_0807FB8C: .4byte gUnknown_830F8B8\n\t"
+        "_0807FB8C: .4byte sPlayerArrowPos\n\t"
         "_0807FB90: .4byte gUnknown_2031F44\n\t"
-        "_0807FB94: .4byte gUnknown_830F9C8\n\t"
+        "_0807FB94: .4byte sSpriteTemplate_PlayerArrow\n\t"
         "_0807FB98: .4byte gSprites\n\t"
         "_0807FB9C: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_0807FBA0: .4byte gWirelessCommType\n\t"
@@ -1576,7 +1727,7 @@ __attribute__((naked)) void sub_0807FA20(void)
         "	b _0807FF04\n\t"
         "	.align 2, 0\n\t"
         "_0807FD5C: .4byte gUnknown_2031F44\n\t"
-        "_0807FD60: .4byte gUnknown_830F8C0\n\t"
+        "_0807FD60: .4byte sPlayerIdMap\n\t"
         "_0807FD64:\n\t"
         "	ldr r3, [r2]\n\t"
         "	movs r0, #0x84\n\t"
@@ -1620,8 +1771,8 @@ __attribute__((naked)) void sub_0807FA20(void)
         "	strh r1, [r2]\n\t"
         "	b _0807FDC6\n\t"
         "	.align 2, 0\n\t"
-        "_0807FDB4: .4byte gUnknown_830F8CC\n\t"
-        "_0807FDB8: .4byte gUnknown_830F8D4\n\t"
+        "_0807FDB4: .4byte sArrowStartPos\n\t"
+        "_0807FDB8: .4byte sArrowStartPosIds\n\t"
         "_0807FDBC: .4byte 0xFFFFA800\n\t"
         "_0807FDC0:\n\t"
         "	ldrb r0, [r3]\n\t"
@@ -1729,8 +1880,8 @@ __attribute__((naked)) void sub_0807FA20(void)
         "	b _0807FEC6\n\t"
         "	.align 2, 0\n\t"
         "_0807FE98: .4byte gUnknown_2031F44\n\t"
-        "_0807FE9C: .4byte gUnknown_830F8CC\n\t"
-        "_0807FEA0: .4byte gUnknown_830F8D4\n\t"
+        "_0807FE9C: .4byte sArrowStartPos\n\t"
+        "_0807FEA0: .4byte sArrowStartPosIds\n\t"
         "_0807FEA4:\n\t"
         "	bl sub_08082D9C\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1766,7 +1917,7 @@ __attribute__((naked)) void sub_0807FA20(void)
         "	bl CreateSprite\n\t"
         "	b _0807FF00\n\t"
         "	.align 2, 0\n\t"
-        "_0807FEE8: .4byte gUnknown_830FB1C\n\t"
+        "_0807FEE8: .4byte sSpriteTemplate_CountdownNumbers\n\t"
         "_0807FEEC:\n\t"
         "	bl SetLinkStandbyCallback\n\t"
         "	b _0807FF00\n\t"
@@ -1908,7 +2059,7 @@ __attribute__((naked)) void sub_0807FF90(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0808001C: .4byte VBlankCB0_BerryBlender + 1\n\t"
-        "_08080020: .4byte gUnknown_830F864\n\t"
+        "_08080020: .4byte sBgTemplates\n\t"
         "_08080024: .4byte gUnknown_2031F44\n\t"
         "_08080028: .4byte 0x000009B4\n\t"
         ".syntax divided\n\t"
@@ -1950,7 +2101,7 @@ __attribute__((naked)) void sub_0808002C(void)
         "	b _08080076\n\t"
         "	.align 2, 0\n\t"
         "_08080068: .4byte gUnknown_2031F44\n\t"
-        "_0808006C: .4byte gUnknown_830F8D7\n\t"
+        "_0808006C: .4byte sArrowHitRangeStart\n\t"
         "_08080070:\n\t"
         "	movs r0, #1\n\t"
         "	b _08080076\n\t"
@@ -2075,9 +2226,9 @@ __attribute__((naked)) void Blender_SetOpponentsBerryData(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08080148: .4byte gUnknown_830FB90\n\t"
+        "_08080148: .4byte sOpponentBerrySets\n\t"
         "_0808014C: .4byte gSpecialVar_0x8004\n\t"
-        "_08080150: .4byte gUnknown_830FBAE\n\t"
+        "_08080150: .4byte sBerryMasterBerries\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2144,7 +2295,7 @@ __attribute__((naked)) void sub_08080154(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080801BC: .4byte gUnknown_2031F44\n\t"
-        "_080801C0: .4byte gUnknown_830F8C0\n\t"
+        "_080801C0: .4byte sPlayerIdMap\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2464,9 +2615,9 @@ __attribute__((naked)) void sub_080802F0(void)
         "	ble _08080426\n\t"
         "	b _080806CA\n\t"
         "	.align 2, 0\n\t"
-        "_08080464: .4byte gUnknown_830F8B8\n\t"
+        "_08080464: .4byte sPlayerArrowPos\n\t"
         "_08080468: .4byte gUnknown_2031F44\n\t"
-        "_0808046C: .4byte gUnknown_830F9C8\n\t"
+        "_0808046C: .4byte sSpriteTemplate_PlayerArrow\n\t"
         "_08080470: .4byte gSprites\n\t"
         "_08080474:\n\t"
         "	movs r0, #1\n\t"
@@ -2582,7 +2733,7 @@ __attribute__((naked)) void sub_080802F0(void)
         "	adds r1, r1, r0\n\t"
         "	b _080806CE\n\t"
         "	.align 2, 0\n\t"
-        "_08080550: .4byte gUnknown_830F8C0\n\t"
+        "_08080550: .4byte sPlayerIdMap\n\t"
         "_08080554: .4byte gUnknown_2031F44\n\t"
         "_08080558:\n\t"
         "	ldr r3, [r2]\n\t"
@@ -2624,8 +2775,8 @@ __attribute__((naked)) void sub_080802F0(void)
         "	adds r0, #1\n\t"
         "	b _080805B4\n\t"
         "	.align 2, 0\n\t"
-        "_080805A4: .4byte gUnknown_830F8CC\n\t"
-        "_080805A8: .4byte gUnknown_830F8D4\n\t"
+        "_080805A4: .4byte sArrowStartPos\n\t"
+        "_080805A8: .4byte sArrowStartPosIds\n\t"
         "_080805AC: .4byte 0xFFFFA800\n\t"
         "_080805B0:\n\t"
         "	ldrb r0, [r3]\n\t"
@@ -2731,8 +2882,8 @@ __attribute__((naked)) void sub_080802F0(void)
         "	b _080807CA\n\t"
         "	.align 2, 0\n\t"
         "_08080688: .4byte gUnknown_2031F44\n\t"
-        "_0808068C: .4byte gUnknown_830F8CC\n\t"
-        "_08080690: .4byte gUnknown_830F8D4\n\t"
+        "_0808068C: .4byte sArrowStartPos\n\t"
+        "_08080690: .4byte sArrowStartPosIds\n\t"
         "_08080694:\n\t"
         "	bl sub_08082D9C\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2769,7 +2920,7 @@ __attribute__((naked)) void sub_080802F0(void)
         "	strb r0, [r1]\n\t"
         "	b _080807CA\n\t"
         "	.align 2, 0\n\t"
-        "_080806D8: .4byte gUnknown_830FB1C\n\t"
+        "_080806D8: .4byte sSpriteTemplate_CountdownNumbers\n\t"
         "_080806DC: .4byte gUnknown_2031F44\n\t"
         "_080806E0:\n\t"
         "	bl sub_08080814\n\t"
@@ -2903,7 +3054,7 @@ __attribute__((naked)) void sub_080802F0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08080804: .4byte gUnknown_830F8DC\n\t"
+        "_08080804: .4byte sLocalOpponentTasks\n\t"
         "_08080808: .4byte gSpecialVar_0x8004\n\t"
         "_0808080C: .4byte gUnknown_2031F44\n\t"
         "_08080810: .4byte SPECIAL_CloseBattlePikeCurtain\n\t"
@@ -3240,7 +3391,7 @@ __attribute__((naked)) void sub_080809EC(void)
         "	.align 2, 0\n\t"
         "_08080A70: .4byte gUnknown_2031F44\n\t"
         "_08080A74: .4byte 0x0000FFFF\n\t"
-        "_08080A78: .4byte gUnknown_830F8D7\n\t"
+        "_08080A78: .4byte sArrowHitRangeStart\n\t"
         "_08080A7C: .4byte gTasks\n\t"
         "_08080A80: .4byte SPECIAL_LeadMonHasEffortRibbon\n\t"
         "_08080A84: .4byte 0x0000028F\n\t"
@@ -3387,7 +3538,7 @@ __attribute__((naked)) void sub_08080B14(void)
         "	.align 2, 0\n\t"
         "_08080B94: .4byte gUnknown_2031F44\n\t"
         "_08080B98: .4byte 0x0000FFFF\n\t"
-        "_08080B9C: .4byte gUnknown_830F8D7\n\t"
+        "_08080B9C: .4byte sArrowHitRangeStart\n\t"
         "_08080BA0: .4byte gTasks\n\t"
         "_08080BA4: .4byte SPECIAL_LeadMonHasEffortRibbon\n\t"
         "_08080BA8: .4byte 0x0000028F\n\t"
@@ -3582,9 +3733,9 @@ __attribute__((naked)) void sub_08080CA4(void)
         "	bl PlaySE\n\t"
         "	b _08080D74\n\t"
         "	.align 2, 0\n\t"
-        "_08080D18: .4byte gUnknown_830FA30\n\t"
-        "_08080D1C: .4byte gUnknown_830F8B8\n\t"
-        "_08080D20: .4byte gUnknown_830F8B0\n\t"
+        "_08080D18: .4byte sSpriteTemplate_ScoreSymbols\n\t"
+        "_08080D1C: .4byte sPlayerArrowPos\n\t"
+        "_08080D20: .4byte sPlayerArrowQuadrant\n\t"
         "_08080D24: .4byte 0x00004523\n\t"
         "_08080D28: .4byte gSprites\n\t"
         "_08080D2C: .4byte sub_080829B8 + 1\n\t"
@@ -3686,7 +3837,7 @@ __attribute__((naked)) void sub_08080D8C(void)
         "	.align 2, 0\n\t"
         "_08080DF0: .4byte gUnknown_2031F44\n\t"
         "_08080DF4: .4byte 0x000005DB\n\t"
-        "_08080DF8: .4byte gUnknown_830FBB3\n\t"
+        "_08080DF8: .4byte sNumPlayersToSpeedDivisor\n\t"
         "_08080DFC:\n\t"
         "	ldr r1, _08080E54\n\t"
         "	adds r0, r4, #0\n\t"
@@ -3728,7 +3879,7 @@ __attribute__((naked)) void sub_08080D8C(void)
         "	bl sub_08082CD8\n\t"
         "	b _08080EBC\n\t"
         "	.align 2, 0\n\t"
-        "_08080E54: .4byte gUnknown_830FBB3\n\t"
+        "_08080E54: .4byte sNumPlayersToSpeedDivisor\n\t"
         "_08080E58:\n\t"
         "	ldr r0, _08080E84\n\t"
         "	ldr r2, [r0]\n\t"
@@ -3754,7 +3905,7 @@ __attribute__((naked)) void sub_08080D8C(void)
         "	.align 2, 0\n\t"
         "_08080E84: .4byte gUnknown_2031F44\n\t"
         "_08080E88: .4byte 0x000005DB\n\t"
-        "_08080E8C: .4byte gUnknown_830FBB3\n\t"
+        "_08080E8C: .4byte sNumPlayersToSpeedDivisor\n\t"
         "_08080E90:\n\t"
         "	ldr r0, _08080EC4\n\t"
         "	ldr r0, [r0]\n\t"
@@ -3784,7 +3935,7 @@ __attribute__((naked)) void sub_08080D8C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08080EC4: .4byte gUnknown_2031F44\n\t"
-        "_08080EC8: .4byte gUnknown_830FBB3\n\t"
+        "_08080EC8: .4byte sNumPlayersToSpeedDivisor\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5723,7 +5874,7 @@ __attribute__((naked)) void CB2_HandleBlenderEndGame(void)
         "	b _08081E78\n\t"
         "	.align 2, 0\n\t"
         "_08081D1C: .4byte gUnknown_2031F44\n\t"
-        "_08081D20: .4byte gUnknown_830F8A8\n\t"
+        "_08081D20: .4byte sYesNoWindowTemplate_ContinuePlaying\n\t"
         "_08081D24:\n\t"
         "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -7284,7 +7435,7 @@ __attribute__((naked)) void sub_080828A0(void)
         "_0808296C: .4byte gSineTable\n\t"
         "_08082970: .4byte gSprites\n\t"
         "_08082974: .4byte gUnknown_2031F44\n\t"
-        "_08082978: .4byte gUnknown_830FAD0\n\t"
+        "_08082978: .4byte sSpriteTemplate_Particles\n\t"
         "_0808297C: .4byte gUnknown_20205C8\n\t"
         "_08082980: .4byte sub_08082858 + 1\n\t"
         ".syntax divided\n\t"
@@ -7472,7 +7623,7 @@ __attribute__((naked)) void sub_08082A2C(void)
         "	bl CreateSprite\n\t"
         "	b _08082ACE\n\t"
         "	.align 2, 0\n\t"
-        "_08082AB8: .4byte gUnknown_830FB50\n\t"
+        "_08082AB8: .4byte sSpriteTemplate_Start\n\t"
         "_08082ABC:\n\t"
         "	movs r0, #0\n\t"
         "	strh r0, [r4, #0x2e]\n\t"
@@ -8397,10 +8548,10 @@ __attribute__((naked)) void Blender_PrintBlendingResults(void)
         "	.align 2, 0\n\t"
         "_08083154: .4byte sText_BlendingResults\n\t"
         "_08083158: .4byte gUnknown_2031F44\n\t"
-        "_0808315C: .4byte sBerryBlenderRecordWindowUnused + 5\n\t"
+        "_0808315C: .4byte sUnused + 5\n\t"
         "_08083160: .4byte sText_Dot\n\t"
         "_08083164: .4byte gUnknown_20226A8\n\t"
-        "_08083168: .4byte sBerryBlenderRecordWindowUnused\n\t"
+        "_08083168: .4byte sUnused\n\t"
         "_0808316C: .4byte sText_SpaceBerry\n\t"
         "_08083170: .4byte sText_MaximumSpeed\n\t"
         "_08083174: .4byte sText_RPM\n\t"
@@ -9149,11 +9300,11 @@ __attribute__((naked)) void Blender_PrintBlendingRanking(void)
         "	b _0808379C\n\t"
         "	.align 2, 0\n\t"
         "_0808374C: .4byte sText_Ranking\n\t"
-        "_08083750: .4byte gUnknown_830FA30\n\t"
+        "_08083750: .4byte sSpriteTemplate_ScoreSymbols\n\t"
         "_08083754: .4byte gUnknown_2031F44\n\t"
         "_08083758: .4byte gSprites\n\t"
         "_0808375C: .4byte SpriteCallbackDummy + 1\n\t"
-        "_08083760: .4byte sBerryBlenderRecordWindowUnused + 10\n\t"
+        "_08083760: .4byte sUnused + 10\n\t"
         "_08083764: .4byte sText_Dot\n\t"
         "_08083768: .4byte gUnknown_20226A8\n\t"
         "_0808376C:\n\t"
@@ -9689,49 +9840,795 @@ __attribute__((naked)) void Blender_PrintText(void)
 }
 
 
-BERRY_BLENDER_DATA static const u8 sText_Dot2[4] = _("だ");
-BERRY_BLENDER_DATA const u8 gUnknown_830F864[] = {0xFC, 0x01, 0x00, 0x00, 0xC9, 0x10, 0x00, 0x00, 0x82, 0x0A, 0x00, 0x00};
-BERRY_BLENDER_DATA const u8 gUnknown_830F870[] = {0x00, 0x01, 0x06, 0x07, 0x02, 0x0E, 0x28, 0x00, 0x00, 0x16, 0x06, 0x07, 0x02, 0x0E, 0x36, 0x00, 0x00, 0x01, 0x0C, 0x07, 0x02, 0x0E, 0x44, 0x00, 0x00, 0x16, 0x0C, 0x07, 0x02, 0x0E, 0x52, 0x00, 0x00, 0x04, 0x0F, 0x16, 0x04, 0x0E, 0x60, 0x00, 0x00, 0x05, 0x03, 0x15, 0x0E, 0x0E, 0x60, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-BERRY_BLENDER_DATA const u8 gUnknown_830F8A8[] = {0x00, 0x15, 0x09, 0x05, 0x04, 0x0E, 0xB8, 0x00};
-BERRY_BLENDER_DATA const u8 gUnknown_830F8B0[] = {0xFF, 0xFF, 0x01, 0xFF, 0xFF, 0x01, 0x01, 0x01};
-BERRY_BLENDER_DATA const u8 gUnknown_830F8B8[] = {0x48, 0x20, 0xA8, 0x20, 0x48, 0x80, 0xA8, 0x80};
-BERRY_BLENDER_DATA const u8 gUnknown_830F8C0[] = {0xFF, 0x00, 0x01, 0xFF, 0xFF, 0x00, 0x01, 0x02, 0x00, 0x01, 0x02, 0x03};
-BERRY_BLENDER_DATA const u8 gUnknown_830F8CC[] = {0x00, 0x00, 0x00, 0xC0, 0x00, 0x40, 0x00, 0x80};
-BERRY_BLENDER_DATA const u8 gUnknown_830F8D4[] = {0x01, 0x01, 0x00};
-BERRY_BLENDER_DATA const u8 gUnknown_830F8D7[] = {0x20, 0xE0, 0x60, 0xA0, 0x00};
-BERRY_BLENDER_DATA const u8 gUnknown_830F8DC[] = {0xC1, 0x08, 0x08, 0x08, 0xED, 0x09, 0x08, 0x08, 0x15, 0x0B, 0x08, 0x08, 0x00, 0x00, 0x00, 0x80, 0x00, 0x04, 0x00, 0x00, 0x10, 0x00, 0xC5, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x10, 0x00, 0x85, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x10, 0x00, 0x45, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x10, 0x00, 0x05, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x30, 0x00, 0xC2, 0x00, 0x20, 0x00, 0xC5, 0x00, 0x30, 0x00, 0xC3, 0x00, 0x10, 0x00, 0xC5, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x30, 0x00, 0x82, 0x00, 0x20, 0x00, 0x85, 0x00, 0x30, 0x00, 0x83, 0x00, 0x10, 0x00, 0x85, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x30, 0x00, 0x42, 0x00, 0x20, 0x00, 0x45, 0x00, 0x30, 0x00, 0x43, 0x00, 0x10, 0x00, 0x45, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x30, 0x00, 0x02, 0x00, 0x20, 0x00, 0x05, 0x00, 0x30, 0x00, 0x03, 0x00, 0x10, 0x00, 0x05, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xC5, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x85, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x45, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0xF0, 0xF8, 0x30, 0x08, 0xF8, 0xF8, 0x30, 0x08, 0x00, 0xF9, 0x30, 0x08, 0x08, 0xF9, 0x30, 0x08, 0x10, 0xF9, 0x30, 0x08, 0x24, 0xF9, 0x30, 0x08, 0x38, 0xF9, 0x30, 0x08, 0x4C, 0xF9, 0x30, 0x08, 0x60, 0xF9, 0x30, 0x08, 0x68, 0xF9, 0x30, 0x08, 0x70, 0xF9, 0x30, 0x08, 0x78, 0xF9, 0x30, 0x08};
-BERRY_BLENDER_DATA const u8 gUnknown_830F9B0[] = {0xB4, 0xEB, 0x30, 0x08, 0x00, 0x08, 0xD1, 0xB5};
-BERRY_BLENDER_DATA const u8 gUnknown_830F9B8[] = {0x74, 0xD9, 0x30, 0x08, 0xD2, 0xB5, 0x00, 0x00};
-BERRY_BLENDER_DATA const u8 gUnknown_830F9C0[] = {0x94, 0xD9, 0x30, 0x08, 0x18, 0x30, 0x00, 0x00};
-BERRY_BLENDER_DATA const u8 gUnknown_830F9C8[] = {0xD1, 0xB5, 0x18, 0x30, 0xE8, 0xF8, 0x30, 0x08, 0x80, 0xF9, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x10, 0xF3, 0x2B, 0x08, 0x15, 0x2E, 0x08, 0x08, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x04, 0x00, 0x54, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x08, 0x00, 0x04, 0x00, 0x0C, 0x00, 0x04, 0x00, 0x08, 0x00, 0x04, 0x00, 0x0C, 0x00, 0x04, 0x00, 0x08, 0x00, 0x04, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x08, 0x00, 0x04, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0xE8, 0xF9, 0x30, 0x08, 0xF0, 0xF9, 0x30, 0x08, 0xF8, 0xF9, 0x30, 0x08, 0x10, 0xFA, 0x30, 0x08};
-BERRY_BLENDER_DATA const u8 gUnknown_830FA28[] = {0xB4, 0xDB, 0x30, 0x08, 0x00, 0x02, 0xF8, 0xBE};
-BERRY_BLENDER_DATA const u8 gUnknown_830FA30[] = {0xF8, 0xBE, 0xD2, 0xB5, 0xE0, 0xF9, 0x30, 0x08, 0x18, 0xFA, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x10, 0xF3, 0x2B, 0x08, 0x85, 0x29, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01, 0x00, 0x04, 0x00, 0x03, 0x00, 0x05, 0x00, 0x01, 0x00, 0x04, 0x00, 0x00, 0x00, 0x03, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x02, 0x00, 0x04, 0x00, 0x04, 0x00, 0x05, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00, 0x00, 0x03, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x01, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x04, 0x00, 0x04, 0x00, 0x03, 0x00, 0x03, 0x00, 0x02, 0x00, 0x02, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00, 0x00, 0x02, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x05, 0x00, 0xC5, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x06, 0x00, 0xC5, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x50, 0xFA, 0x30, 0x08, 0x68, 0xFA, 0x30, 0x08, 0x80, 0xFA, 0x30, 0x08, 0xA4, 0xFA, 0x30, 0x08, 0xAC, 0xFA, 0x30, 0x08};
-BERRY_BLENDER_DATA const u8 gUnknown_830FAC8[] = {0xB4, 0xDD, 0x30, 0x08, 0xE0, 0x00, 0xA0, 0x5B};
-BERRY_BLENDER_DATA const u8 gUnknown_830FAD0[] = {0xA0, 0x5B, 0xD2, 0xB5, 0x48, 0xFA, 0x30, 0x08, 0xB4, 0xFA, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x10, 0xF3, 0x2B, 0x08, 0x41, 0x71, 0x00, 0x08, 0x00, 0x00, 0x00, 0x80, 0x00, 0x04, 0x00, 0x00, 0x20, 0x00, 0x1E, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x10, 0x00, 0x1E, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0xF0, 0xFA, 0x30, 0x08, 0xF8, 0xFA, 0x30, 0x08, 0x00, 0xFB, 0x30, 0x08};
-BERRY_BLENDER_DATA const u8 gUnknown_830FB14[] = {0xB4, 0xDF, 0x30, 0x08, 0x00, 0x06, 0x39, 0x30};
-BERRY_BLENDER_DATA const u8 gUnknown_830FB1C[] = {0x39, 0x30, 0xD2, 0xB5, 0xE8, 0xFA, 0x30, 0x08, 0x08, 0xFB, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x10, 0xF3, 0x2B, 0x08, 0x2D, 0x2A, 0x08, 0x08, 0x00, 0x40, 0x00, 0xC0, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x3C, 0xFB, 0x30, 0x08};
-BERRY_BLENDER_DATA const u8 gUnknown_830FB48[] = {0xB4, 0xE5, 0x30, 0x08, 0x00, 0x04, 0x3A, 0x30};
-BERRY_BLENDER_DATA const u8 gUnknown_830FB50[] = {0x3A, 0x30, 0xD2, 0xB5, 0x34, 0xFB, 0x30, 0x08, 0x44, 0xFB, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x10, 0xF3, 0x2B, 0x08, 0xDD, 0x2A, 0x08, 0x08};
-BERRY_BLENDER_DATA const u8 gUnknown_830FB68[] = {0xF6, 0xFF, 0x14, 0x00, 0x0A, 0x00, 0x02, 0x00, 0x01, 0x00, 0xFA, 0x00, 0x14, 0x00, 0x0A, 0x00, 0xFE, 0xFF, 0x01, 0x00, 0xF6, 0xFF, 0x8C, 0x00, 0x0A, 0x00, 0x02, 0x00, 0xFF, 0xFF, 0xFA, 0x00, 0x8C, 0x00, 0x0A, 0x00, 0xFE, 0xFF, 0xFF, 0xFF};
-BERRY_BLENDER_DATA const u8 gUnknown_830FB90[] = {0x04, 0x03, 0x02, 0x00, 0x04, 0x03, 0x01, 0x00, 0x04, 0x02, 0x01, 0x00, 0x03, 0x02, 0x01, 0x00, 0x02, 0x03, 0x01, 0x03, 0x04, 0x02, 0x04, 0x00, 0x03, 0x00, 0x01, 0x04, 0x01, 0x02};
-BERRY_BLENDER_DATA const u8 gUnknown_830FBAE[] = {0x1E, 0x1F, 0x20, 0x21, 0x22};
-BERRY_BLENDER_DATA const u8 gUnknown_830FBB3[] = {0x01, 0x01, 0x02, 0x03, 0x04};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // The Japanese layout has a distinct record-window arrangement, but the
 // data serves the same unused bookkeeping and record-display roles as US.
-const u8 sBerryBlenderRecordWindowUnused[] BERRY_BLENDER_RECORD_WINDOW_DATA = {
+
+// JP data follows function emission to preserve the existing agbcc output.
+#define BB_DATA(name) __attribute__((section(".rodata.blender." #name), aligned(1)))
+static const u16 sBlenderCenter_Pal[] BB_DATA(sBlenderCenter_Pal) = INCGFX_U16("graphics/berry_blender/center.png", ".gbapal");
+
+static const u8 sBlenderCenter_Tilemap[] BB_DATA(sBlenderCenter_Tilemap) = INCBIN_U8("graphics/berry_blender/center_map.bin");
+
+static const u16 sBlenderOuter_Pal[] BB_DATA(sBlenderOuter_Pal) = INCGFX_U16("graphics/berry_blender/outer.png", ".gbapal");
+
+static const u16 sUnused_Pal[] BB_DATA(sUnused_Pal) = INCGFX_U16("graphics/berry_blender/unused.pal", ".gbapal");
+
+static const u16 sEmpty_Pal[16 * 14] BB_DATA(sEmpty_Pal) = {0};
+
+static const u8 sUnusedText_YesNo[] BB_DATA(sUnusedText_YesNo) = _("はい　\nいいえ");
+
+static const u8 sUnusedText_2[] BB_DATA(sUnusedText_2) = _("▶");
+
+static const u8 sUnusedText_Space[] BB_DATA(sUnusedText_Space) = _("　");
+
+static const u8 sUnusedText_Terminating[] BB_DATA(sUnusedText_Terminating) = _("しゅうりょうまちです　　　");
+
+static const u8 sUnusedText_LinkPartnerNotFound[] BB_DATA(sUnusedText_LinkPartnerNotFound) = _("あいてがみつからないようです\nもういちどやりなおしてください\p");
+
+static const u8 sText_BerryBlenderStart[] BB_DATA(sText_BerryBlenderStart) = _(
+    "きのみブレンダーを　きどうします\p"
+    "バッグから　きのみブレンダーに　いれる\n"
+    "きのみを　えらんでください\p");
+
+static const u8 sJPText_Cool[] BB_DATA(sJPText_Cool) = _("カッコイ");
+
+static const u8 sJPText_Cute[] BB_DATA(sJPText_Cute) = _("カワイイ");
+
+static const u8 sJPText_Beautiful[] BB_DATA(sJPText_Beautiful) = _("ウツクシ");
+
+static const u8 sJPText_Smart[] BB_DATA(sJPText_Smart) = _("カシコイ");
+
+static const u8 sJPText_Tough[] BB_DATA(sJPText_Tough) = _("タクマシ");
+
+static const u8 sText_NewParagraph[] BB_DATA(sText_NewParagraph) = _("\p");
+
+static const u8 sText_WasMade[] BB_DATA(sText_WasMade) = _("　ができた！");
+
+static const u8 sJPText_LegacyName1[10] BB_DATA(sJPText_LegacyName1) = _("てつじ");
+
+static const u8 sJPText_LegacyName2[10] BB_DATA(sJPText_LegacyName2) = _("あきと");
+
+static const u8 sJPText_LegacyName3[10] BB_DATA(sJPText_LegacyName3) = _("シゲル");
+
+static const u8 sJPText_LegacyName4[10] BB_DATA(sJPText_LegacyName4) = _("ヨシノリ");
+
+static const u8 sJPText_PokLabel2[6] BB_DATA(sJPText_PokLabel2) = _("2Pok");
+
+static const u8 sJPText_PokLabel3[6] BB_DATA(sJPText_PokLabel3) = _("3Pok");
+
+static const u8 sJPText_PokLabel4[6] BB_DATA(sJPText_PokLabel4) = _("4Pok");
+
+static const u8 sJPText_PlayerLabel1[4] BB_DATA(sJPText_PlayerLabel1) = _("1P");
+
+static const u8 sJPText_PlayerLabel2[4] BB_DATA(sJPText_PlayerLabel2) = _("2P");
+
+static const u8 sJPText_PlayerLabel3[4] BB_DATA(sJPText_PlayerLabel3) = _("3P");
+
+static const u8 sJPText_PlayerLabel4[4] BB_DATA(sJPText_PlayerLabel4) = _("4P");
+
+static const u8 sText_Mister[] BB_DATA(sText_Mister) = _("おじさん");
+
+static const u8 sText_Laddie[] BB_DATA(sText_Laddie) = _("　おとこのこ");
+
+static const u8 sText_Lassie[] BB_DATA(sText_Lassie) = _("おんなのこ");
+
+static const u8 sText_Master[6] BB_DATA(sText_Master) = _("めいじん");
+
+static const u8 sText_Dude[] BB_DATA(sText_Dude) = _("おにいさん");
+
+static const u8 sText_Miss[] BB_DATA(sText_Miss) = _("おばさん");
+
+static const u8 sText_PressAToStart[] BB_DATA(sText_PressAToStart) = _("　Aボタンで　スタートします");
+
+static const u8 sText_PleaseWaitAWhile[] BB_DATA(sText_PleaseWaitAWhile) = _("しょうしょうおまちください");
+
+static const u8 sText_CommunicationStandby[] BB_DATA(sText_CommunicationStandby) = _("つうしんたいきちゅうです");
+
+static const u8 sText_WouldLikeToBlendAnotherBerry[] BB_DATA(sText_WouldLikeToBlendAnotherBerry) = _(
+    "もういちど　きのみを　まぜますか？\n"
+    "　　　　");
+
+static const u8 sText_RunOutOfBerriesForBlending[] BB_DATA(sText_RunOutOfBerriesForBlending) = _(
+    "きのみブレンダーに　いれる　きのみが\n"
+    "ないので　これいじょう　できません\p");
+
+static const u8 sText_YourPokeblockCaseIsFull[] BB_DATA(sText_YourPokeblockCaseIsFull) = _("ポロックケースが　いっぱいの　ようです\p");
+
+static const u8 sText_HasNoBerriesToPut[] BB_DATA(sText_HasNoBerriesToPut) = _(
+    "は　きのみブレンダーに\n"
+    "いれる　きのみがないようです");
+
+static const u8 sText_ApostropheSPokeblockCaseIsFull[] BB_DATA(sText_ApostropheSPokeblockCaseIsFull) = _(
+    "は　ポロックケースが\n"
+    "いっぱいの　ようです\p");
+
+static const u8 sText_BlendingResults[] BB_DATA(sText_BlendingResults) = _("まぜたけっか");
+
+static const u8 sText_BerryUsed[] BB_DATA(sText_BerryUsed) = _("いれた　たね");
+
+static const u8 sText_SpaceBerry[] BB_DATA(sText_SpaceBerry) = _("のみ");
+
+static const u8 sText_Time[] BB_DATA(sText_Time) = _("じかん");
+
+static const u8 sText_Min[] BB_DATA(sText_Min) = _("ふん");
+
+static const u8 sText_Sec[] BB_DATA(sText_Sec) = _("びょう");
+
+static const u8 sText_MaximumSpeed[] BB_DATA(sText_MaximumSpeed) = _("さいこうそくど");
+
+static const u8 sText_RPM[] BB_DATA(sText_RPM) = _("rpm");
+
+static const u8 sText_Dot[] BB_DATA(sText_Dot) = _(",");
+
+static const u8 sText_NewLine[] BB_DATA(sText_NewLine) = _("\n");
+
+static const u8 sText_Space[] BB_DATA(sText_Space) = _("　");
+
+static const u8 sText_Ranking[] BB_DATA(sText_Ranking) = _("ランキング");
+
+static const u8 sText_TheLevelIs[] BB_DATA(sText_TheLevelIs) = _("レベル");
+
+static const u8 sText_TheFeelIs[] BB_DATA(sText_TheFeelIs) = _("で　なめらかさは");
+
+static const u8 sText_Dot2[4] BB_DATA(sText_Dot2) = _("だ");
+
+static const struct BgTemplate sBgTemplates[3] BB_DATA(sBgTemplates) =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 12,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 8,
+        .screenSize = 1,
+        .paletteMode = 1,
+        .priority = 0,
+        .baseTile = 0,
+    }
+};
+
+static const struct WindowTemplate sWindowTemplates[] BB_DATA(sWindowTemplates) =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 6,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 14,
+        .baseBlock = 40,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 22,
+        .tilemapTop = 6,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 14,
+        .baseBlock = 54,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 12,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 14,
+        .baseBlock = 68,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 22,
+        .tilemapTop = 12,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 14,
+        .baseBlock = 82,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 14,
+        .baseBlock = 96,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 5,
+        .tilemapTop = 3,
+        .width = 21,
+        .height = 14,
+        .paletteNum = 14,
+        .baseBlock = 96,
+    },
+    {
+        .bg = 255,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 0,
+        .height = 0,
+        .paletteNum = 0,
+        .baseBlock = 0,
+    },
+};
+
+static const struct WindowTemplate sYesNoWindowTemplate_ContinuePlaying BB_DATA(sYesNoWindowTemplate_ContinuePlaying) =
+{
+        .bg = 0,
+        .tilemapLeft = 21,
+        .tilemapTop = 9,
+        .width = 5,
+        .height = 4,
+        .paletteNum = 14,
+        .baseBlock = 184,
+    };
+
+static const s8 sPlayerArrowQuadrant[BLENDER_MAX_PLAYERS][2] BB_DATA(sPlayerArrowQuadrant) =
+{
+    {-1, -1},
+    { 1, -1},
+    {-1,  1},
+    { 1,  1}
+};
+
+static const u8 sPlayerArrowPos[BLENDER_MAX_PLAYERS][2] BB_DATA(sPlayerArrowPos) =
+{
+    { 72,  32},
+    {168,  32},
+    { 72, 128},
+    {168, 128}
+};
+
+static const u8 sPlayerIdMap[BLENDER_MAX_PLAYERS - 1][BLENDER_MAX_PLAYERS] BB_DATA(sPlayerIdMap) =
+{
+    {NO_PLAYER, 0, 1, NO_PLAYER}, // 2 Players
+    {NO_PLAYER, 0, 1,         2}, // 3 Players
+    {        0, 1, 2,         3}  // 4 Players
+};
+
+static const u16 sArrowStartPos[] BB_DATA(sArrowStartPos) = {
+    0,
+    MAX_ARROW_POS / 4 * 3, // 0xC000
+    MAX_ARROW_POS / 4,     // 0x4000
+    MAX_ARROW_POS / 4 * 2  // 0x8000
+};
+
+static const u8 sArrowStartPosIds[BLENDER_MAX_PLAYERS - 1] BB_DATA(sArrowStartPosIds) = {1, 1, 0};
+
+static const u8 sArrowHitRangeStart[BLENDER_MAX_PLAYERS] BB_DATA(sArrowHitRangeStart) = {32, 224, 96, 160};
+
+static const TaskFunc sLocalOpponentTasks[] BB_DATA(sLocalOpponentTasks) =
+{
+    (TaskFunc)sub_080808C0,
+    (TaskFunc)sub_080809EC,
+    (TaskFunc)sub_08080B14,
+};
+
+static const struct OamData sOam_PlayerArrow BB_DATA(sOam_PlayerArrow) =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_PlayerArrow_TopLeft[] BB_DATA(sAnim_PlayerArrow_TopLeft) =
+{
+    ANIMCMD_FRAME(16, 5, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_TopRight[] BB_DATA(sAnim_PlayerArrow_TopRight) =
+{
+    ANIMCMD_FRAME(16, 5, .vFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_BottomLeft[] BB_DATA(sAnim_PlayerArrow_BottomLeft) =
+{
+    ANIMCMD_FRAME(16, 5, .hFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_BottomRight[] BB_DATA(sAnim_PlayerArrow_BottomRight) =
+{
+    ANIMCMD_FRAME(16, 5, 0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_TopLeft_Flash[] BB_DATA(sAnim_PlayerArrow_TopLeft_Flash) =
+{
+    ANIMCMD_FRAME(48, 2, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_FRAME(32, 5, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_FRAME(48, 3, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_FRAME(16, 5, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_TopRight_Flash[] BB_DATA(sAnim_PlayerArrow_TopRight_Flash) =
+{
+    ANIMCMD_FRAME(48, 2, .vFlip = TRUE),
+    ANIMCMD_FRAME(32, 5, .vFlip = TRUE),
+    ANIMCMD_FRAME(48, 3, .vFlip = TRUE),
+    ANIMCMD_FRAME(16, 5, .vFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_BottomLeft_Flash[] BB_DATA(sAnim_PlayerArrow_BottomLeft_Flash) =
+{
+    ANIMCMD_FRAME(48, 2, .hFlip = TRUE),
+    ANIMCMD_FRAME(32, 5, .hFlip = TRUE),
+    ANIMCMD_FRAME(48, 3, .hFlip = TRUE),
+    ANIMCMD_FRAME(16, 5, .hFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_BottomRight_Flash[] BB_DATA(sAnim_PlayerArrow_BottomRight_Flash) =
+{
+    ANIMCMD_FRAME(48, 2, 0, 0),
+    ANIMCMD_FRAME(32, 5, 0, 0),
+    ANIMCMD_FRAME(48, 3, 0, 0),
+    ANIMCMD_FRAME(16, 5, 0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_TopLeft_Off[] BB_DATA(sAnim_PlayerArrow_TopLeft_Off) =
+{
+    ANIMCMD_FRAME(0, 5, .vFlip = TRUE, .hFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_TopRight_Off[] BB_DATA(sAnim_PlayerArrow_TopRight_Off) =
+{
+    ANIMCMD_FRAME(0, 5, .vFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_BottomLeft_Off[] BB_DATA(sAnim_PlayerArrow_BottomLeft_Off) =
+{
+    ANIMCMD_FRAME(0, 5, .hFlip = TRUE),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerArrow_BottomRight_Off[] BB_DATA(sAnim_PlayerArrow_BottomRight_Off) =
+{
+    ANIMCMD_FRAME(0, 5, 0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_PlayerArrow[] BB_DATA(sAnims_PlayerArrow) =
+{
+    sAnim_PlayerArrow_TopLeft,
+    sAnim_PlayerArrow_TopRight,
+    sAnim_PlayerArrow_BottomLeft,
+    sAnim_PlayerArrow_BottomRight,
+    sAnim_PlayerArrow_TopLeft_Flash,
+    sAnim_PlayerArrow_TopRight_Flash,
+    sAnim_PlayerArrow_BottomLeft_Flash,
+    sAnim_PlayerArrow_BottomRight_Flash,
+    sAnim_PlayerArrow_TopLeft_Off,
+    sAnim_PlayerArrow_TopRight_Off,
+    sAnim_PlayerArrow_BottomLeft_Off,
+    sAnim_PlayerArrow_BottomRight_Off
+};
+
+static const struct SpriteSheet sSpriteSheet_PlayerArrow BB_DATA(sSpriteSheet_PlayerArrow) =
+{
+    gBerryBlenderPlayerArrow_Gfx, 0x800, GFXTAG_PLAYER_ARROW
+};
+
+static const struct SpritePalette sSpritePal_BlenderMisc BB_DATA(sSpritePal_BlenderMisc) =
+{
+    gBerryBlenderMiscPalette, PALTAG_MISC
+};
+
+static const struct SpritePalette sSpritePal_PlayerArrow BB_DATA(sSpritePal_PlayerArrow) =
+{
+    gBerryBlenderArrowPalette, PALTAG_PLAYER_ARROW
+};
+
+static const struct SpriteTemplate sSpriteTemplate_PlayerArrow BB_DATA(sSpriteTemplate_PlayerArrow) =
+{
+    .tileTag = GFXTAG_PLAYER_ARROW,
+    .paletteTag = PALTAG_PLAYER_ARROW,
+    .oam = &sOam_PlayerArrow,
+    .anims = sAnims_PlayerArrow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (void (*)(struct Sprite *))sub_08082E14
+};
+
+static const struct OamData sOam_ScoreSymbols BB_DATA(sOam_ScoreSymbols) =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_ScoreSymbols_Good[] BB_DATA(sAnim_ScoreSymbols_Good) =
+{
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_ScoreSymbols_Miss[] BB_DATA(sAnim_ScoreSymbols_Miss) =
+{
+    ANIMCMD_FRAME(4, 20, 1, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_ScoreSymbols_BestFlash[] BB_DATA(sAnim_ScoreSymbols_BestFlash) =
+{
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_FRAME(12, 4),
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_FRAME(12, 4),
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_ScoreSymbols_BestStatic[] BB_DATA(sAnim_ScoreSymbols_BestStatic) =
+{
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_ScoreSymbols[] BB_DATA(sAnims_ScoreSymbols) =
+{
+    [SCOREANIM_GOOD]        = sAnim_ScoreSymbols_Good,
+    [SCOREANIM_MISS]        = sAnim_ScoreSymbols_Miss,
+    [SCOREANIM_BEST_FLASH]  = sAnim_ScoreSymbols_BestFlash,
+    [SCOREANIM_BEST_STATIC] = sAnim_ScoreSymbols_BestStatic,
+};
+
+static const struct SpriteSheet sSpriteSheet_ScoreSymbols BB_DATA(sSpriteSheet_ScoreSymbols) =
+{
+    gBerryBlenderScoreSymbols_Gfx, 0x200, GFXTAG_SCORE_SYMBOLS
+};
+
+static const struct SpriteTemplate sSpriteTemplate_ScoreSymbols BB_DATA(sSpriteTemplate_ScoreSymbols) =
+{
+    .tileTag = GFXTAG_SCORE_SYMBOLS,
+    .paletteTag = PALTAG_MISC,
+    .oam = &sOam_ScoreSymbols,
+    .anims = sAnims_ScoreSymbols,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (void (*)(struct Sprite *))sub_08082984
+};
+
+static const struct OamData sOam_Particles BB_DATA(sOam_Particles) =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_SparkleCrossToX[] BB_DATA(sAnim_SparkleCrossToX) =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(3, 5),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_SparkleXToCross[] BB_DATA(sAnim_SparkleXToCross) =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(2, 4),
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(2, 4),
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_SparkleFull[] BB_DATA(sAnim_SparkleFull) =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(1, 2),
+    ANIMCMD_FRAME(2, 2),
+    ANIMCMD_FRAME(4, 4),
+    ANIMCMD_FRAME(3, 3),
+    ANIMCMD_FRAME(2, 2),
+    ANIMCMD_FRAME(1, 2),
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_GreenArrow[] BB_DATA(sAnim_GreenArrow) =
+{
+    ANIMCMD_FRAME(5, 5, 1, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_GreenDot[] BB_DATA(sAnim_GreenDot) =
+{
+    ANIMCMD_FRAME(6, 5, 1, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_Particles[] BB_DATA(sAnims_Particles) =
+{
+    sAnim_SparkleCrossToX, // Only this effect is ever used, rest go unused
+    sAnim_SparkleXToCross,
+    sAnim_SparkleFull,
+    sAnim_GreenArrow,
+    sAnim_GreenDot,
+};
+
+static const struct SpriteSheet sSpriteSheet_Particles BB_DATA(sSpriteSheet_Particles) =
+{
+    gBerryBlenderParticles_Gfx, 0xE0, GFXTAG_PARTICLES
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Particles BB_DATA(sSpriteTemplate_Particles) =
+{
+    .tileTag = GFXTAG_PARTICLES,
+    .paletteTag = PALTAG_MISC,
+    .oam = &sOam_Particles,
+    .anims = sAnims_Particles,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+static const struct OamData sOam_CountdownNumbers BB_DATA(sOam_CountdownNumbers) =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_CountdownNumbers_3[] BB_DATA(sAnim_CountdownNumbers_3) =
+{
+    ANIMCMD_FRAME(32, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_CountdownNumbers_2[] BB_DATA(sAnim_CountdownNumbers_2) =
+{
+    ANIMCMD_FRAME(16, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_CountdownNumbers_1[] BB_DATA(sAnim_CountdownNumbers_1) =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_CountdownNumbers[] BB_DATA(sAnims_CountdownNumbers) =
+{
+    sAnim_CountdownNumbers_3,
+    sAnim_CountdownNumbers_2,
+    sAnim_CountdownNumbers_1,
+};
+
+static const struct SpriteSheet sSpriteSheet_CountdownNumbers BB_DATA(sSpriteSheet_CountdownNumbers) =
+{
+    gBerryBlenderCountdownNumbers_Gfx, 0x600, GFXTAG_COUNTDOWN_NUMBERS
+};
+
+static const struct SpriteTemplate sSpriteTemplate_CountdownNumbers BB_DATA(sSpriteTemplate_CountdownNumbers) =
+{
+    .tileTag = GFXTAG_COUNTDOWN_NUMBERS,
+    .paletteTag = PALTAG_MISC,
+    .oam = &sOam_CountdownNumbers,
+    .anims = sAnims_CountdownNumbers,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (void (*)(struct Sprite *))sub_08082A2C
+};
+
+static const struct OamData sOam_Start BB_DATA(sOam_Start) =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Start[] BB_DATA(sAnim_Start) =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_Start[] BB_DATA(sAnims_Start) =
+{
+    sAnim_Start,
+};
+
+static const struct SpriteSheet sSpriteSheet_Start BB_DATA(sSpriteSheet_Start) =
+{
+    gBerryBlenderStart_Gfx, 0x400, GFXTAG_START
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Start BB_DATA(sSpriteTemplate_Start) =
+{
+    .tileTag = GFXTAG_START,
+    .paletteTag = PALTAG_MISC,
+    .oam = &sOam_Start,
+    .anims = sAnims_Start,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (void (*)(struct Sprite *))sub_08082ADC
+};
+
+static const s16 sBerrySpriteData[][5] BB_DATA(sBerrySpriteData) =
+{
+    {-10,  20,  10,   2,   1},
+    {250,  20,  10,  -2,   1},
+    {-10, 140,  10,   2,  -1},
+    {250, 140,  10,  -2,  -1},
+};
+
+static const u8 sOpponentBerrySets[NUM_NPC_BERRIES * 2][3] BB_DATA(sOpponentBerrySets) =
+{
+    // These sets are used if the player chose one of the 5 NPC berries
+    {ITEM_TO_BERRY(ITEM_ASPEAR_BERRY) - 1, ITEM_TO_BERRY(ITEM_RAWST_BERRY) - 1,  ITEM_TO_BERRY(ITEM_PECHA_BERRY) - 1},   // player chose Cheri Berry
+    {ITEM_TO_BERRY(ITEM_CHERI_BERRY) - 1,  ITEM_TO_BERRY(ITEM_ASPEAR_BERRY) - 1, ITEM_TO_BERRY(ITEM_RAWST_BERRY) - 1},   // player chose Chesto Berry
+    {ITEM_TO_BERRY(ITEM_CHESTO_BERRY) - 1, ITEM_TO_BERRY(ITEM_CHERI_BERRY) - 1,  ITEM_TO_BERRY(ITEM_ASPEAR_BERRY) - 1},  // player chose Pecha Berry
+    {ITEM_TO_BERRY(ITEM_PECHA_BERRY) - 1,  ITEM_TO_BERRY(ITEM_CHESTO_BERRY) - 1, ITEM_TO_BERRY(ITEM_CHERI_BERRY) - 1},   // player chose Rawst Berry
+    {ITEM_TO_BERRY(ITEM_RAWST_BERRY) - 1,  ITEM_TO_BERRY(ITEM_PECHA_BERRY) - 1,  ITEM_TO_BERRY(ITEM_CHESTO_BERRY) - 1},  // player chose Aspear Berry
+
+    // These sets are used if the player chose a different berry (set is selected by player's berry % 5)
+    {ITEM_TO_BERRY(ITEM_CHERI_BERRY) - 1,  ITEM_TO_BERRY(ITEM_PECHA_BERRY) - 1,  ITEM_TO_BERRY(ITEM_RAWST_BERRY) - 1},   // player chose Leppa, Figy, ...
+    {ITEM_TO_BERRY(ITEM_CHESTO_BERRY) - 1, ITEM_TO_BERRY(ITEM_RAWST_BERRY) - 1,  ITEM_TO_BERRY(ITEM_ASPEAR_BERRY) - 1},  // player chose Oran, Wiki, ...
+    {ITEM_TO_BERRY(ITEM_PECHA_BERRY) - 1,  ITEM_TO_BERRY(ITEM_ASPEAR_BERRY) - 1, ITEM_TO_BERRY(ITEM_CHERI_BERRY) - 1},   // player chose Persim, Mago, ...
+    {ITEM_TO_BERRY(ITEM_RAWST_BERRY) - 1,  ITEM_TO_BERRY(ITEM_CHERI_BERRY) - 1,  ITEM_TO_BERRY(ITEM_CHESTO_BERRY) - 1},  // player chose Lum, Aguav, ...
+    {ITEM_TO_BERRY(ITEM_ASPEAR_BERRY) - 1, ITEM_TO_BERRY(ITEM_CHESTO_BERRY) - 1, ITEM_TO_BERRY(ITEM_PECHA_BERRY) - 1},   // player chose Sitrus, Iapapa, ...
+};
+
+static const u8 sBerryMasterBerries[] BB_DATA(sBerryMasterBerries) = {
+    ITEM_TO_BERRY(ITEM_SPELON_BERRY) - 1,
+    ITEM_TO_BERRY(ITEM_PAMTRE_BERRY) - 1,
+    ITEM_TO_BERRY(ITEM_WATMEL_BERRY) - 1,
+    ITEM_TO_BERRY(ITEM_DURIN_BERRY) - 1,
+    ITEM_TO_BERRY(ITEM_BELUE_BERRY) - 1
+};
+
+static const u8 sNumPlayersToSpeedDivisor[] BB_DATA(sNumPlayersToSpeedDivisor) = {1, 1, 2, 3, 4};
+
+static const u8 sBlackPokeblockFlavorFlags[] BB_DATA(sBlackPokeblockFlavorFlags) =
+{
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_DRY),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_BITTER) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY),
+    (1 << FLAVOR_BITTER) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_BITTER) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_SWEET) | (1 << FLAVOR_DRY) | (1 << FLAVOR_SPICY),
+    (1 << FLAVOR_SOUR) | (1 << FLAVOR_SWEET) | (1 << FLAVOR_SPICY),
+};
+
+static const u8 sJPBlackPokeblockFlavorExtraData[] BB_DATA(sJPBlackPokeblockFlavorExtraData) = {11, 10, 3, 15, 8, 255};
+
+static const u8 sJPText_SavingDontTurnOffPower[] BB_DATA(sJPText_SavingDontTurnOffPower) = _(
+    "ポケモンレポートに　かきこんでいます　　　　\n"
+    "でんげんを　きらないで　ください　　　　　　");
+
+static const u8 sJPText_GoodTvReady[] BB_DATA(sJPText_GoodTvReady) = _(
+    "\n"
+    "いいTVができました　");
+
+static const u8 sJPText_BadTvReady[] BB_DATA(sJPText_BadTvReady) = _(
+    "\n"
+    "ダメTVができました　");
+
+static const u8 sJPText_Flavors[][5] BB_DATA(sJPText_Flavors) = {
+    _("からい"),
+    _("しぶい"),
+    _("あまい"),
+    _("にがい"),
+    _("すっぱい"),
+};
+
+static const u8 sUnused[] BB_DATA(sUnused) = {
     6, 6, 6, 6, 5,
     3, 3, 3, 2, 2,
     3, 3, 3, 3, 2,
 };
 
-const u8 gText_BlenderMaxSpeedRecord[] BERRY_BLENDER_RECORD_WINDOW_DATA = _("きのみブレンダー\nさいこうそくど　ランキング！");
-
-const u8 gText_234Players[] BERRY_BLENDER_RECORD_WINDOW_DATA = _("ふたり\nさんにん\nよにん");
-
-const u8 sBlenderRecordWindowPadding[] BERRY_BLENDER_RECORD_WINDOW_DATA = {0, 0, 0};
-
-const struct WindowTemplate sBlenderRecordWindowTemplate BERRY_BLENDER_RECORD_WINDOW_DATA = {
+static const struct WindowTemplate sBlenderRecordWindowTemplate BB_DATA(sBlenderRecordWindowTemplate) = {
     .bg = 0,
     .tilemapLeft = 6,
     .tilemapTop = 4,

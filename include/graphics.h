@@ -5072,3 +5072,4 @@ extern const u16 gMonMarkingsMenu_Pal[];
 extern const u16 gTradeCursor_Pal[];
 extern const u16 gTradeUnused_Tilemap[];
 extern const u16 gTradeGba_Pal[];
+extern const u8 gBerryBlenderBetaArrow_Gfx[];
