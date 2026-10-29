@@ -1473,8 +1473,6 @@ $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c Makefile ch
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_summary_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/rayquaza_scene.h src/data/graphics/berries.h src/data/graphics/pokeballs.h src/data/text_window.h src/data/scrcmd_data.h \
-	graphics/easy_chat/rectangle_cursor.png.gbapal graphics/easy_chat/rectangle_cursor.png.4bpp.lz \
-	graphics/easy_chat/button_window.png.gbapal graphics/easy_chat/mode.png.gbapal graphics/easy_chat/mode.png.4bpp.lz graphics/easy_chat/window.png.4bpp.lz graphics/easy_chat/window.bin.lz graphics/easy_chat/button_window.png.4bpp.lz \
 	graphics/text_window/message_box_jp.4bpp \
 	graphics/interface/menu_info1.gbapal graphics/interface/menu_info2.gbapal graphics/interface/menu_info3.gbapal graphics/interface/menu_info.4bpp \
 	graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin \
@@ -1864,12 +1862,9 @@ $(C_BUILDDIR)/rotating_gate.o: src/rotating_gate.c graphics/rotating_gates/l1.pn
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/rotating_gate.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/rotating_gate.gen.s
 
-$(C_BUILDDIR)/easy_chat.o: src/easy_chat.c graphics/easy_chat/scroll_indicator.png.4bpp graphics/easy_chat/start_select_buttons.png.4bpp \
-	graphics/easy_chat/interview_frame.png.gbapal graphics/easy_chat/interview_frame.png.4bpp.lz \
-	graphics/easy_chat/text_input_frame_orange.pal.gbapal graphics/easy_chat/text_input_frame_green.pal.gbapal graphics/easy_chat/text_input_frame.png.4bpp.lz \
-	graphics/easy_chat/title_text.pal.gbapal graphics/easy_chat/text.pal.gbapal
+$(C_BUILDDIR)/easy_chat.o: src/easy_chat.c Makefile charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/easy_chat.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/easy_chat.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/easy_chat.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/easy_chat.gen.s
 
@@ -6720,3 +6715,109 @@ $(C_BUILDDIR)/battle_interface.d: src/battle_interface.c Makefile | tools
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/battle_interface.d
+
+$(C_BUILDDIR)/easy_chat.d: src/easy_chat.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/easy_chat.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/scroll_indicator.png.4bpp: graphics/easy_chat/scroll_indicator.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/start_select_buttons.png.4bpp: graphics/easy_chat/start_select_buttons.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/interview_frame.png.gbapal: graphics/easy_chat/interview_frame.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/interview_frame.png.4bpp: graphics/easy_chat/interview_frame.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/interview_frame.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/interview_frame.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/text_input_frame_orange.pal.gbapal: graphics/easy_chat/text_input_frame_orange.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/text_input_frame_green.pal.gbapal: graphics/easy_chat/text_input_frame_green.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/text_input_frame.png.4bpp: graphics/easy_chat/text_input_frame.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/text_input_frame.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/text_input_frame.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/title_text.pal.gbapal: graphics/easy_chat/title_text.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/text.pal.gbapal: graphics/easy_chat/text.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/rectangle_cursor.png.gbapal: graphics/easy_chat/rectangle_cursor.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/rectangle_cursor.png.4bpp: graphics/easy_chat/rectangle_cursor.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/rectangle_cursor.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/rectangle_cursor.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/button_window.png.gbapal: graphics/easy_chat/button_window.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/mode.png.4bpp: graphics/easy_chat/mode.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/mode.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/mode.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/mode.png.gbapal: graphics/easy_chat/mode.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/window.png.4bpp: graphics/easy_chat/window.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/window.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/window.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/window.bin.lz: graphics/easy_chat/window.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/button_window.png.4bpp: graphics/easy_chat/button_window.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/button_window.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/button_window.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/triangle_cursor.png.gbapal: graphics/easy_chat/triangle_cursor.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/triangle_cursor.png.4bpp: graphics/easy_chat/triangle_cursor.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@

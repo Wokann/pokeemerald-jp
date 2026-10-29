@@ -408,20 +408,11 @@ static const u16 sRestrictedWordSpecies[] EASY_CHAT_RESTRICTED_WORD_SPECIES_DATA
     SPECIES_DEOXYS,
 };
 
-// Retain the JP triangle cursor palette as byte-exact BGR555 data until its source asset is recovered.
 static const u16 sTriangleCursor_Pal[16] EASY_CHAT_TRIANGLE_CURSOR_PAL_DATA =
-{
-    0x4BFF, 0x4B1F, 0x2E3D, 0x1577,
-    0x6B5F, 0x5ADE, 0x4218, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x18C5,
-    0x318C, 0x5AF6, 0x6F5B, 0x7FFF,
-};
+INCGFX_U16("graphics/easy_chat/triangle_cursor.png", ".gbapal");
 
 static const u32 sTriangleCursor_Gfx[] EASY_CHAT_TRIANGLE_CURSOR_GFX_DATA =
-{
-    0x0000CCC0, 0x000CDDC0, 0x00CDDDC0, 0x0CDDDDC0,
-    0x0CDDDDC0, 0x00CDDDC0, 0x000CDDC0, 0x0000CCC0,
-};
+INCGFX_U32("graphics/easy_chat/triangle_cursor.png", ".4bpp");
 
 static const u32 sScrollIndicator_Gfx[] EASY_CHAT_SCROLL_INDICATOR_GFX_DATA =
     INCGFX_U32("graphics/easy_chat/scroll_indicator.png", ".4bpp");

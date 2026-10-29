@@ -1891,7 +1891,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -4590,7 +4590,7 @@
             "-include $(C_BUILDDIR)/pokedex_area_screen.d",
             "$(C_BUILDDIR)/pokedex_area_screen.o:"
           ],
-          "sha256": "4f15a97bbce3fc6f8c976a28356d982bc7a7d7c6abbf9b7a635f5b874e4c366d"
+          "sha256": "a71482d5edc9fb6c20ac354b0dd8f2ba1060559f6e61e08c707b6341584e2459"
         },
         {
           "path": "ld_script_jp.txt",
@@ -4720,7 +4720,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "src/tilesets.c",
@@ -14511,7 +14511,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -17587,7 +17587,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -20788,7 +20788,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -24004,7 +24004,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -26106,7 +26106,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -29403,7 +29403,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -32393,7 +32393,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -35246,7 +35246,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -37187,7 +37187,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -39434,7 +39434,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -41883,7 +41883,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -43962,7 +43962,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_object_movement.c",
@@ -44442,7 +44442,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -45139,7 +45139,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "87ec5432d3e474308d883c2fd9592faf3d22f1a659f1de37c52a991ceaad708d"
+            "makefile_sha256": "f0932e156fd2c6c5fa0a79e481824c8dd3d205bc3383f9858a4cb68fa4ebd635"
           }
         },
         {
@@ -45574,7 +45574,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "87ec5432d3e474308d883c2fd9592faf3d22f1a659f1de37c52a991ceaad708d"
+          "sha256": "f0932e156fd2c6c5fa0a79e481824c8dd3d205bc3383f9858a4cb68fa4ebd635"
         },
         {
           "path": "asm/macros.inc",
@@ -47424,7 +47424,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -49647,7 +49647,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -54057,7 +54057,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -63231,7 +63231,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -76078,7 +76078,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -76508,7 +76508,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/mirage_tower.c",
@@ -91642,7 +91642,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -93608,7 +93608,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "data/scripts/abnormal_weather.inc",
@@ -104840,7 +104840,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -107343,7 +107343,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -118006,7 +118006,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -125583,7 +125583,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -133482,7 +133482,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -140055,7 +140055,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -147646,7 +147646,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -147986,7 +147986,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "data/event_scripts.s",
@@ -152633,7 +152633,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -162233,7 +162233,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -172287,7 +172287,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -181880,7 +181880,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -190660,7 +190660,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -191825,7 +191825,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/trainer_card.c",
@@ -200873,7 +200873,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -202171,7 +202171,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "data/scripts/movement.inc",
@@ -213210,7 +213210,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -214227,7 +214227,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/trader.c",
@@ -223987,7 +223987,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -234877,7 +234877,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -247265,7 +247265,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -248255,7 +248255,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/field_camera.c",
@@ -265527,7 +265527,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -276041,7 +276041,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_object_movement.c",
@@ -276726,7 +276726,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -286704,7 +286704,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -295373,7 +295373,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -301848,7 +301848,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/secondary/meteor_falls/metatile_attributes.bin",
@@ -308507,7 +308507,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -313839,7 +313839,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -320468,7 +320468,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -325984,7 +325984,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -331547,7 +331547,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -338449,7 +338449,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -346384,7 +346384,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -353404,7 +353404,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -357863,7 +357863,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -361584,7 +361584,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -365602,7 +365602,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -366119,7 +366119,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -370864,7 +370864,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -374522,7 +374522,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -378156,7 +378156,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -378574,7 +378574,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -381914,7 +381914,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -382393,7 +382393,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -385451,7 +385451,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -385914,7 +385914,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -389101,7 +389101,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -389540,7 +389540,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -392998,7 +392998,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -393461,7 +393461,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -396444,7 +396444,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -396899,7 +396899,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -400027,7 +400027,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -400442,7 +400442,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -405846,7 +405846,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -406242,7 +406242,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -414232,7 +414232,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -414711,7 +414711,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -418603,7 +418603,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -418984,7 +418984,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -422798,7 +422798,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -426408,7 +426408,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -431886,7 +431886,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -433874,7 +433874,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -436838,7 +436838,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -440347,7 +440347,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -444579,7 +444579,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -444926,7 +444926,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -446892,7 +446892,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -447447,7 +447447,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -449508,7 +449508,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -450063,7 +450063,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -452327,7 +452327,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -452778,7 +452778,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -454976,7 +454976,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -455331,7 +455331,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -457140,7 +457140,7 @@
         {
           "path": "src/easy_chat.c",
           "selector": "file",
-          "sha256": "0304b05554bca2ab7d3464e33c4d5e9f826a12e30d4d2bc9c98b7e71ed0e3097"
+          "sha256": "0801d82aff56eb34b7732aa8e60b1a3612e1f553568501bccbbff5a06a59b08f"
         },
         {
           "path": "src/event_data.c",
@@ -457615,7 +457615,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -463257,7 +463257,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "src/metatile_behavior.c",
@@ -471048,7 +471048,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "src/item.c",
@@ -477270,7 +477270,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "5994a62b6ff9df4782d5da9096e80c39cf153271c6f418c7edcd3056989a67a7"
+          "sha256": "1fb954d40f69dedc49b3ac14c2d027c3f446ca50b1c10101f8c72a7be242224c"
         },
         {
           "path": "src/item.c",

@@ -1070,49 +1070,49 @@ BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderOuter_Tilemap[] = INCGF
 // unclassified. Dedicated linker sections retain that physical order.
 #define EASY_CHAT_RECTANGLE_CURSOR_PAL __attribute__((section(".rodata.easy_chat_rectangle_cursor_pal_data"), aligned(1)))
 
-EASY_CHAT_RECTANGLE_CURSOR_PAL const u16 gEasyChatRectangleCursor_Pal[] = INCBIN_U16("graphics/easy_chat/rectangle_cursor.png.gbapal");
+EASY_CHAT_RECTANGLE_CURSOR_PAL const u16 gEasyChatRectangleCursor_Pal[] = INCGFX_U16("graphics/easy_chat/rectangle_cursor.png", ".gbapal");
 
 #undef EASY_CHAT_RECTANGLE_CURSOR_PAL
 
 #define EASY_CHAT_RECTANGLE_CURSOR_GFX __attribute__((section(".rodata.easy_chat_rectangle_cursor_gfx_data"), aligned(1)))
 
-EASY_CHAT_RECTANGLE_CURSOR_GFX const u32 gEasyChatRectangleCursor_Gfx[] = INCBIN_U32("graphics/easy_chat/rectangle_cursor.png.4bpp.lz");
+EASY_CHAT_RECTANGLE_CURSOR_GFX const u32 gEasyChatRectangleCursor_Gfx[] = INCGFX_U32("graphics/easy_chat/rectangle_cursor.png", ".4bpp.lz");
 
 #undef EASY_CHAT_RECTANGLE_CURSOR_GFX
 
 #define EASY_CHAT_BUTTON_WINDOW_PAL __attribute__((section(".rodata.easy_chat_button_window_pal_data"), aligned(1)))
 
-EASY_CHAT_BUTTON_WINDOW_PAL const u16 gEasyChatButtonWindow_Pal[] = INCBIN_U16("graphics/easy_chat/button_window.png.gbapal");
+EASY_CHAT_BUTTON_WINDOW_PAL const u16 gEasyChatButtonWindow_Pal[] = INCGFX_U16("graphics/easy_chat/button_window.png", ".gbapal");
 
 #undef EASY_CHAT_BUTTON_WINDOW_PAL
 
 #define EASY_CHAT_MODE_GFX __attribute__((section(".rodata.easy_chat_mode_gfx_data"), aligned(1)))
 
-EASY_CHAT_MODE_GFX const u32 gEasyChatMode_Gfx[] = INCBIN_U32("graphics/easy_chat/mode.png.4bpp.lz");
+EASY_CHAT_MODE_GFX const u32 gEasyChatMode_Gfx[] = INCGFX_U32("graphics/easy_chat/mode.png", ".4bpp.lz");
 
 #undef EASY_CHAT_MODE_GFX
 
 #define EASY_CHAT_MODE_PAL __attribute__((section(".rodata.easy_chat_mode_pal_data"), aligned(1)))
 
-EASY_CHAT_MODE_PAL const u16 gEasyChatMode_Pal[] = INCBIN_U16("graphics/easy_chat/mode.png.gbapal");
+EASY_CHAT_MODE_PAL const u16 gEasyChatMode_Pal[] = INCGFX_U16("graphics/easy_chat/mode.png", ".gbapal");
 
 #undef EASY_CHAT_MODE_PAL
 
 #define EASY_CHAT_WINDOW_GFX __attribute__((section(".rodata.easy_chat_window_gfx_data"), aligned(1)))
 
-EASY_CHAT_WINDOW_GFX const u32 gEasyChatWindow_Gfx[] = INCBIN_U32("graphics/easy_chat/window.png.4bpp.lz");
+EASY_CHAT_WINDOW_GFX const u32 gEasyChatWindow_Gfx[] = INCGFX_U32("graphics/easy_chat/window.png", ".4bpp.lz");
 
 #undef EASY_CHAT_WINDOW_GFX
 
 #define EASY_CHAT_WINDOW_TILEMAP __attribute__((section(".rodata.easy_chat_window_tilemap_data"), aligned(1)))
 
-EASY_CHAT_WINDOW_TILEMAP const u32 gEasyChatWindow_Tilemap[] = INCBIN_U32("graphics/easy_chat/window.bin.lz");
+EASY_CHAT_WINDOW_TILEMAP const u32 gEasyChatWindow_Tilemap[] = INCGFX_U32("graphics/easy_chat/window.bin", ".lz");
 
 #undef EASY_CHAT_WINDOW_TILEMAP
 
 #define EASY_CHAT_BUTTON_WINDOW_GFX __attribute__((section(".rodata.easy_chat_button_window_gfx_data"), aligned(1)))
 
-EASY_CHAT_BUTTON_WINDOW_GFX const u32 gEasyChatButtonWindow_Gfx[] = INCBIN_U32("graphics/easy_chat/button_window.png.4bpp.lz");
+EASY_CHAT_BUTTON_WINDOW_GFX const u32 gEasyChatButtonWindow_Gfx[] = INCGFX_U32("graphics/easy_chat/button_window.png", ".4bpp.lz");
 
 #undef EASY_CHAT_BUTTON_WINDOW_GFX
 
