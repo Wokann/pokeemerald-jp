@@ -990,15 +990,6 @@ $(C_BUILDDIR)/battle_anim_mon_movement.o: CFLAGS := -mthumb-interwork -O2 -fhex-
 $(C_BUILDDIR)/battle_anim_utility_funcs.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/mail.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/starter_choose.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
-$(C_BUILDDIR)/starter_choose.o: \
-	graphics/starter_choose/tiles.gbapal \
-	graphics/starter_choose/pokeball_selection.gbapal \
-	graphics/starter_choose/starter_circle.gbapal \
-	graphics/starter_choose/birch_bag.bin.lz \
-	graphics/starter_choose/birch_grass.bin.lz \
-	graphics/starter_choose/tiles.png.4bpp.lz \
-	graphics/starter_choose/pokeball_selection.png.4bpp.lz \
-	graphics/starter_choose/starter_circle.png.4bpp.lz
 $(C_BUILDDIR)/wallclock.o: \
 	graphics/wallclock/male.gbapal \
 	graphics/wallclock/female.gbapal \
@@ -1231,8 +1222,6 @@ graphics/rotating_gates/%.png.4bpp: graphics/rotating_gates/%.png | tools
 graphics/battle_frontier/factory_screen/%.png.4bpp: graphics/battle_frontier/factory_screen/%.png | tools
 	$(GFX) $< $@
 
-graphics/starter_choose/%.png.4bpp: graphics/starter_choose/%.png | tools
-	$(GFX) $< $@
 
 graphics/wallclock/%.png.4bpp: graphics/wallclock/%.png | tools
 	$(GFX) $< $@
@@ -1565,7 +1554,7 @@ $(C_BUILDDIR)/menu.o: src/menu.c
 
 $(C_BUILDDIR)/starter_choose.o: src/starter_choose.c
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/starter_choose.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/starter_choose.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/starter_choose.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/starter_choose.gen.s
 
@@ -6078,5 +6067,55 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/tough_map.bin.rl: graphics/picture
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/lobby_map.bin.rl: graphics/picture_frame/lobby_map.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/starter_choose.d: src/starter_choose.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/starter_choose.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/tiles.png.gbapal: graphics/starter_choose/tiles.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/pokeball_selection.png.gbapal: graphics/starter_choose/pokeball_selection.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/starter_circle.png.gbapal: graphics/starter_choose/starter_circle.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/birch_bag.bin.lz: graphics/starter_choose/birch_bag.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/birch_grass.bin.lz: graphics/starter_choose/birch_grass.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/tiles.png.4bpp: graphics/starter_choose/tiles.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/tiles.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/tiles.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/pokeball_selection.png.4bpp: graphics/starter_choose/pokeball_selection.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/pokeball_selection.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/pokeball_selection.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/starter_circle.png.4bpp: graphics/starter_choose/starter_circle.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/starter_circle.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/starter_circle.png.4bpp $(GFX)
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@

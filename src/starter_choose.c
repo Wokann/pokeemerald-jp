@@ -35,18 +35,14 @@
 
 #define STARTER_CHOOSE_GRAPHICS __attribute__((section(".rodata.starter_choose_graphics"), aligned(1)))
 
-// Keep the JP starter-selection image streams in pokeemerald's final asset
-// hierarchy while preserving their original compressed ROM order.
-// JP uses two contiguous BG palette rows here, so its palette source is
-// intentionally separate from the single-row tiles.png palette.
-STARTER_CHOOSE_GRAPHICS const u16 gBirchBagGrass_Pal[] = INCBIN_U16("graphics/starter_choose/tiles.gbapal");
-STARTER_CHOOSE_GRAPHICS static const u16 sPokeballSelection_Pal[] = INCBIN_U16("graphics/starter_choose/pokeball_selection.gbapal");
-STARTER_CHOOSE_GRAPHICS static const u16 sStarterCircle_Pal[] = INCBIN_U16("graphics/starter_choose/starter_circle.gbapal");
-STARTER_CHOOSE_GRAPHICS const u32 gBirchBagTilemap[] = INCBIN_U32("graphics/starter_choose/birch_bag.bin.lz");
-STARTER_CHOOSE_GRAPHICS const u32 gBirchGrassTilemap[] = INCBIN_U32("graphics/starter_choose/birch_grass.bin.lz");
-STARTER_CHOOSE_GRAPHICS const u32 gBirchBagGrass_Gfx[] = INCBIN_U32("graphics/starter_choose/tiles.png.4bpp.lz");
-STARTER_CHOOSE_GRAPHICS const u32 gPokeballSelection_Gfx[] = INCBIN_U32("graphics/starter_choose/pokeball_selection.png.4bpp.lz");
-STARTER_CHOOSE_GRAPHICS const u32 sStarterCircle_Gfx[] = INCBIN_U32("graphics/starter_choose/starter_circle.png.4bpp.lz");
+STARTER_CHOOSE_GRAPHICS const u16 gBirchBagGrass_Pal[] = INCGFX_U16("graphics/starter_choose/tiles.png", ".gbapal");
+STARTER_CHOOSE_GRAPHICS static const u16 sPokeballSelection_Pal[] = INCGFX_U16("graphics/starter_choose/pokeball_selection.png", ".gbapal");
+STARTER_CHOOSE_GRAPHICS static const u16 sStarterCircle_Pal[] = INCGFX_U16("graphics/starter_choose/starter_circle.png", ".gbapal");
+STARTER_CHOOSE_GRAPHICS const u32 gBirchBagTilemap[] = INCGFX_U32("graphics/starter_choose/birch_bag.bin", ".lz");
+STARTER_CHOOSE_GRAPHICS const u32 gBirchGrassTilemap[] = INCGFX_U32("graphics/starter_choose/birch_grass.bin", ".lz");
+STARTER_CHOOSE_GRAPHICS const u32 gBirchBagGrass_Gfx[] = INCGFX_U32("graphics/starter_choose/tiles.png", ".4bpp.lz");
+STARTER_CHOOSE_GRAPHICS const u32 gPokeballSelection_Gfx[] = INCGFX_U32("graphics/starter_choose/pokeball_selection.png", ".4bpp.lz");
+STARTER_CHOOSE_GRAPHICS static const u32 sStarterCircle_Gfx[] = INCGFX_U32("graphics/starter_choose/starter_circle.png", ".4bpp.lz");
 
 #undef STARTER_CHOOSE_GRAPHICS
 

@@ -23405,7 +23405,7 @@
         {
           "path": "src/starter_choose.c",
           "selector": "file",
-          "sha256": "52f6d2846a569943c66404276655ab5e8e1a8ba74be6d4a84b99bcaaec0afe50"
+          "sha256": "cabb200a47fbc80301a46a986bc2fd424beb0ef283b2126b4eada92cc998b2e9"
         },
         {
           "path": "tools/jp_generate_layouts.py",
@@ -28778,7 +28778,7 @@
         {
           "path": "src/starter_choose.c",
           "selector": "file",
-          "sha256": "52f6d2846a569943c66404276655ab5e8e1a8ba74be6d4a84b99bcaaec0afe50"
+          "sha256": "cabb200a47fbc80301a46a986bc2fd424beb0ef283b2126b4eada92cc998b2e9"
         },
         {
           "path": "src/time_events.c",
@@ -45138,7 +45138,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "ec1b2793890108f8fce893060b65380efc36d8dad40c918ec5a7157023e356fd"
+            "makefile_sha256": "6aeffb6a28e903565e94ebf7c4fd570d06007331f8ddb05c39e25c8d41ed318b"
           }
         },
         {
@@ -45573,7 +45573,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "ec1b2793890108f8fce893060b65380efc36d8dad40c918ec5a7157023e356fd"
+          "sha256": "6aeffb6a28e903565e94ebf7c4fd570d06007331f8ddb05c39e25c8d41ed318b"
         },
         {
           "path": "asm/macros.inc",
@@ -193876,7 +193876,7 @@
         {
           "path": "src/starter_choose.c",
           "selector": "file",
-          "sha256": "52f6d2846a569943c66404276655ab5e8e1a8ba74be6d4a84b99bcaaec0afe50"
+          "sha256": "cabb200a47fbc80301a46a986bc2fd424beb0ef283b2126b4eada92cc998b2e9"
         },
         {
           "path": "src/data/graphics/rayquaza_scene.h",
@@ -200586,7 +200586,7 @@
         {
           "path": "src/starter_choose.c",
           "selector": "file",
-          "sha256": "52f6d2846a569943c66404276655ab5e8e1a8ba74be6d4a84b99bcaaec0afe50"
+          "sha256": "cabb200a47fbc80301a46a986bc2fd424beb0ef283b2126b4eada92cc998b2e9"
         },
         {
           "path": "src/string_util.c",
@@ -212616,7 +212616,7 @@
         {
           "path": "src/starter_choose.c",
           "selector": "file",
-          "sha256": "52f6d2846a569943c66404276655ab5e8e1a8ba74be6d4a84b99bcaaec0afe50"
+          "sha256": "cabb200a47fbc80301a46a986bc2fd424beb0ef283b2126b4eada92cc998b2e9"
         },
         {
           "path": "src/string_util.c",
@@ -223711,7 +223711,7 @@
         {
           "path": "src/starter_choose.c",
           "selector": "file",
-          "sha256": "52f6d2846a569943c66404276655ab5e8e1a8ba74be6d4a84b99bcaaec0afe50"
+          "sha256": "cabb200a47fbc80301a46a986bc2fd424beb0ef283b2126b4eada92cc998b2e9"
         },
         {
           "path": "src/string_util.c",
@@ -234598,7 +234598,7 @@
         {
           "path": "src/starter_choose.c",
           "selector": "file",
-          "sha256": "52f6d2846a569943c66404276655ab5e8e1a8ba74be6d4a84b99bcaaec0afe50"
+          "sha256": "cabb200a47fbc80301a46a986bc2fd424beb0ef283b2126b4eada92cc998b2e9"
         },
         {
           "path": "src/string_util.c",
