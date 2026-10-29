@@ -849,15 +849,6 @@ $(C_BUILDDIR)/title_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffuncti
 # to retain the original 0x180-byte register allocation.
 $(C_BUILDDIR)/battle_tent.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -g
 
-$(C_BUILDDIR)/title_screen_assets.o: src/title_screen_assets.c graphics/title_screen/rayquaza.4bpp.lz graphics/title_screen/rayquaza.bin.lz \
-	graphics/title_screen/logo_shine.4bpp.lz graphics/title_screen/clouds.4bpp.lz
-	@mkdir -p $(dir $@)
-	@$(CPP) $(CPPFLAGS) -P -x c $< > $(C_BUILDDIR)/title_screen_assets.pre.c
-	@$(PREPROC) -i $< charmap.txt < $(C_BUILDDIR)/title_screen_assets.pre.c > $(C_BUILDDIR)/title_screen_assets.preproc.c
-	@$(CC) $(CFLAGS) -o $(C_BUILDDIR)/title_screen_assets.gen.s $(C_BUILDDIR)/title_screen_assets.preproc.c
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/title_screen_assets.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/title_screen_assets.pre.c $(C_BUILDDIR)/title_screen_assets.preproc.c $(C_BUILDDIR)/title_screen_assets.gen.s
-
 $(C_BUILDDIR)/contest_effect.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/contest.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/trade.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
@@ -1523,9 +1514,6 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/rayquaza_scene.h src/
 	graphics/text_window/message_box_jp.4bpp \
 	graphics/interface/menu_info1.gbapal graphics/interface/menu_info2.gbapal graphics/interface/menu_info3.gbapal graphics/interface/menu_info.4bpp \
 	graphics/battle_frontier/factory_screen/menu.png.4bpp graphics/battle_frontier/factory_screen/menu.bin graphics/battle_frontier/factory_screen/menu.pal.gbapal \
-	graphics/title_screen/press_start.gbapal graphics/title_screen/press_start.4bpp.lz \
-	graphics/title_screen/pokemon_logo.gbapal graphics/title_screen/pokemon_logo.bin.lz graphics/title_screen/pokemon_logo.8bpp.lz \
-	graphics/title_screen/emerald_version.8bpp.lz graphics/title_screen/clouds.bin.lz \
 	graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin \
 	graphics/battle_anims/sprites/flying_dirt.png.4bpp.lz graphics/battle_anims/sprites/flying_dirt.png.gbapal.lz \
 	graphics/battle_anims/backgrounds/sandstorm_brew.bin.lz graphics/battle_anims/backgrounds/sandstorm_brew.png.4bpp.lz \
@@ -5941,3 +5929,23 @@ $(C_BUILDDIR)/intro_credits_graphics.d: src/intro_credits_graphics.c Makefile | 
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/intro_credits_graphics.d
+
+$(C_BUILDDIR)/title_screen.o: src/title_screen.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/title_screen.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/title_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/title_screen.gen.s
+
+$(C_BUILDDIR)/title_screen.d: src/title_screen.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/title_screen.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/title_screen/pokemon_logo.pal.gbapal: graphics/title_screen/pokemon_logo.pal Makefile | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/title_screen/rayquaza_and_clouds.pal.gbapal: graphics/title_screen/rayquaza_and_clouds.pal Makefile | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@

@@ -73,23 +73,26 @@ BATTLE_ANIM_SHOCK_AND_FEATHER_RESOURCES const u32 gBattleAnimSpriteGfx_Sparkle6[
 #define TITLE_SCREEN_PRESS_START_GRAPHICS __attribute__((section(".rodata.title_screen_press_start_graphics"), aligned(1)))
 
 // The localized JP Press Start tile stream is byte-exact source data.
-TITLE_SCREEN_PRESS_START_GRAPHICS const u16 gTitleScreenPressStartPal[] = INCBIN_U16("graphics/title_screen/press_start.gbapal");
-TITLE_SCREEN_PRESS_START_GRAPHICS const u32 gTitleScreenPressStartGfx[] = INCBIN_U32("graphics/title_screen/press_start.4bpp.lz");
+TITLE_SCREEN_PRESS_START_GRAPHICS const u16 gTitleScreenPressStartPal[] = INCGFX_U16("graphics/title_screen/press_start.png", ".gbapal");
+TITLE_SCREEN_PRESS_START_GRAPHICS const u32 gTitleScreenPressStartGfx[] = INCGFX_U32("graphics/title_screen/press_start.png", ".4bpp.lz", "-mwidth 4 -mheight 1 -num_tiles 48 -Wnum_tiles");
+
+// JP retains an alternate affine logo tilemap at this position.
+TITLE_SCREEN_PRESS_START_GRAPHICS static const u32 sUnusedPokemonLogoTilemap[] = INCGFX_U32("graphics/title_screen/unused_pokemon_logo.bin", ".lz");
 
 #undef TITLE_SCREEN_PRESS_START_GRAPHICS
 
 #define TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS __attribute__((section(".rodata.title_screen_graphics_before_title_screen_static_graphics"), aligned(1)))
 
-TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenPokemonLogoTilemap[] = INCBIN_U32("graphics/title_screen/pokemon_logo.bin.lz");
-TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u16 gTitleScreenBgPalettes[] = INCBIN_U16("graphics/title_screen/pokemon_logo.gbapal");
-TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenPokemonLogoGfx[] = INCBIN_U32("graphics/title_screen/pokemon_logo.8bpp.lz");
-TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenEmeraldVersionGfx[] = INCBIN_U32("graphics/title_screen/emerald_version.8bpp.lz");
+TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenPokemonLogoTilemap[] = INCGFX_U32("graphics/title_screen/pokemon_logo.bin", ".lz");
+TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u16 gTitleScreenBgPalettes[] = INCBIN_U16("build/pokeemerald-jp/incgfx/graphics/title_screen/pokemon_logo.pal.gbapal", "build/pokeemerald-jp/incgfx/graphics/title_screen/rayquaza_and_clouds.pal.gbapal");
+TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenPokemonLogoGfx[] = INCGFX_U32("graphics/title_screen/pokemon_logo.png", ".8bpp.lz");
+TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenEmeraldVersionGfx[] = INCGFX_U32("graphics/title_screen/emerald_version.png", ".8bpp.lz", "-mwidth 8 -mheight 4");
 
 #undef TITLE_SCREEN_GRAPHICS_BEFORE_TITLE_SCREEN_STATIC_GRAPHICS
 
 #define TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS __attribute__((section(".rodata.title_screen_graphics_after_title_screen_static_graphics"), aligned(1)))
 
-TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenCloudsTilemap[] = INCBIN_U32("graphics/title_screen/clouds.bin.lz");
+TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS const u32 gTitleScreenCloudsTilemap[] = INCGFX_U32("graphics/title_screen/clouds.bin", ".lz");
 
 #undef TITLE_SCREEN_GRAPHICS_AFTER_TITLE_SCREEN_STATIC_GRAPHICS
 
