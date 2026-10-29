@@ -13,6 +13,11 @@
 #include "menu.h"
 #include "dma3.h"
 
+#define POKENAV_INTERFACE_DATA(symbol) __attribute__((section(".rodata.pokenav_interface." #symbol)))
+
+POKENAV_INTERFACE_DATA(sSpinningPokenav_Pal) static const u16 sSpinningPokenav_Pal[] = INCGFX_U16("graphics/pokenav/nav_icon.png", ".gbapal");
+POKENAV_INTERFACE_DATA(sSpinningPokenav_Pal) static const u32 sSpinningPokenav_Gfx[] = INCGFX_U32("graphics/pokenav/nav_icon.png", ".4bpp.lz");
+
 struct Pokenav_MainMenu
 {
     void (*loopTask)(u32);
@@ -54,9 +59,6 @@ static void SpriteCB_SpinningPokenav(struct Sprite *);
 static u32 LoopedTask_InitPokenavMenu(s32);
 
 #define POKENAV_MAIN_DATA __attribute__((section(".rodata.pokenav_main_menu_data")))
-
-extern const u16 sSpinningPokenav_Pal[];
-extern const u32 sSpinningPokenav_Gfx[];
 
 POKENAV_MAIN_DATA const struct BgTemplate gPokenavMainMenuBgTemplates[] =
 {
@@ -290,7 +292,6 @@ POKENAV_MAIN_DATA static const struct SpriteTemplate sSubmenuLeftHeaderSpriteTem
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
-
 
 bool32 InitPokenavMainMenu(void)
 {
@@ -844,3 +845,5 @@ static void SpriteCB_MoveLeftHeader(struct Sprite *sprite)
         sprite->callback = SpriteCallbackDummy;
     }
 }
+
+#undef POKENAV_INTERFACE_DATA

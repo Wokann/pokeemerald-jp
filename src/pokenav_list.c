@@ -93,9 +93,9 @@ static u32 LoopedTask_PrintCheckPageInfo(s32);
 #define POKENAV_LIST_DATA __attribute__((section(".rodata.pokenav_list_data")))
 
 POKENAV_LIST_DATA static const u16 sListArrow_Pal[] =
-    INCBIN_U16("graphics/pokenav/list_arrows.gbapal");
+    INCGFX_U16("graphics/pokenav/list_arrows.png", ".gbapal");
 POKENAV_LIST_DATA static const u32 sListArrow_Gfx[] =
-    INCBIN_U32("graphics/pokenav/list_arrows.4bpp.lz");
+    INCGFX_U32("graphics/pokenav/list_arrows.png", ".4bpp.lz");
 
 POKENAV_LIST_DATA static const u8 sPokenavCheckPageColors[] = {0, 2, 5, 0};
 POKENAV_LIST_DATA static const u8 *const sPokenavMatchCallFieldNames[] =
@@ -142,7 +142,6 @@ POKENAV_LIST_DATA static const struct SpriteTemplate sSpriteTemplate_UpDownArrow
     .images = NULL, .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
-
 
 extern u32 sMoveWindowDownIndex;
 extern void ClearRematchPokeballIcon(u16 windowId, u32 tileOffset);

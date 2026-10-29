@@ -17,6 +17,8 @@
 #include "constants/songs.h"
 #include "constants/rgb.h"
 
+#define POKENAV_INTERFACE_DATA(symbol) __attribute__((section(".rodata.pokenav_interface." #symbol)))
+
 #define GFXTAG_BLUE_LIGHT 1
 #define GFXTAG_OPTIONS    3
 
@@ -105,21 +107,18 @@ static void SetMenuOptionGlow(void);
 
 #define POKENAV_HANDLER_DATA __attribute__((section(".rodata.pokenav_menu_handler_gfx_data")))
 
-POKENAV_HANDLER_DATA static const u16 sPokenavBgDotsPal[] = INCBIN_U16("graphics/pokenav/bg_dots.gbapal");
-POKENAV_HANDLER_DATA static const u32 sPokenavBgDotsTiles[] = INCBIN_U32("graphics/pokenav/bg_dots.4bpp.lz");
-POKENAV_HANDLER_DATA static const u32 sPokenavBgDotsTilemap[] = INCBIN_U32("graphics/pokenav/bg_dots.bin.lz");
-POKENAV_HANDLER_DATA const u16 gPokenavMessageBox_Pal[] = INCBIN_U16("graphics/pokenav/message_box.gbapal");
-POKENAV_HANDLER_DATA const u32 gPokenavMessageBox_Gfx[] = INCBIN_U32("graphics/pokenav/message_box.4bpp.lz");
-POKENAV_HANDLER_DATA const u32 gPokenavMessageBox_Tilemap[] = INCBIN_U32("graphics/pokenav/message_box.bin.lz");
-POKENAV_HANDLER_DATA static const u16 sPokenavDeviceBgPal[] = INCBIN_U16("graphics/pokenav/device_outline.gbapal");
-POKENAV_HANDLER_DATA static const u32 sPokenavDeviceBgTiles[] = INCBIN_U32("graphics/pokenav/device_outline.4bpp.lz");
-POKENAV_HANDLER_DATA static const u32 sPokenavDeviceBgTilemap[] = INCBIN_U32("graphics/pokenav/device_outline_map.bin.lz");
-POKENAV_HANDLER_DATA const u16 gPokenavOptions_Pal[] = INCBIN_U16("graphics/pokenav/options.gbapal");
-POKENAV_HANDLER_DATA const u32 gPokenavOptions_Gfx[] = INCBIN_U32("graphics/pokenav/options.4bpp.lz");
-POKENAV_HANDLER_DATA static const u16 sMatchCallBlueLightPal[] = INCBIN_U16("graphics/pokenav/blue_light.gbapal");
-POKENAV_HANDLER_DATA static const u32 sMatchCallBlueLightTiles[] = INCBIN_U32("graphics/pokenav/blue_light.4bpp.lz");
+POKENAV_HANDLER_DATA static const u16 sPokenavBgDotsPal[] = INCGFX_U16("graphics/pokenav/bg_dots.png", ".gbapal");
+POKENAV_HANDLER_DATA static const u32 sPokenavBgDotsTiles[] = INCGFX_U32("graphics/pokenav/bg_dots.png", ".4bpp.lz");
+POKENAV_HANDLER_DATA static const u32 sPokenavBgDotsTilemap[] = INCGFX_U32("graphics/pokenav/bg_dots.bin", ".lz");
 
-POKENAV_HANDLER_DATA static const struct BgTemplate sPokenavMainMenuBgTemplates[] = {
+POKENAV_INTERFACE_DATA(sPokenavDeviceBgPal) static const u16 sPokenavDeviceBgPal[] = INCGFX_U16("graphics/pokenav/device_outline.png", ".gbapal");
+POKENAV_INTERFACE_DATA(sPokenavDeviceBgPal) static const u32 sPokenavDeviceBgTiles[] = INCGFX_U32("graphics/pokenav/device_outline.png", ".4bpp.lz", "-num_tiles 53 -Wnum_tiles");
+POKENAV_INTERFACE_DATA(sPokenavDeviceBgPal) static const u32 sPokenavDeviceBgTilemap[] = INCGFX_U32("graphics/pokenav/device_outline_map.bin", ".lz");
+
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sMatchCallBlueLightPal[] = INCGFX_U16("graphics/pokenav/blue_light.png", ".gbapal");
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u32 sMatchCallBlueLightTiles[] = INCGFX_U32("graphics/pokenav/blue_light.png", ".4bpp.lz");
+
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct BgTemplate sPokenavMainMenuBgTemplates[] = {
     {
         .bg = 1,
         .charBaseIndex = 1,
@@ -147,7 +146,7 @@ POKENAV_HANDLER_DATA static const struct BgTemplate sPokenavMainMenuBgTemplates[
     }
 };
 
-POKENAV_HANDLER_DATA static const LoopedTask sMenuHandlerLoopTaskFuncs[] =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const LoopedTask sMenuHandlerLoopTaskFuncs[] =
 {
     [POKENAV_MENU_FUNC_NONE]                  = NULL,
     [POKENAV_MENU_FUNC_MOVE_CURSOR]           = LoopedTask_MoveMenuCursor,
@@ -160,7 +159,7 @@ POKENAV_HANDLER_DATA static const LoopedTask sMenuHandlerLoopTaskFuncs[] =
     [POKENAV_MENU_FUNC_OPEN_FEATURE]          = LoopedTask_OpenPokenavFeature
 };
 
-POKENAV_HANDLER_DATA static const struct CompressedSpriteSheet sPokenavOptionsSpriteSheets[] =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct CompressedSpriteSheet sPokenavOptionsSpriteSheets[] =
 {
     {
         .data = gPokenavOptions_Gfx,
@@ -174,7 +173,7 @@ POKENAV_HANDLER_DATA static const struct CompressedSpriteSheet sPokenavOptionsSp
     }
 };
 
-POKENAV_HANDLER_DATA static const struct SpritePalette sPokenavOptionsSpritePalettes[] =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct SpritePalette sPokenavOptionsSpritePalettes[] =
 {
     {&gPokenavOptions_Pal[0x00], PALTAG_OPTIONS_DEFAULT},
     {&gPokenavOptions_Pal[0x10], PALTAG_OPTIONS_BLUE},
@@ -186,19 +185,19 @@ POKENAV_HANDLER_DATA static const struct SpritePalette sPokenavOptionsSpritePale
 };
 
 // Tile number, palette tag offset
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_RegionMap[] = {0x000, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Condition[] = {0x020, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_MatchCall[] = {0x040, PALTAG_OPTIONS_RED - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Ribbons[]   = {0x060, PALTAG_OPTIONS_PINK - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_SwitchOff[] = {0x080, PALTAG_OPTIONS_BEIGE - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Party[]     = {0x0A0, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Search[]    = {0x0C0, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Cool[]      = {0x0E0, PALTAG_OPTIONS_RED - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Beauty[]    = {0x100, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Cute[]      = {0x120, PALTAG_OPTIONS_PINK - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Smart[]     = {0x140, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Tough[]     = {0x160, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
-POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Cancel[]    = {0x180, PALTAG_OPTIONS_BEIGE - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_RegionMap[] = {0x000, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Condition[] = {0x020, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_MatchCall[] = {0x040, PALTAG_OPTIONS_RED - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Ribbons[]   = {0x060, PALTAG_OPTIONS_PINK - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_SwitchOff[] = {0x080, PALTAG_OPTIONS_BEIGE - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Party[]     = {0x0A0, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Search[]    = {0x0C0, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Cool[]      = {0x0E0, PALTAG_OPTIONS_RED - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Beauty[]    = {0x100, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Cute[]      = {0x120, PALTAG_OPTIONS_PINK - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Smart[]     = {0x140, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Tough[]     = {0x160, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u16 sOptionsLabelGfx_Cancel[]    = {0x180, PALTAG_OPTIONS_BEIGE - PALTAG_OPTIONS_START};
 
 struct MenuOptionLabelGfx
 {
@@ -207,7 +206,7 @@ struct MenuOptionLabelGfx
     const u16 *gfx[MAX_POKENAV_MENUITEMS];
 };
 
-POKENAV_HANDLER_DATA static const struct MenuOptionLabelGfx sPokenavMenuOptionLabelGfx[POKENAV_MENU_TYPE_COUNT] =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct MenuOptionLabelGfx sPokenavMenuOptionLabelGfx[POKENAV_MENU_TYPE_COUNT] =
 {
     [POKENAV_MENU_TYPE_DEFAULT] =
     {
@@ -267,7 +266,7 @@ POKENAV_HANDLER_DATA static const struct MenuOptionLabelGfx sPokenavMenuOptionLa
     },
 };
 
-POKENAV_HANDLER_DATA static const struct WindowTemplate sOptionDescWindowTemplate =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct WindowTemplate sOptionDescWindowTemplate =
 {
     .bg = 1,
     .tilemapLeft = 4,
@@ -278,7 +277,7 @@ POKENAV_HANDLER_DATA static const struct WindowTemplate sOptionDescWindowTemplat
     .baseBlock = 8
 };
 
-POKENAV_HANDLER_DATA static const u8 *const sPageDescriptions[] =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u8 *const sPageDescriptions[] =
 {
     [POKENAV_MENUITEM_MAP]                     = gText_CheckMapOfHoenn,
     [POKENAV_MENUITEM_CONDITION]               = gText_CheckPokemonInDetail,
@@ -296,10 +295,10 @@ POKENAV_HANDLER_DATA static const u8 *const sPageDescriptions[] =
     [POKENAV_MENUITEM_CONDITION_SEARCH_CANCEL] = gText_ReturnToConditionMenu
 };
 
-POKENAV_HANDLER_DATA static const u8 sOptionDescTextColors[]  = {TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, TEXT_COLOR_LIGHT_GREEN};
-POKENAV_HANDLER_DATA static const u8 sOptionDescTextColors2[] = {TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, TEXT_COLOR_LIGHT_GREEN};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u8 sOptionDescTextColors[]  = {TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, TEXT_COLOR_LIGHT_GREEN};
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const u8 sOptionDescTextColors2[] = {TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, TEXT_COLOR_LIGHT_GREEN};
 
-POKENAV_HANDLER_DATA static const struct OamData sOamData_MenuOption =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct OamData sOamData_MenuOption =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -313,26 +312,26 @@ POKENAV_HANDLER_DATA static const struct OamData sOamData_MenuOption =
     .paletteNum = 0,
 };
 
-POKENAV_HANDLER_DATA static const union AffineAnimCmd sAffineAnim_MenuOption_Normal[] =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const union AffineAnimCmd sAffineAnim_MenuOption_Normal[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-POKENAV_HANDLER_DATA static const union AffineAnimCmd sAffineAnim_MenuOption_Zoom[] =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const union AffineAnimCmd sAffineAnim_MenuOption_Zoom[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0x12),
     AFFINEANIMCMD_END,
 };
 
-POKENAV_HANDLER_DATA static const union AffineAnimCmd *const sAffineAnims_MenuOption[] =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const union AffineAnimCmd *const sAffineAnims_MenuOption[] =
 {
     sAffineAnim_MenuOption_Normal,
     sAffineAnim_MenuOption_Zoom
 };
 
-POKENAV_HANDLER_DATA static const struct SpriteTemplate sMenuOptionSpriteTemplate =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct SpriteTemplate sMenuOptionSpriteTemplate =
 {
     .tileTag = GFXTAG_OPTIONS,
     .paletteTag = PALTAG_OPTIONS_START,
@@ -343,7 +342,7 @@ POKENAV_HANDLER_DATA static const struct SpriteTemplate sMenuOptionSpriteTemplat
     .callback = SpriteCallbackDummy,
 };
 
-POKENAV_HANDLER_DATA static const struct OamData sBlueLightOamData =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct OamData sBlueLightOamData =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -357,7 +356,7 @@ POKENAV_HANDLER_DATA static const struct OamData sBlueLightOamData =
     .paletteNum = 0,
 };
 
-POKENAV_HANDLER_DATA static const struct SpriteTemplate sMatchCallBlueLightSpriteTemplate =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct SpriteTemplate sMatchCallBlueLightSpriteTemplate =
 {
     .tileTag = GFXTAG_BLUE_LIGHT,
     .paletteTag = PALTAG_BLUE_LIGHT,
@@ -368,7 +367,7 @@ POKENAV_HANDLER_DATA static const struct SpriteTemplate sMatchCallBlueLightSprit
     .callback = SpriteCallbackDummy,
 };
 
-POKENAV_HANDLER_DATA static const struct ScanlineEffectParams sPokenavMainMenuScanlineEffectParams =
+POKENAV_INTERFACE_DATA(sMatchCallBlueLightPal) static const struct ScanlineEffectParams sPokenavMainMenuScanlineEffectParams =
 {
     &REG_WIN0H,
     ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
@@ -1391,3 +1390,5 @@ void ResetBldCnt_(void)
 {
     ResetBldCnt();
 }
+
+#undef POKENAV_INTERFACE_DATA

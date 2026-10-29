@@ -5,6 +5,24 @@
 
 #include "data/graphics/trainers.h"
 
+#define POKENAV_INTERFACE_DATA(symbol) __attribute__((section(".rodata.pokenav_interface." #symbol)))
+
+POKENAV_INTERFACE_DATA(gPokenavMessageBox_Pal) const u16 gPokenavMessageBox_Pal[] = INCGFX_U16("graphics/pokenav/message.png", ".gbapal");
+POKENAV_INTERFACE_DATA(gPokenavMessageBox_Pal) const u32 gPokenavMessageBox_Gfx[] = INCGFX_U32("graphics/pokenav/message.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavMessageBox_Pal) const u32 gPokenavMessageBox_Tilemap[] = INCGFX_U32("graphics/pokenav/message.bin", ".lz");
+POKENAV_INTERFACE_DATA(gPokenavOptions_Pal) const u16 gPokenavOptions_Pal[] = INCGFX_U16("graphics/pokenav/options/options.pal", ".gbapal");
+// JP uses compressed labels; their PNG order matches the US composite.
+POKENAV_INTERFACE_DATA(gPokenavOptions_Pal) const u32 gPokenavOptions_Gfx[] = INCGFX_U32("graphics/pokenav/options/options.4bpp", ".lz");
+POKENAV_INTERFACE_DATA(gPokenavCondition_Pal) const u16 gPokenavCondition_Pal[] = INCGFX_U16("graphics/pokenav/condition/graph.png", ".gbapal");
+POKENAV_INTERFACE_DATA(gPokenavCondition_Gfx) const u32 gPokenavCondition_Gfx[] = INCGFX_U32("graphics/pokenav/condition/graph.png", ".4bpp.lz", "-num_tiles 121");
+POKENAV_INTERFACE_DATA(gPokenavCondition_Gfx) const u32 gPokenavCondition_Tilemap[] = INCGFX_U32("graphics/pokenav/condition/graph.bin", ".lz");
+POKENAV_INTERFACE_DATA(gPokenavOptions_Tilemap) const u16 gPokenavOptions_Tilemap[] = INCBIN_U16("graphics/pokenav/options/options.bin");
+POKENAV_INTERFACE_DATA(gPokenavRibbonsSummaryBg_Pal) const u16 gPokenavRibbonsSummaryBg_Pal[] = INCGFX_U16("graphics/pokenav/ribbons/summary_bg.png", ".gbapal");
+POKENAV_INTERFACE_DATA(gPokenavRibbonsSummaryBg_Pal) const u32 gPokenavRibbonsSummaryBg_Gfx[] = INCGFX_U32("graphics/pokenav/ribbons/summary_bg.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavRibbonsSummaryBg_Pal) const u32 gPokenavRibbonsSummaryBg_Tilemap[] = INCGFX_U32("graphics/pokenav/ribbons/summary_bg.bin", ".lz");
+POKENAV_INTERFACE_DATA(gPokenavConditionCancel_Pal) const u16 gPokenavConditionCancel_Pal[] = INCGFX_U16("graphics/pokenav/condition/cancel.pal", ".gbapal");
+POKENAV_INTERFACE_DATA(gPokenavConditionCancel_Gfx) const u8 gPokenavConditionCancel_Gfx[] = INCGFX_U8("graphics/pokenav/condition/cancel.png", ".4bpp");
+
 #define CIRCLED_QUESTION_MARK_GRAPHICS __attribute__((section(".rodata.pokemon_circled_question_mark_graphics"), aligned(4)))
 
 CIRCLED_QUESTION_MARK_GRAPHICS const u32 gMonStillFrontPic_CircledQuestionMark[] = INCGFX_U32("graphics/pokemon/question_mark/circled/front.png", ".4bpp.lz");
@@ -653,7 +671,6 @@ BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueFlames2[] = INCGFX_U32("
 
 #undef BATTLE_ANIM_GRAPHICS
 
-
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))
@@ -978,7 +995,6 @@ SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_BattleMoves_Tilemap[] = INCBIN_U
 SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_ContestMoves_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_contest_moves.bin.lz");
 SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_InfoEgg_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_info_egg.bin.lz");
 
-
 #undef SUMMARY_SCREEN_RESOURCES
 
 #define SHOP_MENU_RESOURCES __attribute__((section(".rodata.shop_menu_resources"), aligned(1)))
@@ -1171,7 +1187,6 @@ BERRY_CRUSH_GRAPHICS const u32 gBerryCrush_Crusher_Gfx[] = INCBIN_U32("graphics/
 
 #undef BERRY_CRUSH_GRAPHICS
 
-
 #define JP_CONTEST_GFX __attribute__((section(".rodata.jp_contest_graphics")))
 
 JP_CONTEST_GFX const u32 gJPContestGfx1[] = INCGFX_U32("graphics/contest/japanese/composite_1.4bpp", ".lz");
@@ -1278,8 +1293,6 @@ BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimBgPalette_Dark[] = INCGFX_U32(
 BATTLE_ANIM_POST_CONTEST_GFX const u32 gBattleAnimBgTilemap_Dark[] = INCGFX_U32("graphics/battle_anims/backgrounds/dark.bin", ".lz");
 
 #undef BATTLE_ANIM_POST_CONTEST_GFX
-
-
 
 #define BATTLE_ANIM_MASK_AND_BG_GFX __attribute__((section(".rodata.battle_anim_mask_and_bg_graphics")))
 
@@ -1557,24 +1570,23 @@ SUMMARY_EFFECT_DATA const u16 gSummaryScreen_MoveEffect_Cancel_Tilemap[] =
 
 #define POKENAV_MAIN_GFX __attribute__((section(".rodata.pokenav_main_graphics")))
 
-POKENAV_MAIN_GFX const u16 gPokenavHeader_Pal[] = INCBIN_U16("graphics/pokenav/header.gbapal");
-POKENAV_MAIN_GFX const u32 gPokenavHeader_Gfx[] = INCBIN_U32("graphics/pokenav/header.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavHeader_Tilemap[] = INCBIN_U32("graphics/pokenav/header.bin.lz");
-POKENAV_MAIN_GFX const u16 sSpinningPokenav_Pal[] = INCBIN_U16("graphics/pokenav/nav_icon.gbapal");
-POKENAV_MAIN_GFX const u32 sSpinningPokenav_Gfx[] = INCBIN_U32("graphics/pokenav/nav_icon.4bpp.lz");
-POKENAV_MAIN_GFX const u16 gPokenavLeftHeader_Pal[] = INCBIN_U16("graphics/pokenav/left_headers/palette.gbapal");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderMainMenu_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/main_menu.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderMatchCall_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/match_call.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderRibbons_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/ribbons.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderCondition_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/condition.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderHoennMap_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/hoenn_map.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderParty_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/party.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderSearch_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/search.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderCool_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/cool.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderBeauty_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/beauty.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderCute_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/cute.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderSmart_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/smart.4bpp.lz");
-POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderTough_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/tough.4bpp.lz");
+POKENAV_MAIN_GFX const u16 gPokenavHeader_Pal[] = INCGFX_U16("graphics/pokenav/header.png", ".gbapal");
+POKENAV_MAIN_GFX const u32 gPokenavHeader_Gfx[] = INCGFX_U32("graphics/pokenav/header.png", ".4bpp.lz", "-num_tiles 53 -Wnum_tiles");
+POKENAV_MAIN_GFX const u32 gPokenavHeader_Tilemap[] = INCGFX_U32("graphics/pokenav/header.bin", ".lz");
+
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u16 gPokenavLeftHeader_Pal[] = INCGFX_U16("graphics/pokenav/left_headers/palette.pal", ".gbapal");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderMainMenu_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/main_menu.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderMatchCall_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/match_call.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderRibbons_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/ribbons.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderCondition_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/condition.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderHoennMap_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/hoenn_map.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderParty_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/party.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderSearch_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/search.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderCool_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/cool.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderBeauty_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/beauty.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderCute_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/cute.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderSmart_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/smart.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(gPokenavLeftHeader_Pal) const u32 gPokenavLeftHeaderTough_Gfx[] = INCGFX_U32("graphics/pokenav/left_headers/tough.png", ".4bpp.lz");
 
 #define REGION_MAP_CITY_GRAPHICS(symbol) __attribute__((section(".rodata.region_map_city_graphics." #symbol)))
 
@@ -1606,7 +1618,6 @@ UNUSED_JP_MENU_SPECIALIZED_PREFIX static const u32 sUnusedJpMenuSpecializedTiles
 UNUSED_JP_MENU_SPECIALIZED_PREFIX static const u32 sUnusedJpMenuSpecializedTiles11[] = INCBIN_U32("graphics/unused/jp/menu_specialized/tiles_11.4bpp.lz");
 UNUSED_JP_MENU_SPECIALIZED_MIDDLE static const u8 sUnusedJpMenuSpecializedSpriteData[] = INCBIN_U8("graphics/unused/jp/menu_specialized/sprite_data.bin");
 
-
 // Rayquaza scene 1 (RAY_ANIM_DUO_FIGHT / RAY_ANIM_DUO_FIGHT_PRE)
 #define RAYQUAZA_SCENE_1_GFX __attribute__((section(".rodata.rayquaza_scene_1_graphics")))
 
@@ -1626,7 +1637,6 @@ RAYQUAZA_SCENE_1_GFX const u8 gRaySceneDuoFight_Clouds3_Tilemap[] = INCBIN_U8("g
 static const u8 sRaySceneDuoFightCloudsPadding[3] RAYQUAZA_SCENE_1_GFX __attribute__((used)) = {0, 0, 0};
 
 #undef RAYQUAZA_SCENE_1_GFX
-
 
 // Rayquaza scene 2 smoke (RAY_ANIM_TAKES_FLIGHT)
 #define RAYQUAZA_SCENE_2_SMOKE_GFX __attribute__((section(".rodata.rayquaza_scene_2_smoke_graphics")))
@@ -1664,7 +1674,6 @@ RAYQUAZA_SCENE_3_BG_GFX const u32 gRaySceneDescends_Light_Tilemap[] = INCBIN_U32
 #undef RAYQUAZA_SCENE_2_REMAINING_GFX
 #undef RAYQUAZA_SCENE_3_SPRITE_GFX
 #undef RAYQUAZA_SCENE_3_BG_GFX
-
 
 // Rayquaza scene 4 (RAY_ANIM_CHARGES) and scene 5 (RAY_ANIM_CHASES_AWAY).
 // Scene 4's compressed palette is 81 bytes followed by three ROM padding
@@ -1989,7 +1998,6 @@ const u16 gWallpaperPalettes_Ribbon[][16] RIBBON_WALLPAPER_DATA =
 const u32 gWallpaperTiles_Ribbon[] RIBBON_WALLPAPER_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/ribbon/tiles.4bpp.lz");
 const u32 gWallpaperTilemap_Ribbon[] RIBBON_WALLPAPER_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/ribbon/tilemap.bin.lz");
 
-
 #undef HORIZONTAL_WALLPAPER_DATA
 #undef RIBBON_WALLPAPER_DATA
 #undef CROSS_WALLPAPER_ICON_DATA
@@ -2088,3 +2096,5 @@ ROULETTE_GRAPHICS const u32 gRouletteMultiplier_Gfx[] = INCGFX_U32("graphics/rou
 #define MAIL_GRAPHICS __attribute__((section(".rodata.mail_graphics"), aligned(4)))
 #include "data/graphics/mail.h"
 #undef MAIL_GRAPHICS
+
+#undef POKENAV_INTERFACE_DATA

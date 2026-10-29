@@ -19,6 +19,13 @@
 #include "window.h"
 #include "constants/songs.h"
 
+#define POKENAV_INTERFACE_DATA(symbol) __attribute__((section(".rodata.pokenav_interface." #symbol)))
+
+POKENAV_INTERFACE_DATA(sConditionSearchResultFramePal) static const u16 sConditionSearchResultFramePal[] = INCGFX_U16("graphics/pokenav/condition/search_results.png", ".gbapal");
+POKENAV_INTERFACE_DATA(sConditionSearchResultFramePal) static const u32 sConditionSearchResultTiles[] = INCGFX_U32("graphics/pokenav/condition/search_results.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(sConditionSearchResultFramePal) static const u32 sConditionSearchResultTilemap[] = INCGFX_U32("graphics/pokenav/condition/search_results.bin", ".lz");
+POKENAV_INTERFACE_DATA(sConditionSearchResultFramePal) static const u16 sListBg_Pal[] = INCGFX_U16("graphics/pokenav/condition/search_results_list.pal", ".gbapal");
+
 typedef u8 ALIGNED(4) TilemapBuffer[BG_SCREEN_SIZE];
 
 struct Pokenav_ConditionMenuGfx
@@ -118,7 +125,6 @@ extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
 
 // libgcc trampoline agbcc emits for indirect calls.
 void _call_via_r0(void);
-
 
 // Naked-function prototypes so C callers use the right argument types.
 void CreateConditionMonPic(u8 id);
@@ -231,10 +237,6 @@ extern const struct WindowTemplate sUnusedWindowTemplate2;
 extern const LoopedTask sLoopedTaskFuncs[];
 extern const u32 sSearchMonDataIds[];
 extern const LoopedTask sConditionSearchLoopedTaskFuncs[];
-extern const u16 sConditionSearchResultFramePal[];
-extern const u32 sConditionSearchResultTiles[];
-extern const u32 sConditionSearchResultTilemap[];
-extern const u16 sListBg_Pal[];
 extern const struct BgTemplate sConditionSearchResultBgTemplates[];
 extern const LoopedTask sSearchResultLoopTaskFuncs[];
 extern const struct WindowTemplate sSearchResultListMenuWindowTemplate;
@@ -242,12 +244,8 @@ extern const u8 gText_RibbonsMonListCount[];       // JP 0x085F5DCC
 extern const u8 sText_RibbonsMonListItemMale[];    // JP 0x085F5DD3
 extern const u8 sText_RibbonsMonListItemFemale[];  // JP 0x085F5DEB
 extern const u8 sText_RibbonsMonListItemUnknown[]; // JP 0x085F5E03
-extern const u16 sPokenavMonMarkings_Pal[];
+extern const u16 sMonMarkings_Pal[];
 extern const LoopedTask sMonRibbonListLoopTaskFuncs[];
-extern const u16 sMonRibbonListFramePal[];
-extern const u32 sMonRibbonListFrameTiles[];
-extern const u32 sMonRibbonListFrameTilemap[];
-extern const u16 sMonRibbonListUi_Pal[];
 extern const struct BgTemplate sMonRibbonListBgTemplates[];
 extern const LoopedTask sRibbonsMonMenuLoopTaskFuncs[];
 extern const struct WindowTemplate sRibbonsMonListWindowTemplate;
@@ -794,7 +792,6 @@ void PrintSearchResultListMenuItems(struct Pokenav_SearchResultsGfx *gfx)
     CopyWindowToVram(gfx->winid, COPYWIN_GFX);
 }
 
-
 void CreateSearchResultsList(void)
 {
     struct PokenavListTemplate template;
@@ -812,7 +809,6 @@ void CreateSearchResultsList(void)
     template.iconDrawFunc = NULL;
     CreatePokenavList(&sConditionSearchResultBgTemplates[1], &template, 0);
 }
-
 
 static void BufferSearchMonListItem(struct PokenavMonListItem *item, u8 *dest)
 {
@@ -856,3 +852,5 @@ static void BufferSearchMonListItem(struct PokenavMonListItem *item, u8 *dest)
     }
     DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, genderStr);
 }
+
+#undef POKENAV_INTERFACE_DATA

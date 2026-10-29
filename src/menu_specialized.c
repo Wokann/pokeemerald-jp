@@ -27,6 +27,8 @@
 #include "constants/songs.h"
 #include "gba/io_reg.h"
 
+#define POKENAV_INTERFACE_DATA(symbol) __attribute__((section(".rodata.pokenav_interface." #symbol)))
+
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 
 extern EWRAM_DATA u8 sMailboxWindowIds[MAILBOXWIN_COUNT];
@@ -195,20 +197,11 @@ static void SpriteCB_ConditionSparkle(struct Sprite *);
 #define MENU_SPECIALIZED_CONDITION_RESOURCES __attribute__((section(".rodata.menu_specialized_condition_resources")))
 #define MENU_SPECIALIZED_CONDITION_DATA __attribute__((section(".rodata.menu_specialized_condition_data")))
 
-static const u16 sConditionPokeballPal[] MENU_SPECIALIZED_CONDITION_RESOURCES =
-    INCBIN_U16("graphics/pokenav/condition/pokeball.gbapal");
-const u16 gPokenavConditionCancel_Pal[] MENU_SPECIALIZED_CONDITION_RESOURCES =
-    INCBIN_U16("graphics/pokenav/condition/cancel.gbapal");
-static const u32 sConditionPokeball_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES =
-    INCBIN_U32("graphics/pokenav/condition/pokeball.4bpp");
-static const u32 sConditionPokeballPlaceholder_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES =
-    INCBIN_U32("graphics/pokenav/condition/pokeball_placeholder.4bpp");
-const u8 gPokenavConditionCancel_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES =
-    INCBIN_U8("graphics/pokenav/condition/cancel.4bpp");
-static const u16 sConditionSparkle_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES =
-    INCBIN_U16("graphics/pokenav/condition/sparkle.gbapal");
-static const u32 sConditionSparkle_Pal[] MENU_SPECIALIZED_CONDITION_RESOURCES =
-    INCBIN_U32("graphics/pokenav/condition/sparkle.4bpp");
+static const u32 sConditionPokeball_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES = INCGFX_U32("graphics/pokenav/condition/pokeball.png", ".4bpp");
+static const u32 sConditionPokeballPlaceholder_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES = INCGFX_U32("graphics/pokenav/condition/pokeball_placeholder.png", ".4bpp");
+
+POKENAV_INTERFACE_DATA(sConditionSparkle_Gfx) static const u16 sConditionSparkle_Gfx[] = INCGFX_U16("graphics/pokenav/condition/sparkle.png", ".gbapal");
+POKENAV_INTERFACE_DATA(sConditionSparkle_Gfx) static const u32 sConditionSparkle_Pal[] = INCGFX_U32("graphics/pokenav/condition/sparkle.png", ".4bpp");
 
 const struct OamData sOam_ConditionMonPic MENU_SPECIALIZED_CONDITION_DATA =
 {
@@ -276,8 +269,8 @@ const struct SpriteSheet sConditionSelectionIconsSheets[] MENU_SPECIALIZED_CONDI
 
 const struct SpritePalette sConditionSelectionIconsPals[] MENU_SPECIALIZED_CONDITION_DATA =
 {
-    {sConditionPokeballPal, 101},
-    {gPokenavConditionCancel_Pal, 102},
+    {gPokenavConditionCancel_Pal, 101},
+    {gPokenavConditionCancel_Pal + 16, 102},
     {},
 };
 
@@ -811,7 +804,6 @@ static void ConditionGraph_CalcLeftHalf(struct ConditionGraph *graph)
 
 }
 
-
 void ConditionGraph_CalcPositions(u8 *conditions, struct UCoords16 *positions)
 {
     u8 lineLength, sinIdx;
@@ -966,7 +958,6 @@ void sub_081D200C(u32 chosenMove, bool8 onInit)
 
     MoveRelearnerShowHideHearts(chosenMove);
 }
-
 
 void MoveRelearnerPrintMessage(u8 *str)
 {
@@ -1588,3 +1579,5 @@ void GetMonLevelUpWindowStats(struct Pokemon *mon, u16 *currStats)
     currStats[STAT_SPATK] = GetMonData(mon, MON_DATA_SPATK);
     currStats[STAT_SPDEF] = GetMonData(mon, MON_DATA_SPDEF);
 }
+
+#undef POKENAV_INTERFACE_DATA

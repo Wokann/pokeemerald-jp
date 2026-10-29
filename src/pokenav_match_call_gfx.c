@@ -116,16 +116,15 @@ static u32 ExitMatchCall(s32);
 #define MATCH_CALL_GFX_DATA __attribute__((section(".rodata.pokenav_match_call_gfx_resources")))
 #define MATCH_CALL_GFX_DATA_ALIGNED __attribute__((section(".rodata.pokenav_match_call_gfx_resources"), aligned(4)))
 
-MATCH_CALL_GFX_DATA_ALIGNED static const u16 sMatchCallUI_Pal[] = INCBIN_U16("graphics/pokenav/match_call/ui.gbapal");
-MATCH_CALL_GFX_DATA static const u32 sMatchCallUI_Gfx[] = INCBIN_U32("graphics/pokenav/match_call/ui.4bpp.lz");
-MATCH_CALL_GFX_DATA static const u32 sMatchCallUI_Tilemap[] = INCBIN_U32("graphics/pokenav/match_call/ui.bin.lz");
-MATCH_CALL_GFX_DATA static const u16 sOptionsCursor_Pal[] = INCBIN_U16("graphics/pokenav/match_call/options_cursor.gbapal");
-MATCH_CALL_GFX_DATA static const u32 sOptionsCursor_Gfx[] = INCBIN_U32("graphics/pokenav/match_call/options_cursor.4bpp.lz");
-MATCH_CALL_GFX_DATA static const u16 sCallWindow_Pal[] = INCBIN_U16("graphics/pokenav/match_call/call_window.gbapal");
-MATCH_CALL_GFX_DATA static const u16 sListWindow_Pal[] = INCBIN_U16("graphics/pokenav/match_call/list_window.gbapal");
-MATCH_CALL_GFX_DATA static const u16 sPokeball_Pal[] = INCBIN_U16("graphics/pokenav/match_call/pokeball.gbapal");
-MATCH_CALL_GFX_DATA static const u32 sPokeball_Gfx[] = INCBIN_U32("graphics/pokenav/match_call/pokeball.4bpp.lz");
-
+MATCH_CALL_GFX_DATA_ALIGNED static const u16 sMatchCallUI_Pal[] = INCGFX_U16("graphics/pokenav/match_call/ui.png", ".gbapal");
+MATCH_CALL_GFX_DATA static const u32 sMatchCallUI_Gfx[] = INCGFX_U32("graphics/pokenav/match_call/ui.png", ".4bpp.lz", "-num_tiles 13 -Wnum_tiles");
+MATCH_CALL_GFX_DATA static const u32 sMatchCallUI_Tilemap[] = INCGFX_U32("graphics/pokenav/match_call/ui.bin", ".lz");
+MATCH_CALL_GFX_DATA static const u16 sOptionsCursor_Pal[] = INCGFX_U16("graphics/pokenav/match_call/options_cursor.png", ".gbapal");
+MATCH_CALL_GFX_DATA static const u32 sOptionsCursor_Gfx[] = INCGFX_U32("graphics/pokenav/match_call/options_cursor.png", ".4bpp.lz");
+MATCH_CALL_GFX_DATA static const u16 sCallWindow_Pal[] = INCGFX_U16("graphics/pokenav/match_call/call_window.pal", ".gbapal");
+MATCH_CALL_GFX_DATA static const u16 sListWindow_Pal[] = INCGFX_U16("graphics/pokenav/match_call/list_window.pal", ".gbapal");
+MATCH_CALL_GFX_DATA static const u16 sPokeball_Pal[] = INCGFX_U16("graphics/pokenav/match_call/pokeball.pal", ".gbapal");
+MATCH_CALL_GFX_DATA static const u32 sPokeball_Gfx[] = INCGFX_U32("graphics/pokenav/match_call/pokeball.png", ".4bpp.lz");
 
 static const struct BgTemplate sMatchCallBgTemplates[] =
 {
@@ -533,7 +532,6 @@ static u32 MatchCallListPageUp(s32 state)
     }
     return LT_FINISH;
 }
-
 
 static u32 SelectMatchCallEntry(s32 state)
 {

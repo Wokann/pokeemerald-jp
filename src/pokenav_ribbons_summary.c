@@ -16,18 +16,18 @@
 #include "data/text/ribbon_descriptions.h"
 #include "data/text/gift_ribbon_descriptions.h"
 
+#define POKENAV_INTERFACE_DATA(symbol) __attribute__((section(".rodata.pokenav_interface." #symbol)))
+
 // Ribbons summary screen graphics (JP uses extracted bins).
-static const u16 gPokenavRibbonsSummaryBg_Pal[] = INCBIN_U16("graphics/pokenav/gPokenavRibbonsSummaryBg_Pal.bin");
-static const u32 gPokenavRibbonsSummaryBg_Gfx[] = INCBIN_U32("graphics/pokenav/gPokenavRibbonsSummaryBg_Gfx.bin");
-static const u32 gPokenavRibbonsSummaryBg_Tilemap[] = INCBIN_U32("graphics/pokenav/gPokenavRibbonsSummaryBg_Tilemap.bin");
-static const u16 sRibbonIcons1_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons1_Pal.bin");
-static const u16 sRibbonIcons2_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons2_Pal.bin");
-static const u16 sRibbonIcons3_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons3_Pal.bin");
-static const u16 sRibbonIcons4_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons4_Pal.bin");
-static const u16 sRibbonIcons5_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons5_Pal.bin");
-static const u16 sMonInfo_Pal[] = INCBIN_U16("graphics/pokemon_summary/sMonInfo_Pal.bin");
-static const u32 sRibbonIconsSmall_Gfx[] = INCBIN_U32("graphics/ribbons/sRibbonIconsSmall_Gfx.bin");
-static const u32 sRibbonIconsBig_Gfx[] = INCBIN_U32("graphics/ribbons/sRibbonIconsBig_Gfx.bin");
+
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) static const u16 sRibbonIcons1_Pal[] = INCGFX_U16("graphics/pokenav/ribbons/icons1.pal", ".gbapal");
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) static const u16 sRibbonIcons2_Pal[] = INCGFX_U16("graphics/pokenav/ribbons/icons2.pal", ".gbapal");
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) static const u16 sRibbonIcons3_Pal[] = INCGFX_U16("graphics/pokenav/ribbons/icons3.pal", ".gbapal");
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) static const u16 sRibbonIcons4_Pal[] = INCGFX_U16("graphics/pokenav/ribbons/icons4.pal", ".gbapal");
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) static const u16 sRibbonIcons5_Pal[] = INCGFX_U16("graphics/pokenav/ribbons/icons5.pal", ".gbapal");
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) static const u16 sMonInfo_Pal[] = INCGFX_U16("graphics/pokenav/ribbons/mon_info.pal", ".gbapal");
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) static const u32 sRibbonIconsSmall_Gfx[] = INCGFX_U32("graphics/pokenav/ribbons/icons.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) static const u32 sRibbonIconsBig_Gfx[] = INCGFX_U32("graphics/pokenav/ribbons/icons_big.png", ".4bpp.lz");
 
 struct RibbonGfxData { u16 tileNumOffset; u16 palNumOffset; };
 struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; };
@@ -57,7 +57,6 @@ extern const struct WindowTemplate sMoveRelearnerWindowTemplates[];
 extern const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate;
 extern const struct ListMenuTemplate sMoveRelearnerMovesListTemplate[];
 
-
 enum
 {
     RIBBONS_SUMMARY_FUNC_NONE,
@@ -68,7 +67,7 @@ enum
     RIBBONS_SUMMARY_FUNC_EXIT,
 };
 
-const struct BgTemplate sRibbonsSummaryBgTemplates[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct BgTemplate sRibbonsSummaryBgTemplates[] =
 {
     {
         .bg = 1,
@@ -96,7 +95,7 @@ static u32 LoopedTask_MoveRibbonsCursorExpanded(s32);
 static u32 LoopedTask_ShrinkExpandedRibbon(s32);
 static u32 LoopedTask_ExitRibbonsSummaryMenu(s32);
 
-const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[] =
 {
     [RIBBONS_SUMMARY_FUNC_NONE]                 = NULL,
     [RIBBONS_SUMMARY_FUNC_SWITCH_MONS]          = LoopedTask_SwitchRibbonsSummaryMon,
@@ -106,7 +105,7 @@ const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[] =
     [RIBBONS_SUMMARY_FUNC_EXIT]                 = LoopedTask_ExitRibbonsSummaryMenu
 };
 
-const struct WindowTemplate sRibbonCountWindowTemplate =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct WindowTemplate sRibbonCountWindowTemplate =
 {
     .bg = 2,
     .tilemapLeft = 12,
@@ -117,10 +116,10 @@ const struct WindowTemplate sRibbonCountWindowTemplate =
     .baseBlock = 0x14,
 };
 
-const u8 sPlayerNameTextColors[] = {4, 2, 3};
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const u8 sPlayerNameTextColors[] = {4, 2, 3};
 
 // JP window layout differs from pokeemerald (width 12, baseBlock 0x54).
-const struct WindowTemplate sRibbonSummaryMonNameWindowTemplate =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct WindowTemplate sRibbonSummaryMonNameWindowTemplate =
 {
     .bg = 2,
     .tilemapLeft = 14,
@@ -132,7 +131,7 @@ const struct WindowTemplate sRibbonSummaryMonNameWindowTemplate =
 };
 
 // JP has two actual list index windows (pokeemerald has one + sentinel).
-const struct WindowTemplate sRibbonMonListIndexWindowTemplate[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct WindowTemplate sRibbonMonListIndexWindowTemplate[] =
 {
     {
         .bg = 2,
@@ -154,7 +153,7 @@ const struct WindowTemplate sRibbonMonListIndexWindowTemplate[] =
     },
 };
 
-const struct RibbonGfxData sRibbonGfxData[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct RibbonGfxData sRibbonGfxData[] =
 {
     {0, 0},
     {1, 0},
@@ -198,12 +197,12 @@ const struct RibbonGfxData sRibbonGfxData[] =
 #define PALTAG_RIBBON_ICONS_4 18
 #define PALTAG_RIBBON_ICONS_5 19
 
-const struct CompressedSpriteSheet sSpriteSheet_RibbonIconsBig =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct CompressedSpriteSheet sSpriteSheet_RibbonIconsBig =
 {
     sRibbonIconsBig_Gfx, 0x1800, GFXTAG_RIBBON_ICONS_BIG
 };
 
-const struct SpritePalette sSpritePalettes_RibbonIcons[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct SpritePalette sSpritePalettes_RibbonIcons[] =
 {
     {sRibbonIcons1_Pal, PALTAG_RIBBON_ICONS_1},
     {sRibbonIcons2_Pal, PALTAG_RIBBON_ICONS_2},
@@ -213,7 +212,7 @@ const struct SpritePalette sSpritePalettes_RibbonIcons[] =
     {},
 };
 
-const struct OamData sOamData_RibbonIconBig =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct OamData sOamData_RibbonIconBig =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_NORMAL,
@@ -230,34 +229,34 @@ const struct OamData sOamData_RibbonIconBig =
     .affineParam = 0,
 };
 
-const union AffineAnimCmd sAffineAnim_RibbonIconBig_Normal[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const union AffineAnimCmd sAffineAnim_RibbonIconBig_Normal[] =
 {
     AFFINEANIMCMD_FRAME(128, 128, 0, 0),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomIn[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomIn[] =
 {
     AFFINEANIMCMD_FRAME(128, 128, 0, 0),
     AFFINEANIMCMD_FRAME(32, 32, 0, 4),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomOut[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomOut[] =
 {
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(-32, -32, 0, 4),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const sAffineAnims_RibbonIconBig[] =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const union AffineAnimCmd *const sAffineAnims_RibbonIconBig[] =
 {
     sAffineAnim_RibbonIconBig_Normal,
     sAffineAnim_RibbonIconBig_ZoomIn,
     sAffineAnim_RibbonIconBig_ZoomOut
 };
 
-const struct SpriteTemplate sSpriteTemplate_RibbonIconBig =
+POKENAV_INTERFACE_DATA(sRibbonIcons1_Pal) const struct SpriteTemplate sSpriteTemplate_RibbonIconBig =
 {
     .tileTag = GFXTAG_RIBBON_ICONS_BIG,
     .paletteTag = PALTAG_RIBBON_ICONS_1,
@@ -347,11 +346,6 @@ static u32 LoopedTask_ExpandSelectedRibbon(s32);
 static u32 LoopedTask_MoveRibbonsCursorExpanded(s32);
 static u32 LoopedTask_ShrinkExpandedRibbon(s32);
 static u32 LoopedTask_ExitRibbonsSummaryMenu(s32);
-
-
-
-
-
 
 bool32 PokenavCallback_Init_RibbonsSummaryMenu(void)
 {
@@ -649,7 +643,6 @@ static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
     }
 }
 
-
 static u32 *GetNormalRibbonIds(u32 *size)
 {
     struct Pokenav_RibbonsSummaryList *list = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_SUMMARY_LIST);
@@ -825,8 +818,6 @@ u32 LoopedTask_OpenRibbonsSummaryMenu(s32 state)
     return LT_FINISH;
 }
 
-
-
 static u32 LoopedTask_ExitRibbonsSummaryMenu(s32 state)
 {
     switch (state)
@@ -960,7 +951,6 @@ static u32 LoopedTask_ShrinkExpandedRibbon(s32 state)
     return LT_FINISH;
 }
 
-
 static void AddRibbonCountWindow(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     menu->ribbonCountWindowId = AddWindow(&sRibbonCountWindowTemplate);
@@ -981,7 +971,6 @@ void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSummaryMenu *menu)
     AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, 2, color, TEXT_SKIP_DRAW, gStringVar4);
     CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
 }
-
 
 void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
 {
@@ -1017,15 +1006,12 @@ void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
     CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
 }
 
-
-
 static void AddRibbonSummaryMonNameWindow(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     menu->nameWindowId = AddWindow(&sRibbonSummaryMonNameWindowTemplate);
     PutWindowTilemap(menu->nameWindowId);
     PrintRibbbonsSummaryMonInfo(menu);
 }
-
 
 void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
 {
@@ -1058,8 +1044,6 @@ void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
     CopyWindowToVram(menu->nameWindowId, COPYWIN_GFX);
 }
 
-
-
 void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     menu->listIdxWindowId = AddWindow(&sRibbonMonListIndexWindowTemplate[0]);
@@ -1071,7 +1055,6 @@ void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
     sub_081D07B8(menu->unusedWindowId);
     PrintRibbonsMonListIndex(menu);
 }
-
 
 void sub_081D07B8(s32 state)
 {
@@ -1236,7 +1219,6 @@ enum {
 
 #define TO_PAL_OFFSET(palNum) ((palNum) - PALTAG_RIBBON_ICONS_1)
 
-
 #undef TO_PAL_OFFSET
 
 static void BufferSmallRibbonGfxData(u16 *dst, u32 ribbonId)
@@ -1250,19 +1232,11 @@ static void BufferSmallRibbonGfxData(u16 *dst, u32 ribbonId)
     dst[3] = (tileNum + 1) | (palNum << 12) | 0x400;
 }
 
-
-
-
-
-
-
 enum {
     RIBBONANIM_NORMAL,
     RIBBONANIM_ZOOM_IN,
     RIBBONANIM_ZOOM_OUT,
 };
-
-
 
 // Create dummy sprite to be used for the zoomed in version of the selected ribbon
 static void CreateBigRibbonSprite(struct Pokenav_RibbonsSummaryMenu *menu)
@@ -1322,3 +1296,5 @@ static void SpriteCB_WaitForRibbonAnimation(struct Sprite *sprite)
         sprite->callback = SpriteCallbackDummy;
     }
 }
+
+#undef POKENAV_INTERFACE_DATA

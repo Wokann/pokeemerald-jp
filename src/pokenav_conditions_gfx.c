@@ -4,6 +4,8 @@
 #include "window.h"
 #include "pokenav.h"
 
+#define POKENAV_INTERFACE_DATA(symbol) __attribute__((section(".rodata.pokenav_interface." #symbol)))
+
 // JP conditions data tables (defined at fixed addresses in ld_script_jp.txt).
 // Global (not static) because they are referenced from
 // pokenav_conditions.c and pokenav_conditions_tail.c.
@@ -118,12 +120,8 @@ const LoopedTask sConditionSearchLoopedTaskFuncs[] =
 };
 
 // Condition search result screen.
-const u16 sConditionSearchResultFramePal[] = INCBIN_U16("graphics/pokenav_conditions/sConditionSearchResultFramePal.bin");
-const u32 sConditionSearchResultTiles[] = INCBIN_U32("graphics/pokenav_conditions/sConditionSearchResultTiles.bin");
-const u32 sConditionSearchResultTilemap[] = INCBIN_U32("graphics/pokenav_conditions/sConditionSearchResultTilemap.bin");
-const u16 sListBg_Pal[] = INCBIN_U16("graphics/list_ui/sListBg_Pal.bin");
 
-const struct BgTemplate sConditionSearchResultBgTemplates[] =
+POKENAV_INTERFACE_DATA(sConditionSearchResultBgTemplates) const struct BgTemplate sConditionSearchResultBgTemplates[] =
 {
     {
         .bg = 1,
@@ -163,7 +161,7 @@ enum
     CONDITION_SEARCH_FUNC_SELECT_MON
 };
 
-const LoopedTask sSearchResultLoopTaskFuncs[] =
+POKENAV_INTERFACE_DATA(sConditionSearchResultBgTemplates) const LoopedTask sSearchResultLoopTaskFuncs[] =
 {
     [CONDITION_SEARCH_FUNC_NONE]       = NULL,
     [CONDITION_SEARCH_FUNC_MOVE_UP]    = LoopedTask_MoveSearchListCursorUp,
@@ -174,7 +172,7 @@ const LoopedTask sSearchResultLoopTaskFuncs[] =
     [CONDITION_SEARCH_FUNC_SELECT_MON] = LoopedTask_SelectSearchResult
 };
 
-const struct WindowTemplate sSearchResultListMenuWindowTemplate =
+POKENAV_INTERFACE_DATA(sConditionSearchResultBgTemplates) const struct WindowTemplate sSearchResultListMenuWindowTemplate =
 {
     .bg = 1,
     .tilemapLeft = 1,
@@ -190,19 +188,14 @@ u32 BuildPartyMonRibbonList(s32);
 u32 InitBoxMonRibbonList(s32);
 u32 BuildBoxMonRibbonList(s32);
 
-const LoopedTask sMonRibbonListLoopTaskFuncs[] =
+POKENAV_INTERFACE_DATA(sConditionSearchResultBgTemplates) const LoopedTask sMonRibbonListLoopTaskFuncs[] =
 {
     BuildPartyMonRibbonList,
     InitBoxMonRibbonList,
     BuildBoxMonRibbonList
 };
 
-const u16 sMonRibbonListFramePal[] = INCBIN_U16("graphics/pokemon_summary/sMonRibbonListFramePal.bin");
-const u32 sMonRibbonListFrameTiles[] = INCBIN_U32("graphics/pokemon_summary/sMonRibbonListFrameTiles.bin");
-const u32 sMonRibbonListFrameTilemap[] = INCBIN_U32("graphics/pokemon_summary/sMonRibbonListFrameTilemap.bin");
-const u16 sMonRibbonListUi_Pal[] = INCBIN_U16("graphics/pokemon_summary/sMonRibbonListUi_Pal.bin");
-
-const struct BgTemplate sMonRibbonListBgTemplates[] =
+POKENAV_INTERFACE_DATA(sMonRibbonListBgTemplates) const struct BgTemplate sMonRibbonListBgTemplates[] =
 {
     {
         .bg = 1,
@@ -242,7 +235,7 @@ enum
     RIBBONS_MON_LIST_FUNC_OPEN_RIBBONS_SUMMARY
 };
 
-const LoopedTask sRibbonsMonMenuLoopTaskFuncs[] =
+POKENAV_INTERFACE_DATA(sMonRibbonListBgTemplates) const LoopedTask sRibbonsMonMenuLoopTaskFuncs[] =
 {
     [RIBBONS_MON_LIST_FUNC_NONE]                 = NULL,
     [RIBBONS_MON_LIST_FUNC_MOVE_UP]              = LoopedTask_RibbonsListMoveCursorUp,
@@ -253,7 +246,7 @@ const LoopedTask sRibbonsMonMenuLoopTaskFuncs[] =
     [RIBBONS_MON_LIST_FUNC_OPEN_RIBBONS_SUMMARY] = LoopedTask_RibbonsListOpenSummary
 };
 
-const struct WindowTemplate sRibbonsMonListWindowTemplate =
+POKENAV_INTERFACE_DATA(sMonRibbonListBgTemplates) const struct WindowTemplate sRibbonsMonListWindowTemplate =
 {
     .bg = 1,
     .tilemapLeft = 1,
@@ -265,14 +258,14 @@ const struct WindowTemplate sRibbonsMonListWindowTemplate =
 };
 
 // Ribbons mon list texts.
-const u8 gText_RibbonsMonListCount[] = _("　　　/{DYNAMIC 0}");
-const u8 sText_RibbonsMonListItemMale[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
-const u8 sText_RibbonsMonListItemFemale[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
+POKENAV_INTERFACE_DATA(sMonRibbonListBgTemplates) const u8 gText_RibbonsMonListCount[] = _("　　　/{DYNAMIC 0}");
+POKENAV_INTERFACE_DATA(sMonRibbonListBgTemplates) const u8 sText_RibbonsMonListItemMale[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
+POKENAV_INTERFACE_DATA(sMonRibbonListBgTemplates) const u8 sText_RibbonsMonListItemFemale[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
 // JP text carries its own $ and trailing full-width spaces (no auto terminator).
-const u8 sText_RibbonsMonListItemUnknown[] = __("{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$　　");
+POKENAV_INTERFACE_DATA(sMonRibbonListBgTemplates) const u8 sText_RibbonsMonListItemUnknown[] = __("{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$　　");
 
 struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; };
-const struct RibbonData sRibbonData[] =
+POKENAV_INTERFACE_DATA(sMonRibbonListBgTemplates) const struct RibbonData sRibbonData[] =
 {
     {1, 1, CHAMPION_RIBBON,      FALSE},
     {3, 4, COOL_RIBBON_NORMAL,   FALSE},
@@ -294,24 +287,14 @@ const struct RibbonData sRibbonData[] =
 };
 #define POKENAV_CONDITION_RESOURCES __attribute__((section(".rodata.pokenav_condition_resources")))
 
-const u16 gPokenavCondition_Pal[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U16("graphics/pokenav/condition/graph.gbapal");
-const u16 gConditionGraphData_Pal[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U16("graphics/pokenav/condition/graph_data.gbapal");
-const u16 gConditionText_Pal[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U16("graphics/pokenav/condition/text.gbapal");
-const u32 gPokenavCondition_Gfx[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U32("graphics/pokenav/condition/graph.4bpp.lz");
-const u32 gPokenavCondition_Tilemap[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U32("graphics/pokenav/condition/graph.bin.lz");
-const u32 sConditionGraphData_Gfx[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U32("graphics/pokenav/condition/graph_data.4bpp.lz");
-const u32 sConditionGraphData_Tilemap[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U32("graphics/pokenav/condition/graph_data.bin.lz");
-const u16 gPokenavOptions_Tilemap[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U16("graphics/pokenav/options/options.bin");
-const u16 sPokenavMonMarkings_Pal[] POKENAV_CONDITION_RESOURCES =
-    INCBIN_U16("graphics/pokenav/condition/mon_markings.gbapal");
+const u16 gConditionGraphData_Pal[] POKENAV_CONDITION_RESOURCES = INCGFX_U16("graphics/pokenav/condition/graph_data.pal", ".gbapal");
+const u16 gConditionText_Pal[] POKENAV_CONDITION_RESOURCES = INCGFX_U16("graphics/pokenav/condition/text.pal", ".gbapal");
+
+// Shared with this source file's JP TAIL compilation pass.
+POKENAV_INTERFACE_DATA(sConditionGraphData_Gfx) const u32 sConditionGraphData_Gfx[] = INCGFX_U32("graphics/pokenav/condition/graph_data.png", ".4bpp.lz");
+POKENAV_INTERFACE_DATA(sConditionGraphData_Gfx) const u32 sConditionGraphData_Tilemap[] = INCGFX_U32("graphics/pokenav/condition/graph_data.bin", ".lz");
+
+POKENAV_INTERFACE_DATA(sMonMarkings_Pal) const u16 sMonMarkings_Pal[] = INCGFX_U16("graphics/pokenav/condition/mon_markings.pal", ".gbapal");
 
 #else
 #include "global.h"
@@ -435,7 +418,6 @@ extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
 // libgcc trampoline agbcc emits for indirect calls.
 void _call_via_r0(void);
 
-
 // Naked-function prototypes so C callers use the right argument types.
 void CreateConditionMonPic(u8 id);
 bool32 UpdateConditionGraphMenuWindows(u8 mode, u16 bufferIndex, bool8 winMode);
@@ -538,7 +520,7 @@ extern const u16 gPokenavCondition_Pal[];
 extern const u16 gConditionText_Pal[];
 extern const u32 sConditionGraphData_Tilemap[];
 extern const u16 gConditionGraphData_Pal[];
-extern const u16 sPokenavMonMarkings_Pal[];
+extern const u16 sMonMarkings_Pal[];
 
 // JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
 extern const struct BgTemplate sMenuBgTemplates[3];
@@ -549,10 +531,6 @@ extern const struct WindowTemplate sUnusedWindowTemplate2;
 extern const LoopedTask sLoopedTaskFuncs[];
 extern const u32 sSearchMonDataIds[];
 extern const LoopedTask sConditionSearchLoopedTaskFuncs[];
-extern const u16 sConditionSearchResultFramePal[];
-extern const u32 sConditionSearchResultTiles[];
-extern const u32 sConditionSearchResultTilemap[];
-extern const u16 sListBg_Pal[];
 extern const struct BgTemplate sConditionSearchResultBgTemplates[];
 extern const LoopedTask sSearchResultLoopTaskFuncs[];
 extern const struct WindowTemplate sSearchResultListMenuWindowTemplate;
@@ -561,10 +539,6 @@ extern const u8 sText_RibbonsMonListItemMale[];    // JP 0x085F5DD3
 extern const u8 sText_RibbonsMonListItemFemale[];  // JP 0x085F5DEB
 extern const u8 sText_RibbonsMonListItemUnknown[]; // JP 0x085F5E03
 extern const LoopedTask sMonRibbonListLoopTaskFuncs[];
-extern const u16 sMonRibbonListFramePal[];
-extern const u32 sMonRibbonListFrameTiles[];
-extern const u32 sMonRibbonListFrameTilemap[];
-extern const u16 sMonRibbonListUi_Pal[];
 extern const struct BgTemplate sMonRibbonListBgTemplates[];
 extern const LoopedTask sRibbonsMonMenuLoopTaskFuncs[];
 extern const struct WindowTemplate sRibbonsMonListWindowTemplate;
@@ -602,7 +576,6 @@ bool32 IsSearchResultLoopedTaskActive(void)
     u8 *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
     return ((bool32 (*)(void))*(u32 *)(gfx + 0x1810))();
 }
-
 
 // JP-only alias: the `bx r1` at the end of IsSearchResultLoopedTaskActive is
 // also labeled sub_081CD5D8 (0x081CD5D8) in the JP ROM.  No separate code.
@@ -1092,7 +1065,7 @@ void CreateMonMarkingsOrPokeballIndicators(void)
         menu->marksMenu.basePaletteTag = TAG_CONDITION_MARKINGS_MENU;
         InitMonMarkingsMenu(&menu->marksMenu);
         BufferMonMarkingsMenuTiles();
-        sprite = CreateMonMarkingAllCombosSprite(TAG_CONDITION_MON_MARKINGS, TAG_CONDITION_MON_MARKINGS, sPokenavMonMarkings_Pal);
+        sprite = CreateMonMarkingAllCombosSprite(TAG_CONDITION_MON_MARKINGS, TAG_CONDITION_MON_MARKINGS, sMonMarkings_Pal);
         sprite->oam.priority = 3;
         sprite->x = 192;
         sprite->y = 32;
@@ -1311,3 +1284,5 @@ u8 GetMonMarkingsData(void)
 }
 
 #endif
+
+#undef POKENAV_INTERFACE_DATA

@@ -46,6 +46,14 @@ BUILD_NAME ?= pokeemerald-jp
 OBJ_DIR := build/$(BUILD_NAME)
 JP_GRAPHICS_GFX_ROOT := $(OBJ_DIR)/incgfx/
 
+# JP keeps the US option-label sequence compressed in the build tree.
+JP_POKENAV_OPTIONS_NAMES := hoenn_map condition match_call ribbons switch_off party search cool beauty cute smart tough cancel
+JP_POKENAV_OPTIONS_DIR := $(JP_GRAPHICS_GFX_ROOT)graphics/pokenav/options
+JP_POKENAV_OPTIONS_TILES := $(addprefix $(JP_POKENAV_OPTIONS_DIR)/,$(addsuffix .4bpp,$(JP_POKENAV_OPTIONS_NAMES)))
+JP_POKENAV_OPTIONS_GFX := $(JP_POKENAV_OPTIONS_DIR)/options.4bpp.lz
+# The explicit composite rule replaces scaninc's single-input fallback.
+$(JP_POKENAV_OPTIONS_GFX) := defined
+
 ASFILE := $(wildcard asm/*.s)
 AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # Assembly files that live under src/ like US pokeemerald
@@ -1163,7 +1171,6 @@ clean: clean-tools
 	rm -f $(JP_BATTLE_RECORDS_ASSETS)
 	rm -f $(JP_MON_MARKINGS_ASSETS)
 	rm -f $(JP_USE_POKEBLOCK_ASSETS) $(JP_USE_POKEBLOCK_INTERMEDIATES)
-	rm -f $(JP_UNUSED_POKENAV_ASSETS) $(JP_UNUSED_POKENAV_INTERMEDIATES)
 	rm -f $(JP_FLDEFF_MISC_ASSETS)
 	rm -f $(JP_BATTLE_ANIM_FAMILY_ASSETS) $(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)
 	rm -f $(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES)
@@ -1321,15 +1328,15 @@ $(C_BUILDDIR)/evolution_graphics.o: src/evolution_graphics.c
 	@rm -f $(C_BUILDDIR)/evolution_graphics.gen.s
 
 # Keep Match Call UI graphics reproducible from tracked PNG inputs.
-$(C_BUILDDIR)/match_call.d: src/match_call.c | tools
+$(C_BUILDDIR)/match_call.d: src/match_call.c Makefile | tools
 	@mkdir -p $(dir $@)
-	$(SCANINC) -M $@ -I include -I "" $<
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/match_call.d
 
-$(C_BUILDDIR)/match_call.o: src/match_call.c
+$(C_BUILDDIR)/match_call.o: src/match_call.c Makefile charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/match_call.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/match_call.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/match_call.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/match_call.gen.s
 
@@ -1379,9 +1386,15 @@ $(C_BUILDDIR)/item.o: src/item.c src/data/items.h src/data/text/item_description
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/item.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/item.gen.s
 
-$(C_BUILDDIR)/pokenav_match_call_gfx.o: src/pokenav_match_call_gfx.c $(wildcard graphics/pokenav/match_call/*.lz graphics/pokenav/match_call/*.gbapal)
+$(C_BUILDDIR)/pokenav_match_call_gfx.d: src/pokenav_match_call_gfx.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_match_call_gfx.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_match_call_gfx.d
+
+$(C_BUILDDIR)/pokenav_match_call_gfx.o: src/pokenav_match_call_gfx.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_match_call_gfx.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_match_call_gfx.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_match_call_gfx.gen.s
 
@@ -1418,15 +1431,27 @@ $(C_BUILDDIR)/pokenav_conditions_gfx_tail.o: src/pokenav_conditions_gfx.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $@.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $@.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $@.gen.s
-$(C_BUILDDIR)/pokenav_conditions_gfx.o: src/pokenav_conditions_gfx.c $(wildcard graphics/pokenav/condition/* graphics/pokenav/options/options.bin)
+$(C_BUILDDIR)/pokenav_conditions_gfx.d: src/pokenav_conditions_gfx.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_conditions_gfx.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_conditions_gfx.d
+
+$(C_BUILDDIR)/pokenav_conditions_gfx.o: src/pokenav_conditions_gfx.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_conditions_gfx.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_conditions_gfx.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_conditions_gfx.gen.s
 
-$(C_BUILDDIR)/pokenav_ribbons_summary.o: src/pokenav_ribbons_summary.c
+$(C_BUILDDIR)/pokenav_ribbons_summary.d: src/pokenav_ribbons_summary.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_ribbons_summary.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_ribbons_summary.d
+
+$(C_BUILDDIR)/pokenav_ribbons_summary.o: src/pokenav_ribbons_summary.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_ribbons_summary.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_ribbons_summary.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_ribbons_summary.gen.s
 $(C_BUILDDIR)/braille.o: src/braille.c
@@ -1511,83 +1536,7 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/contest/nextturn_random.png.4bpp \
 	graphics/contest/applause.png.4bpp.lz graphics/contest/applause_meter.png.4bpp \
 	graphics/contest/nextturn.png.gbapal \
-	  \
-	  \
-	  \
-	 \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	 \
-	  \
-	 \
-	  \
-	  \
-	 \
-	  \
-	  \
-	  \
-	 \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	  \
-	 \
-	  \
-	  \
-	  \
-	  \
-	 \
-	  \
-	  \
 	graphics/battle_anims/unused/unknown_1.bin graphics/battle_anims/unused/unknown_2.bin graphics/battle_anims/unused/unknown_3.bin \
-	  \
-	 \
-	  \
 	graphics/battle_anims/sprites/splash.png.4bpp.lz graphics/battle_anims/sprites/splash.png.gbapal.lz \
 	graphics/battle_anims/sprites/sweat_bead.png.4bpp.lz graphics/battle_anims/sprites/pokeblock.png.4bpp.lz \
 	graphics/battle_anims/sprites/pokeblock.png.gbapal.lz graphics/battle_anims/sprites/gem_1.png.4bpp.lz \
@@ -1745,15 +1694,27 @@ $(C_BUILDDIR)/item_menu_icons.o: src/item_menu_icons.c $(wildcard graphics/bag/r
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/item_menu_icons.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/item_menu_icons.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/item_menu_icons.gen.s
-$(C_BUILDDIR)/pokenav_menu_handler_gfx.o: src/pokenav_menu_handler_gfx.c $(wildcard graphics/pokenav/*.lz graphics/pokenav/*.gbapal)
+$(C_BUILDDIR)/pokenav_menu_handler_gfx.d: src/pokenav_menu_handler_gfx.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_menu_handler_gfx.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_menu_handler_gfx.d
+
+$(C_BUILDDIR)/pokenav_menu_handler_gfx.o: src/pokenav_menu_handler_gfx.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_menu_handler_gfx.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_menu_handler_gfx.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_menu_handler_gfx.gen.s
 
-$(C_BUILDDIR)/pokenav_list.o: src/pokenav_list.c graphics/pokenav/list_arrows.gbapal graphics/pokenav/list_arrows.4bpp.lz
+$(C_BUILDDIR)/pokenav_list.d: src/pokenav_list.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_list.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_list.d
+
+$(C_BUILDDIR)/pokenav_list.o: src/pokenav_list.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_list.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_list.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_list.gen.s
 
@@ -1766,9 +1727,15 @@ $(C_BUILDDIR)/pokenav_match_call_list.o: src/pokenav_match_call_list.c src/data/
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_match_call_list.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_match_call_list.gen.s
 
-$(C_BUILDDIR)/menu_specialized.o: src/menu_specialized.c charmap.txt include/pokemon_summary_screen.h $(wildcard graphics/pokenav/condition/*)
+$(C_BUILDDIR)/menu_specialized.d: src/menu_specialized.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/menu_specialized.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/menu_specialized.d
+
+$(C_BUILDDIR)/menu_specialized.o: src/menu_specialized.c Makefile charmap.txt include/pokemon_summary_screen.h
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/menu_specialized.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/menu_specialized.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/menu_specialized.gen.s
 
@@ -3527,32 +3494,6 @@ clean: clean-mon-icon-assets
 .PHONY: clean-mon-icon-assets
 clean-mon-icon-assets:
 	rm -f $(JP_MON_ICON_ASSETS)
-
-JP_UNUSED_POKENAV_ASSETS := graphics/pokenav/unused/menu.png_num_tiles_127.4bpp.lz \
-	graphics/pokenav/unused/menu.bin.lz \
-	graphics/pokenav/unused/toolbar.png.4bpp \
-	graphics/pokenav/unused/toolbar.bin.lz \
-	graphics/pokenav/unused/backdrop.png.4bpp \
-	graphics/pokenav/unused/backdrop.bin.lz \
-	graphics/pokenav/unused/outline.png_num_tiles_43.4bpp.lz \
-	graphics/pokenav/unused/outline.bin.lz
-JP_UNUSED_POKENAV_INTERMEDIATES := graphics/pokenav/unused/menu.png_num_tiles_127.4bpp \
-	graphics/pokenav/unused/outline.png_num_tiles_43.4bpp
-
-# The rectangular PNGs retain zero tiles beyond the native JP streams.
-graphics/pokenav/unused/menu.png_num_tiles_127.4bpp: graphics/pokenav/unused/menu.png | tools
-	$(GFX) $< $@ -num_tiles 127
-
-graphics/pokenav/unused/toolbar.png.4bpp: graphics/pokenav/unused/toolbar.png | tools
-	$(GFX) $< $@
-
-graphics/pokenav/unused/backdrop.png.4bpp: graphics/pokenav/unused/backdrop.png | tools
-	$(GFX) $< $@
-
-graphics/pokenav/unused/outline.png_num_tiles_43.4bpp: graphics/pokenav/unused/outline.png | tools
-	$(GFX) $< $@ -num_tiles 43
-
-$(C_BUILDDIR)/graphics.o: src/data/graphics/unused_pokenav.h include/constants/rgb.h $(JP_UNUSED_POKENAV_ASSETS)
 
 JP_FLDEFF_MISC_ASSETS := graphics/field_effects/pics/secret_power_cave.png_mwidth_2__mheight_2.4bpp \
 	graphics/field_effects/palettes/secret_power_cave.pal.gbapal \
@@ -6401,3 +6342,51 @@ graphics/pokemon/%.png.1bpp: graphics/pokemon/%.png | tools
 	$(GFX) $< $@
 
 $(C_BUILDDIR)/graphics.o: $(JP_POKEMON_STILL_ASSETS) graphics_file_rules.mk
+
+# PokeNav option labels follow the US thirteen-image order.
+$(JP_POKENAV_OPTIONS_TILES): $(JP_POKENAV_OPTIONS_DIR)/%.4bpp: graphics/pokenav/options/%.png Makefile | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_POKENAV_OPTIONS_DIR)/options.4bpp: $(JP_POKENAV_OPTIONS_TILES) Makefile
+	@mkdir -p $(dir $@)
+	@cat $(filter %.4bpp,$^) >$@
+
+$(JP_POKENAV_OPTIONS_GFX): $(JP_POKENAV_OPTIONS_DIR)/options.4bpp Makefile | tools
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/pokenav_main_menu.d: src/pokenav_main_menu.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_main_menu.d
+
+$(C_BUILDDIR)/pokenav_main_menu.o: src/pokenav_main_menu.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_main_menu.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_main_menu.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/pokenav_main_menu.gen.s
+
+$(C_BUILDDIR)/pokenav_conditions_search_results.d: src/pokenav_conditions_search_results.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_conditions_search_results.d
+
+$(C_BUILDDIR)/pokenav_conditions_search_results.o: src/pokenav_conditions_search_results.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_conditions_search_results.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_conditions_search_results.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/pokenav_conditions_search_results.gen.s
+
+$(C_BUILDDIR)/pokenav_ribbons_list.d: src/pokenav_ribbons_list.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_ribbons_list.d
+
+$(C_BUILDDIR)/pokenav_ribbons_list.o: src/pokenav_ribbons_list.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_ribbons_list.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_ribbons_list.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/pokenav_ribbons_list.gen.s

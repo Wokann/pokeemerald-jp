@@ -145,3 +145,10 @@ const u32 gUnusedPokenavOutline_Gfx[] UNUSED_POKENAV_OUTLINE_GRAPHICS = INCGFX_U
 const u32 gUnusedPokenavOutline_Tilemap[] UNUSED_POKENAV_OUTLINE_GRAPHICS = INCGFX_U32("graphics/pokenav/unused/outline.bin", ".lz");
 
 #undef UNUSED_POKENAV_OUTLINE_GRAPHICS
+
+#define UNUSED_POKENAV_INTERFACE_DATA(symbol) __attribute__((section(".rodata.pokenav_interface." #symbol)))
+
+// JP retains an unreferenced second copy of the Match Call light tiles.
+UNUSED_POKENAV_INTERFACE_DATA(gUnusedPokenavBlueLight_Gfx) const u32 gUnusedPokenavBlueLight_Gfx[] = INCGFX_U32("graphics/pokenav/blue_light.png", ".4bpp.lz");
+
+#undef UNUSED_POKENAV_INTERFACE_DATA
