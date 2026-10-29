@@ -169,7 +169,7 @@ static const u8 ALIGNED(2) sBasePaletteColorMapTypes[32] FIELD_WEATHER_STATIC_DA
     COLOR_MAP_DARK_CONTRAST,
 };
 
-const u16 ALIGNED(4) gFogPalette[] FIELD_WEATHER_STATIC_DATA = INCBIN_U16("graphics/field_effects/gFogPalette.bin");
+const u16 ALIGNED(4) gFogPalette[] FIELD_WEATHER_STATIC_DATA = INCGFX_U16("graphics/weather/fog.pal", ".gbapal");
 
 void StartWeather(void)
 {

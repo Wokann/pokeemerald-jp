@@ -45138,7 +45138,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "6aeffb6a28e903565e94ebf7c4fd570d06007331f8ddb05c39e25c8d41ed318b"
+            "makefile_sha256": "ea0ae9bc4c8d5cd6efb72e4c736b7b2896a35781251d7377fec3d215cce1d3bf"
           }
         },
         {
@@ -45573,7 +45573,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "6aeffb6a28e903565e94ebf7c4fd570d06007331f8ddb05c39e25c8d41ed318b"
+          "sha256": "ea0ae9bc4c8d5cd6efb72e4c736b7b2896a35781251d7377fec3d215cce1d3bf"
         },
         {
           "path": "asm/macros.inc",
@@ -307656,7 +307656,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -313453,7 +313453,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -319800,7 +319800,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -325702,7 +325702,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -331181,7 +331181,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -337805,7 +337805,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -346034,7 +346034,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -353101,7 +353101,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -357273,7 +357273,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -361087,7 +361087,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -365646,7 +365646,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -370476,7 +370476,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -374195,7 +374195,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -378200,7 +378200,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -381958,7 +381958,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -385495,7 +385495,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -389145,7 +389145,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -393042,7 +393042,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -396488,7 +396488,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -400071,7 +400071,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -405890,7 +405890,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -414281,7 +414281,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -418647,7 +418647,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -426136,7 +426136,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -431575,7 +431575,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -433587,7 +433587,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -436319,7 +436319,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -439732,7 +439732,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -444618,7 +444618,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -446931,7 +446931,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -449547,7 +449547,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -452366,7 +452366,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -455015,7 +455015,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -457179,7 +457179,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/item.c",
@@ -471037,7 +471037,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",
@@ -477254,7 +477254,7 @@
         {
           "path": "src/field_weather.c",
           "selector": "file",
-          "sha256": "df25b13acdad999f2d5b8ea5c1f66382a932351c3dd59afc230457c9c37fea50"
+          "sha256": "061b157b35cbd636cd822c873f8583ed0513592e9478133c10cfdf39d150a06c"
         },
         {
           "path": "src/fieldmap.c",

@@ -138,17 +138,17 @@ void UpdateRainCounter(u8 newWeather, u8 oldWeather);
 #define FIELD_WEATHER_EFFECT_STATIC_DATA __attribute__((section(".rodata.field_weather_effect_static_data")))
 #define FIELD_WEATHER_EFFECT_WEATHER_CYCLE_DATA __attribute__((section(".rodata.field_weather_effect_weather_cycle_data")))
 
-const u16 gCloudsWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U16("graphics/weather/cloud.gbapal");
-const u16 gSandstormWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U16("graphics/weather/sandstorm.gbapal");
-const u8 gWeatherFogDiagonalTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/fog_diagonal.4bpp");
-const u8 gWeatherFogHorizontalTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/fog_horizontal.4bpp");
-const u8 gWeatherCloudTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/cloud.4bpp");
-const u8 gWeatherSnow1Tiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/snow0.4bpp");
-const u8 gWeatherSnow2Tiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/snow1.4bpp");
-const u8 gWeatherBubbleTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/bubble.4bpp");
-const u8 gWeatherAshTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/ash.4bpp");
-const u8 gWeatherRainTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/rain.4bpp");
-const u8 gWeatherSandstormTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCBIN_U8("graphics/weather/sandstorm.4bpp");
+const u16 gCloudsWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U16("graphics/weather/cloud.png", ".gbapal");
+const u16 gSandstormWeatherPalette[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U16("graphics/weather/sandstorm.png", ".gbapal");
+const u8 gWeatherFogDiagonalTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/fog_diagonal.png", ".4bpp");
+const u8 gWeatherFogHorizontalTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/fog_horizontal.png", ".4bpp");
+const u8 gWeatherCloudTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/cloud.png", ".4bpp");
+const u8 gWeatherSnow1Tiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/snow0.png", ".4bpp");
+const u8 gWeatherSnow2Tiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/snow1.png", ".4bpp");
+const u8 gWeatherBubbleTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/bubble.png", ".4bpp");
+const u8 gWeatherAshTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/ash.png", ".4bpp");
+const u8 gWeatherRainTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/rain.png", ".4bpp");
+const u8 gWeatherSandstormTiles[] FIELD_WEATHER_EFFECT_RESOURCE_DATA = INCGFX_U8("graphics/weather/sandstorm.png", ".4bpp");
 
 #define WEATHER_CYCLE_LENGTH 4
 

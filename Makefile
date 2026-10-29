@@ -1602,13 +1602,13 @@ $(C_BUILDDIR)/dodrio_berry_picking.o: src/dodrio_berry_picking.c
 
 $(C_BUILDDIR)/field_weather.o: src/field_weather.c $(wildcard graphics/weather/drought/*)
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_weather.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_weather.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_weather.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/field_weather.gen.s
 
-$(C_BUILDDIR)/field_weather_effect.o: src/field_weather_effect.c $(wildcard graphics/weather/*.4bpp graphics/weather/*.gbapal)
+$(C_BUILDDIR)/field_weather_effect.o: src/field_weather_effect.c
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_weather_effect.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_weather_effect.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_weather_effect.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/field_weather_effect.gen.s
 
@@ -6117,5 +6117,65 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/starter_circle.png.4bpp: graphics
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/starter_circle.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/starter_choose/starter_circle.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/field_weather.d: src/field_weather.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/field_weather.d
+
+$(C_BUILDDIR)/field_weather_effect.d: src/field_weather_effect.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/field_weather_effect.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/fog.pal.gbapal: graphics/weather/fog.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/cloud.png.gbapal: graphics/weather/cloud.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/sandstorm.png.gbapal: graphics/weather/sandstorm.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/fog_diagonal.png.4bpp: graphics/weather/fog_diagonal.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/fog_horizontal.png.4bpp: graphics/weather/fog_horizontal.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/cloud.png.4bpp: graphics/weather/cloud.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/snow0.png.4bpp: graphics/weather/snow0.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/snow1.png.4bpp: graphics/weather/snow1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/bubble.png.4bpp: graphics/weather/bubble.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/ash.png.4bpp: graphics/weather/ash.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/rain.png.4bpp: graphics/weather/rain.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/weather/sandstorm.png.4bpp: graphics/weather/sandstorm.png $(GFX)
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@
