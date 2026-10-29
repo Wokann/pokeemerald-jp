@@ -1,5 +1,4 @@
 #include "global.h"
 
-// JP Berry Blender data is kept in its own compilation unit so the raw
-// resource order remains independent from the remaining implementation.
+// Keep the unclassified JP suffix separate until its tables are reconstructed.
 #include "berry_blender.h"

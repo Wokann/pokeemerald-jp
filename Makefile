@@ -1654,7 +1654,7 @@ $(C_BUILDDIR)/sound_check.o: src/sound_check.c src/data/sound_check.h charmap.tx
 
 $(C_BUILDDIR)/berry_blender.o: src/berry_blender.c charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry_blender.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry_blender.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/berry_blender.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/berry_blender.gen.s
 
@@ -6095,3 +6095,9 @@ $(C_BUILDDIR)/pokemon_storage_system.d: src/pokemon_storage_system.c src/data/wa
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/pokemon_storage_system.d
+
+$(C_BUILDDIR)/berry_blender.d: src/berry_blender.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/berry_blender.d

@@ -1071,9 +1071,9 @@ ENEMY_SHADOW_GRAPHICS const u32 gEnemyMonShadow_Gfx[] = INCBIN_U32("graphics/bat
 
 #define BERRY_BLENDER_BACKGROUND_GRAPHICS __attribute__((section(".rodata.berry_blender_background_graphics"), aligned(1)))
 
-BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderCenter_Gfx[] = INCBIN_U32("graphics/berry_blender/center.8bpp.lz");
-BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderOuter_Gfx[] = INCBIN_U32("graphics/berry_blender/outer.4bpp.lz");
-BERRY_BLENDER_BACKGROUND_GRAPHICS const u8 gBerryBlenderOuter_Tilemap[] = INCBIN_U8("graphics/berry_blender/outer_map.bin.lz");
+BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderCenter_Gfx[] = INCGFX_U32("graphics/berry_blender/center.png", ".8bpp.lz");
+BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderOuter_Gfx[] = INCGFX_U32("graphics/berry_blender/outer.png", ".4bpp.lz");
+BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderOuter_Tilemap[] = INCGFX_U32("graphics/berry_blender/outer_map.bin", ".lz");
 
 #undef BERRY_BLENDER_BACKGROUND_GRAPHICS
 

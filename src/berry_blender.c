@@ -3,6 +3,15 @@
 #include "constants/berry.h"
 #include "window.h"
 
+#define BERRY_BLENDER_BACKGROUND_DATA __attribute__((section(".rodata.berry_blender_background_data"), aligned(1)))
+
+static const u16 sBlenderCenter_Pal[] BERRY_BLENDER_BACKGROUND_DATA = INCGFX_U16("graphics/berry_blender/center.png", ".gbapal");
+static const u8 sBlenderCenter_Tilemap[] BERRY_BLENDER_BACKGROUND_DATA = INCBIN_U8("graphics/berry_blender/center_map.bin");
+static const u16 sBlenderOuter_Pal[] BERRY_BLENDER_BACKGROUND_DATA = INCGFX_U16("graphics/berry_blender/outer.png", ".gbapal");
+
+#undef BERRY_BLENDER_BACKGROUND_DATA
+
+
 #define BERRY_BLENDER_DATA __attribute__((section(".rodata.berry_blender_data")))
 #define BERRY_BLENDER_RECORD_WINDOW_DATA __attribute__((section(".rodata.berry_blender_record_window_data"), aligned(1)))
 
@@ -235,7 +244,7 @@ __attribute__((naked)) void LoadBerryBlenderGfx(void)
         "	ldr r1, [r4]\n\t"
         "	b _0807F39E\n\t"
         "	.align 2, 0\n\t"
-        "_0807F280: .4byte gUnknown_8D9154C\n\t"
+        "_0807F280: .4byte gBerryBlenderCenter_Gfx\n\t"
         "_0807F284: .4byte gUnknown_2031F44\n\t"
         "_0807F288: .4byte 0x000011B8\n\t"
         "_0807F28C:\n\t"
@@ -274,7 +283,7 @@ __attribute__((naked)) void LoadBerryBlenderGfx(void)
         "	b _0807F39E\n\t"
         "	.align 2, 0\n\t"
         "_0807F2DC: .4byte 0x000011B8\n\t"
-        "_0807F2E0: .4byte gUnknown_8D9154C\n\t"
+        "_0807F2E0: .4byte gBerryBlenderCenter_Gfx\n\t"
         "_0807F2E4:\n\t"
         "	ldr r0, _0807F2F8\n\t"
         "	ldr r1, [r5]\n\t"
@@ -285,7 +294,7 @@ __attribute__((naked)) void LoadBerryBlenderGfx(void)
         "	ldr r1, [r5]\n\t"
         "	b _0807F39E\n\t"
         "	.align 2, 0\n\t"
-        "_0807F2F8: .4byte gUnknown_8D91D6C\n\t"
+        "_0807F2F8: .4byte gBerryBlenderOuter_Gfx\n\t"
         "_0807F2FC: .4byte 0x000011B8\n\t"
         "_0807F300:\n\t"
         "	ldr r0, [r5]\n\t"
@@ -305,7 +314,7 @@ __attribute__((naked)) void LoadBerryBlenderGfx(void)
         "	b _0807F39E\n\t"
         "	.align 2, 0\n\t"
         "_0807F324: .4byte 0x000011B8\n\t"
-        "_0807F328: .4byte gUnknown_8D91D6C\n\t"
+        "_0807F328: .4byte gBerryBlenderOuter_Gfx\n\t"
         "_0807F32C:\n\t"
         "	ldr r0, _0807F340\n\t"
         "	ldr r1, [r5]\n\t"
@@ -316,7 +325,7 @@ __attribute__((naked)) void LoadBerryBlenderGfx(void)
         "	ldr r1, [r5]\n\t"
         "	b _0807F39E\n\t"
         "	.align 2, 0\n\t"
-        "_0807F340: .4byte gUnknown_8D927A0\n\t"
+        "_0807F340: .4byte gBerryBlenderOuter_Tilemap\n\t"
         "_0807F344: .4byte 0x000011B8\n\t"
         "_0807F348:\n\t"
         "	ldr r0, [r5]\n\t"
@@ -338,7 +347,7 @@ __attribute__((naked)) void LoadBerryBlenderGfx(void)
         "	b _0807F39E\n\t"
         "	.align 2, 0\n\t"
         "_0807F370: .4byte 0x000011B8\n\t"
-        "_0807F374: .4byte gUnknown_8D927A0\n\t"
+        "_0807F374: .4byte gBerryBlenderOuter_Tilemap\n\t"
         "_0807F378:\n\t"
         "	ldr r0, _0807F384\n\t"
         "	movs r1, #0x80\n\t"

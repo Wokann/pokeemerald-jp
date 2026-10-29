@@ -4826,7 +4826,7 @@ extern const u16 gBerryBlenderArrowPalette[];
 extern const u32 gBerryBlenderCenter_Gfx[];
 extern const u32 gBerryBlenderOuter_Gfx[];
 // JP's byte-identical compressed stream is 0x311 bytes, not u32-aligned.
-extern const u8 gBerryBlenderOuter_Tilemap[];
+extern const u32 gBerryBlenderOuter_Tilemap[];
 
 // Slot Machine
 extern const u32 gSlotMachineDigitalDisplay_Gfx[];
