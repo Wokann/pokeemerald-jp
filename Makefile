@@ -1479,14 +1479,11 @@ $(C_BUILDDIR)/mystery_event_msg.o: src/mystery_event_msg.c charmap.txt
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mystery_event_msg.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mystery_event_msg.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/mystery_event_msg.gen.s
-graphics/summary_screen/%.png.4bpp: graphics/summary_screen/%.png | tools
-	$(GFX) $< $@
-$(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c charmap.txt \
+$(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c Makefile charmap.txt \
 	src/data/text/move_descriptions.h include/pokemon_summary_screen.h \
-	include/constants/moves.h include/graphics.h \
-	graphics/summary_screen/a_button.png.4bpp graphics/summary_screen/b_button.png.4bpp
+	include/constants/moves.h include/graphics.h
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_summary_screen.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_summary_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/graphics/pokeballs.h src/data/text_window.h src/data/scrcmd_data.h \
@@ -1564,11 +1561,6 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/party_menu/pokeball.4bpp.lz graphics/party_menu/pokeball_small.4bpp.lz graphics/party_menu/pokeball.gbapal.lz \
 	graphics/interface/status_icons.4bpp.lz graphics/interface/status_icons.gbapal.lz \
 	graphics/types/move_types.4bpp.lz graphics/types/move_types.gbapal.lz \
-	graphics/summary_screen/move_select.4bpp.lz graphics/summary_screen/move_select.gbapal.lz \
-	graphics/summary_screen/tiles.4bpp.lz graphics/summary_screen/tiles.gbapal.lz \
-	graphics/summary_screen/page_info.bin.lz graphics/summary_screen/page_skills.bin.lz \
-	graphics/summary_screen/page_battle_moves.bin.lz graphics/summary_screen/page_contest_moves.bin.lz \
-	graphics/summary_screen/page_info_egg.bin.lz \
 	graphics/shop/menu.4bpp.lz graphics/shop/menu.gbapal.lz graphics/shop/menu.bin.lz graphics/shop/money.4bpp.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal) Makefile
 	@mkdir -p $(dir $@)
@@ -6371,3 +6363,9 @@ $(C_BUILDDIR)/pokedex_area_region_map.d: src/pokedex_area_region_map.c Makefile 
 -include $(C_BUILDDIR)/pokedex_area_region_map.d
 
 $(C_BUILDDIR)/pokedex_area_region_map.o: src/pokedex_area_region_map.c Makefile charmap.txt
+
+$(C_BUILDDIR)/pokemon_summary_screen.d: src/pokemon_summary_screen.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokemon_summary_screen.d
