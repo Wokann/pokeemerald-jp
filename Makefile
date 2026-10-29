@@ -1778,7 +1778,7 @@ $(C_BUILDDIR)/text_input_strings.o: src/text_input_strings.c charmap.txt
 
 $(C_BUILDDIR)/naming_screen.o: src/naming_screen.c charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/naming_screen.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/naming_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/naming_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/naming_screen.gen.s
 
@@ -5949,3 +5949,9 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/title_screen/pokemon_logo.pal.gbapal: graphics/t
 $(JP_GRAPHICS_GFX_ROOT)graphics/title_screen/rayquaza_and_clouds.pal.gbapal: graphics/title_screen/rayquaza_and_clouds.pal Makefile | tools
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@
+
+$(C_BUILDDIR)/naming_screen.d: src/naming_screen.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/naming_screen.d

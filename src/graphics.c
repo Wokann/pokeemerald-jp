@@ -1656,50 +1656,48 @@ CABLE_CAR_CABLE_GFX const u32 gCableCarCable_Gfx[] = INCBIN_U32("graphics/cable_
 // the semantic declaration order in the US source.
 #define NAMING_SCREEN_JP_SPRITE_RESOURCES __attribute__((section(".rodata.graphics_naming_screen_jp_sprite_resources"), aligned(1)))
 
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenBackButton_Gfx[] = INCBIN_U32("graphics/naming_screen/back_button.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenInputArrow_Gfx[] = INCBIN_U32("graphics/naming_screen/input_arrow.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenOKButton_Gfx[] = INCBIN_U32("graphics/naming_screen/ok_button.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenUnderscore_Gfx[] = INCBIN_U32("graphics/naming_screen/underscore.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapFrame_Gfx[] = INCBIN_U32("graphics/naming_screen/page_swap_frame.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapButton_Gfx[] = INCBIN_U32("graphics/naming_screen/page_swap_button.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapUpper_Gfx[] = INCBIN_U32("graphics/naming_screen/page_swap_upper.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapLower_Gfx[] = INCBIN_U32("graphics/naming_screen/page_swap_lower.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapOthers_Gfx[] = INCBIN_U32("graphics/naming_screen/page_swap_others.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenCursor_Gfx[] = INCBIN_U32("graphics/naming_screen/cursor.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenCursorSquished_Gfx[] = INCBIN_U32("graphics/naming_screen/cursor_squished.4bpp");
-NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenCursorFilled_Gfx[] = INCBIN_U32("graphics/naming_screen/cursor_filled.4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenBackButton_Gfx[] = INCGFX_U32("graphics/naming_screen/back_button.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenInputArrow_Gfx[] = INCGFX_U32("graphics/naming_screen/input_arrow.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenOKButton_Gfx[] = INCGFX_U32("graphics/naming_screen/ok_button.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenUnderscore_Gfx[] = INCGFX_U32("graphics/naming_screen/underscore.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapFrame_Gfx[] = INCGFX_U32("graphics/naming_screen/page_swap_frame.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapButton_Gfx[] = INCGFX_U32("graphics/naming_screen/page_swap_button.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapHiragana_Gfx[] = INCGFX_U32("graphics/naming_screen/page_swap_hiragana.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapKatakana_Gfx[] = INCGFX_U32("graphics/naming_screen/page_swap_katakana.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenPageSwapAlphabet_Gfx[] = INCGFX_U32("graphics/naming_screen/page_swap_alphabet.png", ".4bpp");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenCursor_Gfx[] = INCGFX_U32("graphics/naming_screen/cursor.png", ".4bpp", "-num_tiles 4 -Wnum_tiles");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenCursorSquished_Gfx[] = INCGFX_U32("graphics/naming_screen/cursor_squished.png", ".4bpp", "-num_tiles 4 -Wnum_tiles");
+NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenCursorFilled_Gfx[] = INCGFX_U32("graphics/naming_screen/cursor_filled.png", ".4bpp", "-num_tiles 4 -Wnum_tiles");
 
 #undef NAMING_SCREEN_JP_SPRITE_RESOURCES
 
-// JP ROM has unreferenced zero padding between the cursor tiles and PC icons.
+// Retain the JP zero block between the cursor tiles and PC icons.
 #define NAMING_SCREEN_JP_SPRITE_PADDING __attribute__((section(".rodata.graphics_naming_screen_jp_sprite_padding"), aligned(1), used))
 
 NAMING_SCREEN_JP_SPRITE_PADDING static const u8 sNamingScreenSpritePadding[0x20] = {0};
 
 #undef NAMING_SCREEN_JP_SPRITE_PADDING
 
-#define NAMING_SCREEN_JP_PC_ICONS __attribute__((section(".rodata.graphics_naming_screen_jp_pc_icons"), aligned(1)))
 
-NAMING_SCREEN_JP_PC_ICONS const u8 gNamingScreenPCIconOff_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_off.4bpp");
-NAMING_SCREEN_JP_PC_ICONS const u8 gNamingScreenPCIconOn_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_on.4bpp");
-
-#undef NAMING_SCREEN_JP_PC_ICONS
-
-#define NAMING_SCREEN_JP_PALETTES __attribute__((section(".rodata.graphics_naming_screen_jp_palettes"), aligned(1)))
-
-NAMING_SCREEN_JP_PALETTES const u16 gNamingScreenKeyboard_Pal[] = INCBIN_U16("graphics/naming_screen/keyboard.gbapal");
-NAMING_SCREEN_JP_PALETTES const u16 gNamingScreenRival_Pal[] = INCBIN_U16("graphics/naming_screen/rival.gbapal");
-
-#undef NAMING_SCREEN_JP_PALETTES
 
 #define NAMING_SCREEN_JP_RESOURCES __attribute__((section(".rodata.graphics_naming_screen_jp_resources"), aligned(1)))
 
-NAMING_SCREEN_JP_RESOURCES const u16 gNamingScreenMenu_Pal[6][16] = INCBIN_U16("graphics/naming_screen/menu.gbapal");
-NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenMenu_Gfx[] = INCBIN_U32("graphics/naming_screen/menu.4bpp.lz");
-NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenBackground_Tilemap[] = INCBIN_U32("graphics/naming_screen/background.bin.lz");
-NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenKeyboardUpper_Tilemap[] = INCBIN_U32("graphics/naming_screen/keyboard_upper.bin.lz");
-NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenKeyboardLower_Tilemap[] = INCBIN_U32("graphics/naming_screen/keyboard_lower.bin.lz");
-NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenKeyboardSymbols_Tilemap[] = INCBIN_U32("graphics/naming_screen/keyboard_symbols.bin.lz");
+NAMING_SCREEN_JP_RESOURCES const u16 gNamingScreenMenu_Pal[6][16] = {
+    INCGFX_U16("graphics/naming_screen/menu.pal", ".gbapal"),
+    INCGFX_U16("graphics/naming_screen/page_swap_hiragana.pal", ".gbapal"),
+    INCGFX_U16("graphics/naming_screen/page_swap_katakana.pal", ".gbapal"),
+    INCGFX_U16("graphics/naming_screen/page_swap_alphabet.pal", ".gbapal"),
+    INCGFX_U16("graphics/naming_screen/buttons.pal", ".gbapal"),
+    INCGFX_U16("graphics/naming_screen/cursor.pal", ".gbapal"),
+};
+NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenMenu_Gfx[] = INCGFX_U32("graphics/naming_screen/menu.png", ".4bpp.lz");
+
+// Retain the JP zero data following the complete menu LZ stream.
+NAMING_SCREEN_JP_RESOURCES static const u8 sUnusedNamingScreenMenuData[52] = {0};
+NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenBackground_Tilemap[] = INCGFX_U32("graphics/naming_screen/background.bin", ".lz");
+NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenKeyboardHiragana_Tilemap[] = INCGFX_U32("graphics/naming_screen/keyboard_hiragana.bin", ".lz");
+NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenKeyboardKatakana_Tilemap[] = INCGFX_U32("graphics/naming_screen/keyboard_katakana.bin", ".lz");
+NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenKeyboardAlphabet_Tilemap[] = INCGFX_U32("graphics/naming_screen/keyboard_alphabet.bin", ".lz");
 
 #undef NAMING_SCREEN_JP_RESOURCES
 

@@ -9653,8 +9653,8 @@ SECTIONS {
         src/script_menu.o(.rodata.script_menu_mid58_link_services);
         src/graphics.o(.rodata.graphics_naming_screen_jp_sprite_resources);
         src/graphics.o(.rodata.graphics_naming_screen_jp_sprite_padding);
-        src/graphics.o(.rodata.graphics_naming_screen_jp_pc_icons);
-        src/graphics.o(.rodata.graphics_naming_screen_jp_palettes);
+        src/naming_screen.o(.rodata.graphics_naming_screen_jp_pc_icons);
+        src/naming_screen.o(.rodata.graphics_naming_screen_jp_palettes);
         src/graphics.o(.rodata.graphics_naming_screen_jp_resources);
         src/naming_screen.o(.rodata.naming_screen_pc_transfer_messages);
         src/strings.o(.rodata.strings_naming_screen_text);

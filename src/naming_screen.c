@@ -59,6 +59,20 @@ static const u8 *const sTransferredToPCMessages[] NAMING_SCREEN_PC_TRANSFER_MESS
 
 NAMING_SCREEN_ALPHABET_TEXT static const u8 sText_AlphabetUpperLower[] = _("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!");
 
+#define NAMING_SCREEN_JP_PC_ICONS __attribute__((section(".rodata.graphics_naming_screen_jp_pc_icons"), aligned(1)))
+
+static const u8 sPCIconOff_Gfx[] NAMING_SCREEN_JP_PC_ICONS = INCGFX_U8("graphics/naming_screen/pc_icon_off.png", ".4bpp");
+static const u8 sPCIconOn_Gfx[] NAMING_SCREEN_JP_PC_ICONS = INCGFX_U8("graphics/naming_screen/pc_icon_on.png", ".4bpp");
+
+#undef NAMING_SCREEN_JP_PC_ICONS
+
+#define NAMING_SCREEN_JP_PALETTES __attribute__((section(".rodata.graphics_naming_screen_jp_palettes"), aligned(1)))
+
+static const u16 sKeyboard_Pal[] NAMING_SCREEN_JP_PALETTES = INCGFX_U16("graphics/naming_screen/keyboard.pal", ".gbapal");
+static const u16 sRival_Pal[] NAMING_SCREEN_JP_PALETTES = INCGFX_U16("graphics/naming_screen/rival.pal", ".gbapal");
+
+#undef NAMING_SCREEN_JP_PALETTES
+
 __attribute__((naked)) void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback)
 {
     __asm__(".syntax unified\n\t"
@@ -809,8 +823,8 @@ __attribute__((naked)) void MainState_BeginFadeIn(void)
         "_080E2818: .4byte gNamingScreenBackground_Tilemap\n\t"
         "_080E281C: .4byte gUnknown_2039C34\n\t"
         "_080E2820: .4byte 0x00001E22\n\t"
-        "_080E2824: .4byte gNamingScreenKeyboardLower_Tilemap\n\t"
-        "_080E2828: .4byte gNamingScreenKeyboardUpper_Tilemap\n\t"
+        "_080E2824: .4byte gNamingScreenKeyboardKatakana_Tilemap\n\t"
+        "_080E2828: .4byte gNamingScreenKeyboardHiragana_Tilemap\n\t"
         "_080E282C: .4byte 0x00001E12\n\t"
         "_080E2830: .4byte 0x00001E11\n\t"
         "_080E2834:\n\t"
@@ -882,8 +896,8 @@ __attribute__((naked)) void MainState_BeginFadeIn(void)
         "	.align 2, 0\n\t"
         "_080E28D4: .4byte gUnknown_2039C34\n\t"
         "_080E28D8: .4byte 0x00001E22\n\t"
-        "_080E28DC: .4byte gNamingScreenKeyboardLower_Tilemap\n\t"
-        "_080E28E0: .4byte gNamingScreenKeyboardUpper_Tilemap\n\t"
+        "_080E28DC: .4byte gNamingScreenKeyboardKatakana_Tilemap\n\t"
+        "_080E28E0: .4byte gNamingScreenKeyboardHiragana_Tilemap\n\t"
         "_080E28E4: .4byte 0x00001E11\n\t"
         "_080E28E8: .4byte 0x00001E12\n\t"
         "_080E28EC: .4byte 0x00001E10\n\t"
@@ -4902,7 +4916,7 @@ __attribute__((naked)) void choose_name_or_words_screen_apply_bg_pals(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E4488: .4byte gNamingScreenMenu_Pal\n\t"
-        "_080E448C: .4byte gNamingScreenKeyboard_Pal\n\t"
+        "_080E448C: .4byte sKeyboard_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5880,12 +5894,12 @@ NAMING_SCREEN_UI_LAYOUT static const u8 *const sKeyboardTextColors[] =
 
 NAMING_SCREEN_UI_LAYOUT static const u8 *const sKeyboardPageTilemaps[] =
 {
-    (const u8 *)gNamingScreenKeyboardUpper_Tilemap,
-    (const u8 *)gNamingScreenKeyboardSymbols_Tilemap,
-    (const u8 *)gNamingScreenKeyboardLower_Tilemap,
-    (const u8 *)gNamingScreenKeyboardUpper_Tilemap,
-    (const u8 *)gNamingScreenKeyboardLower_Tilemap,
-    (const u8 *)gNamingScreenKeyboardSymbols_Tilemap,
+    (const u8 *)gNamingScreenKeyboardHiragana_Tilemap,
+    (const u8 *)gNamingScreenKeyboardAlphabet_Tilemap,
+    (const u8 *)gNamingScreenKeyboardKatakana_Tilemap,
+    (const u8 *)gNamingScreenKeyboardHiragana_Tilemap,
+    (const u8 *)gNamingScreenKeyboardKatakana_Tilemap,
+    (const u8 *)gNamingScreenKeyboardAlphabet_Tilemap,
 };
 
 NAMING_SCREEN_UI_LAYOUT static const u8 sTextColor_Title[] =
@@ -6055,8 +6069,8 @@ NAMING_SCREEN_SPRITE_LAYOUT static const struct SubspriteTable sSubspriteTable_P
 
 NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteFrameImage sImageTable_PCIcon[] =
 {
-    { gNamingScreenPCIconOff_Gfx, sizeof(gNamingScreenPCIconOff_Gfx) },
-    { gNamingScreenPCIconOn_Gfx, sizeof(gNamingScreenPCIconOn_Gfx) },
+    { sPCIconOff_Gfx, sizeof(sPCIconOff_Gfx) },
+    { sPCIconOn_Gfx, sizeof(sPCIconOn_Gfx) },
 };
 
 NAMING_SCREEN_SPRITE_LAYOUT static const union AnimCmd sAnim_Loop[] =
@@ -6222,9 +6236,9 @@ NAMING_SCREEN_SPRITE_RESOURCES static const struct SpriteSheet sSpriteSheets[] =
     { gNamingScreenOKButton_Gfx, 0x1E0, 1 },
     { gNamingScreenPageSwapFrame_Gfx, 0x280, 2 },
     { gNamingScreenPageSwapButton_Gfx, 0x100, 3 },
-    { gNamingScreenPageSwapUpper_Gfx, 0x040, 4 },
-    { gNamingScreenPageSwapLower_Gfx, 0x040, 5 },
-    { gNamingScreenPageSwapOthers_Gfx, 0x060, 6 },
+    { gNamingScreenPageSwapHiragana_Gfx, 0x040, 4 },
+    { gNamingScreenPageSwapKatakana_Gfx, 0x040, 5 },
+    { gNamingScreenPageSwapAlphabet_Gfx, 0x060, 6 },
     { gNamingScreenCursor_Gfx, 0x080, 7 },
     { gNamingScreenCursorSquished_Gfx, 0x080, 8 },
     { gNamingScreenCursorFilled_Gfx, 0x080, 9 },
