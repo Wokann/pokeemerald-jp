@@ -3,6 +3,7 @@
 import hashlib
 from pathlib import Path
 import re
+import shlex
 import tempfile
 import unittest
 
@@ -15,7 +16,7 @@ TEXT_START, TEXT_END = 0x0824C1F5, 0x0824C395
 CODE_SHA256 = '0456a5b246ade1763b81ef1fd037fdaaefdf0ef9dd32d9c5ec611e2479aa584c'
 DATA_SHA256 = '0ec26c7d575697e9e4839621db7828f8e12383257209834d94eb4b6b1bba93f3'
 TEXT_SHA256 = '5d30c22bce4399ad0b2c3212c83463a2bd6788a7c2dcb74774405f6a20fd07c0'
-RESOURCE_RE = re.compile(r'^static const u(?:16|32) (\w+)\[\] CONTEST_PAINTING_DATA = INCBIN_U(?:16|32)\("([^"]+)"\);$', re.M)
+RESOURCE_RE = re.compile(r'^static const u(?:16|32) (\w+)\[\] CONTEST_PAINTING_DATA = INCGFX_U(?:16|32)\("([^"]+)", "([^"]+)"(?:, "([^"]+)")?\);$', re.M)
 FUNCTIONS = (
     ('SetContestWinnerForPainting', 0x44), ('CB2_ContestPainting', 0xC),
     ('CB2_HoldContestPainting', 0x14), ('CB2_QuitContestPainting', 0x4C),
@@ -56,13 +57,25 @@ class ContestPaintingDataTests(unittest.TestCase):
         self.assertIn('.width = 20,', source)
         self.assertIn('static const struct OamData sContestPaintingMonOamData', source)
         self.assertIn('static const u16 sBgPalette[] CONTEST_PAINTING_DATA = {RGB_BLACK, RGB_BLACK};', source)
-        self.assertIn('rm -f $(JP_CONTEST_PAINTING_ASSETS) $(JP_CONTEST_PAINTING_INTERMEDIATES)', make)
-        self.assertIn('graphics/picture_frame/lobby.4bpp: graphics/picture_frame/lobby.png | tools\n\t$(GFX) $< $@ -num_tiles 86', make)
-        self.assertIn('graphics/picture_frame/%.rl: graphics/picture_frame/% | tools\n\t$(GFX) $< $@', make)
-        self.assertIn('$(PREPROC) -i $< charmap.txt', make[make.rfind('$(C_BUILDDIR)/contest_painting.o:'):])
-        for _, output in RESOURCE_RE.findall(source):
-            self.assertIn(output, make)
-            self.assertTrue(run(['git', 'check-ignore', output], text=True).stdout.strip())
+        self.assertNotIn('INCBIN_', source)
+        self.assertNotIn('JP_CONTEST_PAINTING_ASSETS', make)
+        self.assertNotIn('JP_CONTEST_PAINTING_INTERMEDIATES', make)
+        self.assertIn('INCGFX_U32("graphics/picture_frame/lobby.png", ".4bpp.rl", "-num_tiles 86 -Wnum_tiles")', source)
+        self.assertIn('$(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt',
+                      make[make.rfind('$(C_BUILDDIR)/contest_painting.o:'):])
+        self.assertIn('$(C_BUILDDIR)/contest_painting.d: src/contest_painting.c Makefile | tools', make)
+        self.assertIn('$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT)', make)
+        self.assertIn('-include $(C_BUILDDIR)/contest_painting.d', make)
+        for _, source_path, extension, options in RESOURCE_RE.findall(source):
+            self.assertTrue((ROOT / source_path).is_file(), source_path)
+            cache = ('$(JP_GRAPHICS_GFX_ROOT)' + source_path
+                     + re.sub(r'[^a-zA-Z0-9]', '_', options) + extension)
+            self.assertIn(cache + ': ', make)
+            if extension == '.4bpp.rl':
+                self.assertIn(cache + ': ' + cache[:-3] + ' $(GFX)', make)
+                self.assertIn(cache[:-3] + ': ' + source_path + ' $(GFX)', make)
+            self.assertEqual(run(['git', 'ls-files', '--error-unmatch', source_path], text=True).stdout.strip(),
+                             source_path)
 
     @unittest.skipUnless((ROOT / 'baserom_jp.gba').exists(), 'JP ROM required')
     def test_all_13_native_resources_regenerate_the_exact_rle_owner(self):
@@ -70,25 +83,26 @@ class ContestPaintingDataTests(unittest.TestCase):
         cursor = DATA_START
         with tempfile.TemporaryDirectory(prefix='contest-painting-assets-') as directory:
             temporary = Path(directory)
-            for symbol, path in RESOURCE_RE.findall((ROOT / 'src/contest_painting.c').read_text()):
-                relative = Path(path)
-                if relative.suffix == '.gbapal':
-                    output = temporary / relative.name
-                    run(['tools/gbagfx/gbagfx', ROOT / relative.with_suffix('.pal'), output])
+            for symbol, source_path, extension, options in RESOURCE_RE.findall(
+                    (ROOT / 'src/contest_painting.c').read_text()):
+                source = ROOT / source_path
+                if extension == '.gbapal':
+                    output = temporary / (source.name + extension)
+                    run(['tools/gbagfx/gbagfx', source, output])
+                    self.assertEqual(output.stat().st_size, 512)
                 else:
-                    self.assertEqual(relative.suffix, '.rl')
-                    raw_relative = relative.with_suffix('')
-                    if raw_relative.suffix == '.bin':
-                        raw = ROOT / raw_relative
+                    if extension == '.rl':
+                        self.assertEqual(source.suffix, '.bin')
+                        raw = source
                         self.assertEqual(raw.stat().st_size, 2048)
                     else:
-                        raw = temporary / raw_relative.name
-                        args = ['tools/gbagfx/gbagfx', ROOT / raw_relative.with_suffix('.png'), raw]
-                        if raw_relative.stem == 'lobby':
-                            args += ['-num_tiles', 86]
-                        run(args)
-                        self.assertEqual(raw.stat().st_size, 86 * 32 if raw_relative.stem == 'lobby' else 176 * 32)
-                    output = temporary / relative.name
+                        self.assertEqual(extension, '.4bpp.rl')
+                        self.assertEqual(source.suffix, '.png')
+                        raw = temporary / (source.name + '.4bpp')
+                        run(['tools/gbagfx/gbagfx', source, raw, *shlex.split(options)])
+                        self.assertEqual(raw.stat().st_size,
+                                         86 * 32 if source.stem == 'lobby' else 176 * 32)
+                    output = temporary / (raw.name + '.rl')
                     run(['tools/gbagfx/gbagfx', raw, output])
                     self.assertEqual(output.read_bytes()[0], 0x30, symbol)
                 actual = output.read_bytes()

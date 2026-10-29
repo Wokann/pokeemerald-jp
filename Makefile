@@ -1176,7 +1176,6 @@ clean: clean-tools
 	rm -f $(JP_GENERATED_HEAL_LOCATION_HEADERS)
 	rm -f $(JP_GENERATED_REGION_MAP_HEADERS)
 	rm -f $(JP_SLOT_MACHINE_INTERMEDIATES)
-	rm -f $(JP_CONTEST_PAINTING_ASSETS) $(JP_CONTEST_PAINTING_INTERMEDIATES)
 	rm -f $(JP_BATTLE_RECORDS_ASSETS)
 	rm -f $(JP_MON_MARKINGS_ASSETS)
 	rm -f $(JP_USE_POKEBLOCK_ASSETS) $(JP_USE_POKEBLOCK_INTERMEDIATES)
@@ -2510,38 +2509,6 @@ $(C_BUILDDIR)/slot_machine.o: src/slot_machine.c Makefile charmap.txt
 graphics/slot_machine/reel_time_gfx.4bpp: graphics/slot_machine/reel_time_pikachu.4bpp \
                                           graphics/slot_machine/reel_time_machine.4bpp | tools
 	@cat $^ >$@
-
-JP_CONTEST_PAINTING_ASSETS := graphics/picture_frame/bg.gbapal \
-    graphics/picture_frame/cool.4bpp.rl \
-    graphics/picture_frame/beauty.4bpp.rl \
-    graphics/picture_frame/cute.4bpp.rl \
-    graphics/picture_frame/smart.4bpp.rl \
-    graphics/picture_frame/tough.4bpp.rl \
-    graphics/picture_frame/lobby.4bpp.rl \
-    graphics/picture_frame/cool_map.bin.rl \
-    graphics/picture_frame/beauty_map.bin.rl \
-    graphics/picture_frame/cute_map.bin.rl \
-    graphics/picture_frame/smart_map.bin.rl \
-    graphics/picture_frame/tough_map.bin.rl \
-    graphics/picture_frame/lobby_map.bin.rl
-JP_CONTEST_PAINTING_INTERMEDIATES := graphics/picture_frame/cool.4bpp \
-    graphics/picture_frame/beauty.4bpp \
-    graphics/picture_frame/cute.4bpp \
-    graphics/picture_frame/smart.4bpp \
-    graphics/picture_frame/tough.4bpp \
-    graphics/picture_frame/lobby.4bpp
-
-$(C_BUILDDIR)/contest_painting.o: src/contest_painting.c charmap.txt $(JP_CONTEST_PAINTING_ASSETS)
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/contest_painting.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/contest_painting.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/contest_painting.gen.s
-
-graphics/picture_frame/lobby.4bpp: graphics/picture_frame/lobby.png | tools
-	$(GFX) $< $@ -num_tiles 86
-
-graphics/picture_frame/%.rl: graphics/picture_frame/% | tools
-	$(GFX) $< $@
 
 JP_BATTLE_RECORDS_ASSETS := graphics/trainer_hill/records_window.4bpp \
     graphics/trainer_hill/records_window.gbapal
@@ -6025,3 +5992,91 @@ $(C_BUILDDIR)/battle_factory_screen.d: src/battle_factory_screen.c Makefile | to
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/battle_factory_screen.d
+
+$(C_BUILDDIR)/contest_painting.o: src/contest_painting.c charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/contest_painting.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/contest_painting.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/contest_painting.gen.s
+
+$(C_BUILDDIR)/contest_painting.d: src/contest_painting.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/contest_painting.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/bg.pal.gbapal: graphics/picture_frame/bg.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/cool.png.4bpp: graphics/picture_frame/cool.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/cool.png.4bpp.rl: $(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/cool.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/beauty.png.4bpp: graphics/picture_frame/beauty.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/beauty.png.4bpp.rl: $(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/beauty.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/cute.png.4bpp: graphics/picture_frame/cute.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/cute.png.4bpp.rl: $(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/cute.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/smart.png.4bpp: graphics/picture_frame/smart.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/smart.png.4bpp.rl: $(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/smart.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/tough.png.4bpp: graphics/picture_frame/tough.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/tough.png.4bpp.rl: $(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/tough.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/lobby.png_num_tiles_86__Wnum_tiles.4bpp: graphics/picture_frame/lobby.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -num_tiles 86 -Wnum_tiles
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/lobby.png_num_tiles_86__Wnum_tiles.4bpp.rl: $(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/lobby.png_num_tiles_86__Wnum_tiles.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/cool_map.bin.rl: graphics/picture_frame/cool_map.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/beauty_map.bin.rl: graphics/picture_frame/beauty_map.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/cute_map.bin.rl: graphics/picture_frame/cute_map.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/smart_map.bin.rl: graphics/picture_frame/smart_map.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/tough_map.bin.rl: graphics/picture_frame/tough_map.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/picture_frame/lobby_map.bin.rl: graphics/picture_frame/lobby_map.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@

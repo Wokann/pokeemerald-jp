@@ -45138,7 +45138,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "b863e13630a2ff5ef20651e1e1cac6cf21200b058a4027b09bb64cfc1761130a"
+            "makefile_sha256": "ec1b2793890108f8fce893060b65380efc36d8dad40c918ec5a7157023e356fd"
           }
         },
         {
@@ -45573,7 +45573,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "b863e13630a2ff5ef20651e1e1cac6cf21200b058a4027b09bb64cfc1761130a"
+          "sha256": "ec1b2793890108f8fce893060b65380efc36d8dad40c918ec5a7157023e356fd"
         },
         {
           "path": "asm/macros.inc",
@@ -246864,7 +246864,7 @@
         {
           "path": "src/contest_painting.c",
           "selector": "file",
-          "sha256": "b8daf525b555e581b8ad408f00ed58a6306eef6c698a1583de9182a14ead13c9"
+          "sha256": "df0ee7f4f5ce04b320f4b018e62ad8b8c9d838677bec00d182982c268f67adfe"
         },
         {
           "path": "src/contest_util.c",
