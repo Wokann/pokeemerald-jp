@@ -704,9 +704,9 @@ static const struct OamData sOamData_Arrow RESET_RTC_SCREEN_DATA =
     .affineParam = 0,
 };
 
-static const u8 sArrowDown_Gfx[] RESET_RTC_SCREEN_DATA = INCBIN_U8("graphics/reset_rtc_screen/arrow_down.4bpp");
-static const u8 sArrowRight_Gfx[] RESET_RTC_SCREEN_DATA = INCBIN_U8("graphics/reset_rtc_screen/arrow_right.4bpp");
-static const u16 sArrow_Pal[] RESET_RTC_SCREEN_DATA = INCBIN_U16("graphics/reset_rtc_screen/arrow.gbapal");
+static const u8 sArrowDown_Gfx[] RESET_RTC_SCREEN_DATA = INCGFX_U8("graphics/reset_rtc_screen/arrow_down.png", ".4bpp");
+static const u8 sArrowRight_Gfx[] RESET_RTC_SCREEN_DATA = INCGFX_U8("graphics/reset_rtc_screen/arrow_right.png", ".4bpp");
+static const u16 sArrow_Pal[] RESET_RTC_SCREEN_DATA = INCGFX_U16("graphics/reset_rtc_screen/arrow.pal", ".gbapal");
 
 static const struct SpriteFrameImage sPicTable_Arrow[] RESET_RTC_SCREEN_DATA =
 {

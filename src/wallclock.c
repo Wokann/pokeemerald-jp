@@ -81,19 +81,13 @@ enum {
 // sources.
 #define WALLCLOCK_DATA __attribute__((section(".rodata.wallclock_data")))
 
-const u16 gWallClockMale_Pal[] WALLCLOCK_DATA = INCBIN_U16("graphics/wallclock/male.gbapal");
-const u16 gWallClockFemale_Pal[] WALLCLOCK_DATA = INCBIN_U16("graphics/wallclock/female.gbapal");
-const u32 gWallClockStart_Tilemap[] WALLCLOCK_DATA = INCBIN_U32("graphics/wallclock/clock_start.bin.lz");
-const u32 gWallClockView_Tilemap[] WALLCLOCK_DATA = INCBIN_U32("graphics/wallclock/clock_view.bin.lz");
-const u32 gWallClock_Gfx[] WALLCLOCK_DATA = INCBIN_U32("graphics/wallclock/clock.png.4bpp.lz");
-
-static const u32 sHand_Gfx[] WALLCLOCK_DATA = INCBIN_U32("graphics/wallclock/hand.png.4bpp.lz");
+static const u32 sHand_Gfx[] WALLCLOCK_DATA = INCGFX_U32("graphics/wallclock/hand.png", ".4bpp.lz");
 
 const u8 gText_IsThisTheCorrectTime[] WALLCLOCK_DATA = _("この　じかんで　よろしいですか？");
 const u8 gText_Cancel4[] WALLCLOCK_DATA = _("けってい");
 const u8 gText_Confirm3[] WALLCLOCK_DATA = _("もどる　");
 
-static const u16 sTextPrompt_Pal[] WALLCLOCK_DATA = INCBIN_U16("graphics/wallclock/text_prompt.gbapal"); // for "Cancel" or "Confirm"
+static const u16 sTextPrompt_Pal[] WALLCLOCK_DATA = INCGFX_U16("graphics/wallclock/text_prompt.pal", ".gbapal"); // for "Cancel" or "Confirm"
 
 static const struct WindowTemplate sWindowTemplates[] WALLCLOCK_DATA =
 {

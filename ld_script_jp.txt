@@ -10086,6 +10086,7 @@ SECTIONS {
         src/trader.o(.rodata.trader_defaults);
         src/starter_choose.o(.rodata.starter_choose_graphics);
         src/starter_choose.o(.rodata.starter_choose_data);
+        src/graphics.o(.rodata.wallclock_graphics);
         src/wallclock.o(.rodata.wallclock_data);
         src/pokeblock.o(.rodata.pokeblock_flavor_data);
         src/pokeblock.o(.rodata.pokeblock_menu_bg_data);

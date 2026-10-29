@@ -990,14 +990,6 @@ $(C_BUILDDIR)/battle_anim_mon_movement.o: CFLAGS := -mthumb-interwork -O2 -fhex-
 $(C_BUILDDIR)/battle_anim_utility_funcs.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/mail.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/starter_choose.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
-$(C_BUILDDIR)/wallclock.o: \
-	graphics/wallclock/male.gbapal \
-	graphics/wallclock/female.gbapal \
-	graphics/wallclock/text_prompt.gbapal \
-	graphics/wallclock/clock_start.bin.lz \
-	graphics/wallclock/clock_view.bin.lz \
-	graphics/wallclock/clock.png.4bpp.lz \
-	graphics/wallclock/hand.png.4bpp.lz
 $(C_BUILDDIR)/fldeff_flash.o: \
 	graphics/cave_transition/white.pal.gbapal \
 	graphics/cave_transition/black.pal.gbapal \
@@ -1223,8 +1215,6 @@ graphics/battle_frontier/factory_screen/%.png.4bpp: graphics/battle_frontier/fac
 	$(GFX) $< $@
 
 
-graphics/wallclock/%.png.4bpp: graphics/wallclock/%.png | tools
-	$(GFX) $< $@
 
 graphics/cave_transition/%.png.4bpp: graphics/cave_transition/%.png | tools
 	$(GFX) $< $@
@@ -1560,7 +1550,7 @@ $(C_BUILDDIR)/starter_choose.o: src/starter_choose.c
 
 $(C_BUILDDIR)/wallclock.o: src/wallclock.c
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/wallclock.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/wallclock.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/wallclock.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/wallclock.gen.s
 
@@ -1752,9 +1742,9 @@ $(C_BUILDDIR)/naming_screen.o: src/naming_screen.c charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/naming_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/naming_screen.gen.s
 
-$(C_BUILDDIR)/reset_rtc_screen.o: src/reset_rtc_screen.c charmap.txt graphics/reset_rtc_screen/arrow_down.4bpp graphics/reset_rtc_screen/arrow_right.4bpp graphics/reset_rtc_screen/arrow.gbapal
+$(C_BUILDDIR)/reset_rtc_screen.o: src/reset_rtc_screen.c charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/reset_rtc_screen.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/reset_rtc_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/reset_rtc_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/reset_rtc_screen.gen.s
 
@@ -6177,5 +6167,65 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/weather/rain.png.4bpp: graphics/weather/rain.png
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/weather/sandstorm.png.4bpp: graphics/weather/sandstorm.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/wallclock.d: src/wallclock.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/wallclock.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/male.pal.gbapal: graphics/wallclock/male.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/female.pal.gbapal: graphics/wallclock/female.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/clock_start.bin.lz: graphics/wallclock/clock_start.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/clock_view.bin.lz: graphics/wallclock/clock_view.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/clock.png.4bpp: graphics/wallclock/clock.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/clock.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/clock.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/hand.png.4bpp: graphics/wallclock/hand.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/hand.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/hand.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/wallclock/text_prompt.pal.gbapal: graphics/wallclock/text_prompt.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/reset_rtc_screen.d: src/reset_rtc_screen.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/reset_rtc_screen.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/reset_rtc_screen/arrow_down.png.4bpp: graphics/reset_rtc_screen/arrow_down.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/reset_rtc_screen/arrow_right.png.4bpp: graphics/reset_rtc_screen/arrow_right.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/reset_rtc_screen/arrow.pal.gbapal: graphics/reset_rtc_screen/arrow.pal $(GFX)
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@

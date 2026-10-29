@@ -1983,3 +1983,13 @@ ROULETTE_GRAPHICS const u32 gRouletteMultiplier_Gfx[] = INCGFX_U32("graphics/rou
 #undef MAIL_GRAPHICS
 
 #undef POKENAV_INTERFACE_DATA
+
+#define WALLCLOCK_GRAPHICS __attribute__((section(".rodata.wallclock_graphics"), aligned(4)))
+
+const u16 gWallClockMale_Pal[] WALLCLOCK_GRAPHICS = INCGFX_U16("graphics/wallclock/male.pal", ".gbapal");
+const u16 gWallClockFemale_Pal[] WALLCLOCK_GRAPHICS = INCGFX_U16("graphics/wallclock/female.pal", ".gbapal");
+const u32 gWallClockStart_Tilemap[] WALLCLOCK_GRAPHICS = INCGFX_U32("graphics/wallclock/clock_start.bin", ".lz");
+const u32 gWallClockView_Tilemap[] WALLCLOCK_GRAPHICS = INCGFX_U32("graphics/wallclock/clock_view.bin", ".lz");
+const u32 gWallClock_Gfx[] WALLCLOCK_GRAPHICS = INCGFX_U32("graphics/wallclock/clock.png", ".4bpp.lz");
+
+#undef WALLCLOCK_GRAPHICS
