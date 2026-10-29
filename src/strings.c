@@ -2592,3 +2592,6 @@ STRINGS_LINK_COMM_ERROR const u8 gText_MoveCloserToLinkPartner[] = _("　つう�
 STRINGS_LINK_COMM_ERROR const u8 gText_ABtnRegistrationCounter[] = _("Aボタンで　うけつけに　もどります");
 
 STRINGS_LINK_COMM_ERROR const u8 gText_ABtnTitleScreen[] = _("Aボタンで　タイトルに　もどります");
+
+#define TRADE_DATA(name) __attribute__((section(".rodata.trade." #name), aligned(1)))
+const u8 gText_TakeGoodCareOfX[] TRADE_DATA(gText_TakeGoodCareOfX) = _("{STR_VAR_3}を　かわいがって　あげてね！");

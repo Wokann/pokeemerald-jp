@@ -1116,17 +1116,15 @@ EASY_CHAT_BUTTON_WINDOW_GFX const u32 gEasyChatButtonWindow_Gfx[] = INCGFX_U32("
 
 #undef EASY_CHAT_BUTTON_WINDOW_GFX
 
-#define TRADE_MENU_GRAPHICS __attribute__((section(".rodata.trade_menu_graphics"), aligned(1)))
 
-TRADE_MENU_GRAPHICS const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal");
-TRADE_MENU_GRAPHICS const u8 gTradeMenu_Gfx[] = INCBIN_U8("graphics/trade/menu.4bpp");
-TRADE_MENU_GRAPHICS const u16 gTradeMenu_Tilemap[] = INCBIN_U16("graphics/trade/menu.bin");
+
+
+
 
 #undef TRADE_MENU_GRAPHICS
 
-#define TRADE_MENU_MON_BOX_GRAPHICS __attribute__((section(".rodata.trade_menu_mon_box_graphics"), aligned(1)))
 
-TRADE_MENU_MON_BOX_GRAPHICS const u16 gTradeMenuMonBox_Tilemap[] = INCBIN_U16("graphics/trade/menu_mon_box.bin");
+
 
 #undef TRADE_MENU_MON_BOX_GRAPHICS
 
@@ -1968,3 +1966,16 @@ const u32 gWallClockView_Tilemap[] WALLCLOCK_GRAPHICS = INCGFX_U32("graphics/wal
 const u32 gWallClock_Gfx[] WALLCLOCK_GRAPHICS = INCGFX_U32("graphics/wallclock/clock.png", ".4bpp.lz");
 
 #undef WALLCLOCK_GRAPHICS
+
+#define TRADE_DATA(name) __attribute__((section(".rodata.trade." #name), aligned(1)))
+const u16 gTradeMenu_Pal[] TRADE_DATA(gTradeMenu_Pal) = INCGFX_U16("graphics/trade/menu.pal", ".gbapal");
+const u16 gTradeCursor_Pal[] TRADE_DATA(gTradeCursor_Pal) = INCGFX_U16("graphics/trade/cursor.pal", ".gbapal");
+const u8 gTradeMenu_Gfx[] TRADE_DATA(gTradeMenu_Gfx) = INCGFX_U8("graphics/trade/menu.png", ".4bpp");
+const u16 gTradeMenu_Tilemap[] TRADE_DATA(gTradeMenu_Tilemap) = INCBIN_U16("graphics/trade/menu.bin");
+const u16 gTradeMenuMonBox_Tilemap[] TRADE_DATA(gTradeMenuMonBox_Tilemap) = INCBIN_U16("graphics/trade/menu_mon_box.bin");
+const u8 gTradeCursor_Gfx[] TRADE_DATA(gTradeCursor_Gfx) = INCGFX_U8("graphics/trade/cursor.png", ".4bpp");
+const u16 gTradeUnused_Tilemap[] TRADE_DATA(gTradeUnused_Tilemap) = INCBIN_U16("graphics/trade/unused.bin");
+const u16 gTradeGba_Pal[] TRADE_DATA(gTradeGba_Pal) = INCGFX_U16("graphics/trade/gba.pal", ".gbapal");
+const u16 gTradeGba2_Pal[] TRADE_DATA(gTradeGba2_Pal) = INCGFX_U16("graphics/trade/gba_pal2.pal", ".gbapal");
+const u8 gTradeGba_Gfx[] TRADE_DATA(gTradeGba_Gfx) = INCGFX_U8("graphics/trade/gba.png", ".4bpp");
+static const u16 sEmptyPal[16] TRADE_DATA(sEmptyPal) = {0};

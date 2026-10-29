@@ -2807,7 +2807,7 @@ __attribute__((naked)) void Task_TradeEvolutionScene(u8 taskId)
         "_0813FA20: .4byte gBattleStringsTable\n\t"
         "_0813FA24: .4byte gDisplayedStringBattle\n\t"
         "_0813FA28: .4byte gTasks\n\t"
-        "_0813FA2C: .4byte gUnknown_830D28C\n\t"
+        "_0813FA2C: .4byte gTradeEvolutionSceneYesNoWindowTemplate\n\t"
         "_0813FA30: .4byte gBattleCommunication\n\t"
         "_0813FA34:\n\t"
         "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"

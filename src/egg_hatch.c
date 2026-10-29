@@ -95,9 +95,9 @@ static void EggHatchPrintMessage(u8 windowId, u8 *string, u8 x, u8 y, u8 speed);
 extern void GetBoxMonNick(struct Pokemon *mon, u8 *dest);
 extern void GetMonNick(struct BoxPokemon *mon, u8 *dest);
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
-extern const u16 gUnknown_8305D24[];
-extern const u16 gUnknown_8305D84[];
-extern const u16 gUnknown_8304D04[];
+extern const u16 gTradeGba2_Pal[];
+extern const u8 gTradeGba_Gfx[];
+extern const u16 gTradePlatform_Tilemap[];
 
 static const u16 sEggPalette[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U16("graphics/pokemon/egg/normal.pal", ".gbapal");
 static const u8 sEggHatchTiles[] EGG_HATCH_GRAPHICS_DATA = INCGFX_U8("graphics/pokemon/egg/hatch.png", ".4bpp");
@@ -564,9 +564,9 @@ static void CB2_EggHatch_0(void)
         break;
     case 7:
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-        LoadPalette(gUnknown_8305D24, BG_PLTT_ID(1), 5 * PLTT_SIZE_4BPP);
-        LoadBgTiles(1, gUnknown_8305D84, 0x1300, 0);
-        CopyToBgTilemapBuffer(1, gUnknown_8304D04, 0x1000, 0);
+        LoadPalette(gTradeGba2_Pal, BG_PLTT_ID(1), 5 * PLTT_SIZE_4BPP);
+        LoadBgTiles(1, gTradeGba_Gfx, 0x1300, 0);
+        CopyToBgTilemapBuffer(1, gTradePlatform_Tilemap, 0x1000, 0);
         CopyBgTilemapBufferToVram(1);
         gMain.state++;
         break;

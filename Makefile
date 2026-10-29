@@ -46,6 +46,36 @@ BUILD_NAME ?= pokeemerald-jp
 OBJ_DIR := build/$(BUILD_NAME)
 JP_GRAPHICS_GFX_ROOT := $(OBJ_DIR)/incgfx/
 
+JP_TRADE_CACHE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/trade/text.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/pokeball.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/pokeball.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/pokeball_symbol.png.8bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/unused1.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/unused2.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal_none.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/link_mon.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/link_mon_glow.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/link_mon_shadow.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/cable_end.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba_screen.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba_affine.png.8bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/crossing_highlight_wireless.bin.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal_send.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal_receive.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal.png.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal.bin.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/link_mon_shadow.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba_pal2.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/menu.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/cursor.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/menu.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/trade/cursor.png.4bpp
+$(foreach target,$(JP_TRADE_CACHE_TARGETS),$(eval $(target) := defined))
+
+
 JP_SLOT_MACHINE_CACHE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_pikachu.png.4bpp \
     $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_machine.png.4bpp \
     $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_gfx.4bpp \
@@ -1748,17 +1778,17 @@ $(C_BUILDDIR)/data/trainer_hill_templates.o: src/data/trainer_hill_templates.c c
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trainer_hill_templates.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/trainer_hill_templates.gen.s
 
-$(C_BUILDDIR)/data/trade.d: src/data/trade.h | tools
+$(C_BUILDDIR)/trade.d: src/trade.c src/data/trade.h Makefile | tools
 	@mkdir -p $(dir $@)
-	$(SCANINC) -M $@ -I include -I "" $<
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
--include $(C_BUILDDIR)/data/trade.d
+-include $(C_BUILDDIR)/trade.d
 
-$(C_BUILDDIR)/data/trade.o: src/data/trade.c src/data/trade.h charmap.txt graphics/trade/cursor.png $(wildcard graphics/trade/jp/menu/* graphics/trade/jp/animation/*)
+$(C_BUILDDIR)/trade.o: src/trade.c src/data/trade.h Makefile charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/trade.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trade.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/trade.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/trade.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/trade.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/trade.gen.s
 
 $(C_BUILDDIR)/data/berry_blender.o: src/data/berry_blender.c src/data/berry_blender.h $(wildcard graphics/berry_blender/jp/*)
 	@mkdir -p $(dir $@)
@@ -7158,5 +7188,115 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pokeball_shining_1.pal.gbapal: grap
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pokeball_shining_2.pal.gbapal: graphics/slot_machine/pokeball_shining_2.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+# Generate the complete Trade source family in the build cache.
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/text.pal.gbapal: graphics/trade/text.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/pokeball.png.gbapal: graphics/trade/pokeball.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/pokeball.png.4bpp: graphics/trade/pokeball.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/pokeball_symbol.png.8bpp: graphics/trade/pokeball_symbol.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/unused1.pal.gbapal: graphics/trade/unused1.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba.pal.gbapal: graphics/trade/gba.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/unused2.pal.gbapal: graphics/trade/unused2.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal_none.pal.gbapal: graphics/trade/wireless_signal_none.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/link_mon.pal.gbapal: graphics/trade/link_mon.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/link_mon_glow.png.4bpp: graphics/trade/link_mon_glow.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/link_mon_shadow.png.4bpp: graphics/trade/link_mon_shadow.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/cable_end.png.4bpp: graphics/trade/cable_end.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba_screen.png.4bpp: graphics/trade/gba_screen.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba_affine.png.8bpp: graphics/trade/gba_affine.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/crossing_highlight_wireless.bin.lz: graphics/trade/crossing_highlight_wireless.bin | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal_send.pal.gbapal: graphics/trade/wireless_signal_send.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal_receive.pal.gbapal: graphics/trade/wireless_signal_receive.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal.png.4bpp: graphics/trade/wireless_signal.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal.png.4bpp | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/wireless_signal.bin.lz: graphics/trade/wireless_signal.bin | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/link_mon_shadow.pal.gbapal: graphics/trade/link_mon_shadow.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba_pal2.pal.gbapal: graphics/trade/gba_pal2.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/gba.png.4bpp: graphics/trade/gba.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/menu.pal.gbapal: graphics/trade/menu.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/cursor.pal.gbapal: graphics/trade/cursor.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/menu.png.4bpp: graphics/trade/menu.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/trade/cursor.png.4bpp: graphics/trade/cursor.png | tools
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@
