@@ -959,8 +959,8 @@ PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Tilemap[] = INCGFX_U
 PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Gfx[] = INCGFX_U32("graphics/party_menu/pokeball.png", ".4bpp.lz");
 PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeballSmall_Gfx[] = INCGFX_U32("graphics/party_menu/pokeball_small.png", ".4bpp.lz");
 PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Pal[] = INCGFX_U32("graphics/party_menu/pokeball.png", ".gbapal.lz");
-PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusGfx_Icons[] = INCBIN_U32("graphics/interface/status_icons.4bpp.lz");
-PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusPal_Icons[] = INCBIN_U32("graphics/interface/status_icons.gbapal.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusGfx_Icons[] = INCGFX_U32("graphics/interface/status_icons.png", ".4bpp.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusPal_Icons[] = INCGFX_U32("graphics/interface/status_icons.png", ".gbapal.lz");
 
 // Keep ROM-locked Party Menu consumers on their original symbol names.
 __asm__(
@@ -977,8 +977,8 @@ __asm__(
 #define MOVE_TYPES_RESOURCES __attribute__((section(".rodata.move_types_resources"), aligned(1)))
 
 // JP type-label graphics retain their region-specific glyphs.
-MOVE_TYPES_RESOURCES const u32 gMoveTypes_Gfx[] = INCBIN_U32("graphics/types/move_types.4bpp.lz");
-MOVE_TYPES_RESOURCES const u32 gMoveTypes_Pal[] = INCBIN_U32("graphics/types/move_types.gbapal.lz");
+MOVE_TYPES_RESOURCES const u32 gMoveTypes_Gfx[] = INCGFX_U32("graphics/types/move_types.4bpp", ".lz");
+MOVE_TYPES_RESOURCES const u32 gMoveTypes_Pal[] = INCGFX_U32("graphics/types/move_types.gbapal", ".lz");
 
 #undef MOVE_TYPES_RESOURCES
 

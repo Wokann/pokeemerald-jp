@@ -77,6 +77,11 @@ JP_STORAGE_WALLPAPER_PART_NAMES := azumarill/bg.4bpp beach/bg.4bpp beach/frame.4
 JP_STORAGE_WALLPAPER_PARTS := $(addprefix $(JP_STORAGE_WALLPAPER_DIR)/,$(JP_STORAGE_WALLPAPER_PART_NAMES))
 $(foreach storage_gfx,$(JP_STORAGE_WALLPAPER_GFX),$(eval $(storage_gfx) := defined))
 
+# Type icons retain the US label and palette composition order.
+JP_MOVE_TYPES_DIR := $(JP_GRAPHICS_GFX_ROOT)graphics/types
+JP_MOVE_TYPES_DATA := $(JP_MOVE_TYPES_DIR)/move_types.4bpp.lz $(JP_MOVE_TYPES_DIR)/move_types.gbapal.lz
+$(foreach move_types_asset,$(JP_MOVE_TYPES_DATA),$(eval $(move_types_asset) := defined))
+
 ASFILE := $(wildcard asm/*.s)
 AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # Assembly files that live under src/ like US pokeemerald
@@ -1580,8 +1585,6 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/backgrounds/water_opponent.bin.lz graphics/battle_anims/backgrounds/water_player.bin.lz \
 	graphics/battle_anims/backgrounds/water_contest.bin.lz graphics/battle_anims/sprites/slash_2.pal.gbapal.lz \
 	graphics/battle_anims/sprites/white_shadow.png.4bpp.lz graphics/battle_anims/sprites/white_shadow.png.gbapal.lz \
-	graphics/interface/status_icons.4bpp.lz graphics/interface/status_icons.gbapal.lz \
-	graphics/types/move_types.4bpp.lz graphics/types/move_types.gbapal.lz \
 	graphics/shop/menu.4bpp.lz graphics/shop/menu.gbapal.lz graphics/shop/menu.bin.lz graphics/shop/money.4bpp.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal) Makefile
 	@mkdir -p $(dir $@)

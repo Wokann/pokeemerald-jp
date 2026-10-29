@@ -194,6 +194,36 @@ $(JP_STORAGE_WALLPAPER_GFX): %.lz: % graphics_file_rules.mk | tools
 
 .SECONDARY: $(JP_STORAGE_WALLPAPER_PARTS)
 
+### Types ###
+
+TYPESGFXDIR := graphics/types
+types := normal fight flying poison ground rock bug ghost steel mystery fire water grass electric psychic ice dragon dark
+contest_types := cool beauty cute smart tough
+
+JP_MOVE_TYPES_TILES := $(types:%=$(JP_MOVE_TYPES_DIR)/%.4bpp) $(contest_types:%=$(JP_MOVE_TYPES_DIR)/contest_%.4bpp)
+JP_MOVE_TYPES_PALETTES := $(addprefix $(JP_MOVE_TYPES_DIR)/,move_types_1.gbapal move_types_2.gbapal move_types_3.gbapal)
+
+$(JP_MOVE_TYPES_TILES): $(JP_MOVE_TYPES_DIR)/%.4bpp: $(TYPESGFXDIR)/%.png graphics_file_rules.mk | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_MOVE_TYPES_PALETTES): $(JP_MOVE_TYPES_DIR)/%.gbapal: $(TYPESGFXDIR)/%.pal graphics_file_rules.mk | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_MOVE_TYPES_DIR)/move_types.4bpp: $(JP_MOVE_TYPES_TILES) graphics_file_rules.mk
+	@mkdir -p $(dir $@)
+	@cat $(filter %.4bpp,$^) >$@
+
+$(JP_MOVE_TYPES_DIR)/move_types.gbapal: $(JP_MOVE_TYPES_PALETTES) graphics_file_rules.mk
+	@mkdir -p $(dir $@)
+	@cat $(filter %.gbapal,$^) >$@
+
+$(JP_MOVE_TYPES_DATA): %.lz: % graphics_file_rules.mk | tools
+	$(GFX) $< $@
+
+.SECONDARY: $(JP_MOVE_TYPES_TILES) $(JP_MOVE_TYPES_PALETTES)
+
 # Battle animation and retained interface composites.
 
 graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_cube_0.png.4bpp \
