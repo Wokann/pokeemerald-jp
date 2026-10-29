@@ -63,17 +63,20 @@ class PokedexCryAssetsTests(unittest.TestCase):
     def test_build_dependencies_cleanup_and_existing_private_owner_are_closed(self):
         make = (ROOT / 'Makefile').read_text()
         ld = (ROOT / 'ld_script_jp.txt').read_text()
-        self.assertIn('rm -f $(JP_CRY_SCREEN_ASSETS) $(JP_CRY_SCREEN_INTERMEDIATES)', make)
+        self.assertNotIn('JP_CRY_SCREEN_ASSETS', make)
+        self.assertNotIn('JP_CRY_SCREEN_INTERMEDIATES', make)
         self.assertIn('$(C_BUILDDIR)/pokedex_cry_screen.d: src/pokedex_cry_screen.c Makefile | tools', make)
         self.assertIn('-include $(C_BUILDDIR)/pokedex_cry_screen.d', make)
-        self.assertIn('$(C_BUILDDIR)/pokedex_cry_screen.o: src/pokedex_cry_screen.c charmap.txt $(JP_CRY_SCREEN_ASSETS) graphics/pokedex/cry_meter_map.bin', make)
+        self.assertIn('$(C_BUILDDIR)/pokedex_cry_screen.o: src/pokedex_cry_screen.c Makefile charmap.txt graphics/pokedex/cry_meter_map.bin', make)
         self.assertNotIn('$(C_BUILDDIR)/pokedex_cry_screen.o: CC1', make)
         self.assertEqual(ld.count('src/pokedex_cry_screen.o(.rodata.pokedex_cry_screen_data);'), 1)
         self.assertEqual(ld.count('src/pokedex_cry_screen.o(.text);'), 1)
         self.assertLess(ld.index('src/roulette.o(.rodata.roulette_data);'), ld.index('src/pokedex_cry_screen.o(.rodata.pokedex_cry_screen_data);'))
         self.assertLess(ld.index('src/pokedex_cry_screen.o(.rodata.pokedex_cry_screen_data);'), ld.index('src/landmark.o(.rodata.landmark_data);'))
-        for c, n, path, extension in resources():
-            self.assertIn(path + extension, make)
+        scanner = re.search(r'(?m)^\$\(C_BUILDDIR\)/pokedex_cry_screen\.d:.*\n((?:\t[^\n]*\n)+)', make)[1]
+        recipe = re.search(r'(?m)^\$\(C_BUILDDIR\)/pokedex_cry_screen\.o:.*\n((?:\t[^\n]*\n)+)', make)[1]
+        self.assertIn('$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT)', scanner)
+        self.assertIn('$(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT)', recipe)
 
     def test_waveform_rows_raw_sheet_and_sentinel_shapes_are_preserved(self):
         source = (ROOT / 'src/pokedex_cry_screen.c').read_text()

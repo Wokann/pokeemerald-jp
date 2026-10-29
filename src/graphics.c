@@ -675,36 +675,36 @@ BATTLE_ANIM_GRAPHICS const u32 gBattleAnimSpriteGfx_BlueFlames2[] = INCGFX_U32("
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))
 
-POKEDEX_GRAPHICS_PREFIX const u16 gPokedexBgHoenn_Pal[] = INCBIN_U16("graphics/pokedex/bg_hoenn.gbapal");
-POKEDEX_GRAPHICS_PREFIX const u16 gPokedexSearchResults_Pal[] = INCBIN_U16("graphics/pokedex/search_results_bg.gbapal");
-POKEDEX_GRAPHICS_PREFIX const u16 gPokedexBgNational_Pal[] = INCBIN_U16("graphics/pokedex/bg_national.gbapal");
-POKEDEX_GRAPHICS_PREFIX const u32 gPokedexStartMenuMain_Tilemap[] = INCBIN_U32("graphics/pokedex/start_menu_main.bin.lz");
-POKEDEX_GRAPHICS_PREFIX const u32 gPokedexStartMenuSearchResults_Tilemap[] = INCBIN_U32("graphics/pokedex/start_menu_search_results.bin.lz");
-POKEDEX_GRAPHICS_PREFIX const u32 gPokedexList_Tilemap[] = INCBIN_U32("graphics/pokedex/list.bin.lz");
-POKEDEX_GRAPHICS_PREFIX const u32 gPokedexListUnderlay_Tilemap[] = INCBIN_U32("graphics/pokedex/list_underlay.bin.lz");
+POKEDEX_GRAPHICS_PREFIX const u16 gPokedexBgHoenn_Pal[] = INCGFX_U16("graphics/pokedex/bg_hoenn.pal", ".gbapal");
+POKEDEX_GRAPHICS_PREFIX const u16 gPokedexSearchResults_Pal[] = INCGFX_U16("graphics/pokedex/search_results_bg.pal", ".gbapal");
+POKEDEX_GRAPHICS_PREFIX const u16 gPokedexBgNational_Pal[] = INCGFX_U16("graphics/pokedex/bg_national.pal", ".gbapal");
+POKEDEX_GRAPHICS_PREFIX const u32 gPokedexStartMenuMain_Tilemap[] = INCGFX_U32("graphics/pokedex/start_menu_main.bin", ".lz");
+POKEDEX_GRAPHICS_PREFIX const u32 gPokedexStartMenuSearchResults_Tilemap[] = INCGFX_U32("graphics/pokedex/start_menu_search_results.bin", ".lz");
+POKEDEX_GRAPHICS_PREFIX const u32 gPokedexList_Tilemap[] = INCGFX_U32("graphics/pokedex/list.bin", ".lz");
+POKEDEX_GRAPHICS_PREFIX const u32 gPokedexListUnderlay_Tilemap[] = INCGFX_U32("graphics/pokedex/list_underlay.bin", ".lz");
 
 #undef POKEDEX_GRAPHICS_PREFIX
 
 #define POKEDEX_GRAPHICS_SCREEN_TILEMAPS __attribute__((section(".rodata.pokedex_graphics_screen_tilemaps"), aligned(1)))
 
-POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexInfoScreen_Tilemap[] = INCBIN_U32("graphics/pokedex/info_screen.bin.lz");
-POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexCryScreen_Tilemap[] = INCBIN_U32("graphics/pokedex/cry_screen.bin.lz");
-POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexSizeScreen_Tilemap[] = INCBIN_U32("graphics/pokedex/size_screen.bin.lz");
-POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexScreenSelectBarMain_Tilemap[] = INCBIN_U32("graphics/pokedex/screen_select_bar_main.bin.lz");
-POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexScreenSelectBarSubmenu_Tilemap[] = INCBIN_U32("graphics/pokedex/screen_select_bar_submenu.bin.lz");
+POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexInfoScreen_Tilemap[] = INCGFX_U32("graphics/pokedex/info_screen.bin", ".lz");
+POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexCryScreen_Tilemap[] = INCGFX_U32("graphics/pokedex/cry_screen.bin", ".lz");
+POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexSizeScreen_Tilemap[] = INCGFX_U32("graphics/pokedex/size_screen.bin", ".lz");
+POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexScreenSelectBarMain_Tilemap[] = INCGFX_U32("graphics/pokedex/screen_select_bar_main.bin", ".lz");
+POKEDEX_GRAPHICS_SCREEN_TILEMAPS const u32 gPokedexScreenSelectBarSubmenu_Tilemap[] = INCGFX_U32("graphics/pokedex/screen_select_bar_submenu.bin", ".lz");
 
 #undef POKEDEX_GRAPHICS_SCREEN_TILEMAPS
 
 #define POKEDEX_GRAPHICS_UNUSED_NOBALL __attribute__((section(".rodata.pokedex_graphics_unused_noball"), aligned(1)))
 
-POKEDEX_GRAPHICS_UNUSED_NOBALL const u32 gUnused_PokedexNoBall[] = INCBIN_U32("graphics/pokedex/noball_unused.png.4bpp.lz");
+POKEDEX_GRAPHICS_UNUSED_NOBALL const u32 gUnused_PokedexNoBall[] = INCGFX_U32("graphics/pokedex/noball_unused.png", ".4bpp.lz");
 
 #undef POKEDEX_GRAPHICS_UNUSED_NOBALL
 
 #define POKEDEX_GRAPHICS_MENU_INTERFACE __attribute__((section(".rodata.pokedex_graphics_menu_interface"), aligned(1)))
 
-POKEDEX_GRAPHICS_MENU_INTERFACE const u32 gPokedexMenu_Gfx[] = INCBIN_U32("graphics/pokedex/menu.4bpp.lz");
-POKEDEX_GRAPHICS_MENU_INTERFACE const u32 gPokedexInterface_Gfx[] = INCBIN_U32("graphics/pokedex/interface.4bpp.lz");
+POKEDEX_GRAPHICS_MENU_INTERFACE const u32 gPokedexMenu_Gfx[] = INCGFX_U32("graphics/pokedex/menu.png", ".4bpp.lz");
+POKEDEX_GRAPHICS_MENU_INTERFACE const u32 gPokedexInterface_Gfx[] = INCGFX_U32("graphics/pokedex/interface.png", ".4bpp.lz");
 
 #undef POKEDEX_GRAPHICS_MENU_INTERFACE
 
@@ -712,10 +712,10 @@ POKEDEX_GRAPHICS_MENU_INTERFACE const u32 gPokedexInterface_Gfx[] = INCBIN_U32("
 
 // JP search-menu tiles differ from the English source image; retain the
 // byte-exact JP stream while sharing pokeemerald's final resource names.
-POKEDEX_SEARCH_MENU_GRAPHICS const u16 gPokedexSearchMenu_Pal[] = INCBIN_U16("graphics/pokedex/search_menu.gbapal");
-POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenu_Gfx[] = INCBIN_U32("graphics/pokedex/search_menu.4bpp.lz");
-POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_national.bin.lz");
-POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenuHoenn_Tilemap[] = INCBIN_U32("graphics/pokedex/search_menu_hoenn.bin.lz");
+POKEDEX_SEARCH_MENU_GRAPHICS const u16 gPokedexSearchMenu_Pal[] = INCGFX_U16("graphics/pokedex/search_menu.pal", ".gbapal");
+POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenu_Gfx[] = INCGFX_U32("graphics/pokedex/search_menu.png", ".4bpp.lz");
+POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenuNational_Tilemap[] = INCGFX_U32("graphics/pokedex/search_menu_national.bin", ".lz");
+POKEDEX_SEARCH_MENU_GRAPHICS const u32 gPokedexSearchMenuHoenn_Tilemap[] = INCGFX_U32("graphics/pokedex/search_menu_hoenn.bin", ".lz");
 
 #undef POKEDEX_SEARCH_MENU_GRAPHICS
 

@@ -11,11 +11,11 @@ extern u8 *sPokedexAreaMapBgNum;
 
 #define POKEDEX_AREA_MAP_DATA __attribute__((section(".rodata.pokedex_area_region_map_data")))
 
-static const u16 ALIGNED(4) sPokedexAreaMap_Pal[] POKEDEX_AREA_MAP_DATA = INCBIN_U16("graphics/pokedex/region_map.gbapal");
-static const u32 sPokedexAreaMap_Gfx[] POKEDEX_AREA_MAP_DATA = INCBIN_U32("graphics/pokedex/region_map.8bpp.lz");
-static const u32 sPokedexAreaMap_Tilemap[] POKEDEX_AREA_MAP_DATA = INCBIN_U32("graphics/pokedex/region_map.tilemap.lz");
-static const u32 sPokedexAreaMapAffine_Gfx[] POKEDEX_AREA_MAP_DATA = INCBIN_U32("graphics/pokedex/region_map_affine.8bpp.lz");
-static const u32 sPokedexAreaMapAffine_Tilemap[] POKEDEX_AREA_MAP_DATA = INCBIN_U32("graphics/pokedex/region_map_affine.tilemap.lz");
+static const u16 ALIGNED(4) sPokedexAreaMap_Pal[] POKEDEX_AREA_MAP_DATA = INCGFX_U16("graphics/pokedex/region_map.pal", ".gbapal");
+static const u32 sPokedexAreaMap_Gfx[] POKEDEX_AREA_MAP_DATA = INCGFX_U32("graphics/pokedex/region_map.png", ".8bpp.lz", "-num_tiles 232 -Wnum_tiles");
+static const u32 sPokedexAreaMap_Tilemap[] POKEDEX_AREA_MAP_DATA = INCGFX_U32("graphics/pokedex/region_map.bin", ".lz");
+static const u32 sPokedexAreaMapAffine_Gfx[] POKEDEX_AREA_MAP_DATA = INCGFX_U32("graphics/pokedex/region_map_affine.png", ".8bpp.lz", "-num_tiles 233 -Wnum_tiles");
+static const u32 sPokedexAreaMapAffine_Tilemap[] POKEDEX_AREA_MAP_DATA = INCGFX_U32("graphics/pokedex/region_map_affine.bin", ".lz");
 
 void LoadPokedexAreaMapGfx(const struct PokedexAreaMapTemplate *template)
 {

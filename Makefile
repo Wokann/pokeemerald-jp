@@ -1015,7 +1015,7 @@ $(C_BUILDDIR)/pokedex_area_region_map.o: CFLAGS := -mthumb-interwork -O2 -fhex-a
 $(C_BUILDDIR)/battle_message.o: CC1 = $(PREPROC) -i src/battle_message.c charmap.txt | $(CC)
 $(C_BUILDDIR)/diploma.o: CC1 = $(PREPROC) -i src/diploma.c charmap.txt | $(CC)
 $(C_BUILDDIR)/landmark.o: CC1 = $(PREPROC) -i src/landmark.c charmap.txt | $(CC)
-$(C_BUILDDIR)/pokedex_area_region_map.o: CC1 = $(PREPROC) -i src/pokedex_area_region_map.c charmap.txt | $(CC)
+$(C_BUILDDIR)/pokedex_area_region_map.o: CC1 = $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) src/pokedex_area_region_map.c charmap.txt | $(CC)
 $(C_BUILDDIR)/move_relearner.o: CC1 = $(PREPROC) -i src/move_relearner.c charmap.txt | $(CC)
 $(C_BUILDDIR)/pokeblock.o: CC1 = $(PREPROC) -i src/pokeblock.c charmap.txt | $(CC)
 $(C_BUILDDIR)/lilycove_lady.o: CC1 = $(PREPROC) -i src/lilycove_lady.c charmap.txt | $(CC)
@@ -1182,7 +1182,6 @@ clean: clean-tools
 	rm -f $(JP_ITEM_ICON_ASSETS) $(JP_ITEM_ICON_INTERMEDIATES)
 	rm -f $(JP_ROULETTE_ASSETS) $(JP_ROULETTE_INTERMEDIATES)
 	rm -f $(JP_MAIL_ASSETS) $(JP_MAIL_INTERMEDIATES)
-	rm -f $(JP_CRY_SCREEN_ASSETS) $(JP_CRY_SCREEN_INTERMEDIATES)
 	rm -f $(JP_ANIM_MON_FRONT_PIC_ASSETS) $(JP_ANIM_MON_FRONT_PIC_INTERMEDIATES)
 	rm -f $(JP_TRAINER_GRAPHICS_ASSETS) $(JP_TRAINER_GRAPHICS_INTERMEDIATES)
 	rm -f $(JP_DIRECT_SOUND_ASSETS)
@@ -1341,15 +1340,15 @@ $(C_BUILDDIR)/match_call.o: src/match_call.c Makefile charmap.txt
 	@rm -f $(C_BUILDDIR)/match_call.gen.s
 
 # Keep the Pokedex caught-ball graphic reproducible from its tracked PNG input.
-$(C_BUILDDIR)/pokedex.d: src/pokedex.c | tools
+$(C_BUILDDIR)/pokedex.d: src/pokedex.c Makefile | tools
 	@mkdir -p $(dir $@)
-	$(SCANINC) -M $@ -I include -I "" $<
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/pokedex.d
 
-$(C_BUILDDIR)/pokedex.o: src/pokedex.c charmap.txt include/battle_main.h
+$(C_BUILDDIR)/pokedex.o: src/pokedex.c Makefile charmap.txt include/battle_main.h
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokedex.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokedex.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokedex.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokedex.gen.s
 
@@ -1500,14 +1499,6 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/title_screen/pokemon_logo.gbapal graphics/title_screen/pokemon_logo.bin.lz graphics/title_screen/pokemon_logo.8bpp.lz \
 	graphics/title_screen/emerald_version.8bpp.lz graphics/title_screen/clouds.bin.lz \
 	graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin \
-	graphics/pokedex/start_menu_main.bin.lz graphics/pokedex/start_menu_search_results.bin.lz \
-	graphics/pokedex/list.bin.lz graphics/pokedex/list_underlay.bin.lz \
-	graphics/pokedex/info_screen.bin.lz graphics/pokedex/cry_screen.bin.lz \
-	graphics/pokedex/size_screen.bin.lz graphics/pokedex/screen_select_bar_main.bin.lz \
-	graphics/pokedex/screen_select_bar_submenu.bin.lz graphics/pokedex/menu.4bpp.lz \
-	graphics/pokedex/interface.4bpp.lz graphics/pokedex/search_menu.gbapal \
-	graphics/pokedex/search_menu.4bpp.lz graphics/pokedex/search_menu_national.bin.lz \
-	graphics/pokedex/search_menu_hoenn.bin.lz \
 	graphics/intro/scene_2/player.pal.gbapal \
 	graphics/intro/scene_2/volbeat.png.gbapal graphics/intro/scene_2/torchic.png.gbapal \
 	graphics/intro/scene_2/manectric.png.gbapal graphics/intro/scene_2/flygon.png.gbapal \
@@ -5986,33 +5977,15 @@ $(C_BUILDDIR)/mail.o: src/mail.c charmap.txt include/graphics.h
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mail.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/mail.gen.s
 
-JP_CRY_SCREEN_ASSETS := graphics/pokedex/cry_meter_needle.png.gbapal \
-	graphics/pokedex/cry_meter_needle.png.4bpp \
-	graphics/pokedex/cry_meter.png.gbapal \
-	graphics/pokedex/cry_meter.png.4bpp.lz \
-	graphics/pokedex/cry_screen_bg.png.gbapal \
-	graphics/pokedex/cry_screen_bg.png.4bpp
-
-JP_CRY_SCREEN_INTERMEDIATES := graphics/pokedex/cry_meter.png.4bpp
-
-graphics/pokedex/cry_meter_needle.png.4bpp graphics/pokedex/cry_meter.png.4bpp graphics/pokedex/cry_screen_bg.png.4bpp: %.png.4bpp: %.png Makefile | tools
-	$(GFX) $< $@
-
-graphics/pokedex/cry_meter_needle.png.gbapal graphics/pokedex/cry_meter.png.gbapal graphics/pokedex/cry_screen_bg.png.gbapal: %.png.gbapal: %.png Makefile | tools
-	$(GFX) $< $@
-
-graphics/pokedex/cry_meter.png.4bpp.lz: %.lz: % Makefile | tools
-	$(GFX) $< $@
-
 $(C_BUILDDIR)/pokedex_cry_screen.d: src/pokedex_cry_screen.c Makefile | tools
 	@mkdir -p $(dir $@)
-	$(SCANINC) -M $@ -I include -I "" $<
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/pokedex_cry_screen.d
 
-$(C_BUILDDIR)/pokedex_cry_screen.o: src/pokedex_cry_screen.c charmap.txt $(JP_CRY_SCREEN_ASSETS) graphics/pokedex/cry_meter_map.bin
+$(C_BUILDDIR)/pokedex_cry_screen.o: src/pokedex_cry_screen.c Makefile charmap.txt graphics/pokedex/cry_meter_map.bin
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokedex_cry_screen.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokedex_cry_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokedex_cry_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokedex_cry_screen.gen.s
 
@@ -6390,3 +6363,11 @@ $(C_BUILDDIR)/pokenav_ribbons_list.o: src/pokenav_ribbons_list.c Makefile charma
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_ribbons_list.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_ribbons_list.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_ribbons_list.gen.s
+
+$(C_BUILDDIR)/pokedex_area_region_map.d: src/pokedex_area_region_map.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokedex_area_region_map.d
+
+$(C_BUILDDIR)/pokedex_area_region_map.o: src/pokedex_area_region_map.c Makefile charmap.txt
