@@ -736,14 +736,14 @@ MENU_INFO_GRAPHICS const u8 gMenuInfoElements_Gfx[] = INCBIN_U8("graphics/interf
 
 // The JP menu uses two 4bpp palette banks; retain the physical palette stream
 // separately while keeping pokeemerald's final resource names and hierarchy.
-BATTLE_FACTORY_MENU_TILES const u16 gFrontierFactoryMenu_Gfx[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.png.4bpp");
+BATTLE_FACTORY_MENU_TILES const u16 gFrontierFactoryMenu_Gfx[] = INCGFX_U16("graphics/battle_frontier/factory_screen/menu.png", ".4bpp");
 BATTLE_FACTORY_MENU_TILES const u16 gFrontierFactoryMenu_Tilemap[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.bin");
 
 #undef BATTLE_FACTORY_MENU_TILES
 
 #define BATTLE_FACTORY_MENU_PAL __attribute__((section(".rodata.graphics_battle_factory_menu_pal"), aligned(1)))
 
-BATTLE_FACTORY_MENU_PAL const u16 gFrontierFactoryMenu_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.pal.gbapal");
+BATTLE_FACTORY_MENU_PAL const u16 gFrontierFactoryMenu_Pal[] = INCGFX_U16("graphics/battle_frontier/factory_screen/menu.png", ".gbapal");
 
 #undef BATTLE_FACTORY_MENU_PAL
 

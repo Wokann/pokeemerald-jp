@@ -9,32 +9,32 @@
 
 // Keep the JP Battle Factory screen resources in pokeemerald's final hierarchy.
 // The assets retain their original JP palette and tile streams.
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sPokeballGray_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/pokeball_gray.pal.gbapal");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sPokeballSelected_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/pokeball_selected.pal.gbapal");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sInterface_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/interface.pal.gbapal");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sPokeball_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/pokeball.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sArrow_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/arrow.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMenuHighlightLeft_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/menu_highlight_left.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMenuHighlightRight_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/menu_highlight_right.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionBoxLeft_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_box_left.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionBoxRight_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_box_right.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightLeft_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_highlight_left.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightMiddle_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_highlight_middle.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightRight_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/action_highlight_right.png.4bpp");
-BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMonPicBgAnim_Gfx[] = INCBIN_U8("graphics/battle_frontier/factory_screen/mon_pic_bg_anim.png.4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sPokeballGray_Pal[] = INCGFX_U16("graphics/battle_frontier/factory_screen/pokeball_gray.pal", ".gbapal");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sPokeballSelected_Pal[] = INCGFX_U16("graphics/battle_frontier/factory_screen/pokeball_selected.pal", ".gbapal");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u16 sInterface_Pal[] = INCGFX_U16("graphics/battle_frontier/factory_screen/interface.pal", ".gbapal");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sPokeball_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/pokeball.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sArrow_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/arrow.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMenuHighlightLeft_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/menu_highlight_left.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMenuHighlightRight_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/menu_highlight_right.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionBoxLeft_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/action_box_left.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionBoxRight_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/action_box_right.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightLeft_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/action_highlight_left.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightMiddle_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/action_highlight_middle.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sActionHighlightRight_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/action_highlight_right.png", ".4bpp");
+BATTLE_FACTORY_SCREEN_GRAPHICS static const u8 sMonPicBgAnim_Gfx[] = INCGFX_U8("graphics/battle_frontier/factory_screen/mon_pic_bg_anim.png", ".4bpp");
 
 #undef BATTLE_FACTORY_SCREEN_GRAPHICS
 
 #define BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES __attribute__((section(".rodata.battle_factory_screen_mon_pic_bg_tiles"), aligned(1)))
 
 BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES static const u8 sMonPicBg_Tilemap[] = INCBIN_U8("graphics/battle_frontier/factory_screen/mon_pic_bg.bin");
-BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES static const u16 sMonPicBg_Gfx[] = INCBIN_U16("graphics/battle_frontier/factory_screen/mon_pic_bg.png.4bpp");
+BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES static const u16 sMonPicBg_Gfx[] = INCGFX_U16("graphics/battle_frontier/factory_screen/mon_pic_bg.png", ".4bpp");
 
 #undef BATTLE_FACTORY_SCREEN_MON_PIC_BG_TILES
 
 #define BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL __attribute__((section(".rodata.battle_factory_screen_mon_pic_bg_pal"), aligned(1)))
 
-BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL static const u16 sMonPicBg_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/mon_pic_bg.pal.gbapal");
+BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL static const u16 sMonPicBg_Pal[] = INCGFX_U16("graphics/battle_frontier/factory_screen/mon_pic_bg.png", ".gbapal");
 
 #undef BATTLE_FACTORY_SCREEN_MON_PIC_BG_PAL
 

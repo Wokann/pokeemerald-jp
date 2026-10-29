@@ -921,23 +921,6 @@ $(C_BUILDDIR)/item_menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/pokemon_summary_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/graphics.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/battle_factory_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
-$(C_BUILDDIR)/battle_factory_screen.o: \
-	graphics/battle_frontier/factory_screen/pokeball_gray.pal.gbapal \
-	graphics/battle_frontier/factory_screen/pokeball_selected.pal.gbapal \
-	graphics/battle_frontier/factory_screen/interface.pal.gbapal \
-	graphics/battle_frontier/factory_screen/pokeball.png.4bpp \
-	graphics/battle_frontier/factory_screen/arrow.png.4bpp \
-	graphics/battle_frontier/factory_screen/menu_highlight_left.png.4bpp \
-	graphics/battle_frontier/factory_screen/menu_highlight_right.png.4bpp \
-	graphics/battle_frontier/factory_screen/action_box_left.png.4bpp \
-	graphics/battle_frontier/factory_screen/action_box_right.png.4bpp \
-	graphics/battle_frontier/factory_screen/action_highlight_left.png.4bpp \
-	graphics/battle_frontier/factory_screen/action_highlight_middle.png.4bpp \
-	graphics/battle_frontier/factory_screen/action_highlight_right.png.4bpp \
-	graphics/battle_frontier/factory_screen/mon_pic_bg_anim.png.4bpp \
-	graphics/battle_frontier/factory_screen/mon_pic_bg.bin \
-	graphics/battle_frontier/factory_screen/mon_pic_bg.png.4bpp \
-	graphics/battle_frontier/factory_screen/mon_pic_bg.pal.gbapal
 $(C_BUILDDIR)/menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/menu.o: graphics/interface/std_menu.pal.gbapal
 $(C_BUILDDIR)/naming_screen.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
@@ -1513,7 +1496,6 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/rayquaza_scene.h src/
 	graphics/easy_chat/button_window.png.gbapal graphics/easy_chat/mode.png.gbapal graphics/easy_chat/mode.png.4bpp.lz graphics/easy_chat/window.png.4bpp.lz graphics/easy_chat/window.bin.lz graphics/easy_chat/button_window.png.4bpp.lz \
 	graphics/text_window/message_box_jp.4bpp \
 	graphics/interface/menu_info1.gbapal graphics/interface/menu_info2.gbapal graphics/interface/menu_info3.gbapal graphics/interface/menu_info.4bpp \
-	graphics/battle_frontier/factory_screen/menu.png.4bpp graphics/battle_frontier/factory_screen/menu.bin graphics/battle_frontier/factory_screen/menu.pal.gbapal \
 	graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin \
 	graphics/battle_anims/sprites/flying_dirt.png.4bpp.lz graphics/battle_anims/sprites/flying_dirt.png.gbapal.lz \
 	graphics/battle_anims/backgrounds/sandstorm_brew.bin.lz graphics/battle_anims/backgrounds/sandstorm_brew.png.4bpp.lz \
@@ -6031,3 +6013,15 @@ $(C_BUILDDIR)/minigame_countdown.d: src/minigame_countdown.c Makefile | tools
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/minigame_countdown.d
+
+$(C_BUILDDIR)/battle_factory_screen.o: src/battle_factory_screen.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_factory_screen.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_factory_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/battle_factory_screen.gen.s
+
+$(C_BUILDDIR)/battle_factory_screen.d: src/battle_factory_screen.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/battle_factory_screen.d
