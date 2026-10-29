@@ -28743,7 +28743,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_screen_effect.c",
@@ -45138,7 +45138,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "62319191dd13c1d09f39bd5ce2d218cfc22a06c06a618c1b4038b21d356c9e6a"
+            "makefile_sha256": "4475e59d54c080a5eb0f3ce63fb9daba7e61c34d7482e60f717a1c4d033d8898"
           }
         },
         {
@@ -45573,7 +45573,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "62319191dd13c1d09f39bd5ce2d218cfc22a06c06a618c1b4038b21d356c9e6a"
+          "sha256": "4475e59d54c080a5eb0f3ce63fb9daba7e61c34d7482e60f717a1c4d033d8898"
         },
         {
           "path": "asm/macros.inc",
@@ -104864,7 +104864,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -118998,7 +118998,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/tv.c",
@@ -286297,7 +286297,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_screen_effect.c",
@@ -307641,7 +307641,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_screen_effect.c",
@@ -313433,7 +313433,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -319785,7 +319785,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_screen_effect.c",
@@ -325682,7 +325682,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -331161,7 +331161,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -337785,7 +337785,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -346014,7 +346014,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -353071,7 +353071,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -357253,7 +357253,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -361067,7 +361067,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -365626,7 +365626,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -370446,7 +370446,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -374165,7 +374165,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -378180,7 +378180,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -381938,7 +381938,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -385475,7 +385475,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -389125,7 +389125,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -393022,7 +393022,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -396468,7 +396468,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -400051,7 +400051,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -405870,7 +405870,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -414261,7 +414261,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -418627,7 +418627,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -463236,7 +463236,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -471017,7 +471017,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
@@ -477234,7 +477234,7 @@
         {
           "path": "src/field_effect.c",
           "selector": "file",
-          "sha256": "863212e731ca0af6924b861ed627b9ad8743d551e0509af6a7112dfe36e69f22"
+          "sha256": "16c45c9b57e98764568f1f34f0a5c4b0ea580efccd747c066b19c65da2dbed2a"
         },
         {
           "path": "src/field_effect_helpers.c",
