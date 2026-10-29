@@ -1815,12 +1815,9 @@ $(C_BUILDDIR)/trainer_card.o: src/trainer_card.c Makefile charmap.txt
 	@rm -f $(C_BUILDDIR)/trainer_card.gen.s
 
 
-JP_FRONTIER_PASS_ASSETS := $(wildcard graphics/frontier_pass/*)
-
-$(C_BUILDDIR)/graphics.o: $(JP_FRONTIER_PASS_ASSETS)
-$(C_BUILDDIR)/frontier_pass.o: src/frontier_pass.c charmap.txt $(JP_FRONTIER_PASS_ASSETS)
+$(C_BUILDDIR)/frontier_pass.o: src/frontier_pass.c Makefile charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/frontier_pass.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/frontier_pass.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/frontier_pass.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/frontier_pass.gen.s
 
@@ -6351,3 +6348,9 @@ $(C_BUILDDIR)/trainer_card.d: src/trainer_card.c Makefile | tools
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/trainer_card.d
+
+$(C_BUILDDIR)/frontier_pass.d: src/frontier_pass.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/frontier_pass.d

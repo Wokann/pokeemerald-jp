@@ -3999,17 +3999,17 @@ __attribute__((naked)) void sub_080C6738(void)
 }
 
 
-static const u16 sMaleHead_Pal[] __attribute__((section(".rodata.frontier_pass_head_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/map_heads.gbapal");
-static const u16 sFemaleHead_Pal[] __attribute__((section(".rodata.frontier_pass_head_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/map_heads_female.gbapal");
-static const u32 sMapScreen_Gfx[] __attribute__((section(".rodata.frontier_pass_map_cursor_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_screen.4bpp.lz");
-static const u32 sCursor_Gfx[] __attribute__((section(".rodata.frontier_pass_map_cursor_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/cursor.4bpp.lz");
-static const u32 sHeads_Gfx[] __attribute__((section(".rodata.frontier_pass_head_cursor_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_heads.4bpp.lz");
-static const u32 sMapCursor_Gfx[] __attribute__((section(".rodata.frontier_pass_head_cursor_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_cursor.4bpp.lz");
-static const u32 sMapScreen_Tilemap[] __attribute__((section(".rodata.frontier_pass_map_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_screen.bin.lz");
-static const u32 sMapAndCard_ZoomedOut_Tilemap[] __attribute__((section(".rodata.frontier_pass_map_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/small_map_and_card.bin.lz");
+static const u16 sMaleHead_Pal[] __attribute__((section(".rodata.frontier_pass_head_palettes"), aligned(4))) = INCGFX_U16("graphics/frontier_pass/map_heads.png", ".gbapal");
+static const u16 sFemaleHead_Pal[] __attribute__((section(".rodata.frontier_pass_head_palettes"), aligned(4))) = INCGFX_U16("graphics/frontier_pass/map_heads_female.pal", ".gbapal");
+static const u32 sMapScreen_Gfx[] __attribute__((section(".rodata.frontier_pass_map_cursor_graphics"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/map_screen.png", ".4bpp.lz");
+static const u32 sCursor_Gfx[] __attribute__((section(".rodata.frontier_pass_map_cursor_graphics"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/cursor.png", ".4bpp.lz");
+static const u32 sHeads_Gfx[] __attribute__((section(".rodata.frontier_pass_head_cursor_graphics"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/map_heads.png", ".4bpp.lz");
+static const u32 sMapCursor_Gfx[] __attribute__((section(".rodata.frontier_pass_head_cursor_graphics"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/map_cursor.png", ".4bpp.lz");
+static const u32 sMapScreen_Tilemap[] __attribute__((section(".rodata.frontier_pass_map_tilemaps"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/map_screen.bin", ".lz");
+static const u32 sMapAndCard_ZoomedOut_Tilemap[] __attribute__((section(".rodata.frontier_pass_map_tilemaps"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/small_map_and_card.bin", ".lz");
 static const u32 sCardBall_Filled_Tilemap[] __attribute__((section(".rodata.frontier_pass_map_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/card_ball_filled.bin");
-static const u32 sBattleRecord_Tilemap[] __attribute__((section(".rodata.frontier_pass_record_tilemap"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/record_frame.bin.lz");
-static const u32 sMapAndCard_Zooming_Tilemap[] __attribute__((section(".rodata.frontier_pass_affine_tilemap"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/small_map_and_card_affine.bin.lz");
+static const u32 sBattleRecord_Tilemap[] __attribute__((section(".rodata.frontier_pass_record_tilemap"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/record_frame.bin", ".lz");
+static const u32 sMapAndCard_Zooming_Tilemap[] __attribute__((section(".rodata.frontier_pass_affine_tilemap"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/small_map_and_card_affine.bin", ".lz");
 
 #define FRONTIER_PASS_UI __attribute__((section(".rodata.frontier_pass_ui")))
 

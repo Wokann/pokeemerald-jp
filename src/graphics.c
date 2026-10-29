@@ -1945,17 +1945,17 @@ const u16 gKantoTrainerCardBlue_Pal[] GRAPHICS_TRAINER_CARD_PALETTES = INCGFX_U1
 
 #undef GRAPHICS_TRAINER_CARD_PALETTES
 
-const u16 gFrontierPassBg_Pal[8][16] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/bg.gbapal");
-const u16 gFrontierPassCursor_Pal[] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/cursor.gbapal");
-const u16 gFrontierPassMapCursor_Pal[] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/map_cursor.gbapal");
-const u16 gFrontierPassMedalsSilver_Pal[] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/silver.gbapal");
-const u16 gFrontierPassMedalsGold_Pal[] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCBIN_U16("graphics/frontier_pass/gold.gbapal");
-const u32 gFrontierPassBg_Gfx[] __attribute__((section(".rodata.graphics_frontier_pass_background"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/bg.4bpp.lz");
-const u32 gFrontierPassMedals_Gfx[] __attribute__((section(".rodata.graphics_frontier_pass_medals"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/medals.4bpp.lz");
-const u32 gFrontierPassBg_Tilemap[] __attribute__((section(".rodata.graphics_frontier_pass_bg_tilemap"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/bg.bin.lz");
+const u16 gFrontierPassBg_Pal[8][16] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCGFX_U16("graphics/frontier_pass/bg.png", ".gbapal");
+const u16 gFrontierPassCursor_Pal[] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCGFX_U16("graphics/frontier_pass/cursor.png", ".gbapal");
+const u16 gFrontierPassMapCursor_Pal[] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCGFX_U16("graphics/frontier_pass/map_cursor.png", ".gbapal");
+const u16 gFrontierPassMedalsSilver_Pal[] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCGFX_U16("graphics/frontier_pass/silver.pal", ".gbapal");
+const u16 gFrontierPassMedalsGold_Pal[] __attribute__((section(".rodata.graphics_frontier_pass_palettes"), aligned(4))) = INCGFX_U16("graphics/frontier_pass/gold.pal", ".gbapal");
+const u32 gFrontierPassBg_Gfx[] __attribute__((section(".rodata.graphics_frontier_pass_background"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/bg.png", ".4bpp.lz");
+const u32 gFrontierPassMedals_Gfx[] __attribute__((section(".rodata.graphics_frontier_pass_medals"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/medals.png", ".4bpp.lz");
+const u32 gFrontierPassBg_Tilemap[] __attribute__((section(".rodata.graphics_frontier_pass_bg_tilemap"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/bg.bin", ".lz");
 const u32 gFrontierPassCancelButton_Tilemap[] __attribute__((section(".rodata.graphics_frontier_pass_cancel_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/cancel.bin");
 const u32 gFrontierPassCancelButtonHighlighted_Tilemap[] __attribute__((section(".rodata.graphics_frontier_pass_cancel_tilemaps"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/cancel_highlighted.bin");
-const u32 gFrontierPassMapAndCard_Gfx[] __attribute__((section(".rodata.graphics_frontier_pass_zoom_graphics"), aligned(4))) = INCBIN_U32("graphics/frontier_pass/map_and_card.8bpp.lz");
+const u32 gFrontierPassMapAndCard_Gfx[] __attribute__((section(".rodata.graphics_frontier_pass_zoom_graphics"), aligned(4))) = INCGFX_U32("graphics/frontier_pass/map_and_card.png", ".8bpp.lz");
 
 #define STORAGE_PARTY_PALETTE __attribute__((section(".rodata.graphics_storage_party_palette"), aligned(4)))
 
