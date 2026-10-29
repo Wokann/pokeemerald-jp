@@ -46,6 +46,66 @@ BUILD_NAME ?= pokeemerald-jp
 OBJ_DIR := build/$(BUILD_NAME)
 JP_GRAPHICS_GFX_ROOT := $(OBJ_DIR)/incgfx/
 
+JP_SLOT_MACHINE_CACHE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_pikachu.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_machine.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_gfx.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_gfx.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/menu.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/menu.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/menu.png.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/1.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_pikachu.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/shadow.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_machine.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/smoke.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_explosion/0.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/digital_display.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/1.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/2.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/3.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/4.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/5.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/6.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/7.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/digital_display.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/digital_display.png.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/0.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/1.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/2.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/3.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/4.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/5.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/6.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/7.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/8.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/9.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/bolt.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/duck.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/smoke.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/0.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/1.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/2.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/3.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/4.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/5.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/large_bolt/0.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/large_bolt/1.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_explosion/0.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_explosion/1.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/shadow.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pika_aura.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_number_gap.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/flashing_lights_inside.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/flashing_lights_middle.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/flashing_lights_outside.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pokeball_shining_0.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pokeball_shining_1.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pokeball_shining_2.pal.gbapal
+$(foreach target,$(JP_SLOT_MACHINE_CACHE_TARGETS),$(eval $(target) := defined))
+
+JP_SLOT_MACHINE_COMPOSITE_TARGET := $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_gfx.4bpp.lz
+$(eval $(JP_SLOT_MACHINE_COMPOSITE_TARGET) := defined)
+
 JP_BATTLE_INTERFACE_COMPOSITE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox.gbapal.lz \
     $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/battle_bar.4bpp.lz
 $(foreach target,$(JP_BATTLE_INTERFACE_COMPOSITE_TARGETS),$(eval $(target) := defined))
@@ -2452,9 +2512,9 @@ $(C_BUILDDIR)/libc/mprec.o: src/libc/mprec.c
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/libc/mprec_gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/libc/mprec_gen.s
 
-JP_SLOT_MACHINE_INTERMEDIATES := graphics/slot_machine/reel_time_pikachu.4bpp \
-    graphics/slot_machine/reel_time_machine.4bpp \
-    graphics/slot_machine/reel_time_gfx.4bpp
+JP_SLOT_MACHINE_INTERMEDIATES := $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_pikachu.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_machine.png.4bpp \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_gfx.4bpp
 
 $(C_BUILDDIR)/slot_machine.d: src/slot_machine.c Makefile | tools
 	@mkdir -p $(dir $@)
@@ -2468,9 +2528,6 @@ $(C_BUILDDIR)/slot_machine.o: src/slot_machine.c Makefile charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/slot_machine.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/slot_machine.gen.s
 
-graphics/slot_machine/reel_time_gfx.4bpp: graphics/slot_machine/reel_time_pikachu.4bpp \
-                                          graphics/slot_machine/reel_time_machine.4bpp | tools
-	@cat $^ >$@
 
 JP_BATTLE_RECORDS_ASSETS := graphics/trainer_hill/records_window.4bpp \
     graphics/trainer_hill/records_window.gbapal
@@ -6881,5 +6938,225 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable.png.4bpp: graphics/cable_car/cab
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_pikachu.png.4bpp: graphics/slot_machine/reel_time_pikachu.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_machine.png.4bpp: graphics/slot_machine/reel_time_machine.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_gfx.4bpp: $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_pikachu.png.4bpp $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_machine.png.4bpp
+	@mkdir -p $(dir $@)
+	@cat $^ >$@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_gfx.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_gfx.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/menu.png.gbapal: graphics/slot_machine/menu.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/menu.png.4bpp: graphics/slot_machine/menu.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/menu.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/menu.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/1.png.gbapal: graphics/slot_machine/reel_symbols/1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_pikachu.png.gbapal: graphics/slot_machine/reel_time_pikachu.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/shadow.png.gbapal: graphics/slot_machine/shadow.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_machine.png.gbapal: graphics/slot_machine/reel_time_machine.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/smoke.png.gbapal: graphics/slot_machine/smoke.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_explosion/0.png.gbapal: graphics/slot_machine/reel_time_explosion/0.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/digital_display.png.gbapal: graphics/slot_machine/digital_display.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/1.png.4bpp: graphics/slot_machine/reel_symbols/1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/2.png.4bpp: graphics/slot_machine/reel_symbols/2.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/3.png.4bpp: graphics/slot_machine/reel_symbols/3.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/4.png.4bpp: graphics/slot_machine/reel_symbols/4.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/5.png.4bpp: graphics/slot_machine/reel_symbols/5.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/6.png.4bpp: graphics/slot_machine/reel_symbols/6.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_symbols/7.png.4bpp: graphics/slot_machine/reel_symbols/7.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/digital_display.png.4bpp: graphics/slot_machine/digital_display.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/digital_display.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/digital_display.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/0.png.4bpp: graphics/slot_machine/numbers/0.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/1.png.4bpp: graphics/slot_machine/numbers/1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/2.png.4bpp: graphics/slot_machine/numbers/2.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/3.png.4bpp: graphics/slot_machine/numbers/3.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/4.png.4bpp: graphics/slot_machine/numbers/4.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/5.png.4bpp: graphics/slot_machine/numbers/5.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/6.png.4bpp: graphics/slot_machine/numbers/6.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/7.png.4bpp: graphics/slot_machine/numbers/7.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/8.png.4bpp: graphics/slot_machine/numbers/8.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/numbers/9.png.4bpp: graphics/slot_machine/numbers/9.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/bolt.png.4bpp: graphics/slot_machine/bolt.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/duck.png.4bpp: graphics/slot_machine/duck.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/smoke.png.4bpp: graphics/slot_machine/smoke.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/0.png.4bpp: graphics/slot_machine/reel_time_numbers/0.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/1.png.4bpp: graphics/slot_machine/reel_time_numbers/1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/2.png.4bpp: graphics/slot_machine/reel_time_numbers/2.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/3.png.4bpp: graphics/slot_machine/reel_time_numbers/3.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/4.png.4bpp: graphics/slot_machine/reel_time_numbers/4.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_numbers/5.png.4bpp: graphics/slot_machine/reel_time_numbers/5.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/large_bolt/0.png.4bpp: graphics/slot_machine/large_bolt/0.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/large_bolt/1.png.4bpp: graphics/slot_machine/large_bolt/1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_explosion/0.png.4bpp: graphics/slot_machine/reel_time_explosion/0.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_explosion/1.png.4bpp: graphics/slot_machine/reel_time_explosion/1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/shadow.png.4bpp: graphics/slot_machine/shadow.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pika_aura.png.4bpp: graphics/slot_machine/pika_aura.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/reel_time_number_gap.png.4bpp: graphics/slot_machine/reel_time_number_gap.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/flashing_lights_inside.pal.gbapal: graphics/slot_machine/flashing_lights_inside.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/flashing_lights_middle.pal.gbapal: graphics/slot_machine/flashing_lights_middle.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/flashing_lights_outside.pal.gbapal: graphics/slot_machine/flashing_lights_outside.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pokeball_shining_0.pal.gbapal: graphics/slot_machine/pokeball_shining_0.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pokeball_shining_1.pal.gbapal: graphics/slot_machine/pokeball_shining_1.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/slot_machine/pokeball_shining_2.pal.gbapal: graphics/slot_machine/pokeball_shining_2.pal $(GFX)
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@
