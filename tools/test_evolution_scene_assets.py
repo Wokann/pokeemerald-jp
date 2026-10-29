@@ -73,21 +73,35 @@ class EvolutionSceneAssetTests(unittest.TestCase):
     def test_clean_dependencies_and_explicit_preprocessing(self):
         make = (ROOT / 'Makefile').read_text()
         rule = re.search(r'(?m)^\$\(C_BUILDDIR\)/evolution_scene\.o: src/evolution_scene\.c charmap\.txt[^\n]*\n((?:\t[^\n]*\n)+)', make)
-        self.assertIn('$(PREPROC) -i $< charmap.txt', rule.group(1))
+        self.assertIn('$(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt', rule.group(1))
         self.assertIn('$(JP_EVOLUTION_SCENE_ASSETS)', rule.group(0))
         clean = re.search(r'(?m)^clean: clean-tools\n((?:\t[^\n]*\n)+)', make).group(1)
         self.assertIn('$(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES)', clean)
+        for module in ('evolution_scene', 'evolution_graphics'):
+            dependency = re.search(r'(?m)^\$\(C_BUILDDIR\)/' + module + r'\.d:[^\n]*\n((?:\t[^\n]*\n)+)', make)
+            self.assertIn('$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT)', dependency.group(1))
+        self.assertIn('JP_EVOLUTION_SPARKLE_ASSETS := $(JP_GRAPHICS_GFX_ROOT)', make)
+        self.assertIn('JP_EVOLUTION_SCENE_ASSETS := $(JP_GRAPHICS_GFX_ROOT)', make)
+        self.assertNotRegex(make, r'(?m)^graphics/(?:evolution_scene|misc/evo_sparkle)[^:\n]*:')
+        for source, extension in [(name, extension) for name, extension, _, _ in ASSETS]:
+            target = '$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/' + source + extension
+            self.assertIn(target + ': ', make)
+        for suffix in ('.gbapal', '.4bpp', '.4bpp.lz'):
+            self.assertIn('$(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png' + suffix + ': ', make)
         self.assertNotIn('data/graphics/evolution_scene.o', make)
         self.assertNotIn('data/data_b2d_mid32.o', make)
 
     @unittest.skipUnless(GFX.is_file() and (ROOT / 'baserom_jp.gba').is_file(), 'requires gbagfx and JP ROM')
-    def test_all_nine_editable_sources_rebuild_native_bytes(self):
+    def test_all_eleven_editable_resources_rebuild_native_bytes(self):
         rom = (ROOT / 'baserom_jp.gba').read_bytes()
         root = ROOT / '.tmp/agent-work/tests'
         root.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(prefix='evo-assets-', dir=root) as temp:
-            for i, (name, extension, start, size) in enumerate(ASSETS):
-                source = ROOT / 'graphics/evolution_scene' / name
+            assets = [(str(Path('graphics/evolution_scene') / name), extension, start, size) for name, extension, start, size in ASSETS]
+            assets += [('graphics/misc/evo_sparkle.png', '.gbapal', 0x5D289C, 32),
+                       ('graphics/misc/evo_sparkle.png', '.4bpp.lz', 0x5D28BC, 32)]
+            for i, (name, extension, start, size) in enumerate(assets):
+                source = ROOT / name
                 output = Path(temp) / (str(i) + extension)
                 raw_extension = extension[:-3] if extension.endswith('.lz') else extension
                 raw = output.with_suffix('') if extension.endswith('.lz') else output

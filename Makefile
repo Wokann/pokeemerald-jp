@@ -46,6 +46,21 @@ BUILD_NAME ?= pokeemerald-jp
 OBJ_DIR := build/$(BUILD_NAME)
 JP_GRAPHICS_GFX_ROOT := $(OBJ_DIR)/incgfx/
 
+JP_EVOLUTION_SCENE_ASSETS := $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_1.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg.png.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_inner.bin.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_outer.bin.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_anim_intro.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_2.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_3.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_4.pal.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_anim.pal.gbapal
+JP_EVOLUTION_SCENE_INTERMEDIATES := $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg.png.4bpp
+JP_EVOLUTION_SPARKLE_ASSETS := $(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.gbapal \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.4bpp.lz
+JP_EVOLUTION_SPARKLE_INTERMEDIATES := $(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.4bpp
+$(foreach target,$(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES) $(JP_EVOLUTION_SPARKLE_ASSETS) $(JP_EVOLUTION_SPARKLE_INTERMEDIATES),$(eval $(target) := defined))
+
 JP_TRADE_CACHE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/trade/text.pal.gbapal \
     $(JP_GRAPHICS_GFX_ROOT)graphics/trade/pokeball.png.gbapal \
     $(JP_GRAPHICS_GFX_ROOT)graphics/trade/pokeball.png.4bpp \
@@ -1260,7 +1275,7 @@ clean: clean-tools
 	rm -f $(JP_USE_POKEBLOCK_ASSETS) $(JP_USE_POKEBLOCK_INTERMEDIATES)
 	rm -f $(JP_FLDEFF_MISC_ASSETS)
 	rm -f $(JP_BATTLE_ANIM_FAMILY_ASSETS) $(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)
-	rm -f $(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES)
+	rm -f $(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES) $(JP_EVOLUTION_SPARKLE_ASSETS) $(JP_EVOLUTION_SPARKLE_INTERMEDIATES)
 	rm -f $(JP_BATTLE_ENTRY_ASSETS) $(JP_BATTLE_ENTRY_INTERMEDIATES)
 	rm -f $(JP_BATTLE_ANIM_REMAINING_ASSETS) $(JP_BATTLE_ANIM_REMAINING_INTERMEDIATES)
 	rm -f $(JP_CONTEST_ASSETS) $(JP_CONTEST_INTERMEDIATES)
@@ -1392,15 +1407,15 @@ $(C_BUILDDIR)/egg_hatch.o: src/egg_hatch.c
 	@rm -f $(C_BUILDDIR)/egg_hatch.gen.s
 
 # Keep Evolution Sparkle graphics reproducible from the tracked PNG input.
-$(C_BUILDDIR)/evolution_graphics.d: src/evolution_graphics.c | tools
+$(C_BUILDDIR)/evolution_graphics.d: src/evolution_graphics.c Makefile | tools
 	@mkdir -p $(dir $@)
-	$(SCANINC) -M $@ -I include -I "" $<
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/evolution_graphics.d
 
-$(C_BUILDDIR)/evolution_graphics.o: src/evolution_graphics.c
+$(C_BUILDDIR)/evolution_graphics.o: src/evolution_graphics.c Makefile
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/evolution_graphics.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/evolution_graphics.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/evolution_graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/evolution_graphics.gen.s
 
@@ -3659,29 +3674,15 @@ $(JP_BATTLE_ANIM_FAMILY_ASSETS): %.lz: % Makefile | tools
 
 $(C_BUILDDIR)/graphics.o: $(JP_BATTLE_ANIM_FAMILY_ASSETS)
 
-JP_EVOLUTION_SCENE_ASSETS := graphics/evolution_scene/unused_1.pal.gbapal \
-	graphics/evolution_scene/bg.png.4bpp.lz \
-	graphics/evolution_scene/bg_inner.bin.lz \
-	graphics/evolution_scene/bg_outer.bin.lz \
-	graphics/evolution_scene/bg_anim_intro.pal.gbapal \
-	graphics/evolution_scene/unused_2.pal.gbapal \
-	graphics/evolution_scene/unused_3.pal.gbapal \
-	graphics/evolution_scene/unused_4.pal.gbapal \
-	graphics/evolution_scene/bg_anim.pal.gbapal
-JP_EVOLUTION_SCENE_INTERMEDIATES := graphics/evolution_scene/bg.png.4bpp
-
-$(filter %.pal.gbapal,$(JP_EVOLUTION_SCENE_ASSETS)): %.pal.gbapal: %.pal Makefile | tools
-	$(GFX) $< $@
-
-graphics/evolution_scene/bg.png.4bpp: graphics/evolution_scene/bg.png Makefile | tools
-	$(GFX) $< $@
-
-$(filter %.lz,$(JP_EVOLUTION_SCENE_ASSETS)): %.lz: % Makefile | tools
-	$(GFX) $< $@
-
-$(C_BUILDDIR)/evolution_scene.o: src/evolution_scene.c charmap.txt $(JP_EVOLUTION_SCENE_ASSETS)
+$(C_BUILDDIR)/evolution_scene.d: src/evolution_scene.c Makefile | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/evolution_scene.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/evolution_scene.d
+
+$(C_BUILDDIR)/evolution_scene.o: src/evolution_scene.c charmap.txt $(JP_EVOLUTION_SCENE_ASSETS) Makefile
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/evolution_scene.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/evolution_scene.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/evolution_scene.gen.s
 
@@ -7298,5 +7299,59 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/trade/menu.png.4bpp: graphics/trade/menu.png | t
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/trade/cursor.png.4bpp: graphics/trade/cursor.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+# Evolution scene and sparkle outputs remain in the build cache.
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_1.pal.gbapal: graphics/evolution_scene/unused_1.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg.png.4bpp: graphics/evolution_scene/bg.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg.png.4bpp | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_inner.bin.lz: graphics/evolution_scene/bg_inner.bin | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_outer.bin.lz: graphics/evolution_scene/bg_outer.bin | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_anim_intro.pal.gbapal: graphics/evolution_scene/bg_anim_intro.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_2.pal.gbapal: graphics/evolution_scene/unused_2.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_3.pal.gbapal: graphics/evolution_scene/unused_3.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/unused_4.pal.gbapal: graphics/evolution_scene/unused_4.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/evolution_scene/bg_anim.pal.gbapal: graphics/evolution_scene/bg_anim.pal | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.gbapal: graphics/misc/evo_sparkle.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.4bpp: graphics/misc/evo_sparkle.png | tools
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/misc/evo_sparkle.png.4bpp | tools
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@
