@@ -132,7 +132,7 @@ def _inline_asm_incbin(tokens: list[Token]) -> bool:
 
 
 class Source:
-    def __init__(self, owner: str, text: str):
+    def __init__(self, owner: str, text: str, *, tokenize_code: bool = True):
         self.owner = owner
         self.text = text
         self.newlines = [i for i, c in enumerate(text) if c == "\n"]
@@ -147,7 +147,7 @@ class Source:
         self.contexts: list[tuple[int, tuple[str, ...]]] = [(0, ())]
         self.gas_macros: list[dict[str, object]] = []
         self.include_context: list[str] = []
-        self._parse(cleaned)
+        self._parse(cleaned, tokenize_code=tokenize_code)
 
     def line(self, position: int) -> int:
         return bisect.bisect_left(self.newlines, position) + 1
@@ -156,7 +156,7 @@ class Source:
         index = bisect.bisect_right(self.contexts, (position, (chr(0x10FFFF),))) - 1
         return self.contexts[index][1]
 
-    def _parse(self, cleaned: str) -> None:
+    def _parse(self, cleaned: str, *, tokenize_code: bool = True) -> None:
         lines = cleaned.splitlines(keepends=True)
         directives = []
         offset = 0
@@ -195,7 +195,7 @@ class Source:
                 if matching == last:
                     guard = first[0]
         contexts: list[str | None] = []
-        masked = list(cleaned)
+        masked = list(cleaned) if tokenize_code else None
         for start, end, kind, body in directives:
             conditions = tuple(x for x in contexts if x is not None)
             if kind == "define":
@@ -219,7 +219,8 @@ class Source:
             elif kind == "include":
                 self.include_context.append(body)
             self.contexts.append((end, tuple(x for x in contexts if x is not None)))
-            masked[start:end] = _blank(cleaned[start:end])
+            if masked is not None:
+                masked[start:end] = _blank(cleaned[start:end])
         self.contexts.sort()
         if self.assembly:
             active = None
@@ -247,7 +248,8 @@ class Source:
                     active["end"] = cursor + len(line)
                     active["body"] = "".join(active["body"])
                     self.gas_macros.append(active)
-                    masked[int(active["start"]):cursor + len(line)] = _blank(cleaned[int(active["start"]):cursor + len(line)])
+                    if masked is not None:
+                        masked[int(active["start"]):cursor + len(line)] = _blank(cleaned[int(active["start"]):cursor + len(line)])
                     active = None
                 elif active is not None:
                     active["body"].append(line)
@@ -260,8 +262,8 @@ class Source:
                 cpp = cpp_contexts[bisect.bisect_right(cpp_contexts, bound) - 1][1]
                 gas = gas_contexts[bisect.bisect_right(gas_contexts, bound) - 1][1]
                 self.contexts.append((position, cpp + gas))
-        self.code = "".join(masked)
-        self.tokens = _tokens(self.code)
+        self.code = "".join(masked) if masked is not None else ""
+        self.tokens = _tokens(self.code) if tokenize_code else []
         self.contexts.sort()
 
     def binding(self, name: str, position: int) -> tuple[Macro | None, str | None]:
@@ -341,7 +343,9 @@ def collect_resource_references(
         raise ValueError("max_macro_depth must be positive")
     all_text = dict(support_sources or {})
     all_text.update(sources)
-    parsed = {owner: Source(owner, text) for owner, text in sorted(all_text.items())}
+    # Cross-file discovery needs macro metadata, not every file token stream.
+    parsed = {owner: Source(owner, text, tokenize_code=False)
+              for owner, text in sorted(all_text.items())}
     candidates = _resource_macros(parsed)
     candidates.update(candidate_macros or set())
     references: list[dict[str, object]] = []
@@ -434,7 +438,7 @@ def collect_resource_references(
         gas_names.update(extra)
 
     for owner in sorted(sources):
-        source = parsed[owner]
+        source = Source(owner, sources[owner])
         for macro in source.gas_macros:
             if macro["name"] in gas_names:
                 diagnostic(source, Token(str(macro["name"]), "word", int(macro["start"]), int(macro["end"])),
@@ -583,5 +587,7 @@ def collect_resource_references(
                     diagnostic(source, Token(match[1], "word", cursor, cursor + len(line)),
                                match[1], "unsupported_gas_resource_invocation", line.strip())
                 cursor += len(line)
+        # Release the physical-file stream before constructing the next one.
+        del tokens, source
     return dict(mode="physical_source_occurrences_all_branches", references=references,
                 incgfx=incgfx, unresolved=unresolved, incgfx_unresolved=incgfx_unresolved)

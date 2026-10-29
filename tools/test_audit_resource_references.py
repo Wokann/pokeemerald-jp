@@ -2,6 +2,9 @@
 """Resource occurrence/unique-path and fail-closed preprocessing fixtures."""
 from pathlib import Path
 import tempfile
+import json
+import subprocess
+import sys
 import unittest
 
 from audit_resource_references import collect_resource_references as collect
@@ -346,6 +349,29 @@ class ResourceReferenceTests(unittest.TestCase):
         self.assertEqual(report['source_count'], 0)
         self.assertEqual(report['status'], 'unresolved_source')
         self.assertGreater(report['unresolved_source_count'], 0)
+
+
+    @unittest.skipUnless(sys.platform.startswith('linux'), 'requires an address-space limit')
+    def test_complete_multifile_scan_fits_bounded_memory(self):
+        module_dir = Path(sys.modules[collect.__module__].__file__).resolve().parent
+        program = f"""
+import json, resource, sys
+resource.setrlimit(resource.RLIMIT_AS, (128 * 1024**2, 128 * 1024**2))
+sys.path.insert(0, {str(module_dir)!r})
+from audit_resource_references import collect_resource_references
+padding = 'int padding;\\n' * 2500
+sources = {{f'src/file_{{i:03}}.c': padding + f'INCBIN_U8("asset_{{i:03}}.bin");\\n'
+           for i in range(128)}}
+result = collect_resource_references(sources)
+assert [row['resource'] for row in result['references']] == [f'asset_{{i:03}}.bin' for i in range(128)]
+assert not result['unresolved']
+print(json.dumps({{'references': len(result['references']),
+                  'peak_RSS_bytes': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024}}))
+"""
+        process = subprocess.run([sys.executable, '-B', '-c', program],
+                                 capture_output=True, text=True, timeout=60)
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertEqual(json.loads(process.stdout)['references'], 128)
 
 
 if __name__ == '__main__':
