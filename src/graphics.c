@@ -1576,6 +1576,13 @@ POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderCute_Gfx[] = INCBIN_U32("graphics/p
 POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderSmart_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/smart.4bpp.lz");
 POKENAV_MAIN_GFX const u32 gPokenavLeftHeaderTough_Gfx[] = INCBIN_U32("graphics/pokenav/left_headers/tough.4bpp.lz");
 
+#define REGION_MAP_CITY_GRAPHICS(symbol) __attribute__((section(".rodata.region_map_city_graphics." #symbol)))
+
+REGION_MAP_CITY_GRAPHICS(gRegionMapCityZoomTiles_Pal) const u16 gRegionMapCityZoomTiles_Pal[] = INCGFX_U16("graphics/pokenav/region_map/zoom_tiles.png", ".gbapal");
+REGION_MAP_CITY_GRAPHICS(gRegionMapCityZoomText_Gfx) const u32 gRegionMapCityZoomText_Gfx[] = INCGFX_U32("graphics/pokenav/region_map/city_zoom_text.png", ".4bpp.lz");
+
+#undef REGION_MAP_CITY_GRAPHICS
+
 // JP-only unused graphics retained in the original ROM. No pointers to these
 // resources exist anywhere in the ROM, so their original purpose is unknown.
 #define UNUSED_JP_MENU_SPECIALIZED_PREFIX __attribute__((section(".rodata.unused_jp_menu_specialized_prefix")))

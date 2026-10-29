@@ -86,35 +86,23 @@ $(C_BUILDDIR)/post_battle_event_funcs.o: include/constants/heal_locations.h
 $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/event_scripts.d: include/constants/heal_locations.h
 
 JP_GENERATED_REGION_MAP_HEADERS := src/data/region_map/region_map_entries.h include/constants/region_map_sections.h
-JP_REGION_MAP_ASSETS := graphics/pokenav/region_map/cursor.gbapal \
-	graphics/pokenav/region_map/cursor_small.4bpp.lz \
-	graphics/pokenav/region_map/cursor_large.4bpp.lz \
-	graphics/pokenav/region_map/map.gbapal graphics/pokenav/region_map/map.8bpp.lz \
-	graphics/pokenav/region_map/map.bin.lz \
-	graphics/pokenav/region_map/brendan_icon.gbapal graphics/pokenav/region_map/brendan_icon.4bpp \
-	graphics/pokenav/region_map/may_icon.gbapal graphics/pokenav/region_map/may_icon.4bpp \
-	graphics/pokenav/region_map/frame.gbapal graphics/pokenav/region_map/frame.4bpp.lz \
-	graphics/pokenav/region_map/frame.bin.lz \
-	graphics/pokenav/region_map/fly_target_icons.gbapal graphics/pokenav/region_map/fly_target_icons.4bpp.lz
-
-JP_REGION_MAP_INTERMEDIATES := graphics/pokenav/region_map/map.8bpp \
-	graphics/pokenav/region_map/cursor_small.4bpp graphics/pokenav/region_map/cursor_large.4bpp \
-	graphics/pokenav/region_map/frame.4bpp graphics/pokenav/region_map/fly_target_icons.4bpp
-
 src/data/region_map/region_map_entries.h: src/data/region_map/region_map_sections.json src/data/region_map/region_map_sections.json.txt | tools
 	$(JSONPROC) $^ $@
 
 include/constants/region_map_sections.h: src/data/region_map/region_map_sections.json src/data/region_map/region_map_sections.constants.json.txt | tools
 	$(JSONPROC) $^ $@
 
-$(C_BUILDDIR)/region_map.o: src/region_map.c $(JP_GENERATED_REGION_MAP_HEADERS) $(JP_REGION_MAP_ASSETS) include/constants/heal_locations.h charmap.txt
+$(C_BUILDDIR)/region_map.d: src/region_map.c Makefile $(JP_GENERATED_REGION_MAP_HEADERS) include/constants/heal_locations.h | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/region_map.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/region_map.d
+
+$(C_BUILDDIR)/region_map.o: src/region_map.c Makefile $(JP_GENERATED_REGION_MAP_HEADERS) include/constants/heal_locations.h charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/region_map.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/region_map.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/region_map.gen.s
-
-graphics/pokenav/region_map/map.8bpp: graphics/pokenav/region_map/map.png | tools
-	$(GFX) $< $@ -num_tiles 233 -Wnum_tiles
 
 $(OBJ_DIR)/data/event_scripts.d: include/constants/region_map_sections.h
 
@@ -1169,7 +1157,7 @@ clean: clean-tools
 	rm -f $(JP_MAP_GROUP_AGGREGATES)
 	rm -f $(JP_STRUCTURED_MAP_EVENTS)
 	rm -f $(JP_GENERATED_HEAL_LOCATION_HEADERS)
-	rm -f $(JP_GENERATED_REGION_MAP_HEADERS) $(JP_REGION_MAP_ASSETS) $(JP_REGION_MAP_INTERMEDIATES)
+	rm -f $(JP_GENERATED_REGION_MAP_HEADERS)
 	rm -f $(JP_SLOT_MACHINE_INTERMEDIATES)
 	rm -f $(JP_CONTEST_PAINTING_ASSETS) $(JP_CONTEST_PAINTING_INTERMEDIATES)
 	rm -f $(JP_BATTLE_RECORDS_ASSETS)
@@ -1405,9 +1393,15 @@ $(C_BUILDDIR)/battle_script_commands.o: src/battle_script_commands.c charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_script_commands.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/battle_script_commands.gen.s
 
-$(C_BUILDDIR)/pokenav_region_map.o: src/pokenav_region_map.c src/data/region_map/city_map_tilemaps.h $(wildcard graphics/pokenav/region_map/*.lz graphics/pokenav/region_map/*.gbapal graphics/pokenav/region_map/city_maps/*.lz)
+$(C_BUILDDIR)/pokenav_region_map.d: src/pokenav_region_map.c Makefile include/constants/region_map_sections.h | tools
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_region_map.gen.s
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokenav_region_map.d
+
+$(C_BUILDDIR)/pokenav_region_map.o: src/pokenav_region_map.c Makefile charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_region_map.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_region_map.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_region_map.gen.s
 

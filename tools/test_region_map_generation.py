@@ -108,11 +108,14 @@ class RegionMapGenerationTests(unittest.TestCase):
     def test_headers_and_native_assets_rebuild_from_the_tracked_source_inputs(self):
         makefile = (ROOT / 'Makefile').read_text()
         self.assertIn('JP_GENERATED_REGION_MAP_HEADERS := ' + ' '.join(GENERATED), makefile)
-        self.assertIn('\trm -f $(JP_GENERATED_REGION_MAP_HEADERS) $(JP_REGION_MAP_ASSETS) $(JP_REGION_MAP_INTERMEDIATES)', makefile)
-        self.assertIn('JP_REGION_MAP_INTERMEDIATES := graphics/pokenav/region_map/map.8bpp', makefile)
-        self.assertIn('$(JP_REGION_MAP_ASSETS) include/constants/heal_locations.h charmap.txt', makefile)
+        self.assertIn('\trm -f $(JP_GENERATED_REGION_MAP_HEADERS)', makefile)
+        self.assertNotIn('JP_REGION_MAP_ASSETS', makefile)
+        self.assertNotIn('JP_REGION_MAP_INTERMEDIATES', makefile)
+        self.assertIn('$(JP_GENERATED_REGION_MAP_HEADERS) include/constants/heal_locations.h charmap.txt', makefile)
+        self.assertIn('$(C_BUILDDIR)/region_map.d: src/region_map.c Makefile', makefile)
+        self.assertIn('$(C_BUILDDIR)/pokenav_region_map.d: src/pokenav_region_map.c Makefile', makefile)
         self.assertIn('$(OBJFILE): | include/constants/region_map_sections.h', makefile)
-        self.assertIn('$(PREPROC) -i $< charmap.txt', makefile[makefile.index('$(C_BUILDDIR)/region_map.o:'):])
+        self.assertIn('$(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt', makefile[makefile.index('$(C_BUILDDIR)/region_map.o:'):])
         for path, template in zip(GENERATED, TEMPLATES):
             self.assertIn(path + ': ' + JSON_PATH + ' ' + template + ' | tools\n'
                           '\t$(JSONPROC) $^ $@', makefile)
@@ -174,8 +177,17 @@ class RegionMapGenerationTests(unittest.TestCase):
                 self.assertEqual(header.read_bytes(), first)
                 include = generated.removeprefix('src/').removeprefix('include/')
                 source = source.replace('"' + include + '"', '"' + str(header) + '"')
-            for path, (binary, _, _) in generate_assets(temporary).items():
-                source = source.replace('"' + path + '"', '"' + str(binary) + '"')
+            outputs = generate_assets(temporary)
+            def bind_asset(match):
+                path = Path(match[2])
+                native = str(path) + match[3] if path.suffix == '.bin' else str(path.with_suffix(match[3]))
+                self.assertIn(native, outputs)
+                binary = outputs[native][0]
+                return 'INCBIN_' + match[1] + '("' + str(binary) + '")'
+            source, replaced = re.subn(
+                r'INCGFX_(U(?:8|16|32))\("([^"]+)", "([^"]+)"(?:, "[^"]*")?\)',
+                bind_asset, source)
+            self.assertEqual(replaced, 15)
             cpp = run(['cpp', '-iquote', 'include', '-iquote', 'src', '-Wno-trigraphs', '-I', 'tools/agbcc/include',
                        '-I', 'tools/agbcc', '-nostdinc', '-undef', '-std=gnu89', '-P', '-x', 'c', '-'],
                       input=source, text=True).stdout

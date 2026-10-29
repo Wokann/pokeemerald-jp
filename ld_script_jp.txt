@@ -10376,7 +10376,10 @@ SECTIONS {
         src/pokenav_match_call_list.o(.rodata.match_call_list_text);
         src/pokenav_match_call_gfx.o(.rodata.pokenav_match_call_gfx_resources);
         src/pokenav_match_call_gfx.o(.rodata);
+        src/pokenav_region_map.o(.rodata.pokenav_region_map_info_palette);
+        src/graphics.o(.rodata.region_map_city_graphics.gRegionMapCityZoomTiles_Pal);
         src/pokenav_region_map.o(.rodata.pokenav_region_map_resources);
+        src/graphics.o(.rodata.region_map_city_graphics.gRegionMapCityZoomText_Gfx);
         src/pokenav_region_map.o(.rodata);
         src/pokenav_conditions_gfx.o(.rodata.pokenav_condition_resources);
         src/pokenav_conditions_gfx.o(.rodata);
