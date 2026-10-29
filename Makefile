@@ -54,6 +54,29 @@ JP_POKENAV_OPTIONS_GFX := $(JP_POKENAV_OPTIONS_DIR)/options.4bpp.lz
 # The explicit composite rule replaces scaninc's single-input fallback.
 $(JP_POKENAV_OPTIONS_GFX) := defined
 
+# Storage wallpaper tiles are composed from their US-style PNG parts.
+JP_STORAGE_WALLPAPER_NAMES := forest city desert savanna crag \
+	volcano snow cave beach seafloor \
+	river sky polkadot pokecenter machine \
+	plain zigzagoon screen horizontal diagonal \
+	block ribbon pokecenter2 frame blank \
+	circles azumarill pikachu legendary dusclops \
+	ludicolo whiscash
+JP_STORAGE_WALLPAPER_DIR := $(JP_GRAPHICS_GFX_ROOT)graphics/pokemon_storage/wallpapers
+JP_STORAGE_WALLPAPER_GFX := $(addprefix $(JP_STORAGE_WALLPAPER_DIR)/,$(addsuffix /tiles.4bpp.lz,$(JP_STORAGE_WALLPAPER_NAMES)))
+JP_STORAGE_WALLPAPER_PART_NAMES := azumarill/bg.4bpp beach/bg.4bpp beach/frame.4bpp blank/bg.4bpp block/bg.4bpp \
+	cave/bg.4bpp cave/frame.4bpp circles/bg.4bpp city/bg.4bpp city/frame.4bpp \
+	crag/bg.4bpp crag/frame.4bpp desert/bg.4bpp desert/frame.4bpp diagonal/bg.4bpp \
+	dusclops/bg.4bpp forest/bg.4bpp forest/frame.4bpp frame/bg.4bpp friends_frame1.4bpp \
+	friends_frame2.4bpp horizontal/bg.4bpp legendary/bg.4bpp ludicolo/bg.4bpp machine/bg.4bpp \
+	machine/frame.4bpp pikachu/bg.4bpp plain/bg.4bpp plain/frame.4bpp pokecenter/bg.4bpp \
+	pokecenter/frame.4bpp pokecenter2/bg.4bpp polkadot/bg.4bpp polkadot/frame.4bpp ribbon/bg.4bpp \
+	river/bg.4bpp river/frame.4bpp savanna/bg.4bpp savanna/frame.4bpp screen/bg.4bpp \
+	seafloor/bg.4bpp seafloor/frame.4bpp sky/bg.4bpp sky/frame.4bpp snow/bg.4bpp \
+	snow/frame.4bpp volcano/bg.4bpp volcano/frame.4bpp whiscash/bg.4bpp zigzagoon/bg.4bpp
+JP_STORAGE_WALLPAPER_PARTS := $(addprefix $(JP_STORAGE_WALLPAPER_DIR)/,$(JP_STORAGE_WALLPAPER_PART_NAMES))
+$(foreach storage_gfx,$(JP_STORAGE_WALLPAPER_GFX),$(eval $(storage_gfx) := defined))
+
 ASFILE := $(wildcard asm/*.s)
 AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # Assembly files that live under src/ like US pokeemerald
@@ -1821,45 +1844,10 @@ $(C_BUILDDIR)/frontier_pass.o: src/frontier_pass.c Makefile charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/frontier_pass.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/frontier_pass.gen.s
 
-JP_STORAGE_INTERFACE_ASSETS := graphics/pokemon_storage/scrolling_bg.png.4bpp.lz \
-	graphics/pokemon_storage/scrolling_bg.bin.lz \
-	graphics/pokemon_storage/display_menu.pal.gbapal \
-	graphics/pokemon_storage/display_menu.bin.lz \
-	graphics/pokemon_storage/interface.pal.gbapal \
-	graphics/pokemon_storage/pkmn_data_gray.pal.gbapal \
-	graphics/pokemon_storage/party_menu.pal.gbapal \
-	graphics/pokemon_storage/scrolling_bg.pal.gbapal \
-	graphics/pokemon_storage/scrolling_bg_move_items.pal.gbapal \
-	graphics/pokemon_storage/waveform.png.gbapal \
-	graphics/pokemon_storage/waveform.png.4bpp \
-	graphics/pokemon_storage/unused.pal.gbapal \
-	graphics/pokemon_storage/text_windows.pal.gbapal \
-	graphics/pokemon_storage/menu.png.4bpp.lz \
-	graphics/pokemon_storage/party_menu.bin.lz
-
-graphics/pokemon_storage/menu.png.4bpp: graphics/pokemon_storage/menu.png | tools
-	$(GFX) $< $@
-
-graphics/pokemon_storage/menu.png.4bpp.lz: graphics/pokemon_storage/menu.png.4bpp | tools
-	$(GFX) $< $@
-
-graphics/pokemon_storage/party_menu.bin.lz: graphics/pokemon_storage/party_menu.bin | tools
-	$(GFX) $< $@
-
-$(C_BUILDDIR)/graphics.o: graphics/pokemon_storage/party_menu.pal.gbapal \
-	graphics/pokemon_storage/menu.png.4bpp.lz graphics/pokemon_storage/party_menu.bin.lz
-
-clean: clean-storage-interface-assets
-.PHONY: clean-storage-interface-assets
-clean-storage-interface-assets:
-	rm -f graphics/pokemon_storage/menu.png.4bpp graphics/pokemon_storage/menu.png.4bpp.lz graphics/pokemon_storage/party_menu.bin.lz
-
-$(C_BUILDDIR)/pokemon_storage_system.o: src/pokemon_storage_system.c charmap.txt $(JP_STORAGE_INTERFACE_ASSETS) \
-	graphics/pokemon_storage/box_selection_popup.pal.gbapal \
-	graphics/pokemon_storage/box_selection_popup_center.png.4bpp \
-	graphics/pokemon_storage/box_selection_popup_sides.png.4bpp
+$(C_BUILDDIR)/pokemon_storage_system.o: src/pokemon_storage_system.c Makefile graphics_file_rules.mk charmap.txt \
+	src/data/wallpapers.h include/constants/moves.h include/constants/maps.h include/constants/map_groups.h
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_storage_system.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_storage_system.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_storage_system.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon_storage_system.gen.s
 
@@ -2750,266 +2738,6 @@ $(C_BUILDDIR)/battle_records.o: src/battle_records.c charmap.txt $(JP_BATTLE_REC
 
 include audio_rules.mk
 include graphics_file_rules.mk
-
-JP_STORAGE_WALLPAPER_ASSETS := graphics/pokemon_storage/arrow.png.4bpp \
-	graphics/pokemon_storage/wallpapers/azumarill/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/azumarill/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/azumarill/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/beach/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/beach/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/beach/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/beach/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/blank/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/blank/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/block/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/block/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/block/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/cave/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/cave/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/cave/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/cave/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/circles/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/circles/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/circles/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/city/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/city/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/city/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/city/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/crag/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/crag/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/crag/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/crag/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/desert/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/desert/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/desert/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/desert/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/diagonal/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/diagonal/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/diagonal/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/dusclops/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/dusclops/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/dusclops/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/forest/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/forest/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/forest/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/forest/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/frame/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/frame/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/frame/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/friends_frame1.png.gbapal \
-	graphics/pokemon_storage/wallpapers/friends_frame2.png.gbapal \
-	graphics/pokemon_storage/wallpapers/horizontal/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/horizontal/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/horizontal/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/aqua.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/asterisk.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/big_asterisk.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/bolt.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/brick.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/circle.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/cross.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/crystal.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/diglett.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/dot.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/five_star.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/footprint.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/four_circles.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/four_star.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/heart.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/koffing.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/latis.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/line_circle.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/lotad.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/luvdisc.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/magma.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/maze.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/minun.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/pichu.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/plusle.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/pokeball.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/ribbon.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/spinda.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/star_in_circle.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/icons/togepi.png.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/legendary/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/legendary/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/legendary/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/ludicolo/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/ludicolo/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/ludicolo/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/machine/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/machine/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/machine/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/machine/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/pikachu/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/pikachu/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/pikachu/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/plain/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/plain/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/plain/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/plain/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/pokecenter/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/pokecenter/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/pokecenter/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/pokecenter/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/pokecenter2/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/pokecenter2/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/pokecenter2/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/polkadot/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/polkadot/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/polkadot/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/polkadot/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/ribbon/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/ribbon/frame.pal.gbapal \
-	graphics/pokemon_storage/wallpapers/ribbon/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/ribbon/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/river/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/river/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/river/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/river/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/savanna/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/savanna/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/savanna/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/savanna/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/screen/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/screen/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/screen/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/seafloor/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/seafloor/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/seafloor/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/seafloor/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/sky/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/sky/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/sky/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/sky/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/snow/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/snow/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/snow/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/snow/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/volcano/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/volcano/frame.png.gbapal \
-	graphics/pokemon_storage/wallpapers/volcano/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/volcano/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/whiscash/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/whiscash/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/whiscash/tiles.4bpp.lz \
-	graphics/pokemon_storage/wallpapers/zigzagoon/bg.png.gbapal \
-	graphics/pokemon_storage/wallpapers/zigzagoon/tilemap.bin.lz \
-	graphics/pokemon_storage/wallpapers/zigzagoon/tiles.4bpp.lz
-
-JP_STORAGE_WALLPAPER_INTERMEDIATES := graphics/pokemon_storage/wallpapers/azumarill/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/azumarill/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/beach/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/beach/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/beach/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/blank/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/blank/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/block/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/block/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/cave/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/cave/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/cave/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/circles/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/circles/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/city/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/city/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/city/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/crag/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/crag/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/crag/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/desert/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/desert/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/desert/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/diagonal/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/diagonal/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/dusclops/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/dusclops/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/forest/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/forest/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/forest/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/frame/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/frame/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/friends_frame1.4bpp \
-	graphics/pokemon_storage/wallpapers/friends_frame2.4bpp \
-	graphics/pokemon_storage/wallpapers/horizontal/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/horizontal/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/legendary/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/legendary/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/ludicolo/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/ludicolo/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/machine/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/machine/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/machine/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/pikachu/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/pikachu/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/plain/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/plain/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/plain/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/pokecenter/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/pokecenter/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/pokecenter/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/pokecenter2/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/pokecenter2/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/polkadot/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/polkadot/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/polkadot/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/ribbon/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/ribbon/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/river/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/river/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/river/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/savanna/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/savanna/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/savanna/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/screen/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/screen/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/seafloor/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/seafloor/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/seafloor/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/sky/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/sky/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/sky/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/snow/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/snow/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/snow/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/volcano/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/volcano/frame.4bpp \
-	graphics/pokemon_storage/wallpapers/volcano/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/whiscash/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/whiscash/tiles.4bpp \
-	graphics/pokemon_storage/wallpapers/zigzagoon/bg.4bpp \
-	graphics/pokemon_storage/wallpapers/zigzagoon/tiles.4bpp
-
-$(JP_STORAGE_WALLPAPER_ASSETS) $(JP_STORAGE_WALLPAPER_INTERMEDIATES): graphics_file_rules.mk | tools
-.SECONDARY: $(JP_STORAGE_WALLPAPER_INTERMEDIATES)
-
-$(C_BUILDDIR)/pokemon_storage_system.o: src/data/wallpapers.h \
-	graphics/pokemon_storage/wallpapers/unused.bin $(JP_STORAGE_WALLPAPER_ASSETS)
-$(C_BUILDDIR)/graphics.o: $(JP_STORAGE_WALLPAPER_ASSETS)
-
-clean: clean-storage-wallpaper-assets
-.PHONY: clean-storage-wallpaper-assets
-clean-storage-wallpaper-assets:
-	rm -f $(JP_STORAGE_WALLPAPER_ASSETS) $(JP_STORAGE_WALLPAPER_INTERMEDIATES)
-
-JP_STORAGE_CURSOR_GFX := graphics/pokemon_storage/hand_cursor.png.4bpp \
-	graphics/pokemon_storage/hand_cursor_shadow.png.4bpp \
-	graphics/pokemon_storage/item_info_frame.png.4bpp
-JP_STORAGE_CURSOR_ASSETS := graphics/pokemon_storage/hand_cursor.png.gbapal $(JP_STORAGE_CURSOR_GFX)
-
-$(JP_STORAGE_CURSOR_GFX): %.png.4bpp: %.png | tools
-	$(GFX) $< $@
-
-graphics/pokemon_storage/hand_cursor.png.gbapal: graphics/pokemon_storage/hand_cursor.png | tools
-	$(GFX) $< $@
-
-$(C_BUILDDIR)/pokemon_storage_system.o: $(JP_STORAGE_CURSOR_ASSETS) \
-	include/constants/moves.h include/constants/maps.h include/constants/map_groups.h
-
-clean: clean-storage-cursor-assets
-.PHONY: clean-storage-cursor-assets
-clean-storage-cursor-assets:
-	rm -f $(JP_STORAGE_CURSOR_ASSETS)
 
 JP_MON_ICON_GFX := graphics/pokemon/abra/icon.png.4bpp \
 	graphics/pokemon/absol/icon.png.4bpp \
@@ -6354,3 +6082,9 @@ $(C_BUILDDIR)/frontier_pass.d: src/frontier_pass.c Makefile | tools
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/frontier_pass.d
+
+$(C_BUILDDIR)/pokemon_storage_system.d: src/pokemon_storage_system.c src/data/wallpapers.h Makefile graphics_file_rules.mk | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokemon_storage_system.d

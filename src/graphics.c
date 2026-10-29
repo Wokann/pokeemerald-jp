@@ -1959,14 +1959,14 @@ const u32 gFrontierPassMapAndCard_Gfx[] __attribute__((section(".rodata.graphics
 
 #define STORAGE_PARTY_PALETTE __attribute__((section(".rodata.graphics_storage_party_palette"), aligned(4)))
 
-const u16 gStorageSystemPartyMenu_Pal[] STORAGE_PARTY_PALETTE = INCBIN_U16("graphics/pokemon_storage/party_menu.pal.gbapal");
+const u16 gStorageSystemPartyMenu_Pal[] STORAGE_PARTY_PALETTE = INCGFX_U16("graphics/pokemon_storage/party_menu.pal", ".gbapal");
 
 #undef STORAGE_PARTY_PALETTE
 
 #define STORAGE_MENU_GRAPHICS __attribute__((section(".rodata.graphics_storage_menu"), aligned(4)))
 
-const u32 gStorageSystemMenu_Gfx[] STORAGE_MENU_GRAPHICS = INCBIN_U32("graphics/pokemon_storage/menu.png.4bpp.lz");
-const u32 gStorageSystemPartyMenu_Tilemap[] STORAGE_MENU_GRAPHICS = INCBIN_U32("graphics/pokemon_storage/party_menu.bin.lz");
+const u32 gStorageSystemMenu_Gfx[] STORAGE_MENU_GRAPHICS = INCGFX_U32("graphics/pokemon_storage/menu.png", ".4bpp.lz");
+const u32 gStorageSystemPartyMenu_Tilemap[] STORAGE_MENU_GRAPHICS = INCGFX_U32("graphics/pokemon_storage/party_menu.bin", ".lz");
 
 #undef STORAGE_MENU_GRAPHICS
 
@@ -1976,27 +1976,27 @@ const u32 gStorageSystemPartyMenu_Tilemap[] STORAGE_MENU_GRAPHICS = INCBIN_U32("
 #define BOLT_WALLPAPER_ICON_DATA __attribute__((section(".rodata.graphics_wallpaper_icon_bolt"), aligned(4)))
 #define PLUSLE_WALLPAPER_ICON_DATA __attribute__((section(".rodata.graphics_wallpaper_icon_plusle"), aligned(4)))
 
-const u32 gWallpaperIcon_Cross[] CROSS_WALLPAPER_ICON_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/icons/cross.png.4bpp.lz");
-const u32 gWallpaperIcon_Bolt[] BOLT_WALLPAPER_ICON_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/icons/bolt.png.4bpp.lz");
-const u32 gWallpaperIcon_Plusle[] PLUSLE_WALLPAPER_ICON_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/icons/plusle.png.4bpp.lz");
+const u32 gWallpaperIcon_Cross[] CROSS_WALLPAPER_ICON_DATA = INCGFX_U32("graphics/pokemon_storage/wallpapers/icons/cross.png", ".4bpp.lz");
+const u32 gWallpaperIcon_Bolt[] BOLT_WALLPAPER_ICON_DATA = INCGFX_U32("graphics/pokemon_storage/wallpapers/icons/bolt.png", ".4bpp.lz");
+const u32 gWallpaperIcon_Plusle[] PLUSLE_WALLPAPER_ICON_DATA = INCGFX_U32("graphics/pokemon_storage/wallpapers/icons/plusle.png", ".4bpp.lz");
 
 const u16 gWallpaperPalettes_Horizontal[][16] HORIZONTAL_WALLPAPER_DATA =
 {
-    INCBIN_U16("graphics/pokemon_storage/wallpapers/friends_frame2.png.gbapal"),
-    INCBIN_U16("graphics/pokemon_storage/wallpapers/horizontal/bg.png.gbapal"),
+    INCGFX_U16("graphics/pokemon_storage/wallpapers/friends_frame2.png", ".gbapal"),
+    INCGFX_U16("graphics/pokemon_storage/wallpapers/horizontal/bg.png", ".gbapal"),
 };
 
-const u32 gWallpaperTiles_Horizontal[] HORIZONTAL_WALLPAPER_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/horizontal/tiles.4bpp.lz");
-const u32 gWallpaperTilemap_Horizontal[] HORIZONTAL_WALLPAPER_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/horizontal/tilemap.bin.lz");
+const u32 gWallpaperTiles_Horizontal[] HORIZONTAL_WALLPAPER_DATA = INCGFX_U32("graphics/pokemon_storage/wallpapers/horizontal/tiles.4bpp", ".lz");
+const u32 gWallpaperTilemap_Horizontal[] HORIZONTAL_WALLPAPER_DATA = INCGFX_U32("graphics/pokemon_storage/wallpapers/horizontal/tilemap.bin", ".lz");
 
 const u16 gWallpaperPalettes_Ribbon[][16] RIBBON_WALLPAPER_DATA =
 {
-    INCBIN_U16("graphics/pokemon_storage/wallpapers/ribbon/frame.pal.gbapal"),
-    INCBIN_U16("graphics/pokemon_storage/wallpapers/ribbon/bg.png.gbapal"),
+    INCGFX_U16("graphics/pokemon_storage/wallpapers/ribbon/frame.pal", ".gbapal"),
+    INCGFX_U16("graphics/pokemon_storage/wallpapers/ribbon/bg.png", ".gbapal"),
 };
 
-const u32 gWallpaperTiles_Ribbon[] RIBBON_WALLPAPER_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/ribbon/tiles.4bpp.lz");
-const u32 gWallpaperTilemap_Ribbon[] RIBBON_WALLPAPER_DATA = INCBIN_U32("graphics/pokemon_storage/wallpapers/ribbon/tilemap.bin.lz");
+const u32 gWallpaperTiles_Ribbon[] RIBBON_WALLPAPER_DATA = INCGFX_U32("graphics/pokemon_storage/wallpapers/ribbon/tiles.4bpp", ".lz");
+const u32 gWallpaperTilemap_Ribbon[] RIBBON_WALLPAPER_DATA = INCGFX_U32("graphics/pokemon_storage/wallpapers/ribbon/tilemap.bin", ".lz");
 
 #undef HORIZONTAL_WALLPAPER_DATA
 #undef RIBBON_WALLPAPER_DATA

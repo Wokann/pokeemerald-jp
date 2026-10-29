@@ -9228,9 +9228,9 @@ static const union AffineAnimCmd *const sAffineAnims_ChooseBoxMenu[] STORAGE_MEN
 
 static const u8 sText_OutOf30[] STORAGE_MENUS = _("/30");
 
-static const u16 sChooseBoxMenu_Pal[] STORAGE_MENUS = INCBIN_U16("graphics/pokemon_storage/box_selection_popup.pal.gbapal");
-static const u8 sChooseBoxMenuCenter_Gfx[] STORAGE_MENUS = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.png.4bpp");
-static const u8 sChooseBoxMenuSides_Gfx[] STORAGE_MENUS = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.png.4bpp");
+static const u16 sChooseBoxMenu_Pal[] STORAGE_MENUS = INCGFX_U16("graphics/pokemon_storage/box_selection_popup.pal", ".gbapal");
+static const u8 sChooseBoxMenuCenter_Gfx[] STORAGE_MENUS = INCGFX_U8("graphics/pokemon_storage/box_selection_popup_center.png", ".4bpp");
+static const u8 sChooseBoxMenuSides_Gfx[] STORAGE_MENUS = INCGFX_U8("graphics/pokemon_storage/box_selection_popup_sides.png", ".4bpp");
 
 #undef STORAGE_MENUS
 
@@ -9239,13 +9239,13 @@ static const u8 sChooseBoxMenuSides_Gfx[] STORAGE_MENUS = INCBIN_U8("graphics/po
 #define STORAGE_SCROLLING_PALETTES __attribute__((section(".rodata.pokemon_storage_scrolling_palettes"), aligned(4)))
 #define STORAGE_INTERFACE __attribute__((section(".rodata.pokemon_storage_interface"), aligned(4)))
 
-static const u32 sScrollingBg_Gfx[] STORAGE_BACKGROUND = INCBIN_U32("graphics/pokemon_storage/scrolling_bg.png.4bpp.lz");
+static const u32 sScrollingBg_Gfx[] STORAGE_BACKGROUND = INCGFX_U32("graphics/pokemon_storage/scrolling_bg.png", ".4bpp.lz");
 
-static const u32 sScrollingBg_Tilemap[] STORAGE_BACKGROUND = INCBIN_U32("graphics/pokemon_storage/scrolling_bg.bin.lz");
+static const u32 sScrollingBg_Tilemap[] STORAGE_BACKGROUND = INCGFX_U32("graphics/pokemon_storage/scrolling_bg.bin", ".lz");
 
-static const u16 sDisplayMenu_Pal[] STORAGE_DISPLAY = INCBIN_U16("graphics/pokemon_storage/display_menu.pal.gbapal");
+static const u16 sDisplayMenu_Pal[] STORAGE_DISPLAY = INCGFX_U16("graphics/pokemon_storage/display_menu.pal", ".gbapal");
 
-static const u32 sDisplayMenu_Tilemap[] STORAGE_DISPLAY = INCBIN_U32("graphics/pokemon_storage/display_menu.bin.lz");
+static const u32 sDisplayMenu_Tilemap[] STORAGE_DISPLAY = INCGFX_U32("graphics/pokemon_storage/display_menu.bin", ".lz");
 
 static const u16 sPkmnData_Tilemap[] STORAGE_DISPLAY =
 {
@@ -9255,14 +9255,14 @@ static const u16 sPkmnData_Tilemap[] STORAGE_DISPLAY =
     0x2111, 0x2112, 0x2113, 0x2114, 0x2115, 0x2116, 0x2117, 0x2118,
 };
 
-static const u16 sInterface_Pal[] STORAGE_DISPLAY = INCBIN_U16("graphics/pokemon_storage/interface.pal.gbapal");
+static const u16 sInterface_Pal[] STORAGE_DISPLAY = INCGFX_U16("graphics/pokemon_storage/interface.pal", ".gbapal");
 
-static const u16 sPkmnDataGray_Pal[] STORAGE_DISPLAY = INCBIN_U16("graphics/pokemon_storage/pkmn_data_gray.pal.gbapal");
+static const u16 sPkmnDataGray_Pal[] STORAGE_DISPLAY = INCGFX_U16("graphics/pokemon_storage/pkmn_data_gray.pal", ".gbapal");
 
 
-static const u16 sScrollingBg_Pal[] STORAGE_SCROLLING_PALETTES = INCBIN_U16("graphics/pokemon_storage/scrolling_bg.pal.gbapal");
+static const u16 sScrollingBg_Pal[] STORAGE_SCROLLING_PALETTES = INCGFX_U16("graphics/pokemon_storage/scrolling_bg.pal", ".gbapal");
 
-static const u16 sScrollingBgMoveItems_Pal[] STORAGE_SCROLLING_PALETTES = INCBIN_U16("graphics/pokemon_storage/scrolling_bg_move_items.pal.gbapal");
+static const u16 sScrollingBgMoveItems_Pal[] STORAGE_SCROLLING_PALETTES = INCGFX_U16("graphics/pokemon_storage/scrolling_bg_move_items.pal", ".gbapal");
 
 
 
@@ -9287,13 +9287,13 @@ static const u16 sPartySlotEmpty_Tilemap[] STORAGE_INTERFACE =
     0x1163, 0x1164, 0x1164, 0x1165,
 };
 
-static const u16 sWaveform_Pal[] STORAGE_INTERFACE = INCBIN_U16("graphics/pokemon_storage/waveform.png.gbapal");
+static const u16 sWaveform_Pal[] STORAGE_INTERFACE = INCGFX_U16("graphics/pokemon_storage/waveform.png", ".gbapal");
 
-static const u32 sWaveform_Gfx[] STORAGE_INTERFACE = INCBIN_U32("graphics/pokemon_storage/waveform.png.4bpp");
+static const u32 sWaveform_Gfx[] STORAGE_INTERFACE = INCGFX_U32("graphics/pokemon_storage/waveform.png", ".4bpp");
 
-static const u16 sUnused_Pal[] STORAGE_INTERFACE = INCBIN_U16("graphics/pokemon_storage/unused.pal.gbapal");
+static const u16 sUnused_Pal[] STORAGE_INTERFACE = INCGFX_U16("graphics/pokemon_storage/unused.pal", ".gbapal");
 
-static const u16 sTextWindows_Pal[] STORAGE_INTERFACE = INCBIN_U16("graphics/pokemon_storage/text_windows.pal.gbapal");
+static const u16 sTextWindows_Pal[] STORAGE_INTERFACE = INCGFX_U16("graphics/pokemon_storage/text_windows.pal", ".gbapal");
 
 static const struct WindowTemplate sWindowTemplates[] STORAGE_INTERFACE =
 {
@@ -9672,13 +9672,13 @@ static const struct SpriteTemplate sSpriteTemplate_Arrow STORAGE_TAIL_COMMON =
 };
 
 static const u16 sHandCursor_Pal[] STORAGE_TAIL_COMMON =
-INCBIN_U16("graphics/pokemon_storage/hand_cursor.png.gbapal");
+INCGFX_U16("graphics/pokemon_storage/hand_cursor.png", ".gbapal");
 
 static const u8 sHandCursor_Gfx[] STORAGE_TAIL_COMMON =
-INCBIN_U8("graphics/pokemon_storage/hand_cursor.png.4bpp");
+INCGFX_U8("graphics/pokemon_storage/hand_cursor.png", ".4bpp");
 
 static const u8 sHandCursorShadow_Gfx[] STORAGE_TAIL_COMMON =
-INCBIN_U8("graphics/pokemon_storage/hand_cursor_shadow.png.4bpp");
+INCGFX_U8("graphics/pokemon_storage/hand_cursor_shadow.png", ".4bpp");
 
 static const struct RestrictedReleaseMove sRestrictedReleaseMoves[] STORAGE_RELEASE_MOVES =
 {
@@ -9745,7 +9745,7 @@ static const struct WindowTemplate sWindowTemplate_MultiMove STORAGE_TAIL_MENUS 
 };
 
 static const u32 sItemInfoFrame_Gfx[] STORAGE_TAIL_MENUS =
-INCBIN_U32("graphics/pokemon_storage/item_info_frame.png.4bpp");
+INCGFX_U32("graphics/pokemon_storage/item_info_frame.png", ".4bpp");
 
 static const struct OamData sOamData_ItemIcon STORAGE_TAIL_MENUS =
 {
