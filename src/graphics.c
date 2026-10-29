@@ -1589,50 +1589,38 @@ UNUSED_JP_MENU_SPECIALIZED_MIDDLE static const u8 sUnusedJpMenuSpecializedSprite
 #define CABLE_CAR_BG_PALETTE __attribute__((section(".rodata.cable_car_bg_palette")))
 
 CABLE_CAR_BG_PALETTE const u16 gCableCarBg_Pal[] =
-{
-    0x0000, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x479F,
-    0x3F3D, 0x3AFB, 0x36B9, 0x3277, 0x2E36, 0x5DBC, 0x5DBC, 0x5DBC,
-    0x0000, 0x4BF7, 0x3373, 0x2710, 0x1A8D, 0x0DCA, 0x0147, 0x5DBC,
-    0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC,
-    0x0000, 0x7FBA, 0x7F97, 0x7F74, 0x7F51, 0x7F2E, 0x7F2C, 0x6F38,
-    0x62F7, 0x5296, 0x4213, 0x2D70, 0x210F, 0x5DBC, 0x5DBC, 0x5DBC,
-    0x0000, 0x7B38, 0x76F5, 0x76B3, 0x7270, 0x722E, 0x71EC, 0x3528,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+INCGFX_U16("graphics/cable_car/bg.png", ".gbapal");
 
 #undef CABLE_CAR_BG_PALETTE
 
 #define CABLE_CAR_BG_GFX __attribute__((section(".rodata.cable_car_bg_gfx"), aligned(1)))
 
-CABLE_CAR_BG_GFX const u8 gCableCarBg_Gfx[] = INCBIN_U8("graphics/cable_car/bg.4bpp.lz");
+CABLE_CAR_BG_GFX const u32 gCableCarBg_Gfx[] = INCGFX_U32("graphics/cable_car/bg.png", ".4bpp.lz");
 
 #undef CABLE_CAR_BG_GFX
 
 #define CABLE_CAR_SPRITE_PALETTE __attribute__((section(".rodata.cable_car_sprite_palette")))
 
 CABLE_CAR_SPRITE_PALETTE const u16 gCableCar_Pal[] =
-{
-    0x0000, 0x7FFF, 0x6F74, 0x462C, 0x5AD1, 0x4610, 0x3D8C, 0x3528,
-    0x2CC5, 0x7B31, 0x76AC, 0x4BFF, 0x2B5D, 0x0ABA, 0x01B6, 0x0111,
-};
+INCGFX_U16("graphics/cable_car/cable_car.png", ".gbapal");
 
 #undef CABLE_CAR_SPRITE_PALETTE
 
 #define CABLE_CAR_SPRITE_GFX __attribute__((section(".rodata.cable_car_sprite_gfx"), aligned(1)))
 
-CABLE_CAR_SPRITE_GFX const u8 gCableCar_Gfx[] = INCBIN_U8("graphics/cable_car/cable_car.4bpp.lz");
+CABLE_CAR_SPRITE_GFX const u32 gCableCar_Gfx[] = INCGFX_U32("graphics/cable_car/cable_car.png", ".4bpp.lz");
 
 #undef CABLE_CAR_SPRITE_GFX
 
 #define CABLE_CAR_DOOR_GFX __attribute__((section(".rodata.cable_car_door_gfx")))
 
-CABLE_CAR_DOOR_GFX const u32 gCableCarDoor_Gfx[] = INCBIN_U32("graphics/cable_car/door.4bpp.lz");
+CABLE_CAR_DOOR_GFX const u32 gCableCarDoor_Gfx[] = INCGFX_U32("graphics/cable_car/door.png", ".4bpp.lz");
 
 #undef CABLE_CAR_DOOR_GFX
 
 #define CABLE_CAR_CABLE_GFX __attribute__((section(".rodata.cable_car_cable_gfx")))
 
-CABLE_CAR_CABLE_GFX const u32 gCableCarCable_Gfx[] = INCBIN_U32("graphics/cable_car/cable.4bpp.lz");
+CABLE_CAR_CABLE_GFX const u32 gCableCarCable_Gfx[] = INCGFX_U32("graphics/cable_car/cable.png", ".4bpp.lz");
 
 #undef CABLE_CAR_CABLE_GFX
 

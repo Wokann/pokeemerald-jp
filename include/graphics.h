@@ -4894,9 +4894,9 @@ extern const u32 gWallpaperTilemap_Horizontal[];
 extern const u16 gWallpaperPalettes_Horizontal[][16];
 
 // Cable Car
-extern const u8 gCableCarBg_Gfx[];
+extern const u32 gCableCarBg_Gfx[];
 extern const u16 gCableCarBg_Pal[];
-extern const u8 gCableCar_Gfx[];
+extern const u32 gCableCar_Gfx[];
 extern const u32 gCableCarDoor_Gfx[];
 extern const u32 gCableCarCable_Gfx[];
 extern const u16 gCableCar_Pal[];

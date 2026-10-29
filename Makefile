@@ -1780,9 +1780,9 @@ $(C_BUILDDIR)/move_relearner.o: \
 	graphics/interface/ui_learn_move.4bpp \
 	graphics/interface/ui_learn_move.gbapal
 
-$(C_BUILDDIR)/cable_car.o: src/cable_car.c $(wildcard graphics/cable_car/*)
+$(C_BUILDDIR)/cable_car.o: src/cable_car.c Makefile charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/cable_car.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/cable_car.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/cable_car.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/cable_car.gen.s
 
@@ -6819,5 +6819,67 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/triangle_cursor.png.gbapal: graphics/e
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/easy_chat/triangle_cursor.png.4bpp: graphics/easy_chat/triangle_cursor.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/cable_car.d: src/cable_car.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/cable_car.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/ground.bin.lz: graphics/cable_car/ground.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/trees.bin.lz: graphics/cable_car/trees.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/bg_mountains.bin.lz: graphics/cable_car/bg_mountains.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/pylon_pole.bin.lz: graphics/cable_car/pylon_pole.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/bg.png.gbapal: graphics/cable_car/bg.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable_car.png.gbapal: graphics/cable_car/cable_car.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/bg.png.4bpp: graphics/cable_car/bg.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/bg.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/bg.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable_car.png.4bpp: graphics/cable_car/cable_car.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable_car.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable_car.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/door.png.4bpp: graphics/cable_car/door.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/door.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/door.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable.png.4bpp: graphics/cable_car/cable.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/cable_car/cable.png.4bpp $(GFX)
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@

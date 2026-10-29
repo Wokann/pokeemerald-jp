@@ -69,9 +69,9 @@ extern void CB2_LoadCableCar(void);
 
 
 
-extern const u8 gCableCarBg_Gfx[];
+extern const u32 gCableCarBg_Gfx[];
 extern const u16 gCableCarBg_Pal[];
-extern const u8 gCableCar_Gfx[];
+extern const u32 gCableCar_Gfx[];
 extern const u32 gCableCarDoor_Gfx[];
 extern const u32 gCableCarCable_Gfx[];
 extern const u16 gCableCar_Pal[];
@@ -141,19 +141,15 @@ CABLE_CAR_TILEMAP_DATA const struct BgTemplate sCableCarBgTemplates[] =
     },
 };
 
-CABLE_CAR_TILEMAP_DATA const u16 sCableCarGround_Tilemap[] = INCBIN_U16("graphics/cable_car/ground.bin.lz");
-CABLE_CAR_TILEMAP_DATA const u16 sCableCarTrees_Tilemap[] = INCBIN_U16("graphics/cable_car/trees.bin.lz");
+static CABLE_CAR_TILEMAP_DATA const u16 sGround_Tilemap[] = INCGFX_U16("graphics/cable_car/ground.bin", ".lz");
+static CABLE_CAR_TILEMAP_DATA const u16 sTrees_Tilemap[] = INCGFX_U16("graphics/cable_car/trees.bin", ".lz");
 
-// JP ROM has two bytes of alignment padding after the Trees stream.
-CABLE_CAR_TILEMAP_DATA const u16 sCableCarTreesPadding = 0;
 
-CABLE_CAR_TILEMAP_DATA const u16 sCableCarBgMountains_Tilemap[] = INCBIN_U16("graphics/cable_car/bg_mountains.bin.lz");
+static CABLE_CAR_TILEMAP_DATA const u16 sBgMountains_Tilemap[] = INCGFX_U16("graphics/cable_car/bg_mountains.bin", ".lz");
 
-// JP ROM has two bytes of alignment padding after the Mountains stream.
-CABLE_CAR_TILEMAP_DATA const u16 sCableCarBgMountainsPadding = 0;
 
-CABLE_CAR_TILEMAP_DATA const u16 sCableCarPylonTop_Tilemap[] = INCBIN_U16("graphics/cable_car/pylon_top.bin");
-CABLE_CAR_TILEMAP_DATA const u16 sCableCarPylonPole_Tilemap[] = INCBIN_U16("graphics/cable_car/pylon_pole.bin.lz");
+static CABLE_CAR_TILEMAP_DATA const u16 sPylonTop_Tilemap[] = INCBIN_U16("graphics/cable_car/pylon_top.bin");
+static CABLE_CAR_TILEMAP_DATA const u16 sPylonPole_Tilemap[] = INCGFX_U16("graphics/cable_car/pylon_pole.bin", ".lz");
 
 #undef CABLE_CAR_TILEMAP_DATA
 
@@ -321,11 +317,11 @@ void CB2_LoadCableCar(void)
             LoadCompressedSpriteSheet(&sCableCarSpriteSheets[i]);
 
         LoadSpritePalettes(sCableCarSpritePalettes);
-        sCableCar->groundTilemap = malloc_and_decompress(sCableCarGround_Tilemap, &sizeOut);
-        sCableCar->treesTilemap = malloc_and_decompress(sCableCarTrees_Tilemap, &sizeOut);
-        sCableCar->bgMountainsTilemap = malloc_and_decompress(sCableCarBgMountains_Tilemap, &sizeOut);
-        sCableCar->pylonPoleTilemap = malloc_and_decompress(sCableCarPylonPole_Tilemap, &sizeOut);
-        sCableCar->pylonTopTilemap = sCableCarPylonTop_Tilemap;
+        sCableCar->groundTilemap = malloc_and_decompress(sGround_Tilemap, &sizeOut);
+        sCableCar->treesTilemap = malloc_and_decompress(sTrees_Tilemap, &sizeOut);
+        sCableCar->bgMountainsTilemap = malloc_and_decompress(sBgMountains_Tilemap, &sizeOut);
+        sCableCar->pylonPoleTilemap = malloc_and_decompress(sPylonPole_Tilemap, &sizeOut);
+        sCableCar->pylonTopTilemap = sPylonTop_Tilemap;
         DecompressAndCopyTileDataToVram(0, gCableCarBg_Gfx, 0, 0, 0);
         gMain.state++;
         break;
