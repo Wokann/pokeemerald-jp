@@ -34,7 +34,7 @@ class BattleAnimationAssetTests(unittest.TestCase):
     def test_complete_native_family_has_one_real_c_owner(self):
         source = owner_source()
         self.assertEqual(len(re.findall(r'const u(?:8|16|32) ', source)), 271)
-        self.assertEqual(len(resources()), 265)
+        self.assertEqual(len(resources()), 267)
         self.assertNotIn('.set ', source)
         self.assertFalse((ROOT / 'data/data_rest2b.s').exists())
         self.assertFalse((ROOT / 'tools/extract_battle_anim_graphics.py').exists())
@@ -46,7 +46,7 @@ class BattleAnimationAssetTests(unittest.TestCase):
     def test_editable_inputs_include_every_composite_component(self):
         sources = {path for name, path, extension, flags in resources()}
         sources = (sources - COMPOSITES.keys()) | {p for parts in COMPOSITES.values() for p in parts}
-        self.assertEqual(len(sources), 175)
+        self.assertEqual(len(sources), 177)
         for path in sources:
             self.assertIn(Path(path).suffix, ('.png', '.pal', '.bin'))
             self.assertTrue((ROOT / path).is_file(), path)
@@ -54,8 +54,8 @@ class BattleAnimationAssetTests(unittest.TestCase):
     def test_native_healthbox_and_three_existing_unknown_inputs_remain(self):
         source = owner_source()
         self.assertIn('gHealthboxElementsGfxTable[][32] = INCBIN_U8(', source)
-        self.assertIn('gBattleInterface_BallStatusBarPal[] = INCBIN_U16(', source)
-        self.assertIn('gBattleInterface_BallDisplayPal[] = INCBIN_U16(', source)
+        self.assertIn('gBattleInterface_BallStatusBarPal[] = INCGFX_U16(', source)
+        self.assertIn('gBattleInterface_BallDisplayPal[] = INCGFX_U16(', source)
         for i in (1, 2, 3):
             self.assertIn('gBattleAnimUnused_Unknown%d[] = INCBIN_U16(' % i, source)
 
@@ -66,13 +66,16 @@ class BattleAnimationAssetTests(unittest.TestCase):
         self.assertIn('$(JP_BATTLE_ANIM_FAMILY_ASSETS) $(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)', clean)
         rules = (ROOT / 'graphics_file_rules.mk').read_text()
         for composite in COMPOSITES:
-            self.assertIn('\n' + composite + ': ', rules)
+            if composite == 'graphics/battle_interface/battle_bar.4bpp':
+                self.assertIn('\n$(JP_GRAPHICS_GFX_ROOT)' + composite + ': ', make)
+            else:
+                self.assertIn('\n' + composite + ': ', rules)
         for suffix in ('.4bpp', '.gbapal', '.bin'):
             self.assertIn('cat $(filter %' + suffix + ',$^) >$@', rules)
 
     @unittest.skipUnless(GFX.is_file() and NM and (ROOT / 'pokeemerald_jp.elf').is_file()
                          and (ROOT / 'baserom_jp.gba').is_file(), 'requires built JP artifacts and gbagfx')
-    def test_all_265_compressed_resources_rebuild_to_the_native_rom(self):
+    def test_all_267_compressed_and_palette_resources_rebuild_to_the_native_rom(self):
         text = subprocess.check_output([NM, '-S', '--defined-only', str(ROOT / 'pokeemerald_jp.elf')], text=True)
         symbols = {name: (int(address, 16), int(size, 16))
                    for address, size, kind, name in re.findall(r'(?m)^([0-9a-f]+) ([0-9a-f]+) (\w) (\S+)$', text)}

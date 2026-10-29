@@ -173,9 +173,9 @@ static const struct WindowTemplate sUnusedWinTemplate BATTLE_SCRIPT_COMMANDS_DAT
 };
 
 static const u16 sLevelUpBanner_Pal[] BATTLE_SCRIPT_COMMANDS_DATA(sLevelUpBanner_Pal) =
-    INCBIN_U16("graphics/battle_interface/level_up_banner.png.gbapal");
+    INCGFX_U16("graphics/battle_interface/level_up_banner.png", ".gbapal");
 static const u32 sLevelUpBanner_Gfx[] BATTLE_SCRIPT_COMMANDS_DATA(sLevelUpBanner_Gfx) =
-    INCBIN_U32("graphics/battle_interface/level_up_banner.png.4bpp.lz");
+    INCGFX_U32("graphics/battle_interface/level_up_banner.png", ".4bpp.lz");
 
 // Unused.
 static const u8 sRubyLevelUpStatBoxStats[] BATTLE_SCRIPT_COMMANDS_DATA(sRubyLevelUpStatBoxStats) =

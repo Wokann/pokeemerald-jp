@@ -232,10 +232,6 @@ graphics/battle_anims/sprites/ice_cube.4bpp: graphics/battle_anims/sprites/ice_c
 	graphics/battle_anims/sprites/ice_cube_3.png.4bpp Makefile graphics_file_rules.mk | tools
 	@cat $(filter %.4bpp,$^) >$@
 
-graphics/battle_interface/battle_bar.4bpp: graphics/battle_interface/hpbar_anim_unused.png.4bpp \
-	graphics/battle_interface/numbers1.png.4bpp \
-	graphics/battle_interface/numbers2.png.4bpp Makefile graphics_file_rules.mk | tools
-	@cat $(filter %.4bpp,$^) >$@
 
 graphics/unused/obi1.4bpp: graphics/unused/old_bulbasaur.png.4bpp \
 	graphics/unused/old_charizard.png.4bpp Makefile graphics_file_rules.mk | tools

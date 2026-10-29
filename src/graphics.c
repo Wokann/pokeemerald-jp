@@ -575,24 +575,11 @@ BATTLE_ANIM_GRAPHICS const u32 gUnusedPal_BasicFrame[] = INCGFX_U32("graphics/un
 
 BATTLE_ANIM_GRAPHICS const u32 gUnusedTilemap_BasicFrame[] = INCGFX_U32("graphics/unused/basic_frame.bin", ".lz");
 
-BATTLE_ANIM_GRAPHICS const u16 gBattleInterface_BallStatusBarPal[] = INCBIN_U16("graphics/battle_interface/ball_status_bar.gbapal");
+BATTLE_ANIM_GRAPHICS const u16 gBattleInterface_BallStatusBarPal[] = INCGFX_U16("graphics/battle_interface/ball_status_bar.png", ".gbapal");
 
-BATTLE_ANIM_GRAPHICS const u16 gBattleInterface_BallDisplayPal[] = INCBIN_U16("graphics/battle_interface/ball_display.gbapal");
+BATTLE_ANIM_GRAPHICS const u16 gBattleInterface_BallDisplayPal[] = INCGFX_U16("graphics/battle_interface/ball_display.png", ".gbapal");
 
-BATTLE_ANIM_GRAPHICS const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8(
-    "graphics/battle_interface/hpbar.4bpp",
-    "graphics/battle_interface/expbar.4bpp",
-    "graphics/battle_interface/status.4bpp",
-    "graphics/battle_interface/misc.4bpp",
-    "graphics/battle_interface/hpbar_anim.4bpp",
-    "graphics/battle_interface/misc_frameend.4bpp",
-    "graphics/battle_interface/ball_display.4bpp",
-    "graphics/battle_interface/ball_caught_indicator.4bpp",
-    "graphics/battle_interface/status2.4bpp",
-    "graphics/battle_interface/status3.4bpp",
-    "graphics/battle_interface/status4.4bpp",
-    "graphics/battle_interface/healthbox_doubles_frameend.4bpp",
-    "graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp");
+BATTLE_ANIM_GRAPHICS const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8("build/pokeemerald-jp/incgfx/graphics/battle_interface/hpbar.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/expbar.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/status.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/misc.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/hpbar_anim.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/misc_frameend.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/ball_display.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/ball_caught_indicator.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/status2.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/status3.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/status4.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/healthbox_doubles_frameend.png.4bpp", "build/pokeemerald-jp/incgfx/graphics/battle_interface/healthbox_doubles_frameend_bar.png.4bpp");
 
 BATTLE_ANIM_GRAPHICS const u32 gBattleInterfaceGfx_UnusedWindow3[] = INCGFX_U32("graphics/battle_interface/unused_window3.png", ".4bpp.lz");
 
@@ -875,7 +862,7 @@ BATTLE_ANIM_MUDDY_WATER_RESOURCES const u32 gBattleAnimBackgroundImageMuddyWater
 #define BATTLE_INTERFACE_BALL_STATUS_BAR_GRAPHICS __attribute__((section(".rodata.battle_interface_ball_status_bar_graphics"), aligned(1)))
 
 // The JP LZ77 stream retains its original stream-alignment padding.
-BATTLE_INTERFACE_BALL_STATUS_BAR_GRAPHICS const u32 gBattleInterface_BallStatusBarGfx[] = INCBIN_U32("graphics/battle_interface/ball_status_bar.4bpp.lz");
+BATTLE_INTERFACE_BALL_STATUS_BAR_GRAPHICS const u32 gBattleInterface_BallStatusBarGfx[] = INCGFX_U32("graphics/battle_interface/ball_status_bar.png", ".4bpp.lz");
 
 #undef BATTLE_INTERFACE_BALL_STATUS_BAR_GRAPHICS
 
@@ -1067,7 +1054,7 @@ SMOKESCREEN_IMPACT_GRAPHICS const u32 gSmokescreenImpactPalette[] = INCGFX_U32("
 
 #define ENEMY_SHADOW_GRAPHICS __attribute__((section(".rodata.enemy_shadow_graphics"), aligned(1)))
 
-ENEMY_SHADOW_GRAPHICS const u32 gEnemyMonShadow_Gfx[] = INCBIN_U32("graphics/battle_interface/enemy_mon_shadow.4bpp.lz");
+ENEMY_SHADOW_GRAPHICS const u32 gEnemyMonShadow_Gfx[] = INCGFX_U32("graphics/battle_interface/enemy_mon_shadow.png", ".4bpp.lz");
 
 #undef ENEMY_SHADOW_GRAPHICS
 
@@ -1310,11 +1297,11 @@ BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_Eye[] = INCGFX_U32("g
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_Eye[] = INCGFX_U32("graphics/battle_anims/sprites/eye.png", ".gbapal.lz");
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_Tendrils[] = INCGFX_U32("graphics/battle_anims/sprites/tendrils.png", ".4bpp.lz");
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_Tendrils[] = INCGFX_U32("graphics/battle_anims/sprites/tendrils.png", ".gbapal.lz");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxSinglesPlayerGfx[] = INCBIN_U32("graphics/battle_interface/healthbox_singles_player.png.4bpp.lz");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxSinglesOpponentGfx[] = INCBIN_U32("graphics/battle_interface/healthbox_singles_opponent.png.4bpp.lz");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxDoublesPlayerGfx[] = INCBIN_U32("graphics/battle_interface/healthbox_doubles_player.png.4bpp.lz");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxDoublesOpponentGfx[] = INCBIN_U32("graphics/battle_interface/healthbox_doubles_opponent.png.4bpp.lz");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxSafariGfx[] = INCBIN_U32("graphics/battle_interface/healthbox_safari.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxSinglesPlayerGfx[] = INCGFX_U32("graphics/battle_interface/healthbox_singles_player.png", ".4bpp.lz", "-mwidth 8 -mheight 8");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxSinglesOpponentGfx[] = INCGFX_U32("graphics/battle_interface/healthbox_singles_opponent.png", ".4bpp.lz", "-mwidth 8 -mheight 4");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxDoublesPlayerGfx[] = INCGFX_U32("graphics/battle_interface/healthbox_doubles_player.png", ".4bpp.lz", "-mwidth 8 -mheight 4");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxDoublesOpponentGfx[] = INCGFX_U32("graphics/battle_interface/healthbox_doubles_opponent.png", ".4bpp.lz", "-mwidth 8 -mheight 4");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gHealthboxSafariGfx[] = INCGFX_U32("graphics/battle_interface/healthbox_safari.png", ".4bpp.lz", "-mwidth 8 -mheight 8");
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gUnusedGfx_Shadow[] = INCBIN_U32("graphics/unused/shadow.png.4bpp.lz");
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gUnusedPal_Shadow[] = INCBIN_U32("graphics/unused/shadow.png.gbapal.lz");
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_LockOn[] = INCGFX_U32("graphics/battle_anims/sprites/lock_on.png", ".4bpp.lz");

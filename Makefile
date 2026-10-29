@@ -46,6 +46,10 @@ BUILD_NAME ?= pokeemerald-jp
 OBJ_DIR := build/$(BUILD_NAME)
 JP_GRAPHICS_GFX_ROOT := $(OBJ_DIR)/incgfx/
 
+JP_BATTLE_INTERFACE_COMPOSITE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox.gbapal.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/battle_bar.4bpp.lz
+$(foreach target,$(JP_BATTLE_INTERFACE_COMPOSITE_TARGETS),$(eval $(target) := defined))
+
 JP_BATTLE_TRANSITION_COMPOSITE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_1.4bpp.lz \
     $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_2.4bpp.lz \
     $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_3.4bpp.lz \
@@ -1183,7 +1187,6 @@ clean: clean-tools
 	rm -f $(filter %/normal.pal.gbapal.lz,$(JP_POKEMON_STILL_ASSETS)) $(patsubst %.lz,%,$(filter %/normal.pal.gbapal.lz,$(JP_POKEMON_STILL_ASSETS)))
 	rm -f $(filter %/shiny.pal.gbapal.lz,$(JP_POKEMON_STILL_ASSETS)) $(patsubst %.lz,%,$(filter %/shiny.pal.gbapal.lz,$(JP_POKEMON_STILL_ASSETS)))
 	rm -f $(filter %.1bpp graphics/pokemon/castform/%,$(JP_POKEMON_STILL_ASSETS)) $(filter graphics/pokemon/castform/%,$(JP_POKEMON_STILL_INTERMEDIATES))
-	rm -f $(JP_BATTLE_TEXTBOX_PALETTE)
 	rm -f $(JP_CONTEST_RESULTS_ASSETS)
 	rm -f $(JP_FRONTIER_UI_ASSETS) $(JP_FRONTIER_UI_INTERMEDIATES)
 
@@ -1382,11 +1385,9 @@ $(C_BUILDDIR)/pokenav_match_call_gfx.o: src/pokenav_match_call_gfx.c Makefile ch
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_match_call_gfx.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_match_call_gfx.gen.s
 
-$(C_BUILDDIR)/battle_script_commands.o: src/battle_script_commands.c charmap.txt \
-	graphics/battle_interface/level_up_banner.png.4bpp.lz \
-	graphics/battle_interface/level_up_banner.png.gbapal
+$(C_BUILDDIR)/battle_script_commands.o: src/battle_script_commands.c charmap.txt
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_script_commands.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_script_commands.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_script_commands.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/battle_script_commands.gen.s
 
@@ -1495,7 +1496,7 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/rayquaza_scene.h src/
 	graphics/battle_anims/sprites/gem_1.png.gbapal.lz graphics/battle_anims/backgrounds/in_air.png.4bpp.lz \
 	graphics/battle_anims/backgrounds/in_air.png.gbapal.lz graphics/battle_anims/backgrounds/in_air.bin.lz \
 	graphics/battle_anims/sprites/protect.png.4bpp.lz graphics/battle_anims/sprites/protect.png.gbapal.lz \
-	graphics/battle_anims/backgrounds/water_muddy.pal.gbapal.lz graphics/battle_interface/ball_status_bar.4bpp.lz \
+	graphics/battle_anims/backgrounds/water_muddy.pal.gbapal.lz  \
 	graphics/pokemon/egg/icon.png.4bpp graphics/battle_anims/backgrounds/ghost.png.4bpp.lz \
 	graphics/battle_anims/backgrounds/ghost.png.gbapal.lz graphics/battle_anims/backgrounds/ghost.bin.lz \
 	graphics/battle_anims/sprites/whip_hit.pal.gbapal.lz graphics/battle_anims/backgrounds/solarbeam.pal.gbapal.lz \
@@ -1922,9 +1923,9 @@ $(C_BUILDDIR)/trainer_see.o: src/trainer_see.c graphics/field_effects/pics/jp/em
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/trainer_see.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/trainer_see.pre.c $(C_BUILDDIR)/trainer_see.preproc.c $(C_BUILDDIR)/trainer_see.gen.s
 
-$(C_BUILDDIR)/battle_interface.o: src/battle_interface.c
+$(C_BUILDDIR)/battle_interface.o: src/battle_interface.c Makefile charmap.txt
 	@mkdir -p $(C_BUILDDIR)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; \
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
 $(C_BUILDDIR)/link.d: src/link.c Makefile | tools
@@ -3119,7 +3120,6 @@ JP_BATTLE_ANIM_FAMILY_ASSETS := graphics/interface/blank.png.4bpp.lz \
 	graphics/battle_anims/sprites/claw_slash.png.4bpp.lz \
 	graphics/battle_anims/sprites/scratch_3.png.4bpp.lz \
 	graphics/battle_anims/sprites/scratch_2.png.4bpp.lz \
-	graphics/battle_interface/hpbar_unused.png.4bpp.lz \
 	graphics/battle_anims/sprites/bubble_burst_2.png.4bpp.lz \
 	graphics/battle_anims/sprites/bubble_burst_2.png.gbapal.lz \
 	graphics/battle_anims/sprites/ice_chunk.png.4bpp.lz \
@@ -3128,14 +3128,9 @@ JP_BATTLE_ANIM_FAMILY_ASSETS := graphics/interface/blank.png.4bpp.lz \
 	graphics/battle_anims/sprites/glass_2.png.4bpp.lz \
 	graphics/battle_anims/sprites/pink_heart_2.png.gbapal.lz \
 	graphics/battle_anims/sprites/pink_heart_2.png.4bpp.lz \
-	graphics/battle_interface/unused_window.png.4bpp.lz \
-	graphics/battle_interface/unused_window.png.gbapal.lz \
-	graphics/battle_interface/battle_bar.4bpp.lz \
 	graphics/battle_anims/sprites/sap_drip.png.4bpp.lz \
 	graphics/battle_anims/sprites/sap_drip.png.gbapal.lz \
 	graphics/battle_anims/sprites/sap_drip_2.pal.gbapal.lz \
-	graphics/battle_interface/unused_window2.png.4bpp.lz \
-	graphics/battle_interface/unused_window2bar.png_num_tiles_5__Wnum_tiles.4bpp.lz \
 	graphics/battle_anims/sprites/sparkle_1.png.4bpp.lz \
 	graphics/battle_anims/sprites/sparkle_1.png.gbapal.lz \
 	graphics/battle_anims/sprites/sparkle_2.pal.gbapal.lz \
@@ -3257,8 +3252,6 @@ JP_BATTLE_ANIM_FAMILY_ASSETS := graphics/interface/blank.png.4bpp.lz \
 	graphics/unused/basic_frame.png.4bpp.lz \
 	graphics/unused/basic_frame.png.gbapal.lz \
 	graphics/unused/basic_frame.bin.lz \
-	graphics/battle_interface/unused_window3.png.4bpp.lz \
-	graphics/battle_interface/unused_window4.png.4bpp.lz \
 	graphics/battle_anims/sprites/fury_swipes.png.4bpp.lz \
 	graphics/battle_anims/sprites/fury_swipes.png.gbapal.lz \
 	graphics/battle_anims/sprites/vine_2.png.4bpp.lz \
@@ -3540,17 +3533,6 @@ JP_BATTLE_ANIM_FAMILY_INTERMEDIATES := graphics/battle_anims/sprites/air_slash.p
 	graphics/battle_anims/unused/spinning_ball_2.pal.gbapal \
 	graphics/battle_anims/unused/water_splash.png.8bpp \
 	graphics/battle_anims/unused/water_splash.png.gbapal \
-	graphics/battle_interface/battle_bar.4bpp \
-	graphics/battle_interface/hpbar_anim_unused.png.4bpp \
-	graphics/battle_interface/hpbar_unused.png.4bpp \
-	graphics/battle_interface/numbers1.png.4bpp \
-	graphics/battle_interface/numbers2.png.4bpp \
-	graphics/battle_interface/unused_window.png.4bpp \
-	graphics/battle_interface/unused_window.png.gbapal \
-	graphics/battle_interface/unused_window2.png.4bpp \
-	graphics/battle_interface/unused_window2bar.png_num_tiles_5__Wnum_tiles.4bpp \
-	graphics/battle_interface/unused_window3.png.4bpp \
-	graphics/battle_interface/unused_window4.png.4bpp \
 	graphics/interface/blank.png.4bpp \
 	graphics/unused/basic_frame.png.4bpp \
 	graphics/unused/basic_frame.png.gbapal \
@@ -3586,9 +3568,6 @@ $(filter %.png.8bpp,$(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)): %.png.8bpp: %.png M
 
 $(filter %.png.gbapal,$(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)): %.png.gbapal: %.png Makefile | tools
 	$(GFX) $< $@
-
-graphics/battle_interface/unused_window2bar.png_num_tiles_5__Wnum_tiles.4bpp: graphics/battle_interface/unused_window2bar.png Makefile | tools
-	$(GFX) $< $@ -num_tiles 5 -Wnum_tiles
 
 graphics/unused/color_frames.png_num_tiles_353__Wnum_tiles.4bpp: graphics/unused/color_frames.png Makefile | tools
 	$(GFX) $< $@ -num_tiles 353 -Wnum_tiles
@@ -5392,15 +5371,6 @@ $(C_BUILDDIR)/pokedex_area_screen.o: src/pokedex_area_screen.c Makefile charmap.
 
 # Match the US two-bank textbox palette source chain. Only the aggregate
 # keeps its canonical source pathname; encoded banks live in the build cache.
-JP_BATTLE_TEXTBOX_PALETTE := graphics/battle_interface/textbox.gbapal
-JP_BATTLE_TEXTBOX_PALETTE_BANKS := $(addprefix $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_,0.pal.gbapal 1.pal.gbapal)
-
-$(JP_BATTLE_TEXTBOX_PALETTE_BANKS): $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_%.pal.gbapal: graphics/battle_interface/textbox_%.pal | tools
-	@mkdir -p $(dir $@)
-	$(GFX) $< $@
-
-$(JP_BATTLE_TEXTBOX_PALETTE): $(JP_BATTLE_TEXTBOX_PALETTE_BANKS) | tools
-	@cat $^ >$@
 
 $(C_BUILDDIR)/tilesets.d: src/tilesets.c Makefile | tools
 	@mkdir -p $(dir $@)
@@ -6490,3 +6460,263 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_circles.png.4bp
 $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_circles.png.gbapal: graphics/battle_transitions/frontier_logo_circles.png $(GFX)
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@
+
+$(C_BUILDDIR)/battle_script_commands.d: src/battle_script_commands.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/battle_script_commands.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_0.pal.gbapal: graphics/battle_interface/textbox_0.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_1.pal.gbapal: graphics/battle_interface/textbox_1.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox.gbapal: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_0.pal.gbapal $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_1.pal.gbapal
+	@mkdir -p $(dir $@)
+	@cat $^ > $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/hpbar_anim_unused.png.4bpp: graphics/battle_interface/hpbar_anim_unused.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/numbers1.png.4bpp: graphics/battle_interface/numbers1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/numbers2.png.4bpp: graphics/battle_interface/numbers2.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/battle_bar.4bpp: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/hpbar_anim_unused.png.4bpp $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/numbers1.png.4bpp $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/numbers2.png.4bpp
+	@mkdir -p $(dir $@)
+	@cat $^ > $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/level_up_banner.png.gbapal: graphics/battle_interface/level_up_banner.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/level_up_banner.png.4bpp: graphics/battle_interface/level_up_banner.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/level_up_banner.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/level_up_banner.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox.png.4bpp: graphics/battle_interface/textbox.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox.gbapal.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox.gbapal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/textbox_map.bin.lz: graphics/battle_interface/textbox_map.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/hpbar_unused.png.4bpp: graphics/battle_interface/hpbar_unused.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/hpbar_unused.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/hpbar_unused.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window.png.4bpp: graphics/battle_interface/unused_window.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window.png.gbapal: graphics/battle_interface/unused_window.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window.png.gbapal.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window.png.gbapal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/battle_bar.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/battle_bar.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window2.png.4bpp: graphics/battle_interface/unused_window2.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window2.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window2.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window2bar.png_num_tiles_5__Wnum_tiles.4bpp: graphics/battle_interface/unused_window2bar.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -num_tiles 5 -Wnum_tiles
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window2bar.png_num_tiles_5__Wnum_tiles.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window2bar.png_num_tiles_5__Wnum_tiles.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/ball_status_bar.png.gbapal: graphics/battle_interface/ball_status_bar.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/ball_display.png.gbapal: graphics/battle_interface/ball_display.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/hpbar.png.4bpp: graphics/battle_interface/hpbar.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/expbar.png.4bpp: graphics/battle_interface/expbar.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/status.png.4bpp: graphics/battle_interface/status.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/misc.png.4bpp: graphics/battle_interface/misc.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/hpbar_anim.png.4bpp: graphics/battle_interface/hpbar_anim.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/misc_frameend.png.4bpp: graphics/battle_interface/misc_frameend.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/ball_display.png.4bpp: graphics/battle_interface/ball_display.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/ball_caught_indicator.png.4bpp: graphics/battle_interface/ball_caught_indicator.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/status2.png.4bpp: graphics/battle_interface/status2.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/status3.png.4bpp: graphics/battle_interface/status3.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/status4.png.4bpp: graphics/battle_interface/status4.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_doubles_frameend.png.4bpp: graphics/battle_interface/healthbox_doubles_frameend.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_doubles_frameend_bar.png.4bpp: graphics/battle_interface/healthbox_doubles_frameend_bar.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window3.png.4bpp: graphics/battle_interface/unused_window3.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window3.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window3.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window4.png.4bpp: graphics/battle_interface/unused_window4.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window4.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_window4.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/text.pal.gbapal: graphics/battle_interface/text.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/text.pal.gbapal.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/text.pal.gbapal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/text_pp.pal.gbapal: graphics/battle_interface/text_pp.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/ball_status_bar.png.4bpp: graphics/battle_interface/ball_status_bar.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/ball_status_bar.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/ball_status_bar.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/enemy_mon_shadow.png.4bpp: graphics/battle_interface/enemy_mon_shadow.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/enemy_mon_shadow.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/enemy_mon_shadow.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_singles_player.png_mwidth_8__mheight_8.4bpp: graphics/battle_interface/healthbox_singles_player.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -mwidth 8 -mheight 8
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_singles_player.png_mwidth_8__mheight_8.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_singles_player.png_mwidth_8__mheight_8.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_singles_opponent.png_mwidth_8__mheight_4.4bpp: graphics/battle_interface/healthbox_singles_opponent.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -mwidth 8 -mheight 4
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_singles_opponent.png_mwidth_8__mheight_4.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_singles_opponent.png_mwidth_8__mheight_4.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_doubles_player.png_mwidth_8__mheight_4.4bpp: graphics/battle_interface/healthbox_doubles_player.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -mwidth 8 -mheight 4
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_doubles_player.png_mwidth_8__mheight_4.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_doubles_player.png_mwidth_8__mheight_4.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_doubles_opponent.png_mwidth_8__mheight_4.4bpp: graphics/battle_interface/healthbox_doubles_opponent.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -mwidth 8 -mheight 4
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_doubles_opponent.png_mwidth_8__mheight_4.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_doubles_opponent.png_mwidth_8__mheight_4.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_safari.png_mwidth_8__mheight_8.4bpp: graphics/battle_interface/healthbox_safari.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -mwidth 8 -mheight 8
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_safari.png_mwidth_8__mheight_8.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/healthbox_safari.png_mwidth_8__mheight_8.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_interface/unused_status_summary.png.4bpp: graphics/battle_interface/unused_status_summary.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/battle_interface.d: src/battle_interface.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/battle_interface.d
