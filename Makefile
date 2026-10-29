@@ -1580,8 +1580,6 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/backgrounds/water_opponent.bin.lz graphics/battle_anims/backgrounds/water_player.bin.lz \
 	graphics/battle_anims/backgrounds/water_contest.bin.lz graphics/battle_anims/sprites/slash_2.pal.gbapal.lz \
 	graphics/battle_anims/sprites/white_shadow.png.4bpp.lz graphics/battle_anims/sprites/white_shadow.png.gbapal.lz \
-	graphics/party_menu/bg.4bpp.lz graphics/party_menu/bg.gbapal.lz graphics/party_menu/bg.bin.lz \
-	graphics/party_menu/pokeball.4bpp.lz graphics/party_menu/pokeball_small.4bpp.lz graphics/party_menu/pokeball.gbapal.lz \
 	graphics/interface/status_icons.4bpp.lz graphics/interface/status_icons.gbapal.lz \
 	graphics/types/move_types.4bpp.lz graphics/types/move_types.gbapal.lz \
 	graphics/shop/menu.4bpp.lz graphics/shop/menu.gbapal.lz graphics/shop/menu.bin.lz graphics/shop/money.4bpp.lz \

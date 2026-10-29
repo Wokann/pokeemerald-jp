@@ -953,12 +953,12 @@ BATTLE_ANIM_SURF_AND_WHITE_SHADOW_RESOURCES const u32 gBattleAnimSpritePal_White
 #define PARTY_MENU_AND_STATUS_ICON_RESOURCES __attribute__((section(".rodata.party_menu_and_status_icon_resources"), aligned(1)))
 
 // The JP LZ77 streams retain their original stream-alignment padding.
-PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Gfx[] = INCBIN_U32("graphics/party_menu/bg.4bpp.lz");
-PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Pal[] = INCBIN_U32("graphics/party_menu/bg.gbapal.lz");
-PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Tilemap[] = INCBIN_U32("graphics/party_menu/bg.bin.lz");
-PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Gfx[] = INCBIN_U32("graphics/party_menu/pokeball.4bpp.lz");
-PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeballSmall_Gfx[] = INCBIN_U32("graphics/party_menu/pokeball_small.4bpp.lz");
-PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Pal[] = INCBIN_U32("graphics/party_menu/pokeball.gbapal.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Gfx[] = INCGFX_U32("graphics/party_menu/bg.png", ".4bpp.lz", "-num_tiles 62 -Wnum_tiles");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Pal[] = INCGFX_U32("graphics/party_menu/bg.png", ".gbapal.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Tilemap[] = INCGFX_U32("graphics/party_menu/bg.bin", ".lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Gfx[] = INCGFX_U32("graphics/party_menu/pokeball.png", ".4bpp.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeballSmall_Gfx[] = INCGFX_U32("graphics/party_menu/pokeball_small.png", ".4bpp.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Pal[] = INCGFX_U32("graphics/party_menu/pokeball.png", ".gbapal.lz");
 PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusGfx_Icons[] = INCBIN_U32("graphics/interface/status_icons.4bpp.lz");
 PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusPal_Icons[] = INCBIN_U32("graphics/interface/status_icons.gbapal.lz");
 
