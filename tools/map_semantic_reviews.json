@@ -1480,7 +1480,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/item.c",
@@ -1495,7 +1495,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/scrcmd.c",
@@ -1891,7 +1891,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -4714,7 +4714,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "src/tilesets.c",
@@ -13866,7 +13866,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/load_save.c",
@@ -14500,7 +14500,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -17069,7 +17069,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "tools/jp_generate_layouts.py",
@@ -17571,7 +17571,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -20122,7 +20122,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/overworld.c",
@@ -20132,7 +20132,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/scrcmd.c",
@@ -20767,7 +20767,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -21138,6 +21138,11 @@
           "path": "data/tilesets/secondary/mauville/tiles.png",
           "selector": "file",
           "sha256": "fc7ff5d72e303208245539379ba04f7f7169b402d064d9bcf9281d750098be31"
+        },
+        {
+          "path": "include/graphics.h",
+          "selector": "file",
+          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
         }
       ],
       "us_reference": {
@@ -23350,7 +23355,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/overworld.c",
@@ -23973,7 +23978,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -26070,7 +26075,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -28713,7 +28718,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fieldmap.c",
@@ -29362,7 +29367,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -31740,7 +31745,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/item.c",
@@ -31750,7 +31755,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/scrcmd.c",
@@ -32347,7 +32352,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -32668,6 +32673,11 @@
           "path": "data/tilesets/secondary/mossdeep/tiles.png",
           "selector": "file",
           "sha256": "3f63a395dda3d4e790b4f2d038828d2e49ec871244d40e13647a6f59548e95a7"
+        },
+        {
+          "path": "include/graphics.h",
+          "selector": "file",
+          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
         }
       ],
       "us_reference": {
@@ -34628,7 +34638,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fieldmap.c",
@@ -35190,7 +35200,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -37126,7 +37136,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -39033,7 +39043,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/item.c",
@@ -39368,7 +39378,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -41812,7 +41822,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -44366,7 +44376,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -45058,7 +45068,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "0f4c6392542afb5ba9e4d77a4a8bdf9003c7bd45f80b2f190e35ece8d794204c"
+            "makefile_sha256": "b522e7c13c55a73adf3d1ad641f4838ed1f79dd0976ca06eec29da10c2532c66"
           }
         },
         {
@@ -45493,7 +45503,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "0f4c6392542afb5ba9e4d77a4a8bdf9003c7bd45f80b2f190e35ece8d794204c"
+          "sha256": "b522e7c13c55a73adf3d1ad641f4838ed1f79dd0976ca06eec29da10c2532c66"
         },
         {
           "path": "asm/macros.inc",
@@ -46748,7 +46758,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/item.c",
@@ -47343,7 +47353,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -49112,7 +49122,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/item.c",
@@ -49561,7 +49571,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -53538,7 +53548,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/scrcmd.c",
@@ -53966,7 +53976,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -54376,7 +54386,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fldeff_misc.c",
@@ -61533,7 +61543,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fldeff_misc.c",
@@ -61553,7 +61563,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokenav_match_call_data.c",
@@ -63135,7 +63145,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -74151,7 +74161,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fldeff_misc.c",
@@ -74171,7 +74181,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokenav_match_call_data.c",
@@ -75977,7 +75987,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -89665,7 +89675,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fldeff_misc.c",
@@ -89685,7 +89695,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokenav_match_call_data.c",
@@ -91536,7 +91546,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -104769,7 +104779,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fldeff_misc.c",
@@ -104789,7 +104799,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokenav_match_call_data.c",
@@ -107232,7 +107242,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -116552,7 +116562,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fldeff_misc.c",
@@ -116572,7 +116582,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokenav_match_call_data.c",
@@ -117890,7 +117900,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -124691,7 +124701,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/scrcmd.c",
@@ -125462,7 +125472,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -126339,7 +126349,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "data/scripts/item_ball_scripts.inc",
@@ -132064,7 +132074,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/item.c",
@@ -132079,7 +132089,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -133356,7 +133366,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -139652,7 +139662,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -139924,7 +139934,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -140475,7 +140485,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/trainer_card.c",
@@ -146912,7 +146922,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -147510,7 +147520,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -152076,7 +152086,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -152492,7 +152502,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -153791,7 +153801,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/trainer_card.c",
@@ -161698,7 +161708,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -162087,7 +162097,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -163133,7 +163143,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/trainer_card.c",
@@ -171459,7 +171469,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/frontier_util.c",
@@ -171494,7 +171504,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -172136,7 +172146,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -181047,7 +181057,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/frontier_util.c",
@@ -181077,7 +181087,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -181724,7 +181734,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -190075,7 +190085,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/frontier_util.c",
@@ -190105,7 +190115,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -190499,7 +190509,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -200351,7 +200361,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/frontier_util.c",
@@ -200386,7 +200396,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -200707,7 +200717,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -212366,7 +212376,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/heal_location.c",
@@ -212401,7 +212411,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -213039,7 +213049,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -223476,7 +223486,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/heal_location.c",
@@ -223501,7 +223511,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -223811,7 +223821,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -234348,7 +234358,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/heal_location.c",
@@ -234373,7 +234383,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -234696,7 +234706,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -246719,7 +246729,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/item.c",
@@ -246739,7 +246749,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -247079,7 +247089,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -264649,7 +264659,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/frontier_util.c",
@@ -264684,7 +264694,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -265336,7 +265346,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -275870,7 +275880,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_tasks.c",
@@ -275910,7 +275920,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -276530,7 +276540,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -286107,7 +286117,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/hall_of_fame.c",
@@ -286142,7 +286152,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -286503,7 +286513,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -294824,7 +294834,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/heal_location.c",
@@ -294859,7 +294869,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -295167,7 +295177,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -301068,7 +301078,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fieldmap.c",
@@ -301098,7 +301108,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -301637,7 +301647,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/secondary/meteor_falls/metatile_attributes.bin",
@@ -307436,7 +307446,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -307486,7 +307496,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -308291,7 +308301,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -313228,7 +313238,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -313263,7 +313273,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -313618,7 +313628,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -319570,7 +319580,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -319605,7 +319615,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -320242,7 +320252,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -325467,7 +325477,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -325502,7 +325512,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -325753,7 +325763,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -330941,7 +330951,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -330976,7 +330986,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -331311,7 +331321,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -337560,7 +337570,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -337590,7 +337600,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -338208,7 +338218,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -345784,7 +345794,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -345814,7 +345824,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -346138,7 +346148,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -352841,7 +352851,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_tasks.c",
@@ -352876,7 +352886,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -353153,7 +353163,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -357013,7 +357023,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -357043,7 +357053,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -357607,7 +357617,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -360822,7 +360832,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -360852,7 +360862,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -361323,7 +361333,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -365376,7 +365386,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -365406,7 +365416,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -365853,7 +365863,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -370196,7 +370206,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_tasks.c",
@@ -370231,7 +370241,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -370593,7 +370603,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -373910,7 +373920,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_tasks.c",
@@ -373945,7 +373955,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -374246,7 +374256,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -377915,7 +377925,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -377950,7 +377960,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -378293,7 +378303,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -381668,7 +381678,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -381703,7 +381713,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -382107,7 +382117,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -385200,7 +385210,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -385235,7 +385245,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -385623,7 +385633,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -388845,7 +388855,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -388880,7 +388890,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -389244,7 +389254,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -392737,7 +392747,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -392772,7 +392782,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -393160,7 +393170,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -396178,7 +396188,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -396213,7 +396223,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -396593,7 +396603,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -399756,7 +399766,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -399791,7 +399801,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -400131,7 +400141,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -405570,7 +405580,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -405605,7 +405615,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -405926,7 +405936,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -413956,7 +413966,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -413991,7 +414001,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -414390,7 +414400,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -418317,7 +418327,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -418347,7 +418357,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -418658,7 +418668,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -421841,7 +421851,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/fieldmap.c",
@@ -421866,7 +421876,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/scrcmd.c",
@@ -422467,7 +422477,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -425796,7 +425806,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -425816,7 +425826,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -426072,7 +426082,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -431230,7 +431240,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -431250,7 +431260,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -431545,7 +431555,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -433237,7 +433247,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -433257,7 +433267,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -433528,7 +433538,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -435964,7 +435974,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -435984,7 +435994,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -436487,7 +436497,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -439372,7 +439382,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -439392,7 +439402,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -439991,7 +440001,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -444253,7 +444263,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -444273,7 +444283,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -444565,7 +444575,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -446561,7 +446571,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -446581,7 +446591,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -447081,7 +447091,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -449172,7 +449182,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -449192,7 +449202,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -449692,7 +449702,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -451986,7 +451996,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -452006,7 +452016,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -452402,7 +452412,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -454630,7 +454640,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -454650,7 +454660,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -454950,7 +454960,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -456789,7 +456799,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -456809,7 +456819,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -457229,7 +457239,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -462866,7 +462876,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "src/metatile_behavior.c",
@@ -470637,7 +470647,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -470652,7 +470662,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "src/item.c",
@@ -470672,7 +470682,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",
@@ -476849,7 +476859,7 @@
         {
           "path": "src/field_specials.c",
           "selector": "file",
-          "sha256": "3489b56a16a79f7b36ccee6a8478f0ee1faf411aaab3d2d6261fe01d8b2fe6d9"
+          "sha256": "7e6a5ac3aea7b5313fd2bd9661c803188cf21ab0043f1ed7cde56347bb8c101c"
         },
         {
           "path": "src/field_weather.c",
@@ -476869,7 +476879,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "34e17f0ac55c9ba1911a2f0239fa2174c8acae95fb39e3b958efd8c2ca60a948"
+          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
         },
         {
           "path": "src/item.c",
@@ -476884,7 +476894,7 @@
         {
           "path": "src/party_menu.c",
           "selector": "file",
-          "sha256": "0d64de9664e24e2a7f1bcf85b16e9d5f4876269a978213a067eb4dd4fd0d108c"
+          "sha256": "1d6b9b7682109b03846e1ee12fb1f84aea4c205db053050ca51a9950f1d327e2"
         },
         {
           "path": "src/pokemon.c",

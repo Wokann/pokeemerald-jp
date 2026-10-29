@@ -1,4 +1,5 @@
 #include "global.h"
+#include "graphics.h"
 #include "party_menu.h"
 #include "pokemon_icon.h"
 #include "bg.h"
@@ -125,7 +126,6 @@ extern void AddTextPrinterParameterized3(u8 windowId, u8 fontId, u8 left, u8 top
 #define PARTY_TMHM_DATA __attribute__((section(".rodata.party_menu_tmhm")))
 #include "data/party_menu.h"
 
-__asm__(".global gUnknown_85E08C4\n.set gUnknown_85E08C4, gTutorMoves");
 
 static void Task_ExitPartyMenu(u8 taskId);
 static bool8 ShowPartyMenu(void);
@@ -793,9 +793,6 @@ extern void *sPartyBgTilemapBuffer;
 extern void *sPartyBgGfxTilemap;
 extern struct PartyMenuBox *sPartyMenuBoxes;
 
-extern const u32 gUnknown_8D967A0[];
-extern const u32 gUnknown_8D96B54[];
-extern const u16 gUnknown_8D96A68[];
 
 void reset_brm(void)
 {
@@ -835,19 +832,19 @@ static bool8 AllocPartyMenuBgGfx(void)
     switch (sPartyMenuInternal->data[0])
     {
     case 0:
-        sPartyBgGfxTilemap = malloc_and_decompress(gUnknown_8D967A0, &sizeout);
+        sPartyBgGfxTilemap = malloc_and_decompress(gPartyMenuBg_Gfx, &sizeout);
         LoadBgTiles(1, sPartyBgGfxTilemap, sizeout, 0);
         sPartyMenuInternal->data[0]++;
         break;
     case 1:
         if (!IsDma3ManagerBusyWithBgCopy())
         {
-            LZDecompressVram(gUnknown_8D96B54, sPartyBgTilemapBuffer);
+            LZDecompressVram(gPartyMenuBg_Tilemap, sPartyBgTilemapBuffer);
             sPartyMenuInternal->data[0]++;
         }
         break;
     case 2:
-        LoadCompressedPalette(gUnknown_8D96A68, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+        LoadCompressedPalette(gPartyMenuBg_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
         CpuCopy16(gPlttBufferUnfaded, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
         sPartyMenuInternal->data[0]++;
         break;

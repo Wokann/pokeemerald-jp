@@ -962,16 +962,6 @@ PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Pal[] = INCGFX
 PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusGfx_Icons[] = INCGFX_U32("graphics/interface/status_icons.png", ".4bpp.lz");
 PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusPal_Icons[] = INCGFX_U32("graphics/interface/status_icons.png", ".gbapal.lz");
 
-// Keep ROM-locked Party Menu consumers on their original symbol names.
-__asm__(
-    ".global gUnknown_8D967A0\n"
-    ".set gUnknown_8D967A0, gPartyMenuBg_Gfx\n"
-    ".global gUnknown_8D96A68\n"
-    ".set gUnknown_8D96A68, gPartyMenuBg_Pal\n"
-    ".global gUnknown_8D96B54\n"
-    ".set gUnknown_8D96B54, gPartyMenuBg_Tilemap\n"
-);
-
 #undef PARTY_MENU_AND_STATUS_ICON_RESOURCES
 
 #define MOVE_TYPES_RESOURCES __attribute__((section(".rodata.move_types_resources"), aligned(1)))

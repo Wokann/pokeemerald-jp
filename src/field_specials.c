@@ -5262,7 +5262,7 @@ __attribute__((naked)) void GetBattleFrontierTutorMoveIndex(void)
         "_0813AF30: .4byte gSpecialVar_0x8005\n\t"
         "_0813AF34: .4byte 0x0000400E\n\t"
         "_0813AF38: .4byte 0x0000400D\n\t"
-        "_0813AF3C: .4byte gUnknown_85E08C4\n\t"
+        "_0813AF3C: .4byte gTutorMoves\n\t"
         "_0813AF40: .4byte gUnknown_8592C68\n\t"
         "_0813AF44:\n\t"
         "	ldr r0, _0813AF4C\n\t"
@@ -5293,7 +5293,7 @@ __attribute__((naked)) void GetBattleFrontierTutorMoveIndex(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813AF78: .4byte gUnknown_85E08C4\n\t"
+        "_0813AF78: .4byte gTutorMoves\n\t"
         "_0813AF7C: .4byte gUnknown_8592C54\n\t"
         ".syntax divided\n\t"
     );
