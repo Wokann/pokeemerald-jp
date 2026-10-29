@@ -82,6 +82,11 @@ JP_MOVE_TYPES_DIR := $(JP_GRAPHICS_GFX_ROOT)graphics/types
 JP_MOVE_TYPES_DATA := $(JP_MOVE_TYPES_DIR)/move_types.4bpp.lz $(JP_MOVE_TYPES_DIR)/move_types.gbapal.lz
 $(foreach move_types_asset,$(JP_MOVE_TYPES_DATA),$(eval $(move_types_asset) := defined))
 
+# The Rayquaza tail uses the same generated source fix as US.
+JP_RAYQUAZA_SCENE_DIR := $(JP_GRAPHICS_GFX_ROOT)graphics/rayquaza_scene
+JP_RAYQUAZA_SCENE_DATA := $(addprefix $(JP_RAYQUAZA_SCENE_DIR)/,scene_3/rayquaza_tail_fix.4bpp scene_3/rayquaza_tail_fix.4bpp.lz)
+$(foreach ray_scene_asset,$(JP_RAYQUAZA_SCENE_DATA),$(eval $(ray_scene_asset) := defined))
+
 ASFILE := $(wildcard asm/*.s)
 AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # Assembly files that live under src/ like US pokeemerald
@@ -955,6 +960,7 @@ $(C_BUILDDIR)/cable_club.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction
 $(C_BUILDDIR)/berry_blender.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/use_pokeblock.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/rayquaza_scene.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
+$(C_BUILDDIR)/rayquaza_scene.o: src/rayquaza_scene.c include/graphics.h
 $(C_BUILDDIR)/recorded_battle.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/record_mixing.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/sound_check.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
@@ -1515,7 +1521,7 @@ $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c Makefile ch
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_summary_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon_summary_screen.gen.s
-$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/graphics/pokeballs.h src/data/text_window.h src/data/scrcmd_data.h \
+$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/rayquaza_scene.h src/data/graphics/berries.h src/data/graphics/pokeballs.h src/data/text_window.h src/data/scrcmd_data.h \
 	graphics/easy_chat/rectangle_cursor.png.gbapal graphics/easy_chat/rectangle_cursor.png.4bpp.lz \
 	graphics/easy_chat/button_window.png.gbapal graphics/easy_chat/mode.png.gbapal graphics/easy_chat/mode.png.4bpp.lz graphics/easy_chat/window.png.4bpp.lz graphics/easy_chat/window.bin.lz graphics/easy_chat/button_window.png.4bpp.lz \
 	graphics/text_window/message_box_jp.4bpp \

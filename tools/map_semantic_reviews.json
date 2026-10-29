@@ -1866,7 +1866,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -1891,7 +1891,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -2610,6 +2610,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_UNDERWATER_ROUTE125",
           "sha256": "66cb52629334bf30bcbe7147dc3afd7f1ae49af3bf752679e8ce85dc17547e96"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -4584,7 +4589,7 @@
             "-include $(C_BUILDDIR)/pokedex_area_screen.d",
             "$(C_BUILDDIR)/pokedex_area_screen.o:"
           ],
-          "sha256": "69b37e8d4b348290179e58e6dba10bf704f034bc281572112ad43c5d62666815"
+          "sha256": "bc39fe25cbd5658a27d47ce9dba460448c172c4216f006861fc85540fd7ce323"
         },
         {
           "path": "ld_script_jp.txt",
@@ -4704,7 +4709,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -4714,7 +4719,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "src/tilesets.c",
@@ -11884,7 +11889,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/main.h",
@@ -11960,6 +11965,11 @@
           "path": "include/window.h",
           "selector": "file",
           "sha256": "aca03d9cbab335c2d52b46cf35fd763285e75bc0c4758a931525476841f72a3c"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -14433,7 +14443,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "data/maps/PetalburgCity_Gym/map.json",
@@ -14500,7 +14510,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -14821,6 +14831,11 @@
           "path": "data/tilesets/secondary/petalburg/tiles.png",
           "selector": "file",
           "sha256": "5f7427dfdd227f6f048b5ee9aa167144672a228dbc5bd25a84a6e348d62429d9"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -16829,7 +16844,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -17546,7 +17561,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -17571,7 +17586,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -17933,6 +17948,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_HARBOR",
           "sha256": "aecda54a3898c6c0dda9c46bdfce66f5fd115529917ec62f778c0a059a162bd7"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -20742,7 +20762,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -20767,7 +20787,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -21142,7 +21162,12 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -23953,7 +23978,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -23978,7 +24003,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -24349,6 +24374,11 @@
           "path": "data/tilesets/secondary/rustboro/tiles.png",
           "selector": "file",
           "sha256": "87b3ce4e15674b3ef02b1793df0bc8633b7c49bf4443cb50708293615b048d24"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -26050,7 +26080,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -26075,7 +26105,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -26396,6 +26426,11 @@
           "path": "data/tilesets/secondary/fortree/tiles.png",
           "selector": "file",
           "sha256": "d366e2c756a226d916b010e2027f851ac912ed43d418e4e5efb419b7cf03fe15"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -28338,7 +28373,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -29342,7 +29377,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -29367,7 +29402,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -29688,6 +29723,11 @@
           "path": "data/tilesets/secondary/lilycove/tiles.png",
           "selector": "file",
           "sha256": "b25529a506feb24b7c04af6b9e4ad38e7c88d67ac2e630984f75f9b41af82024"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -32327,7 +32367,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -32352,7 +32392,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -32677,7 +32717,12 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -34313,7 +34358,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -34658,7 +34703,7 @@
         {
           "path": "src/rayquaza_scene.c",
           "selector": "file",
-          "sha256": "d3c9c2b711ee419458e854fd5345295e0faeba2df39bc2dd8d01a547cb4b3f5b"
+          "sha256": "cae7e4b212b2a9b429cb7693f02d6a0e7147513334bec1723ee68030fa6c0021"
         },
         {
           "path": "src/scrcmd.c",
@@ -35175,7 +35220,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -35200,7 +35245,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -35601,6 +35646,11 @@
           "path": "data/tilesets/secondary/sootopolis/tiles.png",
           "selector": "file",
           "sha256": "171e251331a1b7217bfd4f54ff5a9f32b09e04ae11246928be55af2120af3146"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -37111,7 +37161,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -37136,7 +37186,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -37497,6 +37547,11 @@
           "path": "data/tilesets/secondary/ever_grande/tiles.png",
           "selector": "file",
           "sha256": "1367852246aaeabf31c7e4570282abba464c7f5ecda35f04969ed7dcd2d5a38a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -39353,7 +39408,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -39378,7 +39433,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -39699,6 +39754,11 @@
           "path": "data/tilesets/secondary/petalburg/tiles.png",
           "selector": "file",
           "sha256": "5f7427dfdd227f6f048b5ee9aa167144672a228dbc5bd25a84a6e348d62429d9"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -41797,7 +41857,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -41822,7 +41882,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -42143,6 +42203,11 @@
           "path": "data/tilesets/secondary/petalburg/tiles.png",
           "selector": "file",
           "sha256": "5f7427dfdd227f6f048b5ee9aa167144672a228dbc5bd25a84a6e348d62429d9"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -43611,7 +43676,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -44351,7 +44416,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -44376,7 +44441,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -44717,6 +44782,11 @@
           "path": "data/tilesets/secondary/dewford/tiles.png",
           "selector": "file",
           "sha256": "f6550056c13ac5cc2082547ce834deddcd50624fd62cec61148db1b75698328b"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -45068,7 +45138,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "b522e7c13c55a73adf3d1ad641f4838ed1f79dd0976ca06eec29da10c2532c66"
+            "makefile_sha256": "176d6fb72fb83c710f8f5fce91a72a98249ed990fb0afae6f1e539a64d82086e"
           }
         },
         {
@@ -45503,7 +45573,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "b522e7c13c55a73adf3d1ad641f4838ed1f79dd0976ca06eec29da10c2532c66"
+          "sha256": "176d6fb72fb83c710f8f5fce91a72a98249ed990fb0afae6f1e539a64d82086e"
         },
         {
           "path": "asm/macros.inc",
@@ -47328,7 +47398,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -47353,7 +47423,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -47694,6 +47764,11 @@
           "path": "data/tilesets/secondary/lavaridge/tiles.png",
           "selector": "file",
           "sha256": "fa144501b1ef85bd26f45480852bbb793433e88706b6a577bffb7974262dec4d"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -49546,7 +49621,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -49571,7 +49646,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -50307,6 +50382,11 @@
           "path": "data/tilesets/secondary/pacifidlog/tiles.png",
           "selector": "file",
           "sha256": "dff974fbb000493c23e62ab8b05c8d194e01ff1722f30e8d1d697311fe3c5a97"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -53951,7 +54031,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -53976,7 +54056,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -55756,6 +55836,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ROUTE103",
           "sha256": "d56f047b0e33819f97f443e07bf44724a09df06517a2d24d02ccf5db8be83a95"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -63120,7 +63205,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -63145,7 +63230,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -65429,6 +65514,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ROUTE109",
           "sha256": "74c3cf8b8745a4332b61e8bd3c443b531ce7b0366118bc3651c1b04a5af185b2"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -75962,7 +76052,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -75987,7 +76077,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -76392,7 +76482,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/palette_util.h",
@@ -79479,6 +79569,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ROUTE114",
           "sha256": "a724f950390d7a0b6c9d283d852e1a3cb73724eb74049111a46b3977234e9ff9"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -91521,7 +91616,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -91546,7 +91641,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -92592,7 +92687,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/international_string_util.h",
@@ -95223,6 +95318,11 @@
           "path": "data/tilesets/secondary/fortree/tiles.png",
           "selector": "file",
           "sha256": "d366e2c756a226d916b010e2027f851ac912ed43d418e4e5efb419b7cf03fe15"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -104394,7 +104494,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -107217,7 +107317,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -107242,7 +107342,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -109293,6 +109393,11 @@
           "path": "data/tilesets/secondary/mossdeep/tiles.png",
           "selector": "file",
           "sha256": "3f63a395dda3d4e790b4f2d038828d2e49ec871244d40e13647a6f59548e95a7"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -117875,7 +117980,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -117900,7 +118005,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -119424,6 +119529,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ROUTE129",
           "sha256": "abeddaadbe53a54042fd2dfa62dab2bffbdcfee2b739855cdd65d0d535ffcc8c"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -125447,7 +125557,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -125472,7 +125582,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -127278,6 +127388,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ROUTE134",
           "sha256": "aeebfe9e011f87a739255dde8c67e956a092695290e21c64fa4460f952143074"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -131719,7 +131834,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -133341,7 +133456,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -133366,7 +133481,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -134605,6 +134720,11 @@
           "path": "data/layouts/LittlerootTown_ProfessorBirchsLabWithTable/map.bin",
           "selector": "file",
           "sha256": "6276fbd2a44d156a7cc80747062c7de067ae837c8653694110949d15902ba641"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -139292,7 +139412,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -139909,7 +140029,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -139934,7 +140054,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -142620,6 +142740,11 @@
           "path": "src/field_player_avatar.c",
           "selector": "file",
           "sha256": "f91f393c93eae601023d8914c63bf9ed3d0c09e4f927fa2b03b7147ab4baa75a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -147495,7 +147620,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -147520,7 +147645,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -147850,7 +147975,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "src/dewford_trend.c",
@@ -147994,6 +148119,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_HOUSE4",
           "sha256": "75ad262b48d9cb2665e25a9ef207ae23466a0aea80dc8f6f5b0e5ef9f079d56c"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -152477,7 +152607,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -152502,7 +152632,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -153756,7 +153886,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/mystery_gift_menu.h",
@@ -155650,6 +155780,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_POKEMON_CENTER_2F",
           "sha256": "04bf5c239064522f858a93a7eea7d2fe0ec3f6d1c8c35f6272c06fda8d2398b9"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -161308,7 +161443,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -162072,7 +162207,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -162097,7 +162232,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -165278,6 +165413,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_HOUSE2",
           "sha256": "20bcb4b4ad13ed1effcfa68da9381858358b687ebbd4cc95948824f99be2da7f"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -171089,7 +171229,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -172121,7 +172261,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -172146,7 +172286,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -175008,6 +175148,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_HOUSE1",
           "sha256": "dfbfc035d7fab7a3d9a93a207e13f353e350dc6966f7192c7ed21af38bbcca11"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -180647,7 +180792,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -181709,7 +181854,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -181734,7 +181879,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -184066,6 +184211,11 @@
           "path": "src/time_events.c",
           "selector": "file",
           "sha256": "5b0ab945aa8d51531c00bc019e8a34bd0879ae56ec277ec70d12c926db27e639"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -189700,7 +189850,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -190484,7 +190634,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -190509,7 +190659,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -193727,6 +193877,11 @@
           "path": "src/starter_choose.c",
           "selector": "file",
           "sha256": "52f6d2846a569943c66404276655ab5e8e1a8ba74be6d4a84b99bcaaec0afe50"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -199951,7 +200106,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -200692,7 +200847,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -200717,7 +200872,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -204701,6 +204856,11 @@
           "path": "tools/test_shared_event_scripts.py",
           "selector": "file",
           "sha256": "0baeb6c20b68d626e595e81096f4c8a467d838baa9a36005141e4c1e5b6f732e"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -211956,7 +212116,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -213024,7 +213184,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -213049,7 +213209,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -216564,6 +216724,11 @@
           "path": "src/event_data.c",
           "selector": "file",
           "sha256": "fc255b44cfa99a62a48863eb2ba017df9fea3d3488c5fde6ef888260cbf63f6a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -223071,7 +223236,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -223796,7 +223961,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -223821,7 +223986,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -227532,6 +227697,11 @@
           "path": "src/event_data.c",
           "selector": "file",
           "sha256": "fc255b44cfa99a62a48863eb2ba017df9fea3d3488c5fde6ef888260cbf63f6a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -233943,7 +234113,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -234681,7 +234851,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -234706,7 +234876,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -237881,6 +238051,11 @@
           "path": "src/event_data.c",
           "selector": "file",
           "sha256": "fc255b44cfa99a62a48863eb2ba017df9fea3d3488c5fde6ef888260cbf63f6a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -246359,7 +246534,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -247064,7 +247239,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -247089,7 +247264,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -254004,6 +254179,11 @@
           "path": "src/event_data.c",
           "selector": "file",
           "sha256": "fc255b44cfa99a62a48863eb2ba017df9fea3d3488c5fde6ef888260cbf63f6a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -265321,7 +265501,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -265346,7 +265526,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -266091,7 +266271,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/mystery_gift_menu.h",
@@ -268855,6 +269035,11 @@
           "path": "src/event_data.c",
           "selector": "file",
           "sha256": "fc255b44cfa99a62a48863eb2ba017df9fea3d3488c5fde6ef888260cbf63f6a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -275500,7 +275685,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -276515,7 +276700,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -276540,7 +276725,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -279634,6 +279819,11 @@
           "path": "src/event_data.c",
           "selector": "file",
           "sha256": "fc255b44cfa99a62a48863eb2ba017df9fea3d3488c5fde6ef888260cbf63f6a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -285732,7 +285922,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -286488,7 +286678,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -286513,7 +286703,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -289717,6 +289907,11 @@
           "path": "src/event_data.c",
           "selector": "file",
           "sha256": "fc255b44cfa99a62a48863eb2ba017df9fea3d3488c5fde6ef888260cbf63f6a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -294449,7 +294644,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -295152,7 +295347,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -295177,7 +295372,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -297122,6 +297317,11 @@
           "path": "src/event_data.c",
           "selector": "file",
           "sha256": "fc255b44cfa99a62a48863eb2ba017df9fea3d3488c5fde6ef888260cbf63f6a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -301622,7 +301822,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -301647,7 +301847,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/secondary/meteor_falls/metatile_attributes.bin",
@@ -303347,6 +303547,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_GRANITE_CAVE_STEVENS_ROOM",
           "sha256": "1bcbe86ab1fdde0222dd105457ed27760a40b449fb16b032408bc4a68e60d89b"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -307066,7 +307271,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -308276,7 +308481,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -308301,7 +308506,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -309528,6 +309733,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_MT_PYRE_SUMMIT",
           "sha256": "a509fc8ba5489f3755bf8d1d6beffb0b395794b282e78102bf50f1ca2cdfb11a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -313603,7 +313813,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -313628,7 +313838,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -315482,6 +315692,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_CAVE_OF_ORIGIN_B1F",
           "sha256": "1f9c1123df1eedb65149f7d58b956857ed7d6e615d86869fa558fdf053d81082"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -320227,7 +320442,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -320252,7 +320467,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -321824,6 +322039,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_NEW_MAUVILLE_INSIDE",
           "sha256": "4bdd212dbcdf642f9381f43f1dd5d18f7e9e2237744f0d23102028464904d91e"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -325738,7 +325958,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -325763,7 +325983,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -327330,6 +327550,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ABANDONED_SHIP_HIDDEN_FLOOR_ROOMS",
           "sha256": "5179fc9b22f73a4deb8e2a148767c86564c2dc3bd6315e4e4d56bd50d4fac99b"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -331296,7 +331521,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -331321,7 +331546,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -333445,6 +333670,11 @@
           "path": "data/layouts/SkyPillar_Top_Clean/map.bin",
           "selector": "file",
           "sha256": "59d583d1c0a457f0963c746b2aaa52dbb2fd35acb1ba959d7d9d93c37821ea80"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -338193,7 +338423,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -338218,7 +338448,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -340710,6 +340940,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_METEOR_FALLS_STEVENS_CAVE",
           "sha256": "e62528794b2438b15663cef3caa57edd5e587cad5aad737554fa08b3b1196eff"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -345359,7 +345594,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -346123,7 +346358,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -346148,7 +346383,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -348879,6 +349114,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_CONTEST_HALL",
           "sha256": "b834a09835d21ad97d4910fd5ed84e51f7a5be0ee05d149f41e425df71ae7560"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -353138,7 +353378,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -353163,7 +353403,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -354587,6 +354827,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_SS_TIDAL_ROOMS",
           "sha256": "2f7c69f41cea74bb2b11dbb9f3c1f24b6bf003948e214753830599546546ce54"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -356593,7 +356838,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -357592,7 +357837,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -357617,7 +357862,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -358564,6 +358809,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_UNION_ROOM",
           "sha256": "7c5d772892e738a90986d4174cc70d49b08d6f2d4af00942927f0bc5e6a08cf1"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -361308,7 +361558,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -361333,7 +361583,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -362426,6 +362676,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_SAFARI_ZONE_SOUTH",
           "sha256": "b3e946d8e3a7e1f1e027b275fdbb260ed20fced92fe3c14de0572b7e9a0f30ad"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -364986,7 +365241,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -365838,7 +366093,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -365863,7 +366118,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -367512,6 +367767,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM",
           "sha256": "25f25283afb64fc82cacdfebfdb4d35da22f92542ea5a907a80f017bf7fcd10a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -370578,7 +370838,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -370603,7 +370863,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -371802,6 +372062,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_SOUTHERN_ISLAND_INTERIOR",
           "sha256": "d4de583a26bf2f15f8a5b44c9a0aa34c24efa96695bce26df7405799feb426e8"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -374231,7 +374496,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -374256,7 +374521,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -375483,6 +375748,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_SAFARI_ZONE_SOUTHEAST",
           "sha256": "d117b169b09effaade4d7b1638041fe1e3c51b7683556332ddcfe09f56637de2"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -377520,7 +377790,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -378278,7 +378548,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -378303,7 +378573,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -379430,6 +379700,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM",
           "sha256": "25f25283afb64fc82cacdfebfdb4d35da22f92542ea5a907a80f017bf7fcd10a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -381248,7 +381523,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -382092,7 +382367,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -382117,7 +382392,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -383099,6 +383374,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_DOME_BATTLE_ROOM",
           "sha256": "11fc833fb0c8d3cd728631cacded59dbf40905705445ad5519d288e7810cfa84"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -384785,7 +385065,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -385608,7 +385888,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -385633,7 +385913,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -386538,6 +386818,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM",
           "sha256": "3a24aba640de570d9bcae21fabbfc9e854e001ee5ba942ab839c5e6c90d4142a"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -388425,7 +388710,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -389229,7 +389514,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -389254,7 +389539,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -390439,6 +390724,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_TOP",
           "sha256": "a71f20e904800f95b8d47b8ea4ab850e8bc36a5a79ea116a55b3e9b7f0565a4f"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -392317,7 +392607,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -393145,7 +393435,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -393170,7 +393460,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -394099,6 +394389,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_ARENA_BATTLE_ROOM",
           "sha256": "588750ebb5772558793c675d30aad829d476fe2739062112054589b47ffa95f8"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -395753,7 +396048,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -396578,7 +396873,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -396603,7 +396898,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -397540,6 +397835,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM",
           "sha256": "82e838b303b6f2f81dc09b1510447923561e9f7b2938ed147d318fcc8ba79ce6"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -399336,7 +399636,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -400116,7 +400416,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -400141,7 +400441,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -401447,6 +401747,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS",
           "sha256": "46123b24c1ee09e326ebef2ac27c39169add4e08e2a838d6bc6694bbfe65a1db"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -405150,7 +405455,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -405911,7 +406216,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -405936,7 +406241,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -409247,6 +409552,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_MART",
           "sha256": "6b35eafc0a4df7f2381aa80adf541aca7da6a1feadca23104d24435483ab8aec"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -413556,7 +413866,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -414375,7 +414685,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -414400,7 +414710,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -415855,6 +416165,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_FARAWAY_ISLAND_INTERIOR",
           "sha256": "87b5b3d37c875f1ee6b33727dc84355256698ada9c19f347998ca74cd1be10e8"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -417922,7 +418237,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -418643,7 +418958,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -418668,7 +418983,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -419596,6 +419911,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ISLAND_HARBOR",
           "sha256": "64ea8b1f55e14bb26daa9b52a4f762a8ab385f6abc3408241831d6a81bed65ae"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -421446,7 +421766,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -422452,7 +422772,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -422477,7 +422797,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -423154,6 +423474,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_TRAINER_HILL_ROOF",
           "sha256": "4849c92540028b07f23412b04e97c6e338cfda1ebd047907d045aa374de082c0"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -426057,7 +426382,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -426082,7 +426407,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -428081,6 +428406,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_NAVEL_ROCK_BOTTOM",
           "sha256": "eaa4e7f68a3515904ae0dbcc1d1fcaeb8ac1c76d424d08bdacff7d2c38fc725c"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -431530,7 +431860,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -431555,7 +431885,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -431756,6 +432086,11 @@
           "path": "data/tilesets/secondary/battle_frontier/tiles.png",
           "selector": "file",
           "sha256": "b4d1dcc4c543ddf9b8ec9db63f51c01306ac9290cc59a869b2898ecd529a384f"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -433513,7 +433848,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -433538,7 +433873,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -434160,6 +434495,11 @@
           "path": "data/tilesets/secondary/pretty_petal_flower_shop/tiles.png",
           "selector": "file",
           "sha256": "ea83dfee7ce044d3c4058ef17a27ad3c826d7107f4f4dfdb4ebdc28673d0eeac"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -436472,7 +436812,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -436497,7 +436837,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -436698,6 +437038,11 @@
           "path": "data/tilesets/secondary/seashore_house/tiles.png",
           "selector": "file",
           "sha256": "d07afd0766e49ab92bf301d2a7595cd838af4672c46a93dbd46d99f840201a4f"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -439976,7 +440321,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -440001,7 +440346,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -441392,6 +441737,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ROUTE110_TRICK_HOUSE_PUZZLE8",
           "sha256": "920f1ec049de703644b82ea04fdd74376dbdb492df0dbc2a824823e47515efe5"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -443878,7 +444228,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -444550,7 +444900,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -444575,7 +444925,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -444801,6 +445151,11 @@
           "path": "data/maps/Route110_SeasideCyclingRoadNorthEntrance/scripts.inc",
           "selector": "file",
           "sha256": "d7a98e7049721fb9328d2c4a89adb967b650912da6d45282242024f9410245d0"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -446186,7 +446541,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -447066,7 +447421,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -447091,7 +447446,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -447292,6 +447647,11 @@
           "path": "data/tilesets/secondary/generic_building/tiles.png",
           "selector": "file",
           "sha256": "7783d199aaaaa51db286c745ddc6907a576f2930767a2f52862128c39cf15be8"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -448797,7 +449157,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -449677,7 +450037,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -449702,7 +450062,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -449903,6 +450263,11 @@
           "path": "data/tilesets/secondary/generic_building/tiles.png",
           "selector": "file",
           "sha256": "7783d199aaaaa51db286c745ddc6907a576f2930767a2f52862128c39cf15be8"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -451611,7 +451976,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -452387,7 +452752,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -452412,7 +452777,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -452813,6 +453178,11 @@
           "selector": "json_layout",
           "id": "LAYOUT_ROUTE119_WEATHER_INSTITUTE_2F",
           "sha256": "4e94852675a42b23bb2da32046921f66592ce24f6e5f5d7dedf0c9d4f21ca5b9"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -454255,7 +454625,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -454935,7 +455305,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -454960,7 +455330,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -455161,6 +455531,11 @@
           "path": "data/tilesets/secondary/generic_building/tiles.png",
           "selector": "file",
           "sha256": "7783d199aaaaa51db286c745ddc6907a576f2930767a2f52862128c39cf15be8"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -456414,7 +456789,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -457214,7 +457589,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/data/tilesets/headers.h",
@@ -457239,7 +457614,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -457440,6 +457815,11 @@
           "path": "data/tilesets/secondary/generic_building/tiles.png",
           "selector": "file",
           "sha256": "7783d199aaaaa51db286c745ddc6907a576f2930767a2f52862128c39cf15be8"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "native_spans": [
@@ -462516,7 +462896,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -462811,7 +463191,7 @@
         {
           "path": "ld_script_jp.txt",
           "selector": "file",
-          "sha256": "73977671e7aac1df5bfb8ac522974b6ff03f091c7a2ced74ed776bfd6c96a68f"
+          "sha256": "4e565db0bbe276aa2a9a9c61a2cfcca3af67598661bdda22facbbc1cdf8ed244"
         },
         {
           "path": "src/battle_tower.c",
@@ -462876,7 +463256,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "src/metatile_behavior.c",
@@ -465350,6 +465730,11 @@
             "data/maps.o"
           ],
           "sha256": "07e8100a59ead9b45b6c7246485b8e4c02d05c81fdfd923915108d24e3ac95ae"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -470187,7 +470572,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -470662,7 +471047,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "src/item.c",
@@ -473569,6 +473954,11 @@
             "data/maps.o"
           ],
           "sha256": "07e8100a59ead9b45b6c7246485b8e4c02d05c81fdfd923915108d24e3ac95ae"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {
@@ -476404,7 +476794,7 @@
         {
           "path": "include/graphics.h",
           "selector": "file",
-          "sha256": "124dacfab9440d80740ed2883372c94bcb9d8ae631b58879e39016b36cb49d90"
+          "sha256": "a6cd0b4bf6f7a7d1b0c2e5cf069801229aae65f9937e05b966799bc3e3ae6eae"
         },
         {
           "path": "include/gym_leader_rematch.h",
@@ -476879,7 +477269,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "df367f63ca2bcf794934fb1ab97c001ad312f099de6cfd9e1f43c96090c591cc"
+          "sha256": "9cf12fb5765cf2c6dd9cbaf185c02b144c8ab2c522ccfe88952d7c3609cdf848"
         },
         {
           "path": "src/item.c",
@@ -478678,6 +479068,11 @@
             "data/maps.o"
           ],
           "sha256": "07e8100a59ead9b45b6c7246485b8e4c02d05c81fdfd923915108d24e3ac95ae"
+        },
+        {
+          "path": "src/data/graphics/rayquaza_scene.h",
+          "selector": "file",
+          "sha256": "294a37b87cac71645cec55f6520b968f955bd330fdb40fdf7f1566668b2e76f7"
         }
       ],
       "us_reference": {

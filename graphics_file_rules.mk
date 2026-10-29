@@ -262,3 +262,12 @@ graphics/unused/redyellowgreen_frame.bin: graphics/unused/red_frame.bin \
 	graphics/unused/green_frame.bin \
 	graphics/unused/blank_frame.bin Makefile graphics_file_rules.mk | tools
 	@cat $(filter %.bin,$^) >$@
+
+# Rayquaza tail fix from the US generated graphics rules.
+$(JP_RAYQUAZA_SCENE_DIR)/scene_3/rayquaza_tail_fix.4bpp: graphics/rayquaza_scene/scene_3/rayquaza_tail.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+	dd if=/dev/zero bs=1 count=12 status=none >> $@
+
+$(JP_RAYQUAZA_SCENE_DIR)/scene_3/rayquaza_tail_fix.4bpp.lz: $(JP_RAYQUAZA_SCENE_DIR)/scene_3/rayquaza_tail_fix.4bpp $(GFX)
+	$(GFX) $< $@

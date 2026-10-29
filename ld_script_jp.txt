@@ -10506,7 +10506,7 @@ SECTIONS {
         src/graphics.o(.rodata.berry_graphics);
         src/graphics.o(.rodata.rayquaza_scene_1_graphics);
         src/graphics.o(.rodata.rayquaza_scene_2_smoke_graphics);
-        src/graphics.o(.rodata.rayquaza_scene_2_bg_graphics);
+        src/graphics.o(.rodata.rayquaza_scene_2_rayquaza_graphics);
         src/graphics.o(.rodata.rayquaza_scene_descends_shared_pal);
         src/graphics.o(.rodata.rayquaza_scene_2_remaining_graphics);
         src/graphics.o(.rodata.rayquaza_scene_3_sprite_graphics);
