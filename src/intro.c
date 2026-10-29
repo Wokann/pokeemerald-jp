@@ -618,41 +618,41 @@ __attribute__((naked)) void Task_IntroLoadPart1Graphics(void)
 
 #define INTRO_SCENE_1_LOGO_GRAPHICS __attribute__((section(".rodata.intro_scene_1_logo_graphics")))
 
-static const u16 sIntroDrops_Pal[] INTRO_SCENE_1_LOGO_GRAPHICS = INCBIN_U16("graphics/intro/scene_1/drops.png.gbapal");
-static const u16 sIntroLogo_Pal[] INTRO_SCENE_1_LOGO_GRAPHICS = INCBIN_U16("graphics/intro/scene_1/logo.png.gbapal");
-static const u32 sIntroDropsLogo_Gfx[] INTRO_SCENE_1_LOGO_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/drops_logo.png.4bpp.lz");
+static const u16 sIntroDrops_Pal[] INTRO_SCENE_1_LOGO_GRAPHICS = INCGFX_U16("graphics/intro/scene_1/drops.pal", ".gbapal");
+static const u16 sIntroLogo_Pal[] INTRO_SCENE_1_LOGO_GRAPHICS = INCGFX_U16("graphics/intro/scene_1/logo.pal", ".gbapal");
+static const u32 sIntroDropsLogo_Gfx[] INTRO_SCENE_1_LOGO_GRAPHICS = INCGFX_U32("graphics/intro/scene_1/drops_logo.png", ".4bpp.lz");
 
 #undef INTRO_SCENE_1_LOGO_GRAPHICS
 
 #define INTRO_SCENE_1_GRAPHICS __attribute__((section(".rodata.intro_scene_1_graphics")))
 
-static const u16 sIntro1Bg_Pal[] INTRO_SCENE_1_GRAPHICS = INCBIN_U16("graphics/intro/scene_1/bg.png.gbapal");
-static const u32 sIntro1Bg0_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg0_map.bin.lz");
-static const u32 sIntro1Bg1_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg1_map.bin.lz");
-static const u32 sIntro1Bg2_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg2_map.bin.lz");
-static const u32 sIntro1Bg3_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg3_map.bin.lz");
-static const u32 sIntro1Bg_Gfx[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg.png.4bpp.lz");
+static const u16 sIntro1Bg_Pal[] INTRO_SCENE_1_GRAPHICS = INCGFX_U16("graphics/intro/scene_1/bg.png", ".gbapal");
+static const u32 sIntro1Bg0_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCGFX_U32("graphics/intro/scene_1/bg0_map.bin", ".lz");
+static const u32 sIntro1Bg1_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCGFX_U32("graphics/intro/scene_1/bg1_map.bin", ".lz");
+static const u32 sIntro1Bg2_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCGFX_U32("graphics/intro/scene_1/bg2_map.bin", ".lz");
+static const u32 sIntro1Bg3_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCGFX_U32("graphics/intro/scene_1/bg3_map.bin", ".lz");
+static const u32 sIntro1Bg_Gfx[] INTRO_SCENE_1_GRAPHICS = INCGFX_U32("graphics/intro/scene_1/bg.png", ".4bpp.lz");
 
 #undef INTRO_SCENE_1_GRAPHICS
 
 #define INTRO_SCENE_3_POKEBALL_GRAPHICS __attribute__((section(".rodata.intro_scene_3_pokeball_graphics")))
 
-static const u16 sIntroPokeball_Pal[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCBIN_U16("graphics/intro/scene_3/pokeball.png.gbapal");
-static const u32 sIntroPokeball_Tilemap[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/pokeball_map.bin.lz");
-static const u32 sIntroPokeball_Gfx[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/pokeball.png.8bpp.lz");
+static const u16 sIntroPokeball_Pal[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCGFX_U16("graphics/intro/scene_3/pokeball.png", ".gbapal");
+static const u32 sIntroPokeball_Tilemap[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCGFX_U32("graphics/intro/scene_3/pokeball_map.bin", ".lz");
+static const u32 sIntroPokeball_Gfx[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCGFX_U32("graphics/intro/scene_3/pokeball.png", ".8bpp.lz");
 
 #undef INTRO_SCENE_3_POKEBALL_GRAPHICS
 
 #define INTRO_SCENE_3_AUXILIARY_GRAPHICS __attribute__((section(".rodata.intro_scene_3_auxiliary_graphics")))
 
-static const u16 sIntroStreaks_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U16("graphics/intro/scene_3/streaks.png.gbapal");
-static const u32 sIntroStreaks_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/streaks.png.4bpp.lz");
-static const u32 sIntroStreaks_Tilemap[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/streaks_map.bin.lz");
-static const u16 sIntroRayquzaOrb_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U16("graphics/intro/scene_3/rayquaza_orb.png.gbapal");
-static const u16 sIntroMisc_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U16("graphics/intro/scene_3/misc.png.gbapal");
-static const u32 sIntroMisc_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/misc.png.4bpp.lz");
-static const u16 sIntroFlygonSilhouette_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U16("graphics/intro/scene_1/flygon.png.gbapal");
-static const u32 sIntroLati_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/lati.png.4bpp.lz");
+static const u16 sIntroStreaks_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCGFX_U16("graphics/intro/scene_3/streaks.png", ".gbapal");
+static const u32 sIntroStreaks_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCGFX_U32("graphics/intro/scene_3/streaks.png", ".4bpp.lz");
+static const u32 sIntroStreaks_Tilemap[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCGFX_U32("graphics/intro/scene_3/streaks_map.bin", ".lz");
+static const u16 sIntroRayquzaOrb_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCGFX_U16("graphics/intro/scene_3/rayquaza_orb.pal", ".gbapal");
+static const u16 sIntroMisc_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCGFX_U16("graphics/intro/scene_3/misc.pal", ".gbapal");
+static const u32 sIntroMisc_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCGFX_U32("graphics/intro/scene_3/misc.png", ".4bpp.lz");
+static const u16 sIntroFlygonSilhouette_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCGFX_U16("graphics/intro/scene_1/flygon.png", ".gbapal");
+static const u32 sIntroLati_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCGFX_U32("graphics/intro/scene_1/lati.png", ".4bpp.lz");
 static const u8 sUnusedData[] INTRO_SCENE_3_AUXILIARY_GRAPHICS =
 {
     0x02, 0x03, 0x04, 0x05, 0x01, 0x01, 0x01, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x02, 0x0D,

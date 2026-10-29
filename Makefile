@@ -1209,8 +1209,6 @@ clean: clean-tools
 	rm -f $(JP_FLDEFF_MISC_ASSETS)
 	rm -f $(JP_BATTLE_ANIM_FAMILY_ASSETS) $(JP_BATTLE_ANIM_FAMILY_INTERMEDIATES)
 	rm -f $(JP_EVOLUTION_SCENE_ASSETS) $(JP_EVOLUTION_SCENE_INTERMEDIATES)
-	rm -f $(JP_INTRO_SCENE_ASSETS) $(JP_INTRO_SCENE_INTERMEDIATES)
-	rm -f $(JP_INTRO_CREDITS_ASSETS) $(JP_INTRO_CREDITS_INTERMEDIATES)
 	rm -f $(JP_BATTLE_ENTRY_ASSETS) $(JP_BATTLE_ENTRY_INTERMEDIATES)
 	rm -f $(JP_BATTLE_ANIM_REMAINING_ASSETS) $(JP_BATTLE_ANIM_REMAINING_INTERMEDIATES)
 	rm -f $(JP_CONTEST_ASSETS) $(JP_CONTEST_INTERMEDIATES)
@@ -1529,24 +1527,6 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/rayquaza_scene.h src/
 	graphics/title_screen/pokemon_logo.gbapal graphics/title_screen/pokemon_logo.bin.lz graphics/title_screen/pokemon_logo.8bpp.lz \
 	graphics/title_screen/emerald_version.8bpp.lz graphics/title_screen/clouds.bin.lz \
 	graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin \
-	graphics/intro/scene_2/player.pal.gbapal \
-	graphics/intro/scene_2/volbeat.png.gbapal graphics/intro/scene_2/torchic.png.gbapal \
-	graphics/intro/scene_2/manectric.png.gbapal graphics/intro/scene_2/flygon.png.gbapal \
-	graphics/intro/scene_2/volbeat.png.4bpp.lz graphics/intro/scene_2/torchic.png.4bpp.lz \
-	graphics/intro/scene_2/manectric.png.4bpp.lz graphics/intro/scene_2/flygon.png.4bpp.lz \
-	graphics/intro/scene_2/brendan.png.4bpp.lz graphics/intro/scene_2/may.png.4bpp.lz \
-	graphics/intro/scene_3/groudon.png.8bpp.lz graphics/intro/scene_3/groudon.bin.lz \
-	graphics/intro/scene_3/kyogre.png.8bpp.lz graphics/intro/scene_3/kyogre.bin.lz \
-	graphics/intro/scene_3/legend_bg.png.4bpp.lz graphics/intro/scene_3/groudon_bg.bin.lz \
-	graphics/intro/scene_3/kyogre_bg.bin.lz graphics/intro/scene_3/clouds.png.4bpp.lz \
-	graphics/intro/scene_3/clouds_left.bin.lz graphics/intro/scene_3/clouds_right.bin.lz \
-	graphics/intro/scene_3/clouds_sun.bin.lz \
-	graphics/intro/scene_3/rayquaza.png.4bpp.lz graphics/intro/scene_3/rayquaza.bin.lz \
-	graphics/intro/scene_3/unused_1.bin.lz graphics/intro/scene_3/unused_2.bin.lz \
-	graphics/intro/scene_3/rayquaza_clouds.png.4bpp.lz graphics/intro/scene_3/rayquaza_clouds.bin.lz \
-	graphics/intro/scene_3/lightning.png.4bpp.lz graphics/intro/scene_3/lightning.png.gbapal \
-	graphics/intro/scene_3/bubbles.png.4bpp.lz graphics/intro/scene_3/bubbles.png.gbapal \
-	graphics/intro/scene_1/flygon.png.4bpp.lz graphics/intro/scene_1/sparkle.png.4bpp.lz \
 	graphics/battle_anims/sprites/flying_dirt.png.4bpp.lz graphics/battle_anims/sprites/flying_dirt.png.gbapal.lz \
 	graphics/battle_anims/backgrounds/sandstorm_brew.bin.lz graphics/battle_anims/backgrounds/sandstorm_brew.png.4bpp.lz \
 	graphics/battle_anims/sprites/metal_sound_waves.png.4bpp.lz graphics/battle_anims/sprites/metal_sound_waves.png.gbapal.lz \
@@ -1857,29 +1837,9 @@ $(C_BUILDDIR)/cable_car.o: src/cable_car.c $(wildcard graphics/cable_car/*)
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/cable_car.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/cable_car.gen.s
 
-$(C_BUILDDIR)/intro.o: src/intro.c \
-	graphics/intro/scene_1/drops.png.gbapal \
-	graphics/intro/scene_1/logo.png.gbapal \
-	graphics/intro/scene_1/drops_logo.png.4bpp.lz \
-	graphics/intro/scene_1/bg.png.gbapal \
-	graphics/intro/scene_1/bg0_map.bin.lz \
-	graphics/intro/scene_1/bg1_map.bin.lz \
-	graphics/intro/scene_1/bg2_map.bin.lz \
-	graphics/intro/scene_1/bg3_map.bin.lz \
-	graphics/intro/scene_1/bg.png.4bpp.lz \
-	graphics/intro/scene_3/pokeball.png.gbapal \
-	graphics/intro/scene_3/pokeball_map.bin.lz \
-	graphics/intro/scene_3/pokeball.png.8bpp.lz \
-	graphics/intro/scene_3/streaks.png.gbapal \
-	graphics/intro/scene_3/streaks.png.4bpp.lz \
-	graphics/intro/scene_3/streaks_map.bin.lz \
-	graphics/intro/scene_3/rayquaza_orb.png.gbapal \
-	graphics/intro/scene_3/misc.png.gbapal \
-	graphics/intro/scene_3/misc.png.4bpp.lz \
-	graphics/intro/scene_1/flygon.png.gbapal \
-	graphics/intro/scene_1/lati.png.4bpp.lz
+$(C_BUILDDIR)/intro.o: src/intro.c
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/intro.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/intro.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/intro.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/intro.gen.s
 
@@ -3844,8 +3804,8 @@ JP_FRONTIER_UI_ASSETS := graphics/battle_frontier/arena_judgment_symbols.png.4bp
 	graphics/battle_frontier/tourney_tree.png.gbapal.lz \
 	graphics/battle_interface/text.pal.gbapal.lz \
 	graphics/battle_interface/text_pp.pal.gbapal \
-	graphics/intro/scene_1/text.pal.gbapal \
-	graphics/intro/scene_2/player.pal.gbapal
+	 \
+
 
 JP_FRONTIER_UI_INTERMEDIATES := graphics/battle_frontier/arena_judgment_symbols.png.4bpp \
 	graphics/battle_frontier/arena_judgment_symbols.png.gbapal \
@@ -3864,7 +3824,7 @@ graphics/battle_frontier/arena_judgment_symbols.png.4bpp graphics/battle_frontie
 graphics/battle_frontier/arena_judgment_symbols.png.gbapal graphics/battle_frontier/tourney_tree.png.gbapal: %.png.gbapal: %.png Makefile | tools
 	$(GFX) $< $@
 
-graphics/battle_frontier/dome_anim1.pal.gbapal graphics/battle_frontier/dome_anim2.pal.gbapal graphics/battle_frontier/dome_anim3.pal.gbapal graphics/battle_frontier/dome_anim4.pal.gbapal graphics/battle_frontier/pyramid_floor.pal.gbapal graphics/battle_frontier/tourney_buttons.pal.gbapal graphics/battle_frontier/tourney_match_card_bg.pal.gbapal graphics/battle_interface/text.pal.gbapal graphics/battle_interface/text_pp.pal.gbapal graphics/intro/scene_1/text.pal.gbapal graphics/intro/scene_2/player.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
+graphics/battle_frontier/dome_anim1.pal.gbapal graphics/battle_frontier/dome_anim2.pal.gbapal graphics/battle_frontier/dome_anim3.pal.gbapal graphics/battle_frontier/dome_anim4.pal.gbapal graphics/battle_frontier/pyramid_floor.pal.gbapal graphics/battle_frontier/tourney_buttons.pal.gbapal graphics/battle_frontier/tourney_match_card_bg.pal.gbapal graphics/battle_interface/text.pal.gbapal graphics/battle_interface/text_pp.pal.gbapal  : %.pal.gbapal: %.pal Makefile | tools
 	$(GFX) $< $@
 
 $(filter %.lz,$(JP_FRONTIER_UI_ASSETS)): %.lz: % Makefile | tools
@@ -3872,138 +3832,11 @@ $(filter %.lz,$(JP_FRONTIER_UI_ASSETS)): %.lz: % Makefile | tools
 
 $(C_BUILDDIR)/graphics.o: $(JP_FRONTIER_UI_ASSETS)
 
-JP_INTRO_SCENE_ASSETS := graphics/intro/scene_1/flygon.png.4bpp.lz \
-	graphics/intro/scene_1/sparkle.png.4bpp.lz \
-	graphics/intro/scene_1/text.pal.gbapal \
-	graphics/intro/scene_2/brendan.png.4bpp.lz \
-	graphics/intro/scene_2/flygon.png.4bpp.lz \
-	graphics/intro/scene_2/flygon.png.gbapal \
-	graphics/intro/scene_2/manectric.png.4bpp.lz \
-	graphics/intro/scene_2/manectric.png.gbapal \
-	graphics/intro/scene_2/may.png.4bpp.lz \
-	graphics/intro/scene_2/player.pal.gbapal \
-	graphics/intro/scene_2/torchic.png.4bpp.lz \
-	graphics/intro/scene_2/torchic.png.gbapal \
-	graphics/intro/scene_2/volbeat.png.4bpp.lz \
-	graphics/intro/scene_2/volbeat.png.gbapal \
-	graphics/intro/scene_3/bg.pal.gbapal \
-	graphics/intro/scene_3/bubbles.png.4bpp.lz \
-	graphics/intro/scene_3/bubbles.png.gbapal \
-	graphics/intro/scene_3/clouds.png.4bpp.lz \
-	graphics/intro/scene_3/clouds_left.bin.lz \
-	graphics/intro/scene_3/clouds_right.bin.lz \
-	graphics/intro/scene_3/clouds_sun.bin.lz \
-	graphics/intro/scene_3/groudon.bin.lz \
-	graphics/intro/scene_3/groudon.png.8bpp.lz \
-	graphics/intro/scene_3/groudon_bg.bin.lz \
-	graphics/intro/scene_3/kyogre.bin.lz \
-	graphics/intro/scene_3/kyogre.png.8bpp.lz \
-	graphics/intro/scene_3/kyogre_bg.bin.lz \
-	graphics/intro/scene_3/legend_bg.png.4bpp.lz \
-	graphics/intro/scene_3/lightning.png.4bpp.lz \
-	graphics/intro/scene_3/lightning.png.gbapal \
-	graphics/intro/scene_3/rayquaza.bin.lz \
-	graphics/intro/scene_3/rayquaza.png.4bpp.lz \
-	graphics/intro/scene_3/rayquaza_clouds.bin.lz \
-	graphics/intro/scene_3/rayquaza_clouds.png.4bpp.lz \
-	graphics/intro/scene_3/unused_1.bin.lz \
-	graphics/intro/scene_3/unused_2.bin.lz
+$(C_BUILDDIR)/graphics.o: src/data/graphics/intro_scene.h
 
-JP_INTRO_SCENE_INTERMEDIATES := graphics/intro/scene_1/flygon.png.4bpp \
-	graphics/intro/scene_1/sparkle.png.4bpp \
-	graphics/intro/scene_2/brendan.png.4bpp \
-	graphics/intro/scene_2/flygon.png.4bpp \
-	graphics/intro/scene_2/manectric.png.4bpp \
-	graphics/intro/scene_2/may.png.4bpp \
-	graphics/intro/scene_2/torchic.png.4bpp \
-	graphics/intro/scene_2/volbeat.png.4bpp \
-	graphics/intro/scene_3/bubbles.png.4bpp \
-	graphics/intro/scene_3/clouds.png.4bpp \
-	graphics/intro/scene_3/groudon.png.8bpp \
-	graphics/intro/scene_3/kyogre.png.8bpp \
-	graphics/intro/scene_3/legend_bg.png.4bpp \
-	graphics/intro/scene_3/lightning.png.4bpp \
-	graphics/intro/scene_3/rayquaza.png.4bpp \
-	graphics/intro/scene_3/rayquaza_clouds.png.4bpp
-
-graphics/intro/scene_1/flygon.png.4bpp graphics/intro/scene_1/sparkle.png.4bpp graphics/intro/scene_2/brendan.png.4bpp graphics/intro/scene_2/flygon.png.4bpp graphics/intro/scene_2/manectric.png.4bpp graphics/intro/scene_2/may.png.4bpp graphics/intro/scene_2/torchic.png.4bpp graphics/intro/scene_2/volbeat.png.4bpp graphics/intro/scene_3/bubbles.png.4bpp graphics/intro/scene_3/clouds.png.4bpp graphics/intro/scene_3/legend_bg.png.4bpp graphics/intro/scene_3/lightning.png.4bpp graphics/intro/scene_3/rayquaza.png.4bpp graphics/intro/scene_3/rayquaza_clouds.png.4bpp: %.png.4bpp: %.png Makefile | tools
-	$(GFX) $< $@
-
-graphics/intro/scene_3/groudon.png.8bpp graphics/intro/scene_3/kyogre.png.8bpp: %.png.8bpp: %.png Makefile | tools
-	$(GFX) $< $@
-
-graphics/intro/scene_2/flygon.png.gbapal graphics/intro/scene_2/manectric.png.gbapal graphics/intro/scene_2/torchic.png.gbapal graphics/intro/scene_2/volbeat.png.gbapal graphics/intro/scene_3/bubbles.png.gbapal graphics/intro/scene_3/lightning.png.gbapal: %.png.gbapal: %.png Makefile | tools
-	$(GFX) $< $@
-
-graphics/intro/scene_3/bg.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
-	$(GFX) $< $@
-
-$(filter %.lz,$(JP_INTRO_SCENE_ASSETS)): %.lz: % Makefile | tools
-	$(GFX) $< $@
-
-$(C_BUILDDIR)/graphics.o: src/data/graphics/intro_scene.h $(JP_INTRO_SCENE_ASSETS)
-
-JP_INTRO_CREDITS_ASSETS := graphics/intro/scene_2/bicycle.png.4bpp.lz \
-	graphics/intro/scene_2/brendan_credits.png.4bpp.lz \
-	graphics/intro/scene_2/brendan_credits.png.gbapal \
-	graphics/intro/scene_2/clouds.png.4bpp.lz \
-	graphics/intro/scene_2/clouds.png.gbapal \
-	graphics/intro/scene_2/clouds_bg.pal.gbapal \
-	graphics/intro/scene_2/clouds_bg.png.4bpp.lz \
-	graphics/intro/scene_2/clouds_bg_map.bin.lz \
-	graphics/intro/scene_2/clouds_bg_sunset.pal.gbapal \
-	graphics/intro/scene_2/clouds_sunset.pal.gbapal \
-	graphics/intro/scene_2/grass.png.4bpp.lz \
-	graphics/intro/scene_2/grass.png.gbapal \
-	graphics/intro/scene_2/grass_map.bin.lz \
-	graphics/intro/scene_2/grass_night.pal.gbapal \
-	graphics/intro/scene_2/grass_sunset.pal.gbapal \
-	graphics/intro/scene_2/house_silhouette.png.4bpp.lz \
-	graphics/intro/scene_2/house_silhouette.png.gbapal \
-	graphics/intro/scene_2/houses.pal.gbapal \
-	graphics/intro/scene_2/houses.png.4bpp.lz \
-	graphics/intro/scene_2/houses_map.bin.lz \
-	graphics/intro/scene_2/latias.png.4bpp.lz \
-	graphics/intro/scene_2/latias.png.gbapal \
-	graphics/intro/scene_2/latios.png.4bpp.lz \
-	graphics/intro/scene_2/latios.png.gbapal \
-	graphics/intro/scene_2/may_credits.png.4bpp.lz \
-	graphics/intro/scene_2/may_credits.png.gbapal \
-	graphics/intro/scene_2/trees.png.4bpp.lz \
-	graphics/intro/scene_2/trees.png.gbapal \
-	graphics/intro/scene_2/trees_map.bin.lz \
-	graphics/intro/scene_2/trees_small.png.4bpp.lz \
-	graphics/intro/scene_2/trees_small.png.gbapal \
-	graphics/intro/scene_2/trees_sunset.pal.gbapal
-
-JP_INTRO_CREDITS_INTERMEDIATES := graphics/intro/scene_2/bicycle.png.4bpp \
-	graphics/intro/scene_2/brendan_credits.png.4bpp \
-	graphics/intro/scene_2/clouds.png.4bpp \
-	graphics/intro/scene_2/clouds_bg.png.4bpp \
-	graphics/intro/scene_2/grass.png.4bpp \
-	graphics/intro/scene_2/house_silhouette.png.4bpp \
-	graphics/intro/scene_2/houses.png.4bpp \
-	graphics/intro/scene_2/latias.png.4bpp \
-	graphics/intro/scene_2/latios.png.4bpp \
-	graphics/intro/scene_2/may_credits.png.4bpp \
-	graphics/intro/scene_2/trees.png.4bpp \
-	graphics/intro/scene_2/trees_small.png.4bpp
-
-graphics/intro/scene_2/bicycle.png.4bpp graphics/intro/scene_2/brendan_credits.png.4bpp graphics/intro/scene_2/clouds.png.4bpp graphics/intro/scene_2/clouds_bg.png.4bpp graphics/intro/scene_2/grass.png.4bpp graphics/intro/scene_2/house_silhouette.png.4bpp graphics/intro/scene_2/houses.png.4bpp graphics/intro/scene_2/latias.png.4bpp graphics/intro/scene_2/latios.png.4bpp graphics/intro/scene_2/may_credits.png.4bpp graphics/intro/scene_2/trees.png.4bpp graphics/intro/scene_2/trees_small.png.4bpp: %.png.4bpp: %.png Makefile | tools
-	$(GFX) $< $@
-
-graphics/intro/scene_2/brendan_credits.png.gbapal graphics/intro/scene_2/clouds.png.gbapal graphics/intro/scene_2/grass.png.gbapal graphics/intro/scene_2/house_silhouette.png.gbapal graphics/intro/scene_2/latias.png.gbapal graphics/intro/scene_2/latios.png.gbapal graphics/intro/scene_2/may_credits.png.gbapal graphics/intro/scene_2/trees.png.gbapal graphics/intro/scene_2/trees_small.png.gbapal: %.png.gbapal: %.png Makefile | tools
-	$(GFX) $< $@
-
-graphics/intro/scene_2/clouds_bg.pal.gbapal graphics/intro/scene_2/clouds_bg_sunset.pal.gbapal graphics/intro/scene_2/clouds_sunset.pal.gbapal graphics/intro/scene_2/grass_night.pal.gbapal graphics/intro/scene_2/grass_sunset.pal.gbapal graphics/intro/scene_2/houses.pal.gbapal graphics/intro/scene_2/trees_sunset.pal.gbapal: %.pal.gbapal: %.pal Makefile | tools
-	$(GFX) $< $@
-
-$(filter %.lz,$(JP_INTRO_CREDITS_ASSETS)): %.lz: % Makefile | tools
-	$(GFX) $< $@
-
-$(C_BUILDDIR)/intro_credits_graphics.o: src/intro_credits_graphics.c charmap.txt include/intro_credits_graphics.h include/graphics.h $(JP_INTRO_CREDITS_ASSETS)
+$(C_BUILDDIR)/intro_credits_graphics.o: src/intro_credits_graphics.c charmap.txt include/intro_credits_graphics.h include/graphics.h
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/intro_credits_graphics.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/intro_credits_graphics.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/intro_credits_graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/intro_credits_graphics.gen.s
 
@@ -6096,3 +5929,15 @@ $(C_BUILDDIR)/field_effect.d: src/field_effect.c Makefile | tools
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/field_effect.d
+
+$(C_BUILDDIR)/intro.d: src/intro.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/intro.d
+
+$(C_BUILDDIR)/intro_credits_graphics.d: src/intro_credits_graphics.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/intro_credits_graphics.d

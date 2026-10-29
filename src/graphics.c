@@ -746,9 +746,9 @@ BATTLE_FACTORY_MENU_PAL const u16 gFrontierFactoryMenu_Pal[] = INCBIN_U16("graph
 
 #define INTRO_COPYRIGHT_GRAPHICS __attribute__((section(".rodata.intro_copyright_graphics")))
 
-INTRO_COPYRIGHT_GRAPHICS const u16 gIntroCopyright_Pal[16] = INCBIN_U16("graphics/intro/copyright.gbapal");
-INTRO_COPYRIGHT_GRAPHICS const u32 gIntroCopyright_Gfx[] = INCBIN_U32("graphics/intro/copyright.4bpp.lz");
-INTRO_COPYRIGHT_GRAPHICS const u32 gIntroCopyright_Tilemap[] = INCBIN_U32("graphics/intro/copyright.bin.lz");
+INTRO_COPYRIGHT_GRAPHICS const u16 gIntroCopyright_Pal[16] = INCGFX_U16("graphics/intro/copyright.png", ".gbapal");
+INTRO_COPYRIGHT_GRAPHICS const u32 gIntroCopyright_Gfx[] = INCGFX_U32("graphics/intro/copyright.png", ".4bpp.lz");
+INTRO_COPYRIGHT_GRAPHICS const u32 gIntroCopyright_Tilemap[] = INCGFX_U32("graphics/intro/copyright.bin", ".lz");
 
 #undef INTRO_COPYRIGHT_GRAPHICS
 
