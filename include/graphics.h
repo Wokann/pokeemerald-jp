@@ -3071,7 +3071,7 @@ extern const u32 gTrainerBackPicPalette_Leaf[];
 
 // pokeblock
 extern const u32 gMenuPokeblock_Gfx[];
-extern const u8 gMenuPokeblock_Pal[];
+extern const u32 gMenuPokeblock_Pal[];
 extern const u32 gMenuPokeblock_Tilemap[];
 extern const u32 gMenuPokeblockDevice_Gfx[];
 extern const u32 gMenuPokeblockDevice_Pal[];

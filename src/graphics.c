@@ -1009,28 +1009,27 @@ MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] =
 
 #define POKEBLOCK_GRAPHICS __attribute__((section(".rodata.pokeblock_graphics")))
 
-POKEBLOCK_GRAPHICS const u32 gMenuPokeblock_Gfx[] = INCBIN_U32("graphics/pokeblock/menu.png.4bpp.lz");
-POKEBLOCK_GRAPHICS const u8 gMenuPokeblock_Pal[] = INCBIN_U8("graphics/pokeblock/menu.pal.gbapal.lz");
-static const u16 sPokeblockGraphicsPadding POKEBLOCK_GRAPHICS __attribute__((used)) = 0;
-POKEBLOCK_GRAPHICS const u32 gMenuPokeblockDevice_Gfx[] = INCBIN_U32("graphics/pokeblock/device.png.4bpp.lz");
-POKEBLOCK_GRAPHICS const u32 gMenuPokeblockDevice_Pal[] = INCBIN_U32("graphics/pokeblock/device.png.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gMenuPokeblock_Tilemap[] = INCBIN_U32("graphics/pokeblock/menu.bin.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblock_Gfx[] = INCBIN_U32("graphics/pokeblock/pokeblock.png.4bpp.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockRed_Pal[] = INCBIN_U32("graphics/pokeblock/red.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockBlue_Pal[] = INCBIN_U32("graphics/pokeblock/blue.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockPink_Pal[] = INCBIN_U32("graphics/pokeblock/pink.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockGreen_Pal[] = INCBIN_U32("graphics/pokeblock/green.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockYellow_Pal[] = INCBIN_U32("graphics/pokeblock/yellow.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockPurple_Pal[] = INCBIN_U32("graphics/pokeblock/purple.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockIndigo_Pal[] = INCBIN_U32("graphics/pokeblock/indigo.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockBrown_Pal[] = INCBIN_U32("graphics/pokeblock/brown.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockLiteBlue_Pal[] = INCBIN_U32("graphics/pokeblock/liteblue.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockOlive_Pal[] = INCBIN_U32("graphics/pokeblock/olive.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockGray_Pal[] = INCBIN_U32("graphics/pokeblock/gray.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockBlack_Pal[] = INCBIN_U32("graphics/pokeblock/black.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockWhite_Pal[] = INCBIN_U32("graphics/pokeblock/white.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockGold_Pal[] = INCBIN_U32("graphics/pokeblock/gold.pal.gbapal.lz");
-POKEBLOCK_GRAPHICS const u32 gPokeblockFeedBg_Tilemap[] = INCBIN_U32("graphics/pokeblock/feeding_bg.bin.lz");
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblock_Gfx[] = INCGFX_U32("graphics/pokeblock/menu.png", ".4bpp.lz");
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblock_Pal[] = INCGFX_U32("graphics/pokeblock/menu.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblockDevice_Gfx[] = INCGFX_U32("graphics/pokeblock/device.png", ".4bpp.lz");
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblockDevice_Pal[] = INCGFX_U32("graphics/pokeblock/device.png", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblock_Tilemap[] = INCGFX_U32("graphics/pokeblock/menu.bin", ".lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblock_Gfx[] = INCGFX_U32("graphics/pokeblock/pokeblock.png", ".4bpp.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockRed_Pal[] = INCGFX_U32("graphics/pokeblock/red.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockBlue_Pal[] = INCGFX_U32("graphics/pokeblock/blue.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockPink_Pal[] = INCGFX_U32("graphics/pokeblock/pink.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockGreen_Pal[] = INCGFX_U32("graphics/pokeblock/green.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockYellow_Pal[] = INCGFX_U32("graphics/pokeblock/yellow.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockPurple_Pal[] = INCGFX_U32("graphics/pokeblock/purple.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockIndigo_Pal[] = INCGFX_U32("graphics/pokeblock/indigo.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockBrown_Pal[] = INCGFX_U32("graphics/pokeblock/brown.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockLiteBlue_Pal[] = INCGFX_U32("graphics/pokeblock/liteblue.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockOlive_Pal[] = INCGFX_U32("graphics/pokeblock/olive.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockGray_Pal[] = INCGFX_U32("graphics/pokeblock/gray.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockBlack_Pal[] = INCGFX_U32("graphics/pokeblock/black.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockWhite_Pal[] = INCGFX_U32("graphics/pokeblock/white.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockGold_Pal[] = INCGFX_U32("graphics/pokeblock/gold.pal", ".gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockFeedBg_Tilemap[] = INCGFX_U32("graphics/pokeblock/feeding_bg.bin", ".lz");
 
 #undef POKEBLOCK_GRAPHICS
 
