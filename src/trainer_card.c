@@ -5883,47 +5883,47 @@ __attribute__((naked)) void sub_080C48F4(void)
 
 #define TRAINER_CARD_DATA __attribute__((section(".rodata.trainer_card_data"), aligned(1)))
 
-static const u32 sTrainerCardStickers_Gfx[] TRAINER_CARD_STICKERS = INCBIN_U32("graphics/trainer_card/frlg/stickers.4bpp.lz");
+static const u32 sTrainerCardStickers_Gfx[] TRAINER_CARD_STICKERS = INCGFX_U32("graphics/trainer_card/frlg/stickers.png", ".4bpp.lz");
 
-static const u16 sUnused_Pal[] TRAINER_CARD_UNUSED_PALETTE = INCBIN_U16("graphics/trainer_card/unused.pal.gbapal");
+static const u16 sUnused_Pal[] TRAINER_CARD_UNUSED_PALETTE = INCGFX_U16("graphics/trainer_card/unused.pal", ".gbapal");
 
-static const u16 sHoennTrainerCardBronze_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/bronze.pal.gbapal");
+static const u16 sHoennTrainerCardBronze_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/bronze.pal", ".gbapal");
 
-static const u16 sKantoTrainerCardGreen_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/green.pal.gbapal");
+static const u16 sKantoTrainerCardGreen_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/green.pal", ".gbapal");
 
-static const u16 sHoennTrainerCardCopper_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/copper.pal.gbapal");
+static const u16 sHoennTrainerCardCopper_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/copper.pal", ".gbapal");
 
-static const u16 sKantoTrainerCardBronze_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/bronze.pal.gbapal");
+static const u16 sKantoTrainerCardBronze_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/bronze.pal", ".gbapal");
 
-static const u16 sHoennTrainerCardSilver_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/silver.pal.gbapal");
+static const u16 sHoennTrainerCardSilver_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/silver.pal", ".gbapal");
 
-static const u16 sKantoTrainerCardSilver_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/silver.pal.gbapal");
+static const u16 sKantoTrainerCardSilver_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/silver.pal", ".gbapal");
 
-static const u16 sHoennTrainerCardGold_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/gold.pal.gbapal");
+static const u16 sHoennTrainerCardGold_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/gold.pal", ".gbapal");
 
-static const u16 sKantoTrainerCardGold_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/gold.pal.gbapal");
+static const u16 sKantoTrainerCardGold_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/gold.pal", ".gbapal");
 
-static const u16 sHoennTrainerCardFemaleBg_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/female_bg.gbapal");
+static const u16 sHoennTrainerCardFemaleBg_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/female_bg.pal", ".gbapal");
 
-static const u16 sKantoTrainerCardFemaleBg_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/female_bg.gbapal");
+static const u16 sKantoTrainerCardFemaleBg_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/female_bg.pal", ".gbapal");
 
-static const u16 sHoennTrainerCardBadges_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/badges.gbapal");
+static const u16 sHoennTrainerCardBadges_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/badges.png", ".gbapal");
 
-static const u16 sKantoTrainerCardBadges_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/badges.gbapal");
+static const u16 sKantoTrainerCardBadges_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/badges.png", ".gbapal");
 
-static const u16 sTrainerCardStar_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/star.gbapal");
+static const u16 sTrainerCardStar_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/star.pal", ".gbapal");
 
-static const u16 sTrainerCardSticker1_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/stickers1.gbapal");
+static const u16 sTrainerCardSticker1_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/stickers1.pal", ".gbapal");
 
-static const u16 sTrainerCardSticker2_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/stickers2.gbapal");
+static const u16 sTrainerCardSticker2_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/stickers2.pal", ".gbapal");
 
-static const u16 sTrainerCardSticker3_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/stickers3.gbapal");
+static const u16 sTrainerCardSticker3_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/stickers3.pal", ".gbapal");
 
-static const u16 sTrainerCardSticker4_Pal[] TRAINER_CARD_DATA = INCBIN_U16("graphics/trainer_card/frlg/stickers4.gbapal");
+static const u16 sTrainerCardSticker4_Pal[] TRAINER_CARD_DATA = INCGFX_U16("graphics/trainer_card/frlg/stickers4.pal", ".gbapal");
 
-static const u32 sHoennTrainerCardBadges_Gfx[] TRAINER_CARD_DATA = INCBIN_U32("graphics/trainer_card/badges.4bpp.lz");
+static const u32 sHoennTrainerCardBadges_Gfx[] TRAINER_CARD_DATA = INCGFX_U32("graphics/trainer_card/badges.png", ".4bpp.lz");
 
-static const u32 sKantoTrainerCardBadges_Gfx[] TRAINER_CARD_DATA = INCBIN_U32("graphics/trainer_card/frlg/badges.4bpp.lz");
+static const u32 sKantoTrainerCardBadges_Gfx[] TRAINER_CARD_DATA = INCGFX_U32("graphics/trainer_card/frlg/badges.png", ".4bpp.lz");
 
 static const struct BgTemplate sTrainerCardBgTemplates[4] TRAINER_CARD_DATA __attribute__((aligned(4))) = {
     { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 27, .screenSize = 2, .paletteMode = 0, .priority = 2, .baseTile = 0 },

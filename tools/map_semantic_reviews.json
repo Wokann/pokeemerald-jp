@@ -1891,7 +1891,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -4584,7 +4584,7 @@
             "-include $(C_BUILDDIR)/pokedex_area_screen.d",
             "$(C_BUILDDIR)/pokedex_area_screen.o:"
           ],
-          "sha256": "39f8451b99a00055f92cf359a59efac58c689ff0dc2ea7931086f0d46ec1a1ff"
+          "sha256": "1c116aa2ad26e81a7145eccd62e7e282ddc60405b87868b0fd99240299132585"
         },
         {
           "path": "ld_script_jp.txt",
@@ -4714,7 +4714,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "src/tilesets.c",
@@ -14500,7 +14500,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -17571,7 +17571,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -20767,7 +20767,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -23973,7 +23973,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -26070,7 +26070,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -29362,7 +29362,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -32347,7 +32347,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -35190,7 +35190,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -37126,7 +37126,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -39368,7 +39368,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -41812,7 +41812,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -44366,7 +44366,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -45058,7 +45058,7 @@
             "defines": {
               "FIELD_PLAYER_AVATAR_TAIL": 1
             },
-            "makefile_sha256": "adf672dbdeb1f0511b3ecf20a0b3b269557da93d2bf9cc050071b3c0791b00af"
+            "makefile_sha256": "5aa38e5e94c3bef3ac561cd827195cecde8b92921930b415561d85b88afedef2"
           }
         },
         {
@@ -45493,7 +45493,7 @@
         {
           "path": "Makefile",
           "selector": "file",
-          "sha256": "adf672dbdeb1f0511b3ecf20a0b3b269557da93d2bf9cc050071b3c0791b00af"
+          "sha256": "5aa38e5e94c3bef3ac561cd827195cecde8b92921930b415561d85b88afedef2"
         },
         {
           "path": "asm/macros.inc",
@@ -47343,7 +47343,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -49561,7 +49561,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -53966,7 +53966,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -63135,7 +63135,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -75977,7 +75977,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -91536,7 +91536,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -107232,7 +107232,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -117890,7 +117890,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -125462,7 +125462,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -133356,7 +133356,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -139924,7 +139924,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -140480,7 +140480,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -147510,7 +147510,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -152492,7 +152492,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -153796,7 +153796,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -162087,7 +162087,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -163138,7 +163138,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -172136,7 +172136,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -172970,7 +172970,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -181122,7 +181122,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/trainer_see.c",
@@ -181724,7 +181724,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -190499,7 +190499,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -191669,7 +191669,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -200707,7 +200707,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -202858,7 +202858,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -213039,7 +213039,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -214066,7 +214066,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -223811,7 +223811,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -225204,7 +225204,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -234696,7 +234696,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -235740,7 +235740,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -247079,7 +247079,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -250136,7 +250136,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "data/scripts/cable_club.inc",
@@ -265336,7 +265336,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -266116,7 +266116,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -276530,7 +276530,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -277176,7 +277176,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -286503,7 +286503,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -287620,7 +287620,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -295167,7 +295167,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -301637,7 +301637,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/secondary/meteor_falls/metatile_attributes.bin",
@@ -308291,7 +308291,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -313618,7 +313618,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -320242,7 +320242,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -325753,7 +325753,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -331311,7 +331311,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -338208,7 +338208,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -346138,7 +346138,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -353153,7 +353153,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -357607,7 +357607,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -361323,7 +361323,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -365853,7 +365853,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -370593,7 +370593,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -374246,7 +374246,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -378293,7 +378293,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -382107,7 +382107,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -385623,7 +385623,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -389244,7 +389244,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -393160,7 +393160,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -396593,7 +396593,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -400131,7 +400131,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -405926,7 +405926,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -407433,7 +407433,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/union_room.c",
@@ -414390,7 +414390,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -418658,7 +418658,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -421916,7 +421916,7 @@
         {
           "path": "src/trainer_card.c",
           "selector": "file",
-          "sha256": "19e9ce5c4f3d394ed27b5cdd0828e128ca30a9661e074280eb1ef9f33840d5fd"
+          "sha256": "0ddb7d4c6f1e91849dd40762381e6ecf4b3a366967ec1f3e8fa95357a74a5d60"
         },
         {
           "path": "src/trainer_hill.c",
@@ -422467,7 +422467,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -426072,7 +426072,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -431545,7 +431545,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -433528,7 +433528,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/general/anim/flower/0.png",
@@ -436487,7 +436487,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -439991,7 +439991,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -444565,7 +444565,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -447081,7 +447081,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -449692,7 +449692,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -452402,7 +452402,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -454950,7 +454950,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -457229,7 +457229,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "data/tilesets/primary/building/anim/tv_turned_on/0.png",
@@ -462866,7 +462866,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "src/metatile_behavior.c",
@@ -470652,7 +470652,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "src/item.c",
@@ -476869,7 +476869,7 @@
         {
           "path": "src/graphics.c",
           "selector": "file",
-          "sha256": "0f2d80ce07f6456ee58a0424ff438b07a5962580b9eb74d7b06ed04b9caeb9cc"
+          "sha256": "bea66954cd150c94db409a84db1700e5bf7905949b771ce2de87dffc2c93c703"
         },
         {
           "path": "src/item.c",
