@@ -1624,9 +1624,9 @@ $(C_BUILDDIR)/berry_blender.o: src/berry_blender.c charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/berry_blender.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/berry_blender.gen.s
 
-$(C_BUILDDIR)/dodrio_berry_picking.o: src/dodrio_berry_picking.c graphics/misc/sBg_Pal.bin graphics/dodrio/sDodrioNormalPal.bin graphics/dodrio/sDodrioShinyPal.bin graphics/misc/sBerry_Gfx.bin graphics/misc/sBg_Gfx.bin graphics/misc/sTreeBorder_Gfx.bin graphics/battle_anims/sStatus_Gfx.bin graphics/misc/sCloud_Gfx.bin graphics/dodrio/sDodrio_Gfx.bin graphics/dodrio/sDodrioBg_Tilemap.bin graphics/misc/sTreeBorderRight_Tilemap.bin graphics/misc/sTreeBorderLeft_Tilemap.bin
+$(C_BUILDDIR)/dodrio_berry_picking.o: src/dodrio_berry_picking.c
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/dodrio_berry_picking.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/dodrio_berry_picking.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/dodrio_berry_picking.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/dodrio_berry_picking.gen.s
 
@@ -2285,24 +2285,6 @@ $(C_BUILDDIR)/data/berry_crush3.o: src/data/berry_crush3.c src/data/berry_crush3
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/berry_crush3.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/berry_crush3.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/berry_crush3.gen.s
-
-$(C_BUILDDIR)/data/berry_crush4.o: src/data/berry_crush4.c src/data/berry_crush4.h
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/berry_crush4.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/berry_crush4.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/berry_crush4.gen.s
-
-$(C_BUILDDIR)/data/dodrio1.o: src/data/dodrio1.c src/data/dodrio1.h src/data/dodrio1_dup_maps.inc
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/dodrio1.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/dodrio1.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/dodrio1.gen.s
-
-$(C_BUILDDIR)/data/dodrio2.o: src/data/dodrio2.c src/data/dodrio2.h
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/dodrio2.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/dodrio2.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/dodrio2.gen.s
 
 $(C_BUILDDIR)/data/pokejump1.o: src/data/pokejump1.c src/data/pokejump1.h
 	@mkdir -p $(dir $@)
@@ -5955,3 +5937,91 @@ $(C_BUILDDIR)/berry_crush.d: src/berry_crush.c Makefile | tools
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/berry_crush.d
+
+$(C_BUILDDIR)/dodrio_berry_picking.d: src/dodrio_berry_picking.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/dodrio_berry_picking.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/tree_border.png.gbapal: graphics/dodrio_berry_picking/tree_border.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/bg.png.gbapal: graphics/dodrio_berry_picking/bg.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/dodrio.png.gbapal: graphics/dodrio_berry_picking/dodrio.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/shiny.pal.gbapal: graphics/dodrio_berry_picking/shiny.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/status.png.gbapal: graphics/dodrio_berry_picking/status.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/berries.png.gbapal: graphics/dodrio_berry_picking/berries.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/berries.png.4bpp: graphics/dodrio_berry_picking/berries.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/berries.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/berries.png.4bpp $(GFX)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/cloud.png.gbapal: graphics/dodrio_berry_picking/cloud.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/bg.png.4bpp: graphics/dodrio_berry_picking/bg.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/bg.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/bg.png.4bpp $(GFX)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/tree_border.png.4bpp: graphics/dodrio_berry_picking/tree_border.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/tree_border.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/tree_border.png.4bpp $(GFX)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/status.png.4bpp: graphics/dodrio_berry_picking/status.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/status.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/status.png.4bpp $(GFX)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/cloud.png.4bpp: graphics/dodrio_berry_picking/cloud.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/cloud.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/cloud.png.4bpp $(GFX)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/dodrio.png.4bpp: graphics/dodrio_berry_picking/dodrio.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/dodrio.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/dodrio.png.4bpp $(GFX)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/bg.bin.lz: graphics/dodrio_berry_picking/bg.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/tree_border_right.bin.lz: graphics/dodrio_berry_picking/tree_border_right.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/tree_border_left.bin.lz: graphics/dodrio_berry_picking/tree_border_left.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@

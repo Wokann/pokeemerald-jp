@@ -9269,10 +9269,12 @@ SECTIONS {
         src/graphics.o(.rodata.berry_crush_text_windows);
         src/berry_crush.o(.rodata.berry_crush_sprite_data);
         src/data/berry_crush3.o(.rodata);
-        src/data/berry_crush4.o(.rodata);
-        src/data/dodrio1.o(.rodata);
+        src/dodrio_berry_picking.o(.rodata.dodrio_lookup_data);
+        src/dodrio_berry_picking.o(.rodata.dodrio_duplicate_graphics);
+        src/dodrio_berry_picking.o(.rodata.dodrio_game_data);
+        src/dodrio_berry_picking.o(.rodata.dodrio_duplicate_maps);
         src/dodrio_berry_picking.o(.rodata.dodrio_graphics);
-        src/data/dodrio2.o(.rodata);
+        src/dodrio_berry_picking.o(.rodata.dodrio_sprite_data);
         src/data/pokejump1.o(.rodata);
         src/data/pokejump2.o(.rodata);
         src/data/pokejump3.o(.rodata);

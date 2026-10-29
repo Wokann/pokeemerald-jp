@@ -329,24 +329,24 @@ extern void (*GetGfxFunc(void))(void);
 extern void InitBgs(void);
 extern bool32 LoadBgGfx(void);
 extern void FreeAllWindowBuffers_(void);
-extern const struct GfxFunc sGfxFuncs[];
-extern const u16 sDodrioBg_Tilemap[];
-extern const u16 sTreeBorderLeft_Tilemap[];
-extern const u16 sTreeBorderRight_Tilemap[];
-extern const u8 sDodrioTextColorTable[][3];
-extern const struct WinCoords *const sNameWindowCoords[];
-extern const u8 *const sRankingTexts[];
-extern const u16 sRankingYCoords[];
-extern const u8 sRankingOrder[];
-extern const struct WindowTemplate sWindowTemplates_PlayAgain[];
-extern const struct WindowTemplate sWindowTemplate_CommStandby;
-extern const struct WindowTemplate sWindowTemplate_DroppedOut;
-extern const u8 sBg_Pal[];
-extern const u8 sBg_Gfx[];
-extern const u8 sTreeBorder_Gfx[];
-extern const u8 sTreeBorderXPos[];
-extern const u8 sDodrioHeadToColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
-extern const u8 sBerryFallDelays[][3];
+static const struct GfxFunc sGfxFuncs[];
+static const u32 sBg_Tilemap[];
+static const u32 sTreeBorderLeft_Tilemap[];
+static const u32 sTreeBorderRight_Tilemap[];
+static const u8 sDodrioTextColorTable[][3];
+static const struct WinCoords *const sNameWindowCoords[];
+static const u8 *const sRankingTexts[];
+static const u16 sRankingYCoords[];
+static const u8 sRankingOrder[];
+static const struct WindowTemplate sWindowTemplates_PlayAgain[];
+static const struct WindowTemplate sWindowTemplate_CommStandby;
+static const struct WindowTemplate sWindowTemplate_DroppedOut;
+static const u16 sBg_Pal[];
+static const u32 sBg_Gfx[];
+static const u32 sTreeBorder_Gfx[];
+static const u8 sTreeBorderXPos[8];
+static const u8 sDodrioHeadToColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
+static const u8 sBerryFallDelays[][3];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -356,8 +356,8 @@ extern void CreateBerrySprites_Dodrio(void);
 extern void CreateCloudSprites_Dodrio(void);
 #define CreateCloudSprites CreateCloudSprites_Dodrio
 extern void CreateDodrioGameTask(TaskFunc func);
-extern void (*const sLeaderFuncs[])(void);
-extern void (*const sMemberFuncs[])(void);
+static void (*const sLeaderFuncs[12])(void);
+static void (*const sMemberFuncs[12])(void);
 static void RecvLinkData_Leader(void);
 void sub_0802792C(u8 windowId);
 static void RecvLinkData_Member(void);
@@ -381,48 +381,48 @@ extern void ResetGfxState(void);
 extern bool32 SlideTreeBordersOut(void);
 extern void InitStatusBarPos(void);
 extern bool32 DoStatusBarIntro(void);
-extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
-extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
-extern const u8 sPrizeBerryIds[3][10];
-extern const s16 sBerryScoreMultipliers[NUM_BERRY_IDS];
-extern const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
-extern const u8 sDodrioNeighborMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
-extern const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
-extern const u32 sDodrio_Gfx[];
-extern const struct SpritePalette sDodrioNormalSpritePalette;
-extern const struct SpritePalette sDodrioShinySpritePalette;
-extern const u32 sStatus_Gfx[];
-extern const struct SpritePalette sStatusPalette;
-extern const struct SpriteTemplate sStatusSpriteTemplate;
-extern const u32 sBerry_Gfx[];
-extern const struct SpritePalette sBerryPalette;
-extern const s16 sBerryIconXCoords[NUM_BERRY_TYPES];
-extern const struct SpriteTemplate sBerrySpriteTemplate;
-extern const struct SpriteTemplate sBerryIconSpriteTemplate;
-extern const u32 sCloud_Gfx[];
-extern const struct SpritePalette sCloudPalette;
-extern const struct SpriteTemplate sCloudSpriteTemplate;
-extern const s16 sCloudPositions[NUM_CLOUDS][2];
+static const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][11];
+static const u8 sDifficultyThresholds[8];
+static const u8 sPrizeBerryIds[3][10];
+static const s16 sBerryScoreMultipliers[];
+static const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][11];
+static const u8 sDodrioNeighborMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
+static const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
+static const u32 sDodrio_Gfx[];
+static const struct SpritePalette sDodrioNormalSpritePalette;
+static const struct SpritePalette sDodrioShinySpritePalette;
+static const u32 sStatus_Gfx[];
+static const struct SpritePalette sStatusPalette;
+static const struct SpriteTemplate sStatusSpriteTemplate;
+static const u32 sBerries_Gfx[];
+static const struct SpritePalette sBerryPalette;
+static const s16 sBerryIconXCoords[NUM_BERRY_TYPES];
+static const struct SpriteTemplate sBerrySpriteTemplate;
+static const struct SpriteTemplate sBerryIconSpriteTemplate;
+static const u32 sCloud_Gfx[];
+static const struct SpritePalette sCloudPalette;
+static const struct SpriteTemplate sCloudSpriteTemplate;
+static const s16 sCloudPositions[NUM_CLOUDS][2];
 extern EWRAM_DATA u16 *sBerrySpriteIds[NUM_BERRY_COLUMNS];
 extern EWRAM_DATA u16 *sBerryIconSpriteIds[NUM_BERRY_TYPES];
 extern EWRAM_DATA u16 *sCloudSpriteIds[NUM_CLOUDS];
 extern EWRAM_DATA struct DodrioGame_Gfx *sGfx;
-extern const struct OamData sOamData_Dodrio;
-extern const union AnimCmd *const sAnims_Dodrio[];
+static const struct OamData sOamData_Dodrio;
+static const union AnimCmd *const sAnims_Dodrio[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
 extern EWRAM_DATA u16 *sDodrioSpriteIds[MAX_RFU_PLAYERS];
 extern EWRAM_DATA struct StatusBar *sStatusBar;
 extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
 extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
-extern const struct WindowTemplate sRecordsWindowTemplate;
-extern const u8 sRecordDigitCounts[];
-extern const u8 *const sRecordsLabels[];
-extern const u16 sRecordLabelYs[];
-extern const u16 sRecordValueYs[];
-extern const u16 sBerryResultsInit[MAX_RFU_PLAYERS][BERRY_PRIZE];
-extern const u8 *const sPlayerNames[MAX_RFU_PLAYERS];
-extern const u8 sCloudDurations[];
-extern const struct BgTemplate sDodrioBgTemplates[];
+static const struct WindowTemplate sRecordsWindowTemplate;
+static const u8 sRecordDigitCounts[];
+static const u8 *const sRecordsLabels[];
+static const u16 sRecordLabelYs[];
+static const u16 sRecordValueYs[];
+static const u16 sBerryResultsInit[MAX_RFU_PLAYERS][BERRY_PRIZE];
+static const u8 *const sPlayerNames[MAX_RFU_PLAYERS];
+static const u8 sCloudDurations[];
+static const struct BgTemplate sDodrioBgTemplates[];
 void LoadDodrioGfx(void);
 void SetDodrioInvisibility(bool8 invisible, u8 id);
 void SetAllDodrioInvisibility(bool8 invisible, u8 count);
@@ -1820,7 +1820,7 @@ void LoadBerryGfx_Dodrio(void)
     void *ptr = AllocZeroed(0x480);
     struct SpritePalette pal = sBerryPalette;
 
-    LZ77UnCompWram(sBerry_Gfx, ptr);
+    LZ77UnCompWram(sBerries_Gfx, ptr);
     if (ptr)
     {
         struct SpriteSheet sheet = {ptr, 0x480, GFXTAG_BERRIES};
@@ -2126,7 +2126,7 @@ void LoadGfx(void)
             sGfx->state++;
         break;
     case 2:
-        CopyToBgTilemapBuffer(3, sDodrioBg_Tilemap, 0, 0);
+        CopyToBgTilemapBuffer(3, sBg_Tilemap, 0, 0);
         CopyToBgTilemapBuffer(1, sTreeBorderLeft_Tilemap, 0, 0);
         CopyToBgTilemapBuffer(2, sTreeBorderRight_Tilemap, 0, 0);
         CopyBgTilemapBufferToVram(3);
@@ -4868,36 +4868,834 @@ __attribute__((naked)) void sub_080295A4(void)
 
 #define DODRIO_GRAPHICS_DATA __attribute__((section(".rodata.dodrio_graphics")))
 
-// 0x82CB67C-0x82CEA6C: Dodrio Berry Picking graphics and palettes.
-// Keep this in the data-layer slot between dodrio1 and dodrio2 so the JP ROM
-// layout remains stable while matching the upstream module ownership.
-DODRIO_GRAPHICS_DATA const u8 sBg_Pal[] = INCBIN_U8("graphics/misc/sBg_Pal.bin");
-DODRIO_GRAPHICS_DATA const u16 sDodrioNormalPal[] = INCBIN_U16("graphics/dodrio/sDodrioNormalPal.bin");
-DODRIO_GRAPHICS_DATA const u16 sDodrioShinyPal[] = INCBIN_U16("graphics/dodrio/sDodrioShinyPal.bin");
-
-// These two palettes were one anonymous 0x40-byte aggregate in the raw data.
-DODRIO_GRAPHICS_DATA const u16 sStatus_Pal[] =
-{
-    0x7FFC, 0x2108, 0x5FFF, 0x3BBF, 0x031F, 0x6B18, 0x5A94, 0x4A10,
-    0x631F, 0x463F, 0x18DF, 0x0000, 0x0000, 0x0000, 0x0000, 0x00DF,
-};
-
-DODRIO_GRAPHICS_DATA const u16 sBerries_Pal[] =
-{
-    0x7FFC, 0x2108, 0x7273, 0x5DCE, 0x6BD1, 0x574C, 0x1F5F, 0x1EBE,
-    0x77BD, 0x6A40, 0x1A1C, 0x5E60, 0x465F, 0x7F80, 0x2D9A, 0x7FA0,
-};
-
-// The final 0x20 bytes of this JP resource remain the cloud palette, matching
-// the existing cloud palette descriptor's internal offset.
-DODRIO_GRAPHICS_DATA const u32 sBerry_Gfx[] = INCBIN_U32("graphics/misc/sBerry_Gfx.bin");
-DODRIO_GRAPHICS_DATA const u8 sBg_Gfx[] = INCBIN_U8("graphics/misc/sBg_Gfx.bin");
-DODRIO_GRAPHICS_DATA const u8 sTreeBorder_Gfx[] = INCBIN_U8("graphics/misc/sTreeBorder_Gfx.bin");
-DODRIO_GRAPHICS_DATA const u32 sStatus_Gfx[] = INCBIN_U32("graphics/battle_anims/sStatus_Gfx.bin");
-DODRIO_GRAPHICS_DATA const u32 sCloud_Gfx[] = INCBIN_U32("graphics/misc/sCloud_Gfx.bin");
-DODRIO_GRAPHICS_DATA const u32 sDodrio_Gfx[] = INCBIN_U32("graphics/dodrio/sDodrio_Gfx.bin");
-DODRIO_GRAPHICS_DATA const u16 sDodrioBg_Tilemap[] = INCBIN_U16("graphics/dodrio/sDodrioBg_Tilemap.bin");
-DODRIO_GRAPHICS_DATA const u16 sTreeBorderRight_Tilemap[] = INCBIN_U16("graphics/misc/sTreeBorderRight_Tilemap.bin");
-DODRIO_GRAPHICS_DATA const u16 sTreeBorderLeft_Tilemap[] = INCBIN_U16("graphics/misc/sTreeBorderLeft_Tilemap.bin");
+static const u16 sBg_Pal[] DODRIO_GRAPHICS_DATA = INCBIN_U16("build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/tree_border.png.gbapal", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/bg.png.gbapal");
+static const u16 sDodrioNormal_Pal[] DODRIO_GRAPHICS_DATA = INCGFX_U16("graphics/dodrio_berry_picking/dodrio.png", ".gbapal");
+static const u16 sDodrioShiny_Pal[] DODRIO_GRAPHICS_DATA = INCGFX_U16("graphics/dodrio_berry_picking/shiny.pal", ".gbapal");
+static const u16 sStatus_Pal[] DODRIO_GRAPHICS_DATA = INCGFX_U16("graphics/dodrio_berry_picking/status.png", ".gbapal");
+static const u16 sBerries_Pal[] DODRIO_GRAPHICS_DATA = INCGFX_U16("graphics/dodrio_berry_picking/berries.png", ".gbapal");
+static const u32 sBerries_Gfx[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/berries.png", ".4bpp.lz");
+static const u16 sCloud_Pal[] DODRIO_GRAPHICS_DATA = INCGFX_U16("graphics/dodrio_berry_picking/cloud.png", ".gbapal");
+static const u32 sBg_Gfx[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/bg.png", ".4bpp.lz");
+static const u32 sTreeBorder_Gfx[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/tree_border.png", ".4bpp.lz");
+static const u32 sStatus_Gfx[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/status.png", ".4bpp.lz");
+static const u32 sCloud_Gfx[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/cloud.png", ".4bpp.lz");
+static const u32 sDodrio_Gfx[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/dodrio.png", ".4bpp.lz");
+static const u32 sBg_Tilemap[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/bg.bin", ".lz");
+static const u32 sTreeBorderRight_Tilemap[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/tree_border_right.bin", ".lz");
+static const u32 sTreeBorderLeft_Tilemap[] DODRIO_GRAPHICS_DATA = INCGFX_U32("graphics/dodrio_berry_picking/tree_border_left.bin", ".lz");
 
 #undef DODRIO_GRAPHICS_DATA
+
+
+#define DODRIO_LOOKUP_DATA __attribute__((section(".rodata.dodrio_lookup_data")))
+
+// 0x82C7D28 - for each player the list of columns starting with the one to
+// their left; only the active range is read (see pokeemerald
+// dodrio_berry_picking.c sActiveColumnMap).
+static const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][11] DODRIO_LOOKUP_DATA =
+{
+    { // 1 player (never used), columns 4-6.
+        {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+    },
+    { // 2 players (never used), columns 3-6
+        {0, 1, 2, 3, 4, 5, 6, 3, 8, 9, 0},
+        {0, 1, 2, 5, 6, 3, 4, 5, 8, 9, 0},
+    },
+    { // 3 players, columns 2-7
+        {0, 1, 2, 3, 4, 5, 6, 7, 2, 9, 0},
+        {0, 1, 4, 5, 6, 7, 2, 3, 4, 9, 0},
+        {0, 1, 6, 7, 2, 3, 4, 5, 6, 9, 0},
+    },
+    { // 4 players, columns 1-8
+        {0, 1, 2, 3, 4, 5, 6, 7, 8, 1, 0},
+        {0, 3, 4, 5, 6, 7, 8, 1, 2, 3, 0},
+        {0, 5, 6, 7, 8, 1, 2, 3, 4, 5, 0},
+        {0, 7, 8, 1, 2, 3, 4, 5, 6, 7, 0},
+    },
+    { // 5 players, all columns (0-9)
+        {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+        {2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2},
+        {4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4},
+        {6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6},
+        {8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8},
+    },
+};
+
+// 0x82C7E3B - which falling-berry column corresponds to which Dodrio head.
+static const u8 sDodrioHeadToColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3] DODRIO_LOOKUP_DATA =
+{
+    { // 1 player (never used)
+        {4, 5, 6},
+    },
+    { // 2 players (never used)
+        {3, 4, 5},
+        {5, 6, 3},
+    },
+    { // 3 players
+        {4, 5, 6},
+        {6, 7, 2},
+        {2, 3, 4},
+    },
+    { // 4 players
+        {3, 4, 5},
+        {5, 6, 7},
+        {7, 8, 1},
+        {1, 2, 3},
+    },
+    { // 5 players
+        {4, 5, 6},
+        {6, 7, 8},
+        {8, 9, 0},
+        {0, 1, 2},
+        {2, 3, 4},
+    },
+};
+
+// 0x82C7E86 - player ids and their neighbours {L, M, R}.
+static const u8 sDodrioNeighborMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3] DODRIO_LOOKUP_DATA =
+{
+    { // 1 player (never used)
+        {1, 0, 1},
+    },
+    { // 2 players (never used)
+        {1, 0, 1},
+        {0, 1, 0},
+    },
+    { // 3 players
+        {2, 0, 1},
+        {0, 1, 2},
+        {1, 2, 0},
+    },
+    { // 4 players
+        {3, 0, 1},
+        {0, 1, 2},
+        {1, 2, 3},
+        {2, 3, 0},
+    },
+    { // 5 players
+        {4, 0, 1},
+        {0, 1, 2},
+        {1, 2, 3},
+        {2, 3, 4},
+        {3, 4, 0},
+    },
+};
+
+// 0x82C7ED4 - player id at each column; 9 = no player.
+static ALIGNED(4) const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][11] DODRIO_LOOKUP_DATA =
+{
+    {9, 9, 9, 9, 1, 1, 1, 9, 9, 9, 9},
+    {9, 9, 9, 0, 0, 1, 1, 0, 9, 9, 9},
+    {9, 9, 2, 2, 0, 0, 1, 1, 1, 9, 9},
+    {9, 3, 3, 0, 0, 1, 1, 2, 2, 3, 9},
+    {3, 3, 4, 4, 0, 0, 1, 1, 2, 2, 3},
+};
+
+// 0x82C7F0B - columns that belong solely to one player; JP keeps the
+// original buggy row ({1, 3, 5, 6, 9}, column 6 shared, 7 not).
+static const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS] DODRIO_LOOKUP_DATA =
+{
+    {5},
+    {4, 6},
+    {3, 5, 7},
+    {2, 4, 6, 8},
+    {1, 3, 5, 6, 9},
+};
+
+#undef DODRIO_LOOKUP_DATA
+
+static const u32 sDuplicateGfx[] __attribute__((section(".rodata.dodrio_duplicate_graphics"))) = INCBIN_U32("build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/tree_border.png.gbapal", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/bg.png.gbapal", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/dodrio.png.gbapal", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/shiny.pal.gbapal", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/status.png.gbapal", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/berries.png.gbapal", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/berries.png.4bpp.lz", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/cloud.png.gbapal", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/bg.png.4bpp.lz", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/tree_border.png.4bpp.lz", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/status.png.4bpp.lz", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/cloud.png.4bpp.lz", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/dodrio.png.4bpp.lz", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/bg.bin.lz", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/tree_border_right.bin.lz", "build/pokeemerald-jp/incgfx/graphics/dodrio_berry_picking/tree_border_left.bin.lz");
+
+#define DODRIO_GAME_DATA __attribute__((section(".rodata.dodrio_game_data")))
+
+// Dodrio berry-picking tables and window templates (0x82CB314..0x82CB67C)
+
+struct DodrioGame;
+
+void DoGameIntro(void);
+void InitCountdown(void);
+void DoCountdown(void);
+void WaitGameStart(void);
+void PlayGame_Leader(void);
+void InitResults_Leader(void);
+void DoResults(void);
+void AskPlayAgain(void);
+void EndLink(void);
+void ExitGame(void);
+void ResetGame_Dodrio(void);
+void WaitEndGame_Leader(void);
+void PlayGame_Member(void);
+void InitResults_Member(void);
+void WaitEndGame_Member(void);
+
+// 0x82CB314 - JP adds a {0, 0, 0} terminator row to the US 3-row table.
+static const u8 sBerryFallDelays[][3] DODRIO_GAME_DATA =
+{
+    { 40, 24, 13 },
+    { 32, 19, 10 },
+    { 22, 13,  7 },
+    {  0,  0,  0 },
+};
+
+// 0x82CB320 - US 5-entry table padded to 8 bytes.
+static const u8 sTreeBorderXPos[8] DODRIO_GAME_DATA = { 8, 5, 8, 11, 15, 0, 0, 0 };
+
+// 0x82CB328 - US 7-entry table padded to 8 bytes.
+static const u8 sDifficultyThresholds[8] DODRIO_GAME_DATA = { 5, 10, 20, 30, 50, 70, 100, 0 };
+
+// 0x82CB330 - 3 x 10 berry ids (30 bytes), 2 pad bytes before the pointer
+// table below.
+static const u8 sPrizeBerryIds[3][10] DODRIO_GAME_DATA =
+{
+    { 15, 16, 17, 18, 19, 19, 18, 17, 16, 15 },
+    { 20, 21, 22, 23, 24, 25, 26, 27, 28, 29 },
+    { 30, 31, 32, 33, 34, 34, 33, 32, 31, 30 },
+};
+
+// 0x82CB350 / 0x82CB380
+static void (*const sLeaderFuncs[12])(void) DODRIO_GAME_DATA =
+{
+    [FUNC_INTRO]            = DoGameIntro,
+    [FUNC_INIT_COUNTDOWN]   = InitCountdown,
+    [FUNC_COUNTDOWN]        = DoCountdown,
+    [FUNC_WAIT_START]       = WaitGameStart,
+    [FUNC_PLAY_GAME]        = PlayGame_Leader,
+    [FUNC_INIT_RESULTS]     = InitResults_Leader,
+    [FUNC_RESULTS]          = DoResults,
+    [FUNC_ASK_PLAY_AGAIN]   = AskPlayAgain,
+    [FUNC_END_LINK]         = EndLink,
+    [FUNC_EXIT]             = ExitGame,
+    [FUNC_RESET_GAME]       = ResetGame_Dodrio,
+    [FUNC_WAIT_END_GAME]    = WaitEndGame_Leader,
+};
+
+static void (*const sMemberFuncs[12])(void) DODRIO_GAME_DATA =
+{
+    [FUNC_INTRO]            = DoGameIntro,
+    [FUNC_INIT_COUNTDOWN]   = InitCountdown,
+    [FUNC_COUNTDOWN]        = DoCountdown,
+    [FUNC_WAIT_START]       = WaitGameStart,
+    [FUNC_PLAY_GAME]        = PlayGame_Member,
+    [FUNC_INIT_RESULTS]     = InitResults_Member,
+    [FUNC_RESULTS]          = DoResults,
+    [FUNC_ASK_PLAY_AGAIN]   = AskPlayAgain,
+    [FUNC_END_LINK]         = EndLink,
+    [FUNC_EXIT]             = ExitGame,
+    [FUNC_RESET_GAME]       = ResetGame_Dodrio,
+    [FUNC_WAIT_END_GAME]    = WaitEndGame_Member,
+};
+
+// 0x82CB3B0
+static const s16 sBerryScoreMultipliers[] DODRIO_GAME_DATA = { 10, 30, 50, 50 };
+
+// 0x82CB3B8
+static const struct WindowTemplate sRecordsWindowTemplate DODRIO_GAME_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 5,
+    .tilemapTop = 1,
+    .width = 20,
+    .height = 11,
+    .paletteNum = 15,
+    .baseBlock = 1,
+};
+
+// 0x82CB3C0 - Records labels.
+static const u8 *const sRecordsLabels[] DODRIO_GAME_DATA =
+{
+    gText_BerriesPicked,
+    gText_BestScore,
+    gText_BerriesInRowFivePlayers,
+};
+
+// 0x82CB3CC
+static const u8 sRecordDigitCounts[] DODRIO_GAME_DATA = { 4, 7, 4, 0 };
+
+// 0x82CB3D0
+static const u16 sRecordLabelYs[] DODRIO_GAME_DATA = { 26, 42, 58 };
+
+// 0x82CB3D6
+static const u16 sRecordValueYs[] DODRIO_GAME_DATA = { 26, 42, 72 };
+
+// 0x82CB3DC - JP-only initial berry results (twenty u16s).
+static const u16 sBerryResultsInit[MAX_RFU_PLAYERS][BERRY_PRIZE] DODRIO_GAME_DATA =
+{
+    { 9999, 0, 90, 9999 },
+    { 9999, 9999, 70, 9999 },
+    { 9999, 0, 9999, 0 },
+    { 9999, 9999, 60, 0 },
+    { 9999, 9999, 9999, 0 },
+};
+
+// 0x82CB404 - JP default player names (hiragana / letters / digits).
+static const u8 sDefaultPlayerName1[] DODRIO_GAME_DATA = _("あいうえおかき");
+static const u8 sDefaultPlayerName2[] DODRIO_GAME_DATA = _("ABCDEFG");
+static const u8 sDefaultPlayerName3[] DODRIO_GAME_DATA = _("0123456");
+
+// 0x82CB41C
+static const u8 *const sPlayerNames[MAX_RFU_PLAYERS] DODRIO_GAME_DATA =
+{
+    sDefaultPlayerName1,
+    sDefaultPlayerName1,
+    sDefaultPlayerName1,
+    sDefaultPlayerName2,
+    sDefaultPlayerName3,
+};
+
+// 0x82CB430 - US sBgTemplates plus two filler entries.
+static const struct BgTemplate sDodrioBgTemplates[] DODRIO_GAME_DATA =
+{
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 30, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 1, .charBaseIndex = 2, .mapBaseIndex = 12, .screenSize = 1, .paletteMode = 0, .priority = 1, .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 2, .mapBaseIndex = 14, .screenSize = 1, .paletteMode = 0, .priority = 1, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 3, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 2, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 3, .mapBaseIndex = 15, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 0,  .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+};
+
+// 0x82CB448 - JP results window layouts (differ from US).
+static const struct WindowTemplate sDodrioWindowTemplates_Results[] DODRIO_GAME_DATA =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 28,
+        .height = 3,
+        .paletteNum = 13,
+        .baseBlock = 0x13,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 6,
+        .width = 28,
+        .height = 13,
+        .paletteNum = 13,
+        .baseBlock = 0x67,
+    },
+};
+
+// 0x82CB458 - JP prize window layout (differs from US).
+static const struct WindowTemplate sWindowTemplate_Prize DODRIO_GAME_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 6,
+    .width = 28,
+    .height = 7,
+    .paletteNum = 13,
+    .baseBlock = 0x67,
+};
+
+// 0x82CB460
+static const struct WindowTemplate sWindowTemplates_PlayAgain[] DODRIO_GAME_DATA =
+{
+    { // WIN_PLAY_AGAIN
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 8,
+        .width = 19,
+        .height = 3,
+        .paletteNum = 13,
+        .baseBlock = 0x13,
+    },
+    { // WIN_YES_NO
+        .bg = 0,
+        .tilemapLeft = 22,
+        .tilemapTop = 7,
+        .width = 6,
+        .height = 4,
+        .paletteNum = 13,
+        .baseBlock = 0x4C,
+    },
+};
+
+// 0x82CB470
+static const struct WindowTemplate sWindowTemplate_DroppedOut DODRIO_GAME_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 4,
+    .tilemapTop = 6,
+    .width = 22,
+    .height = 5,
+    .paletteNum = 13,
+    .baseBlock = 0x13,
+};
+
+// 0x82CB478
+static const struct WindowTemplate sWindowTemplate_CommStandby DODRIO_GAME_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 5,
+    .tilemapTop = 8,
+    .width = 19,
+    .height = 3,
+    .paletteNum = 13,
+    .baseBlock = 0x13,
+};
+
+#undef DODRIO_GAME_DATA
+
+#define DODRIO_DUPLICATE_MAP_DATA __attribute__((section(".rodata.dodrio_duplicate_maps")))
+
+// 0x82CB480 - for each player the list of columns starting with the one to
+// their left; only the active range is read (see pokeemerald
+// dodrio_berry_picking.c sActiveColumnMap_Duplicate).
+static const u8 sActiveColumnMap_Duplicate[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][11] DODRIO_DUPLICATE_MAP_DATA =
+{
+    { // 1 player (never used), columns 4-6.
+        {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+    },
+    { // 2 players (never used), columns 3-6
+        {0, 1, 2, 3, 4, 5, 6, 3, 8, 9, 0},
+        {0, 1, 2, 5, 6, 3, 4, 5, 8, 9, 0},
+    },
+    { // 3 players, columns 2-7
+        {0, 1, 2, 3, 4, 5, 6, 7, 2, 9, 0},
+        {0, 1, 4, 5, 6, 7, 2, 3, 4, 9, 0},
+        {0, 1, 6, 7, 2, 3, 4, 5, 6, 9, 0},
+    },
+    { // 4 players, columns 1-8
+        {0, 1, 2, 3, 4, 5, 6, 7, 8, 1, 0},
+        {0, 3, 4, 5, 6, 7, 8, 1, 2, 3, 0},
+        {0, 5, 6, 7, 8, 1, 2, 3, 4, 5, 0},
+        {0, 7, 8, 1, 2, 3, 4, 5, 6, 7, 0},
+    },
+    { // 5 players, all columns (0-9)
+        {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+        {2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2},
+        {4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4},
+        {6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6},
+        {8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8},
+    },
+};
+
+// 0x82CB593 - which falling-berry column corresponds to which Dodrio head.
+static const u8 sDodrioHeadToColumnMap_Duplicate[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3] DODRIO_DUPLICATE_MAP_DATA =
+{
+    { // 1 player (never used)
+        {4, 5, 6},
+    },
+    { // 2 players (never used)
+        {3, 4, 5},
+        {5, 6, 3},
+    },
+    { // 3 players
+        {4, 5, 6},
+        {6, 7, 2},
+        {2, 3, 4},
+    },
+    { // 4 players
+        {3, 4, 5},
+        {5, 6, 7},
+        {7, 8, 1},
+        {1, 2, 3},
+    },
+    { // 5 players
+        {4, 5, 6},
+        {6, 7, 8},
+        {8, 9, 0},
+        {0, 1, 2},
+        {2, 3, 4},
+    },
+};
+
+// 0x82CB5DE - player ids and their neighbours {L, M, R}.
+static const u8 sDodrioNeighborMap_Duplicate[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3] DODRIO_DUPLICATE_MAP_DATA =
+{
+    { // 1 player (never used)
+        {1, 0, 1},
+    },
+    { // 2 players (never used)
+        {1, 0, 1},
+        {0, 1, 0},
+    },
+    { // 3 players
+        {2, 0, 1},
+        {0, 1, 2},
+        {1, 2, 0},
+    },
+    { // 4 players
+        {3, 0, 1},
+        {0, 1, 2},
+        {1, 2, 3},
+        {2, 3, 0},
+    },
+    { // 5 players
+        {4, 0, 1},
+        {0, 1, 2},
+        {1, 2, 3},
+        {2, 3, 4},
+        {3, 4, 0},
+    },
+};
+
+// 0x82CB62C - player id at each column; 9 = no player.
+static ALIGNED(4) const u8 sPlayerIdAtColumn_Duplicate[MAX_RFU_PLAYERS][11] DODRIO_DUPLICATE_MAP_DATA =
+{
+    {9, 9, 9, 9, 1, 1, 1, 9, 9, 9, 9},
+    {9, 9, 9, 0, 0, 1, 1, 0, 9, 9, 9},
+    {9, 9, 2, 2, 0, 0, 1, 1, 1, 9, 9},
+    {9, 3, 3, 0, 0, 1, 1, 2, 2, 3, 9},
+    {3, 3, 4, 4, 0, 0, 1, 1, 2, 2, 3},
+};
+
+// 0x82CB663 - columns that belong solely to one player; JP keeps the
+// original buggy row ({1, 3, 5, 6, 9}, column 6 shared, 7 not).
+static const u8 sUnsharedColumns_Duplicate[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS] DODRIO_DUPLICATE_MAP_DATA =
+{
+    {5},
+    {4, 6},
+    {3, 5, 7},
+    {2, 4, 6, 8},
+    {1, 3, 5, 6, 9},
+};
+
+#undef DODRIO_DUPLICATE_MAP_DATA
+
+#define DODRIO_SPRITE_DATA __attribute__((section(".rodata.dodrio_sprite_data")))
+
+// Dodrio sprite/rank data (0x82CEA6C..0x82CECF0)
+
+
+void LoadGfx(void);
+void ShowNames(void);
+void sub_080295A4(void);
+void Msg_WantToPlayAgain(void);
+void Msg_SavingDontTurnOff(void);
+void Msg_CommunicationStandby(void);
+void EraseMessage(void);
+void Msg_SomeoneDroppedOut(void);
+void StopGfxFuncs(void);
+void GfxIdle(void);
+void SpriteCB_Cloud(struct Sprite *sprite);
+void nullsub_15(void);
+
+// 0x82CEA6C - the four OamData entries match pokeemerald's
+// sOamData_Dodrio / sOamData_16x16_Priority0 / sOamData_Berry / sOamData_Cloud.
+static const struct OamData sOamData_Dodrio DODRIO_SPRITE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_16x16_Priority0 DODRIO_SPRITE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_Berry DODRIO_SPRITE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_Cloud DODRIO_SPRITE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+// 0x82CEA8C - dodrio head animations.
+static const union AnimCmd sAnim_Dodrio_Normal[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_JUMP(0)
+};
+static const union AnimCmd sAnim_Dodrio_PickRight[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(64, 20),
+    ANIMCMD_JUMP(0)
+};
+static const union AnimCmd sAnim_Dodrio_PickMiddle[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(128, 20),
+    ANIMCMD_JUMP(0)
+};
+static const union AnimCmd sAnim_Dodrio_PickLeft[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(192, 20),
+    ANIMCMD_JUMP(0)
+};
+static const union AnimCmd sAnim_Dodrio_Down[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(256, 20),
+    ANIMCMD_JUMP(0)
+};
+
+// 0x82CEAB4
+static const union AnimCmd *const sAnims_Dodrio[] DODRIO_SPRITE_DATA =
+{
+    sAnim_Dodrio_Normal,
+    sAnim_Dodrio_PickRight,
+    sAnim_Dodrio_PickMiddle,
+    sAnim_Dodrio_PickLeft,
+    sAnim_Dodrio_Down,
+};
+
+// 0x82CEAC8 - status bar animations.
+static const union AnimCmd sAnims_StatusBar_Yellow[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_JUMP(0)
+};
+static const union AnimCmd sAnims_StatusBar_Gray[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(4, 20),
+    ANIMCMD_JUMP(0)
+};
+static const union AnimCmd sAnims_StatusBar_Red[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(8, 20),
+    ANIMCMD_JUMP(0)
+};
+
+// 0x82CEAE0
+static const union AnimCmd *const sAnims_StatusBar[] DODRIO_SPRITE_DATA =
+{
+    sAnims_StatusBar_Yellow,
+    sAnims_StatusBar_Gray,
+    sAnims_StatusBar_Red,
+};
+
+// 0x82CEAEC - nine berry animations (JP game has nine berry tiles).
+static const union AnimCmd sAnim_Berry_0[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(0, 20), ANIMCMD_JUMP(0) };
+static const union AnimCmd sAnim_Berry_1[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(4, 20), ANIMCMD_JUMP(0) };
+static const union AnimCmd sAnim_Berry_2[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(8, 20), ANIMCMD_JUMP(0) };
+static const union AnimCmd sAnim_Berry_3[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(12, 20), ANIMCMD_JUMP(0) };
+static const union AnimCmd sAnim_Berry_4[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(16, 20), ANIMCMD_JUMP(0) };
+static const union AnimCmd sAnim_Berry_5[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(20, 20), ANIMCMD_JUMP(0) };
+static const union AnimCmd sAnim_Berry_6[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(24, 20), ANIMCMD_JUMP(0) };
+static const union AnimCmd sAnim_Berry_7[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(28, 20), ANIMCMD_JUMP(0) };
+static const union AnimCmd sAnim_Berry_8[] DODRIO_SPRITE_DATA = { ANIMCMD_FRAME(32, 20), ANIMCMD_JUMP(0) };
+
+// 0x82CEB34
+static const union AnimCmd *const sAnims_Berry[] DODRIO_SPRITE_DATA =
+{
+    sAnim_Berry_0,
+    sAnim_Berry_1,
+    sAnim_Berry_2,
+    sAnim_Berry_3,
+    sAnim_Berry_4,
+    sAnim_Berry_5,
+    sAnim_Berry_6,
+    sAnim_Berry_7,
+    sAnim_Berry_8,
+};
+
+// 0x82CEB58
+static const union AnimCmd sAnim_Cloud[] DODRIO_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 20),
+    ANIMCMD_JUMP(0)
+};
+static const union AnimCmd *const sAnims_Cloud[] DODRIO_SPRITE_DATA = { sAnim_Cloud };
+
+// 0x82CEB64
+static const struct SpritePalette sDodrioNormalSpritePalette DODRIO_SPRITE_DATA =
+{
+    .data = sDodrioNormal_Pal,
+    .tag = 0,
+};
+static const struct SpritePalette sDodrioShinySpritePalette DODRIO_SPRITE_DATA =
+{
+    .data = sDodrioShiny_Pal,
+    .tag = 1,
+};
+static const struct SpritePalette sStatusPalette DODRIO_SPRITE_DATA =
+{
+    .data = sStatus_Pal,
+    .tag = 2,
+};
+
+// 0x82CEB7C
+static const struct SpriteTemplate sStatusSpriteTemplate DODRIO_SPRITE_DATA =
+{
+    .tileTag = 1,
+    .paletteTag = 2,
+    .oam = &sOamData_16x16_Priority0,
+    .anims = sAnims_StatusBar,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = nullsub_15,
+};
+
+// 0x82CEB94 - unlabeled 12 bytes between the status template and sBerryPalette.
+static const u8 gUnknown_82CEB94[] DODRIO_SPRITE_DATA =
+{
+    0xD4, 0x3E, 0x3F, 0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0xFB, 0x00, 0x00
+};
+
+// 0x82CEBA0 - berry palette data is the second half of the former aggregate.
+static const struct SpritePalette sBerryPalette DODRIO_SPRITE_DATA =
+{
+    .data = sBerries_Pal,
+    .tag = 3,
+};
+
+// 0x82CEBA8
+static const s16 sBerryIconXCoords[NUM_BERRY_TYPES] DODRIO_SPRITE_DATA = { 88, 128, 168, 208 };
+
+// 0x82CEBB0
+static const struct SpriteTemplate sBerrySpriteTemplate DODRIO_SPRITE_DATA =
+{
+    .tileTag = 2,
+    .paletteTag = 3,
+    .oam = &sOamData_Berry,
+    .anims = sAnims_Berry,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82CEBC8
+static const struct SpriteTemplate sBerryIconSpriteTemplate DODRIO_SPRITE_DATA =
+{
+    .tileTag = 2,
+    .paletteTag = 3,
+    .oam = &sOamData_16x16_Priority0,
+    .anims = sAnims_Berry,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82CEBE0
+static const u8 sCloudDurations[] DODRIO_SPRITE_DATA = { 0x1E, 0x14 };
+
+// 0x82CEBE2
+static const s16 sCloudPositions[NUM_CLOUDS][2] DODRIO_SPRITE_DATA =
+{
+    { 230, 55 },
+    { 30, 74 },
+};
+
+// 0x82CEBEA
+static const u8 gUnknown_82CEBEA[] DODRIO_SPRITE_DATA = { 0x00, 0x00 };
+
+// 0x82CEBEC - cloud palette data is the last 0x20 bytes of sBerries_Gfx.
+static const struct SpritePalette sCloudPalette DODRIO_SPRITE_DATA =
+{
+    .data = sCloud_Pal,
+    .tag = 6,
+};
+#undef sCloud_Pal
+
+// 0x82CEBF4
+static const struct SpriteTemplate sCloudSpriteTemplate DODRIO_SPRITE_DATA =
+{
+    .tileTag = 5,
+    .paletteTag = 6,
+    .oam = &sOamData_Cloud,
+    .anims = sAnims_Cloud,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Cloud,
+};
+
+// 0x82CEC0C
+static const u8 sDodrioTextColorTable[][3] DODRIO_SPRITE_DATA =
+{
+    { 1, 2, 3 },
+    { 1, 4, 5 },
+    { 1, 8, 9 },
+    { 1, 6, 7 },
+};
+
+// 0x82CEC18 - same values as pokeemerald; agbcc pads each WinCoords to 4 bytes.
+static const struct WinCoords sNameWindowCoords_1Player[] DODRIO_SPRITE_DATA = { { 12, 6 } };
+static const struct WinCoords sNameWindowCoords_2Players[] DODRIO_SPRITE_DATA = { { 9, 10 }, { 15, 6 } };
+static const struct WinCoords sNameWindowCoords_3Players[] DODRIO_SPRITE_DATA = { { 12, 6 }, { 18, 10 }, { 6, 10 } };
+static const struct WinCoords sNameWindowCoords_4Players[] DODRIO_SPRITE_DATA = { { 9, 10 }, { 15, 6 }, { 21, 10 }, { 3, 6 } };
+static const struct WinCoords sNameWindowCoords_5Players[] DODRIO_SPRITE_DATA = { { 12, 6 }, { 18, 10 }, { 23, 6 }, { 1, 6 }, { 6, 10 } };
+
+// 0x82CEC54
+static const struct WinCoords *const sNameWindowCoords[] DODRIO_SPRITE_DATA =
+{
+    sNameWindowCoords_1Player,
+    sNameWindowCoords_2Players,
+    sNameWindowCoords_3Players,
+    sNameWindowCoords_4Players,
+    sNameWindowCoords_5Players,
+};
+
+// 0x82CEC68 - Ranking number labels.
+static const u8 *const sRankingTexts[] DODRIO_SPRITE_DATA =
+{
+    gText_1Colon,
+    gText_2Colon,
+    gText_3Colon,
+    gText_4Colon,
+    gText_5Colon,
+};
+
+// 0x82CEC7C - JP values differ from US (last X coord 220 vs 212, Y coords differ).
+static const u16 sResultsXCoords[] DODRIO_SPRITE_DATA = { 92, 132, 172, 220 };
+static const u16 sResultsYCoords[] DODRIO_SPRITE_DATA = { 30, 45, 60, 75, 90 };
+static const u16 sRankingYCoords[] DODRIO_SPRITE_DATA = { 12, 28, 44, 60, 76 };
+
+// 0x82CEC98
+static const struct GfxFunc sGfxFuncs[] DODRIO_SPRITE_DATA =
+{
+    { GFXFUNC_LOAD,              LoadGfx },
+    { GFXFUNC_SHOW_NAMES,        ShowNames },
+    { GFXFUNC_SHOW_RESULTS,      sub_080295A4 },
+    { GFXFUNC_MSG_PLAY_AGAIN,    Msg_WantToPlayAgain },
+    { GFXFUNC_MSG_SAVING,        Msg_SavingDontTurnOff },
+    { GFXFUNC_MSG_COMM_STANDBY,  Msg_CommunicationStandby },
+    { GFXFUNC_ERASE_MSG,         EraseMessage },
+    { GFXFUNC_MSG_PLAYER_DROPPED, Msg_SomeoneDroppedOut },
+    { GFXFUNC_STOP,              StopGfxFuncs },
+    { GFXFUNC_IDLE,              GfxIdle },
+};
+
+// 0x82CECE8 - ranking display order (5 entries padded to 8 bytes).
+static const u8 sRankingOrder[] DODRIO_SPRITE_DATA = { 0, 1, 2, 3, 4, 0, 0, 0 };
+
+#undef DODRIO_SPRITE_DATA
