@@ -2286,24 +2286,6 @@ $(C_BUILDDIR)/data/berry_crush3.o: src/data/berry_crush3.c src/data/berry_crush3
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/berry_crush3.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/berry_crush3.gen.s
 
-$(C_BUILDDIR)/data/pokejump1.o: src/data/pokejump1.c src/data/pokejump1.h
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokejump1.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokejump1.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/pokejump1.gen.s
-
-$(C_BUILDDIR)/data/pokejump2.o: src/data/pokejump2.c src/data/pokejump2.h
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokejump2.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokejump2.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/pokejump2.gen.s
-
-$(C_BUILDDIR)/data/pokejump3.o: src/data/pokejump3.c src/data/pokejump3.h
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokejump3.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokejump3.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/pokejump3.gen.s
-
 $(C_BUILDDIR)/data/pokejump4.o: src/data/pokejump4.c src/data/pokejump4.h
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokejump4.gen.s
@@ -6025,3 +6007,27 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/tree_border_right.bin.lz: g
 $(JP_GRAPHICS_GFX_ROOT)graphics/dodrio_berry_picking/tree_border_left.bin.lz: graphics/dodrio_berry_picking/tree_border_left.bin $(GFX)
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@
+
+$(C_BUILDDIR)/pokemon_jump.o: src/pokemon_jump.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_jump.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_jump.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/pokemon_jump.gen.s
+
+$(C_BUILDDIR)/pokemon_jump.d: src/pokemon_jump.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/pokemon_jump.d
+
+$(C_BUILDDIR)/data.o: src/data.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/data.gen.s
+
+$(C_BUILDDIR)/data.d: src/data.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/data.d

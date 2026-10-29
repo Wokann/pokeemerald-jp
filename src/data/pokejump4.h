@@ -7,60 +7,7 @@
 #include "pokemon_jump.h"
 #include "window.h"
 
-// Pokemon-jump name/mon coords, records data, static 321 countdown pal/gfx (0x82D1A88..0x82D1F54)
-
-extern const u16 s321Start_Static_Pal[];
-extern const u8 s321Start_Static_Gfx[];
-
-// 0x82D1A88
-const u16 sPlayerNameWindowCoords_2Players[] = { 6, 8, 16, 8 };
-const u16 sPlayerNameWindowCoords_3Players[] = { 6, 8, 11, 6, 16, 8 };
-const u16 sPlayerNameWindowCoords_4Players[] = { 2, 6, 6, 8, 16, 8, 20, 6 };
-const u16 sPlayerNameWindowCoords_5Players[] = { 2, 6, 6, 8, 11, 6, 16, 8, 20, 6 };
-
-// 0x82D1AC0
-const u16 *const sPlayerNameWindowCoords[MAX_RFU_PLAYERS - 1] =
-{
-    sPlayerNameWindowCoords_2Players,
-    sPlayerNameWindowCoords_3Players,
-    sPlayerNameWindowCoords_4Players,
-    sPlayerNameWindowCoords_5Players,
-};
-
-// 0x82D1AD0
-const s16 sMonXCoords_2Players[] = { 88, 152 };
-const s16 sMonXCoords_3Players[] = { 88, 120, 152 };
-const s16 sMonXCoords_4Players[] = { 56, 88, 152, 184 };
-const s16 sMonXCoords_5Players[] = { 56, 88, 120, 152, 184 };
-
-// 0x82D1AEC
-const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1] =
-{
-    sMonXCoords_2Players,
-    sMonXCoords_3Players,
-    sMonXCoords_4Players,
-    sMonXCoords_5Players,
-};
-
-// 0x82D1AFC
-const struct WindowTemplate sWindowTemplate_Records =
-{
-    .bg = 0,
-    .tilemapLeft = 5,
-    .tilemapTop = 1,
-    .width = 20,
-    .height = 9,
-    .paletteNum = 15,
-    .baseBlock = 1,
-};
-
-// 0x82D1B04 - Records labels.
-const u8 *const sRecordsTexts[3] =
-{
-    gText_JumpsInARow,
-    gText_BestScore2,
-    gText_ExcellentsInARow,
-};
+// Static 321 countdown data (0x82D1B10..0x82D1F54).
 
 // 0x82D1B10 - static 321-start countdown palette (16 colors).
 const u16 s321Start_Static_Pal[] =

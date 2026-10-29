@@ -259,10 +259,10 @@ STATIC_ASSERT(offsetof(struct PokemonJump_MonInfo, species) == 0, mon_species_of
 // gUnknown_82CECF0).  US defines it as sPokeJumpMons in C; JP data has the
 // same layout ({u16 species, u16 jumpType}) but jumpType byte values differ
 // from US (JP enum order NORMAL=0, FAST=1, SLOW=2).
-extern const struct PokemonJumpMons sPokeJumpMons[];
+static const struct PokemonJumpMons sPokeJumpMons[];
 // JP: jump Y-offset table is ROM data at 0x082CEEE8 (data/data_b.s,
 // gUnknown_82CEEE8).  3 rows of 48 s8 (row order NORMAL, FAST, SLOW).
-extern const s8 sJumpOffsets[][48];
+static const s8 sJumpOffsets[][48];
 
 EWRAM_DATA struct PokemonJump *sPokemonJump = NULL;
 extern EWRAM_DATA struct PokemonJumpGfx *sPokemonJumpGfx;
@@ -407,31 +407,31 @@ bool32 IsMonHitShakeActive(int multiplayerId);
 void StartMonHitFlash(u8 multiplayerId);
 void StopMonHitFlash(void);
 extern void LoadPokeJumpGfx(void); // sub_0802CE44, still asm
-extern const struct PokeJumpGfxFunc sPokeJumpGfxFuncs[10];
+static const struct PokeJumpGfxFunc sPokeJumpGfxFuncs[10];
 void AddPlayerNameWindows(void);
-extern const u16 *const sPlayerNameWindowCoords[MAX_RFU_PLAYERS - 1];
+static const u16 *const sPlayerNameWindowCoords[MAX_RFU_PLAYERS - 1];
 void PrintPokeJumpPlayerNames(bool32 highlightSelf);
 void DrawPlayerNameWindows_PokeJump(void);
-extern const struct BgTemplate sPokeJumpBgTemplates[];
-extern const struct WindowTemplate sPokeJumpWindowTemplates[];
-extern const u16 sPokeJumpBg_Pal[];
-extern const u32 sPokeJumpBg_Gfx[];
-extern const u32 sPokeJumpBg_Tilemap[];
-extern const u16 sPokeJumpVenusaur_Pal[];
-extern const u32 sPokeJumpVenusaur_Gfx[];
-extern const u32 sPokeJumpVenusaur_Tilemap[];
-extern const u16 sPokeJumpBonuses_Pal[];
-extern const u32 sPokeJumpBonuses_Gfx[];
-extern const u32 sPokeJumpBonuses_Tilemap[];
-extern const u16 sPokeJumpInterface_Pal[];
+static const struct BgTemplate sPokeJumpBgTemplates[];
+static const struct WindowTemplate sPokeJumpWindowTemplates[];
+static const u16 sBg_Pal[];
+static const u32 sBg_Gfx[];
+static const u32 sBg_Tilemap[];
+static const u16 sVenusaur_Pal[];
+static const u32 sVenusaur_Gfx[];
+static const u32 sVenusaur_Tilemap[];
+static const u16 sBonuses_Pal[];
+static const u32 sBonuses_Gfx[];
+static const u32 sBonuses_Tilemap[];
+static const u16 sInterface_Pal[];
 void InitDigitPrinters(void);
-extern const struct SpriteSheet sSpriteSheet_Digits;
-extern const struct SpritePalette sSpritePalette_Digits;
+static const struct CompressedSpriteSheet sSpriteSheet_Digits;
+static const struct SpritePalette sSpritePalette_Digits;
 void PrintScoreSuffixes(void);
-extern const u8 gUnknown_82D1A68[];
+static const u8 sScoreSuffixTextColors[];
 void PrintScore(int num);
 void CreateJumpMonSprites(void);
-extern const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1];
+static const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1];
 // gMonFrontPicCoords is declared in include/data.h (struct MonCoords, 4-byte entries in agbcc).
 void CreatePokeJumpYesNoMenu(u16 left, u16 top, u8 cursorPos);
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
@@ -449,19 +449,19 @@ extern int sub_0802BD8C(void); // PokeJumpRandom
 
 // JP: vine speed tables are ROM data (data/data_b.s gUnknown_82CEEC8 /
 // gUnknown_82CEED8); same layouts as US sVineBaseSpeeds / sVineSpeedDelays.
-extern const u16 sVineBaseSpeeds[];
-extern const u16 sVineSpeedDelays[];
-extern const u16 sSoundEffects[];
-extern const int sScoreBonuses[];
-extern const u16 sPrizeItems[];
-extern const struct PrizeQuantityData sPrizeQuantityData[];
-extern const struct CompressedSpriteSheet sCompressedSpriteSheets[5];
-extern const struct SpritePalette sSpritePalettes[2];
-extern const struct SpriteTemplate sSpriteTemplate_JumpMon;
-extern const struct SpriteTemplate sSpriteTemplate_Star;
-extern const struct SpriteTemplate *const sSpriteTemplates_Vine[4];
-extern const s16 sVineXCoords[8];
-extern const s16 sVineYCoords[4][10];
+static const u16 sVineBaseSpeeds[];
+static const u16 sVineSpeedDelays[];
+static const u16 sSoundEffects[];
+static const s32 sScoreBonuses[];
+static const u16 sPrizeItems[];
+static const struct PrizeQuantityData sPrizeQuantityData[];
+static const struct CompressedSpriteSheet sCompressedSpriteSheets[5];
+static const struct SpritePalette sSpritePalettes[2];
+static const struct SpriteTemplate sSpriteTemplate_JumpMon;
+static const struct SpriteTemplate sSpriteTemplate_Star;
+static const struct SpriteTemplate *const sSpriteTemplates_Vine[4];
+static const s16 sVineXCoords[8];
+static const s16 sVineYCoords[4][10];
 int DoSameJumpTimeBonus(u8 flags);
 void PrintJumpsInRow(u16 num);
 extern void sub_0802BF74(void); // HandleMonState
@@ -470,16 +470,16 @@ void UpdateVineSwing(int vineState);
 void SetMonSpriteY(u32 id, s16 y);
 extern void sub_0802C08C(int playerId); // UpdateJump
 void StartMonHitShake(u8 multiplayerId);
-extern const u8 sVenusaurStates[];
+static const u8 sVenusaurStates[NUM_VINESTATES];
 void ShowBonus(u8 numPlayers);
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
-extern bool32 (*const sPokeJumpMemberFuncs[])(void);
+static bool32 (*const sPokeJumpMemberFuncs[])(void);
 
 // JP: leader function table is ROM data at 0x082CEE80 (data/data_b.s,
 // gUnknown_82CEE80); same 9-entry layout as US sPokeJumpLeaderFuncs.
-extern bool32 (*const sPokeJumpLeaderFuncs[])(void);
+static bool32 (*const sPokeJumpLeaderFuncs[])(void);
 
 void Task_StartPokemonJump(u8 taskId)
 {
@@ -2426,16 +2426,16 @@ void LoadPokeJumpGfx(void)
         ResetTempTileDataBuffers();
         LoadSpriteSheetsAndPalettes(sPokemonJumpGfx);
         sub_0802DA00(); // InitDigitPrinters
-        LoadPalette(sPokeJumpBg_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
-        DecompressAndCopyTileDataToVram(BG_SCENERY, sPokeJumpBg_Gfx, 0, 0, 0);
-        DecompressAndCopyTileDataToVram(BG_SCENERY, sPokeJumpBg_Tilemap, 0, 0, 1);
-        LoadPalette(sPokeJumpVenusaur_Pal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
-        DecompressAndCopyTileDataToVram(BG_VENUSAUR, sPokeJumpVenusaur_Gfx, 0, 0, 0);
-        DecompressAndCopyTileDataToVram(BG_VENUSAUR, sPokeJumpVenusaur_Tilemap, 0, 0, 1);
-        LoadPalette(sPokeJumpBonuses_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
-        DecompressAndCopyTileDataToVram(BG_BONUSES, sPokeJumpBonuses_Gfx, 0, 0, 0);
-        DecompressAndCopyTileDataToVram(BG_BONUSES, sPokeJumpBonuses_Tilemap, 0, 0, 1);
-        LoadPalette(sPokeJumpInterface_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
+        LoadPalette(sBg_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+        DecompressAndCopyTileDataToVram(BG_SCENERY, sBg_Gfx, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(BG_SCENERY, sBg_Tilemap, 0, 0, 1);
+        LoadPalette(sVenusaur_Pal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+        DecompressAndCopyTileDataToVram(BG_VENUSAUR, sVenusaur_Gfx, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(BG_VENUSAUR, sVenusaur_Tilemap, 0, 0, 1);
+        LoadPalette(sBonuses_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        DecompressAndCopyTileDataToVram(BG_BONUSES, sBonuses_Gfx, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(BG_BONUSES, sBonuses_Tilemap, 0, 0, 1);
+        LoadPalette(sInterface_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
         SetBgTilemapBuffer(BG_INTERFACE, sPokemonJumpGfx->tilemapBuffer);
         FillBgTilemapBufferRect_Palette0(BG_INTERFACE, 0, 0, 0, 0x20, 0x20);
         PrintScoreSuffixes();
@@ -2889,7 +2889,7 @@ void PrintScoreSuffixes(void)
 {
     u8 color[3];
 
-    memcpy(color, gUnknown_82D1A68, 3);
+    memcpy(color, sScoreSuffixTextColors, 3);
     PutWindowTilemap(WIN_POINTS);
     PutWindowTilemap(WIN_TIMES);
     FillWindowPixelBuffer(WIN_POINTS, 0);
@@ -3484,8 +3484,8 @@ bool32 TryUpdateRecords_PokeJump(u32 jumpScore, u16 jumpsInRow, u16 excellentsIn
 void Task_ShowPokemonJumpRecords(u8 taskId);
 void PrintRecordsText(u16 windowId);
 void TruncateToFirstWordOnly(u8 *str);
-extern const struct WindowTemplate sWindowTemplate_Records;
-extern const u8 *const sRecordsTexts[3];
+static const struct WindowTemplate sWindowTemplate_Records;
+static const u8 *const sRecordsTexts[3];
 
 void IncrementGamesWithMaxPlayers(void)
 {
@@ -3708,3 +3708,725 @@ void TruncateToFirstWordOnly(u8 *str)
         str++;
     }
 }
+
+#define POKEJUMP_TABLE_DATA __attribute__((section(".rodata.pokemon_jump_tables")))
+
+#include "global.h"
+#include "pokemon_jump.h"
+#include "constants/items.h"
+#include "constants/songs.h"
+#include "constants/species.h"
+
+// Pokemon-jump tables (0x82CECF0..0x82CEFA0)
+
+bool32 sub_0802AF3C(void);
+bool32 sub_0802AFC8(void);
+bool32 sub_0802B05C(void);
+bool32 sub_0802B0C8(void);
+bool32 sub_0802B1C0(void);
+bool32 sub_0802B2BC(void);
+bool32 sub_0802B358(void);
+bool32 sub_0802B3AC(void);
+bool32 sub_0802B414(void);
+bool32 sub_0802AF90(void);
+bool32 sub_0802B010(void);
+bool32 sub_0802B0A8(void);
+bool32 sub_0802B164(void);
+bool32 sub_0802B25C(void);
+bool32 sub_0802B31C(void);
+bool32 sub_0802B3F8(void);
+
+// 0x82CECF0
+static const struct PokemonJumpMons sPokeJumpMons[] POKEJUMP_TABLE_DATA =
+{
+    { .species = SPECIES_BULBASAUR, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_CHARMANDER, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_SQUIRTLE, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_CATERPIE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_METAPOD, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_WEEDLE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_KAKUNA, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_RATTATA, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_RATICATE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_PIKACHU, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_SANDSHREW, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_NIDORAN_F, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_NIDORAN_M, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_CLEFAIRY, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_VULPIX, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_JIGGLYPUFF, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_ODDISH, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_PARAS, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_MEOWTH, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_PSYDUCK, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_MANKEY, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_GROWLITHE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_POLIWAG, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_BELLSPROUT, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_SHELLDER, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_KRABBY, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_EXEGGCUTE, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_CUBONE, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_DITTO, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_EEVEE, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_OMANYTE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_KABUTO, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_CHIKORITA, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_CYNDAQUIL, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_TOTODILE, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_SPINARAK, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_PICHU, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_CLEFFA, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_IGGLYBUFF, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_TOGEPI, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_MAREEP, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_BELLOSSOM, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_MARILL, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_SUNKERN, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_WOOPER, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_PINECO, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_SNUBBULL, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_SHUCKLE, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_TEDDIURSA, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_SLUGMA, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_SWINUB, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_HOUNDOUR, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_PHANPY, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_PORYGON2, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_TYROGUE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_SMOOCHUM, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_ELEKID, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_MAGBY, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_LARVITAR, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_TREECKO, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_TORCHIC, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_MUDKIP, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_MARSHTOMP, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_POOCHYENA, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_ZIGZAGOON, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_LINOONE, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_WURMPLE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_SILCOON, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_CASCOON, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_LOTAD, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_SEEDOT, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_RALTS, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_KIRLIA, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_SURSKIT, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_SHROOMISH, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_NINCADA, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_WHISMUR, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_AZURILL, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_SKITTY, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_SABLEYE, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_MAWILE, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_ARON, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_MEDITITE, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_ELECTRIKE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_PLUSLE, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_MINUN, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_VOLBEAT, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_ILLUMISE, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_ROSELIA, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_GULPIN, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_NUMEL, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_TORKOAL, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_SPOINK, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_TRAPINCH, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_CACNEA, .jumpType = JUMP_TYPE_SLOW },
+    { .species = SPECIES_ANORITH, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_WYNAUT, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_SNORUNT, .jumpType = JUMP_TYPE_NORMAL },
+    { .species = SPECIES_CLAMPERL, .jumpType = JUMP_TYPE_FAST },
+    { .species = SPECIES_BAGON, .jumpType = JUMP_TYPE_FAST },
+};
+
+// 0x82CEE80 / 0x82CEEA4
+static bool32 (*const sPokeJumpLeaderFuncs[])(void) POKEJUMP_TABLE_DATA =
+{
+    sub_0802AF3C,
+    sub_0802AFC8,
+    sub_0802B05C,
+    sub_0802B0C8,
+    sub_0802B1C0,
+    sub_0802B2BC,
+    sub_0802B358,
+    sub_0802B3AC,
+    sub_0802B414,
+};
+
+static bool32 (*const sPokeJumpMemberFuncs[])(void) POKEJUMP_TABLE_DATA =
+{
+    sub_0802AF90,
+    sub_0802B010,
+    sub_0802B0A8,
+    sub_0802B164,
+    sub_0802B25C,
+    sub_0802B31C,
+    sub_0802B358,
+    sub_0802B3F8,
+    sub_0802B414,
+};
+
+// 0x82CEEC8
+static const u16 sVineBaseSpeeds[] POKEJUMP_TABLE_DATA = { 26, 31, 36, 41, 46, 51, 56, 61 };
+
+// 0x82CEED8
+static const u16 sVineSpeedDelays[] POKEJUMP_TABLE_DATA = { 0, 1, 1, 2 };
+
+// 0x82CEEE0
+static const u16 sSoundEffects[] POKEJUMP_TABLE_DATA = { SE_SHOP, SE_SHINY, SE_M_MORNING_SUN, SE_RG_POKE_JUMP_SUCCESS };
+
+// 0x82CEEE8
+static const s8 sJumpOffsets[][48] POKEJUMP_TABLE_DATA =
+{
+    { 253, 250, 248, 246, 243, 241, 239, 237, 235, 233, 231, 229, 228, 227, 226, 226, 226, 228, 229, 230, 231, 233, 234, 236, 238, 239, 241, 243, 245, 248, 250, 252, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 253, 250, 247, 245, 242, 240, 238, 236, 234, 232, 230, 228, 227, 226, 226, 228, 230, 232, 234, 236, 238, 240, 242, 245, 247, 250, 252, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 253, 250, 247, 245, 243, 241, 239, 237, 235, 233, 231, 229, 228, 227, 226, 226, 226, 226, 227, 227, 228, 228, 229, 229, 230, 231, 232, 234, 236, 238, 240, 242, 244, 245, 247, 250, 252, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+};
+
+// 0x82CEF78
+static const s32 sScoreBonuses[] POKEJUMP_TABLE_DATA = { 0, 0, 50, 100, 200, 500 };
+
+// 0x82CEF90
+static const u16 sPrizeItems[] POKEJUMP_TABLE_DATA =
+{
+    ITEM_LEPPA_BERRY,
+    ITEM_LUM_BERRY,
+    ITEM_SITRUS_BERRY,
+    ITEM_FIGY_BERRY,
+    ITEM_WIKI_BERRY,
+    ITEM_MAGO_BERRY,
+    ITEM_AGUAV_BERRY,
+    ITEM_IAPAPA_BERRY,
+};
+
+#undef POKEJUMP_TABLE_DATA
+
+#define POKEJUMP_SPRITE_DATA __attribute__((section(".rodata.pokemon_jump_sprites")))
+
+#include "global.h"
+#include "pokemon_jump.h"
+#include "sprite.h"
+
+// Pokemon-jump data (0x82CEFA0..0x82CF744)
+
+extern const struct OamData sOamData_JumpMon; // vine OamData (pokejump3.h)
+
+// 0x82CEFA0
+static const struct PrizeQuantityData sPrizeQuantityData[] POKEJUMP_SPRITE_DATA =
+{
+    { 5000, 1 },
+    { 8000, 2 },
+    { 12000, 3 },
+    { 16000, 4 },
+    { 20000, 5 },
+};
+
+// 0x82CEFC8 / 0x82CEFE8
+static const u16 sPokeJumpPal1[] POKEJUMP_SPRITE_DATA = INCGFX_U16("graphics/pokemon_jump/pal1.pal", ".gbapal");
+static const u16 sPokeJumpPal2[] POKEJUMP_SPRITE_DATA = INCGFX_U16("graphics/pokemon_jump/pal2.pal", ".gbapal");
+
+// 0x82CF008 (LZ compressed)
+static const u32 sVine1_Gfx[] POKEJUMP_SPRITE_DATA = INCGFX_U32("graphics/pokemon_jump/vine1.png", ".4bpp.lz");
+
+// 0x82CF128 (LZ compressed)
+static const u32 sVine2_Gfx[] POKEJUMP_SPRITE_DATA = INCGFX_U32("graphics/pokemon_jump/vine2.png", ".4bpp.lz");
+
+// 0x82CF2FC (LZ compressed)
+static const u32 sVine3_Gfx[] POKEJUMP_SPRITE_DATA = INCGFX_U32("graphics/pokemon_jump/vine3.png", ".4bpp.lz");
+
+// 0x82CF42C (LZ compressed)
+static const u32 sVine4_Gfx[] POKEJUMP_SPRITE_DATA = INCGFX_U32("graphics/pokemon_jump/vine4.png", ".4bpp.lz");
+
+// 0x82CF528 (LZ compressed)
+static const u32 sStar_Gfx[] POKEJUMP_SPRITE_DATA = INCGFX_U32("graphics/pokemon_jump/star.png", ".4bpp.lz");
+
+// 0x82CF694
+static const struct CompressedSpriteSheet sCompressedSpriteSheets[] POKEJUMP_SPRITE_DATA =
+{
+    { .data = sVine1_Gfx, .size = 0x600, .tag = 5 },
+    { .data = sVine2_Gfx, .size = 0xC00, .tag = 6 },
+    { .data = sVine3_Gfx, .size = 0x600, .tag = 7 },
+    { .data = sVine4_Gfx, .size = 0x600, .tag = 8 },
+    { .data = sStar_Gfx, .size = 0x200, .tag = 10 },
+};
+
+// 0x82CF6BC
+static const struct SpritePalette sSpritePalettes[] POKEJUMP_SPRITE_DATA =
+{
+    { .data = sPokeJumpPal1, .tag = 5 },
+    { .data = sPokeJumpPal2, .tag = 6 },
+};
+
+// 0x82CF6CC
+static const struct SpriteTemplate sSpriteTemplate_JumpMon POKEJUMP_SPRITE_DATA =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &sOamData_JumpMon,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82CF6E4
+static const s16 sVineYCoords[4][10] POKEJUMP_SPRITE_DATA =
+{
+    { 96, 96, 96, 114, 120, 120, 120, 114, 96, 96 },
+    { 70, 80, 96, 114, 120, 128, 120, 114, 96, 80 },
+    { 50, 72, 96, 114, 128, 136, 128, 114, 96, 72 },
+    { 42, 72, 96, 114, 128, 136, 128, 114, 96, 72 },
+};
+
+// 0x82CF734
+static const s16 sVineXCoords[8] POKEJUMP_SPRITE_DATA = { 16, 40, 72, 104, 136, 168, 200, 224 };
+
+#undef POKEJUMP_SPRITE_DATA
+
+#define POKEJUMP_BG_DATA __attribute__((section(".rodata.pokemon_jump_backgrounds")))
+
+#include "global.h"
+#include "bg.h"
+#include "pokemon_jump.h"
+#include "sprite.h"
+#include "window.h"
+
+// Pokemon-jump sprites, palettes, gfx and templates (0x82CF744..0x82D1A88)
+
+
+bool32 sub_0802CE44(void);
+bool32 sub_0802CFD8(void);
+bool32 sub_0802D044(void);
+bool32 sub_0802D0B0(void);
+bool32 sub_0802D13C(void);
+bool32 sub_0802D1E8(void);
+bool32 sub_0802D28C(void);
+bool32 sub_0802D2D8(void);
+bool32 sub_0802D420(void);
+bool32 sub_0802D37C(void);
+
+extern const struct SpriteTemplate sSpriteTemplate_Vine1;
+extern const struct SpriteTemplate sSpriteTemplate_Vine2;
+extern const struct SpriteTemplate sSpriteTemplate_Vine3;
+extern const struct SpriteTemplate sSpriteTemplate_Vine4;
+
+// 0x82CF744 - pointers to the vine sprite templates below.
+static const struct SpriteTemplate *const sSpriteTemplates_Vine[4] POKEJUMP_BG_DATA =
+{
+    &sSpriteTemplate_Vine1,
+    &sSpriteTemplate_Vine2,
+    &sSpriteTemplate_Vine3,
+    &sSpriteTemplate_Vine4,
+};
+
+// 0x82CF754 - vine/jump-mon OamData.
+static const struct OamData sOamData_JumpMon POKEJUMP_BG_DATA =
+{
+    .y = 0,
+    .affineMode = 0,
+    .objMode = 0,
+    .mosaic = 0,
+    .bpp = 0,
+    .shape = 0,
+    .x = 0,
+    .matrixNum = 0,
+    .size = 3,
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_Vine16x32 POKEJUMP_BG_DATA =
+{
+    .y = 0,
+    .affineMode = 0,
+    .objMode = 0,
+    .mosaic = 0,
+    .bpp = 0,
+    .shape = 2,
+    .x = 0,
+    .matrixNum = 0,
+    .size = 2,
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_Vine32x32 POKEJUMP_BG_DATA =
+{
+    .y = 0,
+    .affineMode = 0,
+    .objMode = 0,
+    .mosaic = 0,
+    .bpp = 0,
+    .shape = 0,
+    .x = 0,
+    .matrixNum = 0,
+    .size = 2,
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_Vine32x16 POKEJUMP_BG_DATA =
+{
+    .y = 0,
+    .affineMode = 0,
+    .objMode = 0,
+    .mosaic = 0,
+    .bpp = 0,
+    .shape = 1,
+    .x = 0,
+    .matrixNum = 0,
+    .size = 2,
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+// 0x82CF774 - vine animations.
+static const union AnimCmd sAnims_Vine_Highest[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_Vine_Higher[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_Vine_High[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_Vine_Low[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(24, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_Vine_Lower[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(32, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_Vine_Lowest[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(40, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_VineTall_Highest[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_VineTall_Higher[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_VineTall_High[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(32, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_VineTall_Low[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(48, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_VineTall_Lower[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(64, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_VineTall_Lowest[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(80, 1),
+    ANIMCMD_END
+};
+
+// 0x82CF7D4 / 0x82CF7EC
+static const union AnimCmd *const sAnims_Vine[] POKEJUMP_BG_DATA =
+{
+    sAnims_Vine_Highest,
+    sAnims_Vine_Higher,
+    sAnims_Vine_High,
+    sAnims_Vine_Low,
+    sAnims_Vine_Lower,
+    sAnims_Vine_Lowest,
+};
+
+static const union AnimCmd *const sAnims_VineTall[] POKEJUMP_BG_DATA =
+{
+    sAnims_VineTall_Highest,
+    sAnims_VineTall_Higher,
+    sAnims_VineTall_High,
+    sAnims_VineTall_Low,
+    sAnims_VineTall_Lower,
+    sAnims_VineTall_Lowest,
+};
+
+// 0x82CF804
+static const struct SpriteTemplate sSpriteTemplate_Vine1 POKEJUMP_BG_DATA =
+{
+    .tileTag = 5,
+    .paletteTag = 5,
+    .oam = &sOamData_Vine16x32,
+    .anims = sAnims_Vine,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+static const struct SpriteTemplate sSpriteTemplate_Vine2 POKEJUMP_BG_DATA =
+{
+    .tileTag = 6,
+    .paletteTag = 5,
+    .oam = &sOamData_Vine32x32,
+    .anims = sAnims_VineTall,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+static const struct SpriteTemplate sSpriteTemplate_Vine3 POKEJUMP_BG_DATA =
+{
+    .tileTag = 7,
+    .paletteTag = 5,
+    .oam = &sOamData_Vine32x16,
+    .anims = sAnims_Vine,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+static const struct SpriteTemplate sSpriteTemplate_Vine4 POKEJUMP_BG_DATA =
+{
+    .tileTag = 8,
+    .paletteTag = 5,
+    .oam = &sOamData_Vine32x16,
+    .anims = sAnims_Vine,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82CF864 - star sprite data.
+static const struct OamData sOamData_Star POKEJUMP_BG_DATA =
+{
+    .y = 0,
+    .affineMode = 0,
+    .objMode = 0,
+    .mosaic = 0,
+    .bpp = 0,
+    .shape = 0,
+    .x = 0,
+    .matrixNum = 0,
+    .size = 1,
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnims_Star_Small[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnims_Star_Big[] POKEJUMP_BG_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(4, 4),
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_FRAME(12, 4),
+    ANIMCMD_LOOP(1),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_Star[] POKEJUMP_BG_DATA =
+{
+    sAnims_Star_Small,
+    sAnims_Star_Big,
+};
+
+// 0x82CF898
+static const struct SpriteTemplate sSpriteTemplate_Star POKEJUMP_BG_DATA =
+{
+    .tileTag = 10,
+    .paletteTag = 5,
+    .oam = &sOamData_Star,
+    .anims = sAnims_Star,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82CF8B0
+static const u16 sInterface_Pal[] POKEJUMP_BG_DATA = INCGFX_U16("graphics/pokemon_jump/interface.pal", ".gbapal");
+
+// 0x82CF8D0
+static const u16 sBg_Pal[] POKEJUMP_BG_DATA = INCGFX_U16("graphics/pokemon_jump/bg.png", ".gbapal");
+
+// 0x82CF8F0 (LZ compressed)
+static const u32 sBg_Gfx[] POKEJUMP_BG_DATA = INCGFX_U32("graphics/pokemon_jump/bg.png", ".4bpp.lz", "-num_tiles 63 -Wnum_tiles");
+
+// 0x82CFB1C (LZ compressed)
+static const u32 sBg_Tilemap[] POKEJUMP_BG_DATA = INCGFX_U32("graphics/pokemon_jump/bg.bin", ".lz");
+
+// 0x82CFCCC
+static const u16 sVenusaur_Pal[] POKEJUMP_BG_DATA = INCGFX_U16("graphics/pokemon_jump/venusaur.png", ".gbapal");
+
+// 0x82CFCEC (LZ compressed)
+static const u32 sVenusaur_Gfx[] POKEJUMP_BG_DATA = INCGFX_U32("graphics/pokemon_jump/venusaur.png", ".4bpp.lz");
+
+// 0x82D063C (LZ compressed)
+static const u32 sVenusaur_Tilemap[] POKEJUMP_BG_DATA = INCGFX_U32("graphics/pokemon_jump/venusaur.bin", ".lz");
+
+// 0x82D09F4
+static const u16 sBonuses_Pal[] POKEJUMP_BG_DATA = INCGFX_U16("graphics/pokemon_jump/bonuses.png", ".gbapal");
+
+// 0x82D0A14 (LZ compressed)
+static const u32 sBonuses_Gfx[] POKEJUMP_BG_DATA = INCGFX_U32("graphics/pokemon_jump/bonuses.png", ".4bpp.lz");
+
+// 0x82D14C4 (LZ compressed)
+static const u32 sBonuses_Tilemap[] POKEJUMP_BG_DATA = INCGFX_U32("graphics/pokemon_jump/bonuses.bin", ".lz");
+
+// 0x82D19F0
+static const struct BgTemplate sPokeJumpBgTemplates[] POKEJUMP_BG_DATA =
+{
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 27, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 1, .mapBaseIndex = 30, .screenSize = 2, .paletteMode = 0, .priority = 2, .baseTile = 0 },
+    { .bg = 1, .charBaseIndex = 2, .mapBaseIndex = 12, .screenSize = 3, .paletteMode = 0, .priority = 1, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 3, .mapBaseIndex = 29, .screenSize = 0, .paletteMode = 0, .priority = 3, .baseTile = 0 },
+};
+
+// 0x82D1A00
+static const struct WindowTemplate sPokeJumpWindowTemplates[] POKEJUMP_BG_DATA =
+{
+    { .bg = 0, .tilemapLeft = 19, .tilemapTop = 0, .width = 2, .height = 2, .paletteNum = 2, .baseBlock = 0x13 },
+    { .bg = 0, .tilemapLeft = 8, .tilemapTop = 0, .width = 2, .height = 2, .paletteNum = 2, .baseBlock = 0x17 },
+    { .bg = 255, .tilemapLeft = 0, .tilemapTop = 0, .width = 0, .height = 0, .paletteNum = 0, .baseBlock = 0x0 },
+};
+
+// 0x82D1A18
+static const struct PokeJumpGfxFunc sPokeJumpGfxFuncs[] POKEJUMP_BG_DATA =
+{
+    { 0, sub_0802CE44 },
+    { 1, sub_0802CFD8 },
+    { 2, sub_0802D044 },
+    { 3, sub_0802D0B0 },
+    { 4, sub_0802D13C },
+    { 5, sub_0802D1E8 },
+    { 6, sub_0802D28C },
+    { 7, sub_0802D2D8 },
+    { 9, sub_0802D420 },
+    { 8, sub_0802D37C },
+};
+
+// 0x82D1A68
+static const u8 sScoreSuffixTextColors[] POKEJUMP_BG_DATA = { 0x00, 0x02, 0x03 };
+
+// 0x82D1A6B - ten states; the next descriptor retains three zero alignment bytes.
+static const u8 sVenusaurStates[NUM_VINESTATES] POKEJUMP_BG_DATA =
+{
+    2, 2, 0, 0, 1, 1, 1, 0, 0, 2,
+};
+
+// 0x82D1A78 / 0x82D1A80 - shared minigame digit descriptors.
+static const struct CompressedSpriteSheet sSpriteSheet_Digits POKEJUMP_BG_DATA =
+{
+    .data = gMinigameDigits_Gfx,
+    .size = 0,
+    .tag = 0x0320,
+};
+
+static const struct SpritePalette sSpritePalette_Digits POKEJUMP_BG_DATA =
+{
+    .data = gMinigameDigits_Pal,
+    .tag = 0x0320,
+};
+
+#undef POKEJUMP_BG_DATA
+
+#define POKEJUMP_RECORD_DATA __attribute__((section(".rodata.pokemon_jump_records")))
+
+#include "global.h"
+#include "strings.h"
+#include "link.h"
+#include "pokemon_jump.h"
+#include "window.h"
+
+// Pokemon-jump name/mon coords, records data, static 321 countdown pal/gfx (0x82D1A88..0x82D1F54)
+
+extern const u16 s321Start_Static_Pal[];
+extern const u8 s321Start_Static_Gfx[];
+
+// 0x82D1A88
+static const u16 sPlayerNameWindowCoords_2Players[] POKEJUMP_RECORD_DATA = { 6, 8, 16, 8 };
+static const u16 sPlayerNameWindowCoords_3Players[] POKEJUMP_RECORD_DATA = { 6, 8, 11, 6, 16, 8 };
+static const u16 sPlayerNameWindowCoords_4Players[] POKEJUMP_RECORD_DATA = { 2, 6, 6, 8, 16, 8, 20, 6 };
+static const u16 sPlayerNameWindowCoords_5Players[] POKEJUMP_RECORD_DATA = { 2, 6, 6, 8, 11, 6, 16, 8, 20, 6 };
+
+// 0x82D1AC0
+static const u16 *const sPlayerNameWindowCoords[MAX_RFU_PLAYERS - 1] POKEJUMP_RECORD_DATA =
+{
+    sPlayerNameWindowCoords_2Players,
+    sPlayerNameWindowCoords_3Players,
+    sPlayerNameWindowCoords_4Players,
+    sPlayerNameWindowCoords_5Players,
+};
+
+// 0x82D1AD0
+static const s16 sMonXCoords_2Players[] POKEJUMP_RECORD_DATA = { 88, 152 };
+static const s16 sMonXCoords_3Players[] POKEJUMP_RECORD_DATA = { 88, 120, 152 };
+static const s16 sMonXCoords_4Players[] POKEJUMP_RECORD_DATA = { 56, 88, 152, 184 };
+static const s16 sMonXCoords_5Players[] POKEJUMP_RECORD_DATA = { 56, 88, 120, 152, 184 };
+
+// 0x82D1AEC
+static const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1] POKEJUMP_RECORD_DATA =
+{
+    sMonXCoords_2Players,
+    sMonXCoords_3Players,
+    sMonXCoords_4Players,
+    sMonXCoords_5Players,
+};
+
+// 0x82D1AFC
+static const struct WindowTemplate sWindowTemplate_Records POKEJUMP_RECORD_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 5,
+    .tilemapTop = 1,
+    .width = 20,
+    .height = 9,
+    .paletteNum = 15,
+    .baseBlock = 1,
+};
+
+// 0x82D1B04 - Records labels.
+static const u8 *const sRecordsTexts[3] POKEJUMP_RECORD_DATA =
+{
+    gText_JumpsInARow,
+    gText_BestScore2,
+    gText_ExcellentsInARow,
+};
+
+#undef POKEJUMP_RECORD_DATA

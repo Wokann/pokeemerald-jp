@@ -9275,13 +9275,15 @@ SECTIONS {
         src/dodrio_berry_picking.o(.rodata.dodrio_duplicate_maps);
         src/dodrio_berry_picking.o(.rodata.dodrio_graphics);
         src/dodrio_berry_picking.o(.rodata.dodrio_sprite_data);
-        src/data/pokejump1.o(.rodata);
-        src/data/pokejump2.o(.rodata);
-        src/data/pokejump3.o(.rodata);
+        src/pokemon_jump.o(.rodata.pokemon_jump_tables);
+        src/pokemon_jump.o(.rodata.pokemon_jump_sprites);
+        src/pokemon_jump.o(.rodata.pokemon_jump_backgrounds);
+        src/pokemon_jump.o(.rodata.pokemon_jump_records);
         src/data/pokejump4.o(.rodata);
         src/data/minigame_countdown.o(.rodata);
         src/data/rtc_data.o(.rodata);
         src/data/main_menu_data.o(.rodata);
+        src/data.o(.rodata.minigame_digits);
         src/data/battle_affine.o(.rodata);
         src/data/unused_anims.o(.rodata);
         src/data/front_pic_coordinates.o(.rodata);
