@@ -46,6 +46,12 @@ BUILD_NAME ?= pokeemerald-jp
 OBJ_DIR := build/$(BUILD_NAME)
 JP_GRAPHICS_GFX_ROOT := $(OBJ_DIR)/incgfx/
 
+JP_BATTLE_TRANSITION_COMPOSITE_TARGETS := $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_1.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_2.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_3.4bpp.lz \
+    $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_4.4bpp.lz
+$(foreach target,$(JP_BATTLE_TRANSITION_COMPOSITE_TARGETS),$(eval $(target) := defined))
+
 # JP keeps the US option-label sequence compressed in the build tree.
 JP_POKENAV_OPTIONS_NAMES := hoenn_map condition match_call ribbons switch_off party search cool beauty cute smart tough cancel
 JP_POKENAV_OPTIONS_DIR := $(JP_GRAPHICS_GFX_ROOT)graphics/pokenav/options
@@ -1124,12 +1130,8 @@ $(C_BUILDDIR)/link_rfu_2.o: src/link_rfu_2.c
 include sound/song_order.mk
 SONG_OBJS := $(patsubst sound/songs/midi/%.s,$(OBJ_DIR)/sound/songs/midi/%.o,$(SONG_SRCS))
 
-DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/battle_transition_tilemaps.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
+DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/battle_anim_scripts.o $(OBJ_DIR)/data/battle_scripts_1.o $(OBJ_DIR)/data/field_effect_scripts.o $(OBJ_DIR)/data/battle_scripts_2.o $(OBJ_DIR)/data/battle_ai_scripts.o $(OBJ_DIR)/data/contest_ai_scripts.o $(OBJ_DIR)/data/mystery_event_script_cmd_table.o $(OBJ_DIR)/data/maps.o $(OBJ_DIR)/data/fieldmap.o $(OBJ_DIR)/data/metatile_behavior.o $(OBJ_DIR)/data/field_door.o $(OBJ_DIR)/data/map_events.o $(OBJ_DIR)/data/data_b2d_mid60.o  $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 DATA_OBJS += $(OBJ_DIR)/data/tv.o
-DATA_OBJS += $(OBJ_DIR)/data/battle_transition_regis_resources.o
-DATA_OBJS += $(OBJ_DIR)/data/battle_transition_legendary_resources.o
-DATA_OBJS += $(OBJ_DIR)/data/battle_transition_frontier_resources.o
-DATA_OBJS += $(OBJ_DIR)/data/battle_transition_pre_regi_resources.o
 
 OBJFILE := $(AS_OBJS) $(C_ASM_OBJS) $(C_OBJECTS) $(SONG_OBJS) $(DATA_OBJS)
 OBJFILE_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJFILE))
@@ -1452,9 +1454,9 @@ $(C_BUILDDIR)/mirage_tower.o: src/mirage_tower.c Makefile
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mirage_tower.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mirage_tower.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/mirage_tower.gen.s
-$(C_BUILDDIR)/battle_transition_frontier.o: src/battle_transition_frontier.c $(wildcard graphics/battle_transitions/frontier_logo_center.* graphics/battle_transitions/frontier_logo_circles.*)
+$(C_BUILDDIR)/battle_transition_frontier.o: src/battle_transition_frontier.c
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_transition_frontier.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_transition_frontier.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_transition_frontier.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/battle_transition_frontier.gen.s
 $(C_BUILDDIR)/mystery_event_msg.o: src/mystery_event_msg.c charmap.txt
@@ -2384,21 +2386,9 @@ $(OBJ_DIR)/data/field_door.o: data/field_door.s baserom_jp.gba
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 
-$(OBJ_DIR)/data/battle_transition_regis_resources.o: data/battle_transition_regis_resources.s graphics/battle_transitions/regis.4bpp graphics/battle_transitions/regice.gbapal graphics/battle_transitions/registeel.gbapal graphics/battle_transitions/regirock.gbapal graphics/battle_transitions/regice.bin graphics/battle_transitions/registeel.bin graphics/battle_transitions/regirock.bin graphics/battle_transitions/unused.gbapal
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/battle_transition_legendary_resources.o: data/battle_transition_legendary_resources.s graphics/battle_transitions/kyogre.4bpp.lz graphics/battle_transitions/kyogre.bin.lz graphics/battle_transitions/groudon.4bpp.lz graphics/battle_transitions/groudon.bin.lz graphics/battle_transitions/kyogre_pt1.gbapal graphics/battle_transitions/kyogre_pt2.gbapal graphics/battle_transitions/groudon_pt1.gbapal graphics/battle_transitions/groudon_pt2.gbapal graphics/battle_transitions/rayquaza.gbapal graphics/battle_transitions/rayquaza.4bpp graphics/battle_transitions/rayquaza.bin
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/battle_transition_frontier_resources.o: data/battle_transition_frontier_resources.s graphics/battle_transitions/frontier_logo.gbapal graphics/battle_transitions/frontier_logo.4bpp.lz graphics/battle_transitions/frontier_logo.bin.lz graphics/battle_transitions/frontier_squares_blanktiles.gbapal graphics/battle_transitions/frontier_square_1.4bpp.lz graphics/battle_transitions/frontier_square_2.4bpp.lz graphics/battle_transitions/frontier_square_3.4bpp.lz graphics/battle_transitions/frontier_square_4.4bpp.lz graphics/battle_transitions/frontier_squares.bin
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/battle_transition_pre_regi_resources.o: data/battle_transition_pre_regi_resources.s graphics/battle_transitions/big_pokeball.4bpp graphics/battle_transitions/pokeball_trail.4bpp graphics/battle_transitions/pokeball.4bpp graphics/battle_transitions/elite_four_bg.4bpp graphics/battle_transitions/unused_brendan.4bpp graphics/battle_transitions/unused_lass.4bpp graphics/battle_transitions/shrinking_box.4bpp graphics/battle_transitions/evil_team.gbapal graphics/battle_transitions/team_aqua.4bpp.lz graphics/battle_transitions/team_aqua.bin.lz graphics/battle_transitions/team_magma.4bpp.lz graphics/battle_transitions/team_magma.bin.lz
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/tv.o: data/tv.s data/tv/text_groups.inc
 	@mkdir -p $(dir $@)
@@ -2413,9 +2403,6 @@ $(OBJ_DIR)/data/data_b2d_mid60.o: data/data_b2d_mid60.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/battle_transition_tilemaps.o: data/battle_transition_tilemaps.s graphics/battle_transitions/big_pokeball_map.bin graphics/battle_transitions/elite_four_bg_map.bin
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/data_b2d_mid70.o: data/data_b2d_mid70.s baserom_jp.gba
 	@mkdir -p $(dir $@)
@@ -6227,5 +6214,279 @@ $(JP_GRAPHICS_GFX_ROOT)graphics/reset_rtc_screen/arrow_right.png.4bpp: graphics/
 	$(GFX) $< $@
 
 $(JP_GRAPHICS_GFX_ROOT)graphics/reset_rtc_screen/arrow.pal.gbapal: graphics/reset_rtc_screen/arrow.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(C_BUILDDIR)/battle_transition.o: src/battle_transition.c charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_transition.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_transition.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/battle_transition.gen.s
+
+$(C_BUILDDIR)/battle_transition.d: src/battle_transition.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/battle_transition.d
+
+$(C_BUILDDIR)/battle_transition_frontier.d: src/battle_transition_frontier.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/battle_transition_frontier.d
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_blanktiles.png.4bpp: graphics/battle_transitions/frontier_squares_blanktiles.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_1.png.4bpp: graphics/battle_transitions/frontier_squares_1.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_1.4bpp: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_blanktiles.png.4bpp $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_1.png.4bpp
+	@mkdir -p $(dir $@)
+	@cat $^ > $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_2.png.4bpp: graphics/battle_transitions/frontier_squares_2.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_2.4bpp: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_blanktiles.png.4bpp $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_2.png.4bpp
+	@mkdir -p $(dir $@)
+	@cat $^ > $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_3.png.4bpp: graphics/battle_transitions/frontier_squares_3.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_3.4bpp: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_blanktiles.png.4bpp $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_3.png.4bpp
+	@mkdir -p $(dir $@)
+	@cat $^ > $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_4.png.4bpp: graphics/battle_transitions/frontier_squares_4.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_4.4bpp: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_blanktiles.png.4bpp $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_4.png.4bpp
+	@mkdir -p $(dir $@)
+	@cat $^ > $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo.png.gbapal: graphics/battle_transitions/frontier_logo.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo.png.4bpp: graphics/battle_transitions/frontier_logo.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo.bin.lz: graphics/battle_transitions/frontier_logo.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_squares_blanktiles.png.gbapal: graphics/battle_transitions/frontier_squares_blanktiles.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_1.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_1.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_2.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_2.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_3.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_3.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_4.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_square_4.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/kyogre.png.4bpp: graphics/battle_transitions/kyogre.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/kyogre.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/kyogre.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/kyogre.bin.lz: graphics/battle_transitions/kyogre.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/groudon.png.4bpp: graphics/battle_transitions/groudon.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/groudon.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/groudon.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/groudon.bin.lz: graphics/battle_transitions/groudon.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/kyogre_pt1.pal.gbapal: graphics/battle_transitions/kyogre_pt1.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/kyogre_pt2.pal.gbapal: graphics/battle_transitions/kyogre_pt2.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/groudon_pt1.pal.gbapal: graphics/battle_transitions/groudon_pt1.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/groudon_pt2.pal.gbapal: graphics/battle_transitions/groudon_pt2.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/rayquaza.pal.gbapal: graphics/battle_transitions/rayquaza.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/rayquaza.png_num_tiles_938__Wnum_tiles.4bpp: graphics/battle_transitions/rayquaza.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -num_tiles 938 -Wnum_tiles
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/big_pokeball.png.4bpp: graphics/battle_transitions/big_pokeball.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/pokeball_trail.png.4bpp: graphics/battle_transitions/pokeball_trail.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/pokeball.png.4bpp: graphics/battle_transitions/pokeball.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/elite_four_bg.png.4bpp: graphics/battle_transitions/elite_four_bg.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/unused_brendan.png.4bpp: graphics/battle_transitions/unused_brendan.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/unused_lass.png.4bpp: graphics/battle_transitions/unused_lass.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/shrinking_box.png.4bpp: graphics/battle_transitions/shrinking_box.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/evil_team.pal.gbapal: graphics/battle_transitions/evil_team.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/team_aqua.png.4bpp: graphics/battle_transitions/team_aqua.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/team_aqua.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/team_aqua.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/team_aqua.bin.lz: graphics/battle_transitions/team_aqua.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/team_magma.png.4bpp: graphics/battle_transitions/team_magma.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/team_magma.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/team_magma.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/team_magma.bin.lz: graphics/battle_transitions/team_magma.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/regis.png_num_tiles_53__Wnum_tiles.4bpp: graphics/battle_transitions/regis.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -num_tiles 53 -Wnum_tiles
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/regice.pal.gbapal: graphics/battle_transitions/regice.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/registeel.pal.gbapal: graphics/battle_transitions/registeel.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/regirock.pal.gbapal: graphics/battle_transitions/regirock.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/unused.pal.gbapal: graphics/battle_transitions/unused.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/field_effects/palettes/pokeball.pal.gbapal: graphics/field_effects/palettes/pokeball.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/sidney_bg.pal.gbapal: graphics/battle_transitions/sidney_bg.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/phoebe_bg.pal.gbapal: graphics/battle_transitions/phoebe_bg.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/glacia_bg.pal.gbapal: graphics/battle_transitions/glacia_bg.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/drake_bg.pal.gbapal: graphics/battle_transitions/drake_bg.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/wallace_bg.pal.gbapal: graphics/battle_transitions/wallace_bg.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/brendan_bg.pal.gbapal: graphics/battle_transitions/brendan_bg.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/may_bg.pal.gbapal: graphics/battle_transitions/may_bg.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/unused_trainer.pal.gbapal: graphics/battle_transitions/unused_trainer.pal $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_center.png_num_tiles_43__Wnum_tiles.4bpp: graphics/battle_transitions/frontier_logo_center.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@ -num_tiles 43 -Wnum_tiles
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_center.png_num_tiles_43__Wnum_tiles.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_center.png_num_tiles_43__Wnum_tiles.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_center.bin.lz: graphics/battle_transitions/frontier_logo_center.bin $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_circles.png.4bpp: graphics/battle_transitions/frontier_logo_circles.png $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_circles.png.4bpp.lz: $(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_circles.png.4bpp $(GFX)
+	@mkdir -p $(dir $@)
+	$(GFX) $< $@
+
+$(JP_GRAPHICS_GFX_ROOT)graphics/battle_transitions/frontier_logo_circles.png.gbapal: graphics/battle_transitions/frontier_logo_circles.png $(GFX)
 	@mkdir -p $(dir $@)
 	$(GFX) $< $@

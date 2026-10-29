@@ -40,10 +40,10 @@ static bool8 CirclesSymmetricSpiralInSeq_End(struct Task *task);
 #define PALTAG_LOGO_CIRCLES 0x2E90
 #define FRONTIER_CIRCLES_DATA __attribute__((section(".rodata.battle_transition_frontier_circles")))
 
-const u32 sLogoCenter_Gfx[] FRONTIER_CIRCLES_DATA = INCBIN_U32("graphics/battle_transitions/frontier_logo_center.4bpp.lz");
-const u32 sLogoCenter_Tilemap[] FRONTIER_CIRCLES_DATA = INCBIN_U32("graphics/battle_transitions/frontier_logo_center.bin.lz");
-const u32 sLogoCircles_Gfx[] FRONTIER_CIRCLES_DATA = INCBIN_U32("graphics/battle_transitions/frontier_logo_circles.4bpp.lz");
-const u16 sLogo_Pal[] FRONTIER_CIRCLES_DATA = INCBIN_U16("graphics/battle_transitions/frontier_logo_circles.gbapal");
+static const u32 sLogoCenter_Gfx[] FRONTIER_CIRCLES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_logo_center.png", ".4bpp.lz", "-num_tiles 43 -Wnum_tiles");
+static const u32 sLogoCenter_Tilemap[] FRONTIER_CIRCLES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_logo_center.bin", ".lz");
+static const u32 sLogoCircles_Gfx[] FRONTIER_CIRCLES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_logo_circles.png", ".4bpp.lz");
+static const u16 sLogo_Pal[] FRONTIER_CIRCLES_DATA = INCGFX_U16("graphics/battle_transitions/frontier_logo_circles.png", ".gbapal");
 const u8 sFiller[0x1C0] FRONTIER_CIRCLES_DATA = {0};
 
 const struct OamData sOamData_LogoCircles FRONTIER_CIRCLES_DATA =

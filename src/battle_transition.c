@@ -8,6 +8,49 @@
 #include "constants/trainers.h"
 #include "constants/field_effects.h"
 
+static const u16 sFrontierLogo_Palette[16];
+static const u32 sFrontierLogo_Tileset[419];
+static const u32 sFrontierLogo_Tilemap[187];
+static const u16 sFrontierSquares_Palette[16];
+static const u32 sFrontierSquares_FilledBg_Tileset[87];
+static const u32 sFrontierSquares_EmptyBg_Tileset[64];
+static const u32 sFrontierSquares_Shrink1_Tileset[44];
+static const u32 sFrontierSquares_Shrink2_Tileset[33];
+static const u32 sFrontierSquares_Tilemap[8];
+static const u32 sKyogre_Tileset[429];
+static const u32 sKyogre_Tilemap[205];
+static const u32 sGroudon_Tileset[347];
+static const u32 sGroudon_Tilemap[198];
+static const u16 sKyogre1_Palette[160];
+static const u16 sKyogre2_Palette[224];
+static const u16 sGroudon1_Palette[256];
+static const u16 sGroudon2_Palette[256];
+static const u16 sRayquaza_Palette[256];
+static const u32 sRayquaza_Tileset[7504];
+static const u32 sRayquaza_Tilemap[1024];
+static const u32 sBigPokeball_Tileset[352];
+static const u32 sPokeballTrail_Tileset[16];
+static const u8 sPokeball_Gfx[512];
+static const u32 sEliteFour_Tileset[120];
+static const u8 sUnusedBrendan_Gfx[2048];
+static const u8 sUnusedLass_Gfx[2048];
+static const u32 sShrinkingBoxTileset[120];
+static const u16 sEvilTeam_Palette[16];
+static const u32 sTeamAqua_Tileset[222];
+static const u32 sTeamAqua_Tilemap[151];
+static const u32 sTeamMagma_Tileset[291];
+static const u32 sTeamMagma_Tilemap[185];
+static const u32 sRegis_Tileset[424];
+static const u16 sRegice_Palette[16];
+static const u16 sRegisteel_Palette[16];
+static const u16 sRegirock_Palette[16];
+static const u32 sRegice_Tilemap[512];
+static const u32 sRegisteel_Tilemap[512];
+static const u32 sRegirock_Tilemap[512];
+static const u16 sUnused_Palette[16];
+static const u16 sBigPokeball_Tilemap[600];
+static const u16 sMugshotsTilemap[640];
+
 #define PALTAG_UNUSED_MUGSHOT 0x100A
 
 // Sprite data aliases matching the US battle_transition.c field names.
@@ -93,9 +136,6 @@ bool8 FrontierSquaresScroll_SetBlack(struct Task *task);
 bool8 FrontierSquaresScroll_Erase(struct Task *task);
 bool8 FrontierSquaresScroll_End(struct Task *task);
 
-extern const u8 sPokeball_Gfx[];
-extern const u8 sUnusedBrendan_Gfx[];
-extern const u8 sUnusedLass_Gfx[];
 extern const struct OamData gObjectEventBaseOam_32x32;
 
 void SpriteCB_FldEffPokeballTrail(struct Sprite *sprite);
@@ -394,11 +434,7 @@ const struct SpriteTemplate sSpriteTemplate_UnusedLass BATTLE_TRANSITION_SPRITE_
 
 #define BATTLE_TRANSITION_PALETTE_DATA __attribute__((section(".rodata.battle_transition_palette_data")))
 
-static const u16 sFieldEffectPal_Pokeball[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x76AC, 0x003E, 0x5B5D, 0x4ADB, 0x7FFF, 0x779B, 0x7337, 0x6ED3,
-    0x5A6C, 0x0012, 0x6318, 0x539D, 0x433B, 0x36DA, 0x2A79, 0x0000,
-};
+static const u16 sFieldEffectPal_Pokeball[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/field_effects/palettes/pokeball.pal", ".gbapal");
 
 const struct SpritePalette gSpritePalette_Pokeball BATTLE_TRANSITION_PALETTE_DATA =
 {
@@ -406,47 +442,19 @@ const struct SpritePalette gSpritePalette_Pokeball BATTLE_TRANSITION_PALETTE_DAT
     .tag = FLDEFF_PAL_TAG_POKEBALL_TRAIL,
 };
 
-static const u16 sMugshotPal_Sidney[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x5C17, 0x6459, 0x6C9B,
-    0x74DD, 0x7D1F, 0x6ACD, 0x730F, 0x7B51, 0x7F93, 0x7FD5, 0x7FFF,
-};
+static const u16 sMugshotPal_Sidney[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/battle_transitions/sidney_bg.pal", ".gbapal");
 
-static const u16 sMugshotPal_Phoebe[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x0741, 0x13A4, 0x1BC6,
-    0x27E9, 0x3FEF, 0x45FC, 0x4E3E, 0x567F, 0x5EBF, 0x66FF, 0x45FC,
-};
+static const u16 sMugshotPal_Phoebe[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/battle_transitions/phoebe_bg.pal", ".gbapal");
 
-static const u16 sMugshotPal_Glacia[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x555F, 0x5D9F, 0x65DF,
-    0x6E1F, 0x765F, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+static const u16 sMugshotPal_Glacia[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/battle_transitions/glacia_bg.pal", ".gbapal");
 
-static const u16 sMugshotPal_Drake[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x4000, 0x4842, 0x5084,
-    0x58C6, 0x6108, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+static const u16 sMugshotPal_Drake[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/battle_transitions/drake_bg.pal", ".gbapal");
 
-static const u16 sMugshotPal_Champion[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x2318, 0x2B5A, 0x339C,
-    0x3BDE, 0x43FF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+static const u16 sMugshotPal_Champion[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/battle_transitions/wallace_bg.pal", ".gbapal");
 
-static const u16 sMugshotPal_Brendan[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x6ACD, 0x730F, 0x7B51, 0x7F93, 0x7FD5, 0x7FFF, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+static const u16 sMugshotPal_Brendan[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/battle_transitions/brendan_bg.pal", ".gbapal");
 
-static const u16 sMugshotPal_May[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x45FC, 0x4E3E, 0x567F, 0x5EBF, 0x66FF, 0x7FFF, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+static const u16 sMugshotPal_May[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/battle_transitions/may_bg.pal", ".gbapal");
 
 static const u16 *const sOpponentMugshotsPals[MUGSHOTS_COUNT] BATTLE_TRANSITION_PALETTE_DATA =
 {
@@ -463,11 +471,7 @@ static const u16 *const sPlayerMugshotsPals[GENDER_COUNT] BATTLE_TRANSITION_PALE
     [FEMALE] = sMugshotPal_May,
 };
 
-static const u16 sUnusedTrainerPalette[] BATTLE_TRANSITION_PALETTE_DATA =
-{
-    0x530E, 0x677F, 0x4A9B, 0x3A19, 0x296F, 0x3D27, 0x30E5, 0x28A3,
-    0x1C82, 0x779B, 0x2F1F, 0x2E77, 0x2D9F, 0x2118, 0x7FFF, 0x0000,
-};
+static const u16 sUnusedTrainerPalette[] BATTLE_TRANSITION_PALETTE_DATA = INCGFX_U16("graphics/battle_transitions/unused_trainer.pal", ".gbapal");
 
 static const struct SpritePalette sSpritePalette_UnusedTrainer BATTLE_TRANSITION_PALETTE_DATA =
 {
@@ -12035,3 +12039,70 @@ static const TransitionSpriteCallback sMugshotTrainerPicFuncs[] BATTLE_TRANSITIO
     MugshotTrainerPic_SlideOffscreen,
     MugshotTrainerPic_Pause,
 };
+
+#define BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA __attribute__((section(".rodata.battle_transition_frontier_resources"), aligned(4)))
+
+static const u16 sFrontierLogo_Palette[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/frontier_logo.png", ".gbapal");
+static const u32 sFrontierLogo_Tileset[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_logo.png", ".4bpp.lz");
+static const u32 sFrontierLogo_Tilemap[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_logo.bin", ".lz");
+static const u16 sFrontierSquares_Palette[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/frontier_squares_blanktiles.png", ".gbapal");
+static const u32 sFrontierSquares_FilledBg_Tileset[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_square_1.4bpp", ".lz");
+static const u32 sFrontierSquares_EmptyBg_Tileset[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_square_2.4bpp", ".lz");
+static const u32 sFrontierSquares_Shrink1_Tileset[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_square_3.4bpp", ".lz");
+static const u32 sFrontierSquares_Shrink2_Tileset[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/frontier_square_4.4bpp", ".lz");
+static const u32 sFrontierSquares_Tilemap[] BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA = INCBIN_U32("graphics/battle_transitions/frontier_squares.bin");
+
+#undef BATTLE_TRANSITION_FRONTIER_RESOURCES_DATA
+
+#define BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA __attribute__((section(".rodata.battle_transition_legendary_resources"), aligned(4)))
+
+static const u32 sKyogre_Tileset[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/kyogre.png", ".4bpp.lz");
+static const u32 sKyogre_Tilemap[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/kyogre.bin", ".lz");
+static const u32 sGroudon_Tileset[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/groudon.png", ".4bpp.lz");
+static const u32 sGroudon_Tilemap[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/groudon.bin", ".lz");
+static const u16 sKyogre1_Palette[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/kyogre_pt1.pal", ".gbapal");
+static const u16 sKyogre2_Palette[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/kyogre_pt2.pal", ".gbapal");
+static const u16 sGroudon1_Palette[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/groudon_pt1.pal", ".gbapal");
+static const u16 sGroudon2_Palette[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/groudon_pt2.pal", ".gbapal");
+static const u16 sRayquaza_Palette[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/rayquaza.pal", ".gbapal");
+static const u32 sRayquaza_Tileset[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/rayquaza.png", ".4bpp", "-num_tiles 938 -Wnum_tiles");
+static const u32 sRayquaza_Tilemap[] BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA = INCBIN_U32("graphics/battle_transitions/rayquaza.bin");
+
+#undef BATTLE_TRANSITION_LEGENDARY_RESOURCES_DATA
+
+#define BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA __attribute__((section(".rodata.battle_transition_pre_regi_resources"), aligned(4)))
+
+static const u32 sBigPokeball_Tileset[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/big_pokeball.png", ".4bpp");
+static const u32 sPokeballTrail_Tileset[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/pokeball_trail.png", ".4bpp");
+static const u8 sPokeball_Gfx[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U8("graphics/battle_transitions/pokeball.png", ".4bpp");
+static const u32 sEliteFour_Tileset[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/elite_four_bg.png", ".4bpp");
+static const u8 sUnusedBrendan_Gfx[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U8("graphics/battle_transitions/unused_brendan.png", ".4bpp");
+static const u8 sUnusedLass_Gfx[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U8("graphics/battle_transitions/unused_lass.png", ".4bpp");
+static const u32 sShrinkingBoxTileset[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/shrinking_box.png", ".4bpp");
+static const u16 sEvilTeam_Palette[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/evil_team.pal", ".gbapal");
+static const u32 sTeamAqua_Tileset[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/team_aqua.png", ".4bpp.lz");
+static const u32 sTeamAqua_Tilemap[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/team_aqua.bin", ".lz");
+static const u32 sTeamMagma_Tileset[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/team_magma.png", ".4bpp.lz");
+static const u32 sTeamMagma_Tilemap[] BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/team_magma.bin", ".lz");
+
+#undef BATTLE_TRANSITION_PRE_REGI_RESOURCES_DATA
+
+#define BATTLE_TRANSITION_REGIS_RESOURCES_DATA __attribute__((section(".rodata.battle_transition_regis_resources"), aligned(4)))
+
+static const u32 sRegis_Tileset[] BATTLE_TRANSITION_REGIS_RESOURCES_DATA = INCGFX_U32("graphics/battle_transitions/regis.png", ".4bpp", "-num_tiles 53 -Wnum_tiles");
+static const u16 sRegice_Palette[] BATTLE_TRANSITION_REGIS_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/regice.pal", ".gbapal");
+static const u16 sRegisteel_Palette[] BATTLE_TRANSITION_REGIS_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/registeel.pal", ".gbapal");
+static const u16 sRegirock_Palette[] BATTLE_TRANSITION_REGIS_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/regirock.pal", ".gbapal");
+static const u32 sRegice_Tilemap[] BATTLE_TRANSITION_REGIS_RESOURCES_DATA = INCBIN_U32("graphics/battle_transitions/regice.bin");
+static const u32 sRegisteel_Tilemap[] BATTLE_TRANSITION_REGIS_RESOURCES_DATA = INCBIN_U32("graphics/battle_transitions/registeel.bin");
+static const u32 sRegirock_Tilemap[] BATTLE_TRANSITION_REGIS_RESOURCES_DATA = INCBIN_U32("graphics/battle_transitions/regirock.bin");
+static const u16 sUnused_Palette[] BATTLE_TRANSITION_REGIS_RESOURCES_DATA = INCGFX_U16("graphics/battle_transitions/unused.pal", ".gbapal");
+
+#undef BATTLE_TRANSITION_REGIS_RESOURCES_DATA
+
+#define BATTLE_TRANSITION_TILEMAPS_DATA __attribute__((section(".rodata.battle_transition_tilemap_data"), aligned(4)))
+
+static const u16 sBigPokeball_Tilemap[] BATTLE_TRANSITION_TILEMAPS_DATA = INCBIN_U16("graphics/battle_transitions/big_pokeball_map.bin");
+static const u16 sMugshotsTilemap[] BATTLE_TRANSITION_TILEMAPS_DATA = INCBIN_U16("graphics/battle_transitions/elite_four_bg_map.bin");
+
+#undef BATTLE_TRANSITION_TILEMAPS_DATA
