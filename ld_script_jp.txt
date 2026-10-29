@@ -9262,9 +9262,12 @@ SECTIONS {
         src/data/union_room8y.o(.rodata);
         src/data/union_room8z.o(.rodata);
         src/data/berry_crush1.o(.rodata);
+        src/graphics.o(.rodata.berry_crush_palette);
+        src/berry_crush.o(.rodata.berry_crush_sprite_palettes);
         src/graphics.o(.rodata.berry_crush_graphics);
         src/berry_crush.o(.rodata.berry_crush_resources);
-        src/data/berry_crush2.o(.rodata);
+        src/graphics.o(.rodata.berry_crush_text_windows);
+        src/berry_crush.o(.rodata.berry_crush_sprite_data);
         src/data/berry_crush3.o(.rodata);
         src/data/berry_crush4.o(.rodata);
         src/data/dodrio1.o(.rodata);

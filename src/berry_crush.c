@@ -257,32 +257,39 @@ extern void SetPaletteFadeArgs(u8 *, bool8, u32, s8, u8, u8, u16);
 extern void GetBerryFromBag(void);
 extern const struct BgTemplate sBgTemplates[4];
 
+#define BERRY_CRUSH_PALETTE_DATA __attribute__((section(".rodata.berry_crush_sprite_palettes")))
 #define BERRY_CRUSH_RESOURCE_DATA __attribute__((section(".rodata.berry_crush_resources")))
 
-BERRY_CRUSH_RESOURCE_DATA const u8 sCrusherTop_Tilemap[] = INCBIN_U8("graphics/berry_crush/sCrusherTop_Tilemap.bin");
-BERRY_CRUSH_RESOURCE_DATA const u8 sContainerCap_Tilemap[] = INCBIN_U8("graphics/misc/sContainerCap_Tilemap.bin");
-BERRY_CRUSH_RESOURCE_DATA const u8 sBg_Tilemap[] = INCBIN_U8("graphics/misc/sBg_Tilemap.bin");
+static const u16 sCrusherBase_Pal[] BERRY_CRUSH_PALETTE_DATA = INCGFX_U16("graphics/berry_crush/crusher_base.png", ".gbapal");
+static const u16 sEffects_Pal[] BERRY_CRUSH_PALETTE_DATA = INCGFX_U16("graphics/berry_crush/effects.pal", ".gbapal");
+static const u16 sTimerDigits_Pal[] BERRY_CRUSH_PALETTE_DATA = INCGFX_U16("graphics/berry_crush/timer_digits.png", ".gbapal");
+static const u32 sCrusherBase_Gfx[] BERRY_CRUSH_RESOURCE_DATA = INCGFX_U32("graphics/berry_crush/crusher_base.png", ".4bpp.lz");
+static const u32 sImpact_Gfx[] BERRY_CRUSH_RESOURCE_DATA = INCGFX_U32("graphics/berry_crush/impact.png", ".4bpp.lz");
+static const u32 sSparkle_Gfx[] BERRY_CRUSH_RESOURCE_DATA = INCGFX_U32("graphics/berry_crush/sparkle.png", ".4bpp.lz");
+static const u32 sTimerDigits_Gfx[] BERRY_CRUSH_RESOURCE_DATA = INCGFX_U32("graphics/berry_crush/timer_digits.png", ".4bpp.lz");
+static const u8 sCrusherTop_Tilemap[] BERRY_CRUSH_RESOURCE_DATA = INCGFX_U8("graphics/berry_crush/crusher_top.bin", ".lz");
+static const u8 sContainerCap_Tilemap[] BERRY_CRUSH_RESOURCE_DATA = INCGFX_U8("graphics/berry_crush/container_cap.bin", ".lz");
+static const u8 sBg_Tilemap[] BERRY_CRUSH_RESOURCE_DATA = INCGFX_U8("graphics/berry_crush/bg.bin", ".lz");
 
-extern const u16 sPlayerBerrySpriteTags[MAX_RFU_PLAYERS];
-extern const struct SpriteTemplate sSpriteTemplate_PlayerBerry;
-extern const s8 sImpactCoords[3][2];
-extern const s8 sSparkleCoords[][2];
+#undef BERRY_CRUSH_PALETTE_DATA
+#undef BERRY_CRUSH_RESOURCE_DATA
+static const u16 sPlayerBerrySpriteTags[6];
+static const struct SpriteTemplate sSpriteTemplate_PlayerBerry;
+static const s8 sImpactCoords[3][2];
+static const s8 sSparkleCoords[][2];
 extern const u32 sPressingSpeedConversionTable[];
 extern const u8 sTextColorTable[][3];
-extern const struct BerryCrushPlayerCoords sPlayerCoords[];
-extern const u8 sPlayerIdToPosId[][MAX_RFU_PLAYERS];
+static const struct BerryCrushPlayerCoords sPlayerCoords[];
+static const u8 sPlayerIdToPosId[][MAX_RFU_PLAYERS];
 extern const struct WindowTemplate sWindowTemplates_PlayerNames[];
-BERRY_CRUSH_RESOURCE_DATA const u32 sPlayerNameWindowGfx[] = INCBIN_U32("graphics/naming_screen/sPlayerNameWindowGfx.bin");
 
-#undef BERRY_CRUSH_RESOURCE_DATA
-
-extern const struct CompressedSpriteSheet sSpriteSheets[];
-extern const struct SpritePalette sSpritePals[];
-extern const struct SpriteTemplate sSpriteTemplate_CrusherBase;
-extern const struct SpriteTemplate sSpriteTemplate_Impact;
-extern const struct SpriteTemplate sSpriteTemplate_Sparkle;
-extern const struct SpriteTemplate sSpriteTemplate_Timer;
-extern const struct DigitObjUtilTemplate sDigitObjTemplates[];
+static const struct CompressedSpriteSheet sSpriteSheets[];
+static const struct SpritePalette sSpritePals[];
+static const struct SpriteTemplate sSpriteTemplate_CrusherBase;
+static const struct SpriteTemplate sSpriteTemplate_Impact;
+static const struct SpriteTemplate sSpriteTemplate_Sparkle;
+static const struct SpriteTemplate sSpriteTemplate_Timer;
+static const struct DigitObjUtilTemplate sDigitObjTemplates[];
 extern u32 (*const sBerryCrushCommands[26])(struct BerryCrushGame *, u8 *);
 extern const u8 *const sMessages[];
 extern const u8 sReceivedPlayerBitmasks[];
@@ -2689,7 +2696,7 @@ void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *game)
     u8 i = 0;
     u8 *windowGfx;
 
-    LZ77UnCompWram(sPlayerNameWindowGfx, gDecompressionBuffer);
+    LZ77UnCompWram(gBerryCrush_TextWindows_Tilemap, gDecompressionBuffer);
 
     for (windowGfx = gDecompressionBuffer; i < game->playerCount; i++)
     {
@@ -4030,3 +4037,306 @@ __attribute__((naked)) void sub_08021ABC(void)
         ".syntax divided\n\t"
     );
 }
+
+#define BERRY_CRUSH_SPRITE_DATA __attribute__((section(".rodata.berry_crush_sprite_data")))
+
+// Berry-crush sprite/table data (0x82C7A08..0x82C7C40)
+
+extern const struct OamData gOamData_AffineOff_ObjNormal_16x16;
+extern const struct OamData gOamData_AffineOff_ObjNormal_32x32;
+extern const struct OamData gOamData_AffineOff_ObjNormal_64x64;
+extern const struct OamData gOamData_AffineOff_ObjNormal_8x16;
+extern const struct OamData gOamData_AffineDouble_ObjNormal_32x32;
+extern void SpriteCB_Impact(struct Sprite *sprite); // src/berry_crush.c
+
+// 0x82C7A08 - index into sPlayerCoords by (playerCount - 2) and player slot.
+static const u8 sPlayerIdToPosId[MAX_RFU_PLAYERS - 1][MAX_RFU_PLAYERS] BERRY_CRUSH_SPRITE_DATA =
+{
+    { 1, 3, 0, 0, 0 },
+    { 0, 1, 3, 0, 0 },
+    { 1, 3, 2, 4, 0 },
+    { 0, 1, 3, 2, 4 },
+};
+
+// 0x82C7A1C
+static const struct BerryCrushPlayerCoords sPlayerCoords[MAX_RFU_PLAYERS] BERRY_CRUSH_SPRITE_DATA =
+{
+    {
+        .playerId = 0,
+        .windowGfxX = 0,
+        .windowGfxY = 0,
+        .impactXOffset = 0,
+        .impactYOffset = -16,
+        .berryXOffset = 0,
+        .berryXDest = 0,
+    },
+    {
+        .playerId = 1,
+        .windowGfxX = 0,
+        .windowGfxY = 3,
+        .impactXOffset = -28,
+        .impactYOffset = -4,
+        .berryXOffset = -24,
+        .berryXDest = 16,
+    },
+    {
+        .playerId = 2,
+        .windowGfxX = 0,
+        .windowGfxY = 6,
+        .impactXOffset = -16,
+        .impactYOffset = 20,
+        .berryXOffset = -8,
+        .berryXDest = 16,
+    },
+    {
+        .playerId = 3,
+        .windowGfxX = 20,
+        .windowGfxY = 3,
+        .impactXOffset = 28,
+        .impactYOffset = -4,
+        .berryXOffset = 32,
+        .berryXDest = -8,
+    },
+    {
+        .playerId = 4,
+        .windowGfxX = 20,
+        .windowGfxY = 6,
+        .impactXOffset = 16,
+        .impactYOffset = 20,
+        .berryXOffset = 16,
+        .berryXDest = -8,
+    },
+};
+
+// 0x82C7A58
+static const s8 sImpactCoords[3][2] BERRY_CRUSH_SPRITE_DATA =
+{
+    {  0,  0 },
+    { -1,  0 },
+    {  1,  1 },
+};
+
+// 0x82C7A5E
+static const s8 sSparkleCoords[11][2] BERRY_CRUSH_SPRITE_DATA =
+{
+    {   0,   0 },
+    { -16,  -4 },
+    {  16,  -4 },
+    {  -8,  -2 },
+    {   8,  -2 },
+    { -24,  -8 },
+    {  24,  -8 },
+    { -32, -12 },
+    {  32, -12 },
+    { -40, -16 },
+    {  40, -16 },
+};
+
+// 0x82C7A74 - JP pads the five berry tags with a 0 terminator.
+static const u16 sPlayerBerrySpriteTags[6] BERRY_CRUSH_SPRITE_DATA =
+{
+    5, 6, 7, 8, 9, 0
+};
+
+// 0x82C7A80
+static const struct CompressedSpriteSheet sSpriteSheets[] BERRY_CRUSH_SPRITE_DATA =
+{
+    { .data = sCrusherBase_Gfx, .size = 0x800, .tag = 1 }, // TAG_CRUSHER_BASE
+    { .data = sImpact_Gfx, .size = 0xE00, .tag = 2 }, // GFXTAG_IMPACT
+    { .data = sSparkle_Gfx, .size = 0x700, .tag = 3 }, // GFXTAG_SPARKLE
+    { .data = sTimerDigits_Gfx, .size = 0x2C0, .tag = 4 }, // TAG_TIMER_DIGITS
+    {},
+};
+
+// 0x82C7AA8
+static const struct SpritePalette sSpritePals[] BERRY_CRUSH_SPRITE_DATA =
+{
+    { .data = sCrusherBase_Pal, .tag = 1 }, // TAG_CRUSHER_BASE
+    { .data = sEffects_Pal, .tag = 2 }, // PALTAG_EFFECT
+    { .data = sTimerDigits_Pal, .tag = 4 }, // TAG_TIMER_DIGITS
+    {},
+};
+
+// 0x82C7AC8 - animation scripts.
+static const union AnimCmd sAnim_CrusherBase[] BERRY_CRUSH_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Impact_Small[] BERRY_CRUSH_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Impact_Big[] BERRY_CRUSH_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(48, 2),
+    ANIMCMD_FRAME(64, 2),
+    ANIMCMD_FRAME(80, 2),
+    ANIMCMD_FRAME(96, 2),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Sparkle_Small[] BERRY_CRUSH_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(4, 2),
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(12, 2),
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_FRAME(20, 2),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd sAnim_Sparkle_Big[] BERRY_CRUSH_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(24, 4),
+    ANIMCMD_FRAME(28, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_FRAME(36, 4),
+    ANIMCMD_FRAME(40, 4),
+    ANIMCMD_FRAME(44, 4),
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_FRAME(52, 4),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd sAnim_Timer[] BERRY_CRUSH_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(20, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_PlayerBerry[] BERRY_CRUSH_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_PlayerBerry_0[] BERRY_CRUSH_SPRITE_DATA =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(0, 0, 2, 1),
+    AFFINEANIMCMD_JUMP(1)
+};
+
+static const union AffineAnimCmd sAffineAnim_PlayerBerry_1[] BERRY_CRUSH_SPRITE_DATA =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(0, 0, -2, 1),
+    AFFINEANIMCMD_JUMP(1)
+};
+
+static const union AnimCmd *const sAnims_CrusherBase[] BERRY_CRUSH_SPRITE_DATA = { sAnim_CrusherBase };
+static const union AnimCmd *const sAnims_Impact[] BERRY_CRUSH_SPRITE_DATA = { sAnim_Impact_Small, sAnim_Impact_Big };
+static const union AnimCmd *const sAnims_Sparkle[] BERRY_CRUSH_SPRITE_DATA = { sAnim_Sparkle_Small, sAnim_Sparkle_Big };
+static const union AnimCmd *const sAnims_Timer[] BERRY_CRUSH_SPRITE_DATA = { sAnim_Timer };
+static const union AnimCmd *const sAnims_PlayerBerry[] BERRY_CRUSH_SPRITE_DATA = { sAnim_PlayerBerry };
+static const union AffineAnimCmd *const sAffineAnims_PlayerBerry[] BERRY_CRUSH_SPRITE_DATA = { sAffineAnim_PlayerBerry_0, sAffineAnim_PlayerBerry_1 };
+
+// 0x82C7B98
+static const struct SpriteTemplate sSpriteTemplate_CrusherBase BERRY_CRUSH_SPRITE_DATA =
+{
+    .tileTag = 1, // TAG_CRUSHER_BASE
+    .paletteTag = 1, // TAG_CRUSHER_BASE
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
+    .anims = sAnims_CrusherBase,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82C7BB0
+static const struct SpriteTemplate sSpriteTemplate_Impact BERRY_CRUSH_SPRITE_DATA =
+{
+    .tileTag = 2, // GFXTAG_IMPACT
+    .paletteTag = 2, // PALTAG_EFFECT
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_Impact,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Impact,
+};
+
+// 0x82C7BC8
+static const struct SpriteTemplate sSpriteTemplate_Sparkle BERRY_CRUSH_SPRITE_DATA =
+{
+    .tileTag = 3, // GFXTAG_SPARKLE
+    .paletteTag = 2, // PALTAG_EFFECT
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_Sparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82C7BE0
+static const struct SpriteTemplate sSpriteTemplate_Timer BERRY_CRUSH_SPRITE_DATA =
+{
+    .tileTag = 4, // TAG_TIMER_DIGITS
+    .paletteTag = 4, // TAG_TIMER_DIGITS
+    .oam = &gOamData_AffineOff_ObjNormal_8x16,
+    .anims = sAnims_Timer,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82C7BF8
+static const struct SpriteTemplate sSpriteTemplate_PlayerBerry BERRY_CRUSH_SPRITE_DATA =
+{
+    .tileTag = 5, // TAG_PLAYER1_BERRY
+    .paletteTag = 5, // TAG_PLAYER1_BERRY
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
+    .anims = sAnims_PlayerBerry,
+    .images = NULL,
+    .affineAnims = sAffineAnims_PlayerBerry,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82C7C10 - timer digit printers; the JP first entry keeps strConvMode = 1.
+static const struct DigitObjUtilTemplate sDigitObjTemplates[] BERRY_CRUSH_SPRITE_DATA =
+{
+    { // Minutes
+        .strConvMode = 1,
+        .shape = 2,
+        .size = 0,
+        .priority = 0,
+        .oamCount = 2,
+        .xDelta = 8,
+        .x = 156,
+        .y = 0,
+        .spriteSheet = (const struct SpriteSheet *)&sSpriteSheets[3],
+        .spritePal = &sSpritePals[2],
+    },
+    { // Seconds
+        .strConvMode = 0,
+        .shape = 2,
+        .size = 0,
+        .priority = 0,
+        .oamCount = 2,
+        .xDelta = 8,
+        .x = 180,
+        .y = 0,
+        .spriteSheet = (const struct SpriteSheet *)&sSpriteSheets[3],
+        .spritePal = &sSpritePals[2],
+    },
+    { // 1/60ths of a second
+        .strConvMode = 0,
+        .shape = 2,
+        .size = 0,
+        .priority = 0,
+        .oamCount = 2,
+        .xDelta = 8,
+        .x = 204,
+        .y = 0,
+        .spriteSheet = (const struct SpriteSheet *)&sSpriteSheets[3],
+        .spritePal = &sSpritePals[2],
+    },
+};
+
+#undef BERRY_CRUSH_SPRITE_DATA

@@ -1162,12 +1162,9 @@ SWAP_LINE_GRAPHICS const u32 gSwapLinePal[] = INCBIN_U32("graphics/interface/swa
 #undef BERRY_TAG_GRAPHICS
 #undef BERRY_GRAPHICS
 
-#define BERRY_CRUSH_GRAPHICS __attribute__((section(".rodata.berry_crush_graphics")))
-
-BERRY_CRUSH_GRAPHICS const u16 gBerryCrush_Crusher_Pal[] = INCBIN_U16("graphics/berry_crush/gBerryCrush_Crusher_Pal.bin");
-BERRY_CRUSH_GRAPHICS const u32 gBerryCrush_Crusher_Gfx[] = INCBIN_U32("graphics/berry_crush/gBerryCrush_Crusher_Gfx.bin");
-
-#undef BERRY_CRUSH_GRAPHICS
+const u16 gBerryCrush_Crusher_Pal[] __attribute__((section(".rodata.berry_crush_palette"))) = INCGFX_U16("graphics/berry_crush/crusher.png", ".gbapal");
+const u32 gBerryCrush_Crusher_Gfx[] __attribute__((section(".rodata.berry_crush_graphics"))) = INCGFX_U32("graphics/berry_crush/crusher.png", ".4bpp.lz");
+const u32 gBerryCrush_TextWindows_Tilemap[] __attribute__((section(".rodata.berry_crush_text_windows"))) = INCGFX_U32("graphics/berry_crush/text_windows.bin", ".lz");
 
 #define JP_CONTEST_GFX __attribute__((section(".rodata.jp_contest_graphics")))
 

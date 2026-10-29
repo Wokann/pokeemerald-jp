@@ -1606,9 +1606,9 @@ $(C_BUILDDIR)/text_window.o: src/text_window.c graphics/text_window/gTextWindowF
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/text_window.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/text_window.gen.s
 
-$(C_BUILDDIR)/berry_crush.o: src/berry_crush.c graphics/berry_crush/gBerryCrush_Crusher_Pal.bin graphics/berry_crush/gBerryCrush_Crusher_Gfx.bin graphics/berry_crush/sCrusherTop_Tilemap.bin graphics/misc/sContainerCap_Tilemap.bin graphics/misc/sBg_Tilemap.bin graphics/naming_screen/sPlayerNameWindowGfx.bin
+$(C_BUILDDIR)/berry_crush.o: src/berry_crush.c
 	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry_crush.gen.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i -g $(JP_GRAPHICS_GFX_ROOT) $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry_crush.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/berry_crush.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/berry_crush.gen.s
 
@@ -2279,12 +2279,6 @@ $(C_BUILDDIR)/data/berry_crush1.o: src/data/berry_crush1.c src/data/berry_crush1
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/berry_crush1.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/berry_crush1.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/berry_crush1.gen.s
-
-$(C_BUILDDIR)/data/berry_crush2.o: src/data/berry_crush2.c src/data/berry_crush2.h
-	@mkdir -p $(dir $@)
-	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/berry_crush2.gen.s
-	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/berry_crush2.gen.s | $(AS) $(ASFLAGS) -o $@ -
-	@rm -f $(C_BUILDDIR)/data/berry_crush2.gen.s
 
 $(C_BUILDDIR)/data/berry_crush3.o: src/data/berry_crush3.c src/data/berry_crush3.h
 	@mkdir -p $(dir $@)
@@ -5955,3 +5949,9 @@ $(C_BUILDDIR)/naming_screen.d: src/naming_screen.c Makefile | tools
 	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
 
 -include $(C_BUILDDIR)/naming_screen.d
+
+$(C_BUILDDIR)/berry_crush.d: src/berry_crush.c Makefile | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -g $(JP_GRAPHICS_GFX_ROOT) -I include -I "" $<
+
+-include $(C_BUILDDIR)/berry_crush.d
