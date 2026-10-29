@@ -57,10 +57,10 @@ void Task_StaticCountdown_Run(u8 taskId);
 void StaticCountdown_CreateSprites(u8 taskId, s16 *data);
 void SpriteCB_StaticCountdown(struct Sprite *sprite);
 
-extern const struct CompressedSpriteSheet sSpriteSheet_321Start_Static[];
-extern const struct SpritePalette sSpritePalette_321Start_Static[];
-extern const struct SpriteTemplate sSpriteTemplate_StaticCountdown[];
-extern const TaskFunc sStaticCountdownFuncs[][4];
+static const struct CompressedSpriteSheet sSpriteSheet_321Start_Static[];
+static const struct SpritePalette sSpritePalette_321Start_Static[];
+static const struct SpriteTemplate sSpriteTemplate_StaticCountdown[];
+static const TaskFunc sStaticCountdownFuncs[][4];
 
 #define tState            data[0]
 #define tFuncSetId        data[1]
@@ -288,10 +288,10 @@ void InitStartGraphic(u8 spriteId1, u8 spriteId2, u8 spriteId3);
 void SpriteCB_Start(struct Sprite *sprite);
 
 // JP keeps these template structures in ROM data; US builds them in C.
-extern const struct CompressedSpriteSheet s321StartGfxSheet;
-extern const struct SpritePalette s321StartPalette;
-extern const struct SpriteTemplate sSpriteTemplate_Number;
-extern const struct SpriteTemplate sSpriteTemplate_Start;
+static const struct CompressedSpriteSheet s321StartGfxSheet;
+static const struct SpritePalette s321StartPalette;
+static const struct SpriteTemplate sSpriteTemplate_Number;
+static const struct SpriteTemplate sSpriteTemplate_Start;
 
 #define tState       data[0]
 #define tTilesTag    data[2]
@@ -561,3 +561,278 @@ void CreateStartSprite(u16 tileTag, u16 palTag, s16 x, s16 y, u8 subpriority, s1
     gSprites[*spriteId2].invisible = TRUE;
     StartSpriteAnim(&gSprites[*spriteId2], 1);
 }
+
+#define STATIC_COUNTDOWN_DATA __attribute__((section(".rodata.minigame_countdown_static")))
+
+// Static 321 countdown data (0x82D1B10..0x82D1F54).
+
+// 0x82D1B10 - static 321-start countdown palette (16 colors).
+static const u16 s321Start_Static_Pal[] STATIC_COUNTDOWN_DATA = INCGFX_U16("graphics/link/321start_static.png", ".gbapal");
+
+// 0x82D1B30 - static 321-start countdown LZ graphics (decompresses to 0xC00).
+static const u32 s321Start_Static_Gfx[] STATIC_COUNTDOWN_DATA = INCGFX_U32("graphics/link/321start_static.png", ".4bpp.lz");
+
+#undef STATIC_COUNTDOWN_DATA
+
+#define MINIGAME_COUNTDOWN_DATA __attribute__((section(".rodata.minigame_countdown_data")))
+
+// 321 countdown data (0x82D1F54..0x82D254C).
+
+#define TAG_STATIC_COUNTDOWN 0x2000
+
+extern const struct OamData gOamData_AffineOff_ObjNormal_32x32; // 0x084FD020 (battle_anim data)
+extern void Task_StaticCountdown_Init(u8 taskId); // src/minigame_countdown.c
+extern void Task_StaticCountdown_Free(u8 taskId);
+extern void Task_StaticCountdown_Start(u8 taskId);
+extern void Task_StaticCountdown_Run(u8 taskId);
+
+// 0x82D1F54
+static const struct CompressedSpriteSheet sSpriteSheet_321Start_Static[] MINIGAME_COUNTDOWN_DATA =
+{
+    {s321Start_Static_Gfx, 0xC00, TAG_STATIC_COUNTDOWN},
+    {},
+};
+
+// 0x82D1F64
+static const struct SpritePalette sSpritePalette_321Start_Static[] MINIGAME_COUNTDOWN_DATA =
+{
+    {s321Start_Static_Pal, TAG_STATIC_COUNTDOWN},
+    {},
+};
+
+// 0x82D1F74 - static countdown number/start anims (unused in JP, like US).
+static const union AnimCmd sAnim_StaticCountdown_Three[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_StaticCountdown_Two[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(16, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_StaticCountdown_One[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(32, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_StaticCountdown_StartLeft[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(64, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_StaticCountdown_StartMid[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(48, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_StaticCountdown_StartRight[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(80, 0),
+    ANIMCMD_END
+};
+
+// 0x82D1FA4
+static const union AnimCmd *const sAnims_StaticCountdown[] MINIGAME_COUNTDOWN_DATA =
+{
+    sAnim_StaticCountdown_Three,
+    sAnim_StaticCountdown_Two,
+    sAnim_StaticCountdown_One,
+    sAnim_StaticCountdown_StartLeft,
+    sAnim_StaticCountdown_StartMid,
+    sAnim_StaticCountdown_StartRight,
+};
+
+// 0x82D1FBC
+static const struct SpriteTemplate sSpriteTemplate_StaticCountdown[] MINIGAME_COUNTDOWN_DATA =
+{
+    {
+        .tileTag = TAG_STATIC_COUNTDOWN,
+        .paletteTag = TAG_STATIC_COUNTDOWN,
+        .oam = &gOamData_AffineOff_ObjNormal_32x32,
+        .anims = sAnims_StaticCountdown,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+};
+
+// 0x82D1FD4 - task funcs (Task_StaticCountdown_* in src/pokemon_jump.c).
+static const TaskFunc sStaticCountdownFuncs[][4] MINIGAME_COUNTDOWN_DATA =
+{
+    {
+        Task_StaticCountdown_Init,
+        Task_StaticCountdown_Free,
+        Task_StaticCountdown_Start,
+        Task_StaticCountdown_Run,
+    },
+};
+
+// 0x82D1FE4 - minigame countdown palette (s321StartPalette.data).
+static const u16 s321Start_Pal[] MINIGAME_COUNTDOWN_DATA = INCGFX_U16("graphics/link/321start.png", ".gbapal");
+
+// 0x82D2004 - minigame countdown LZ gfx (decompresses to 0xE00, s321StartGfxSheet.data).
+static const u32 s321Start_Gfx[] MINIGAME_COUNTDOWN_DATA = INCGFX_U32("graphics/link/321start.png", ".4bpp.lz");
+
+// 0x82D2458
+static const struct CompressedSpriteSheet s321StartGfxSheet MINIGAME_COUNTDOWN_DATA =
+{
+    s321Start_Gfx, 0xE00, 0,
+};
+
+// 0x82D2460
+static const struct SpritePalette s321StartPalette MINIGAME_COUNTDOWN_DATA =
+{
+    s321Start_Pal, 0,
+};
+
+// 0x82D2468 - number sprite oam (affine double, 32x32).
+static const struct OamData sOamData_Numbers MINIGAME_COUNTDOWN_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+// 0x82D2470 - start sprite oam (affine off, 64x32).
+static const struct OamData sOamData_Start MINIGAME_COUNTDOWN_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+// 0x82D2478 - minigame countdown number anims.
+static const union AnimCmd sAnim_Numbers_Three[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Numbers_Two[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_Numbers_One[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(32, 1),
+    ANIMCMD_END
+};
+
+// 0x82D2490
+static const union AnimCmd *const sAnimTable_Numbers[] MINIGAME_COUNTDOWN_DATA =
+{
+    sAnim_Numbers_Three,
+    sAnim_Numbers_Two,
+    sAnim_Numbers_One,
+};
+
+// 0x82D249C - minigame countdown start anims.
+static const union AnimCmd sAnim_StartLeft[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(48, 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sAnim_StartRight[] MINIGAME_COUNTDOWN_DATA =
+{
+    ANIMCMD_FRAME(80, 1),
+    ANIMCMD_END
+};
+
+// 0x82D24AC
+static const union AnimCmd *const sAnimTable_Start[] MINIGAME_COUNTDOWN_DATA =
+{
+    sAnim_StartLeft,
+    sAnim_StartRight,
+};
+
+// 0x82D24B4 - number affine anims (values match pokeemerald).
+static const union AffineAnimCmd sAffineAnim_Numbers_Normal[] MINIGAME_COUNTDOWN_DATA =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Numbers_Squash[] MINIGAME_COUNTDOWN_DATA =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(16, -16, 0, 8),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Numbers_Stretch[] MINIGAME_COUNTDOWN_DATA =
+{
+    AFFINEANIMCMD_FRAME(-18, 18, 0, 8),
+    AFFINEANIMCMD_END
+};
+
+static const union AffineAnimCmd sAffineAnim_Numbers_Land[] MINIGAME_COUNTDOWN_DATA =
+{
+    AFFINEANIMCMD_FRAME(6, -6, 0, 8),
+    AFFINEANIMCMD_FRAME(-4, 4, 0, 8),
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+// 0x82D250C
+static const union AffineAnimCmd *const sAffineAnimTable_Numbers[] MINIGAME_COUNTDOWN_DATA =
+{
+    sAffineAnim_Numbers_Normal,
+    sAffineAnim_Numbers_Squash,
+    sAffineAnim_Numbers_Stretch,
+    sAffineAnim_Numbers_Land,
+};
+
+// 0x82D251C
+static const struct SpriteTemplate sSpriteTemplate_Number MINIGAME_COUNTDOWN_DATA =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &sOamData_Numbers,
+    .anims = sAnimTable_Numbers,
+    .images = NULL,
+    .affineAnims = sAffineAnimTable_Numbers,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0x82D2534
+static const struct SpriteTemplate sSpriteTemplate_Start MINIGAME_COUNTDOWN_DATA =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &sOamData_Start,
+    .anims = sAnimTable_Start,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+#undef MINIGAME_COUNTDOWN_DATA

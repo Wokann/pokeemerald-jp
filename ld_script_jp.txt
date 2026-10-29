@@ -9279,8 +9279,8 @@ SECTIONS {
         src/pokemon_jump.o(.rodata.pokemon_jump_sprites);
         src/pokemon_jump.o(.rodata.pokemon_jump_backgrounds);
         src/pokemon_jump.o(.rodata.pokemon_jump_records);
-        src/data/pokejump4.o(.rodata);
-        src/data/minigame_countdown.o(.rodata);
+        src/minigame_countdown.o(.rodata.minigame_countdown_static);
+        src/minigame_countdown.o(.rodata.minigame_countdown_data);
         src/data/rtc_data.o(.rodata);
         src/data/main_menu_data.o(.rodata);
         src/data.o(.rodata.minigame_digits);
