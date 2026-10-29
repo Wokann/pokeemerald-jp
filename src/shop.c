@@ -1520,11 +1520,11 @@ __attribute__((naked)) void BuyMenuDecompressBgGraphics(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF998: .4byte gUnknown_8D9B1B4\n\t"
+        "_080DF998: .4byte gShopMenu_Gfx\n\t"
         "_080DF99C: .4byte 0x000003E3\n\t"
-        "_080DF9A0: .4byte gUnknown_8D9B2E8\n\t"
+        "_080DF9A0: .4byte gShopMenu_Tilemap\n\t"
         "_080DF9A4: .4byte gUnknown_2039C10\n\t"
-        "_080DF9A8: .4byte gUnknown_8D9B2C0\n\t"
+        "_080DF9A8: .4byte gShopMenu_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
